@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "test": "npx mocha --no-timeout --reporter mochawesome --require mochawesome/register --reporter-options reportDir=C:/xampp/htdocs/MainPortal_Development/test-reports,reportFilename=testResults,timestamp,autoOpen 'tests/*.js'",
+        "test:parallel": "npx mocha --no-timeout -p --reporter mochawesome --require mochawesome/register --reporter-options reportDir=C:/xampp/htdocs/MainPortal_Development/test-reports,reportFilename=testResults,timestamp,autoOpen 'tests/*.js'"
     },
     "devDependencies": {
         "@headlessui/react": "^1.4.2",
@@ -51,10 +53,13 @@
         "js-cookie": "^3.0.5",
         "lord-icon-element": "^4.1.1",
         "lottie-web": "^5.11.0",
+        "mocha": "^10.2.0",
+        "mochawesome": "^7.1.3",
         "moment": "^2.29.4",
         "next": "^13.4.2",
         "pako": "^2.1.0",
         "pdfjs-dist": "^3.8.162",
+        "react-autosuggest": "^10.1.0",
         "react-chartjs-2": "^5.2.0",
         "react-dropzone": "^14.2.3",
         "react-export-table-to-excel": "^1.0.6",
@@ -82,6 +87,7 @@
         "react-toastify": "^9.1.3",
         "react-transition-group": "^4.4.5",
         "react-youtube": "^10.1.0",
+        "selenium-webdriver": "^4.15.0",
         "signalr": "^2.4.3",
         "slick-carousel": "^1.8.1",
         "styled-components": "^5.3.9",

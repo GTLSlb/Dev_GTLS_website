@@ -37,6 +37,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/LandingPage', function () {
+    return Inertia::render('LandingPage');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -119,7 +123,21 @@ Route::get('/downloadGTLS-Pallets', function () {
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
 
+Route::post('/saveImg', [NewUserController::class, 'storePic']);
 
+Route::post('/upload', function (Request $request) {
+    if($request->hasFile('file')){
+        $file = $request->file('file');
+    $fileName = $file->getClientOriginalName();
+    $destinationPath = public_path('userImgs');
+    if (file_exists($destinationPath . '/' . $fileName)) {
+        return response()->json(['message' => 'File already exists']);
+    } else {
+        $file->move($destinationPath, $fileName);
+        return response()->json(['message' => 'File uploaded successfully', 'filename' => $fileName]);
+    }
+    }
+});
 
 Route::get('/downloadGTLS-docx', function () {
     $pathToFile = public_path('docs/Gold-Tiger-Capability-Statement-2020-12-24.pdf');
