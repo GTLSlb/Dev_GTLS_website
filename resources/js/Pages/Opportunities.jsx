@@ -1,45 +1,14 @@
-import { Link, usePage, Inertia } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
-import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
-import submitform from "../assets/pictures/submitform.webp";
 import jobs from "../assets/pictures/jobs.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import { useState, useEffect } from "react";
-import { Dialog } from "@headlessui/react";
-
-import {
-    Bars3Icon,
-    XMarkIcon,
-    PhoneIcon,
-    ChevronDoubleRightIcon,
-} from "@heroicons/react/24/outline";
-import {
-    CloudArrowUpIcon,
-    LockClosedIcon,
-    ServerIcon,
-} from "@heroicons/react/20/solid";
-import { Link as ScrollLink } from "react-scroll";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
-import SecondaryFooter from "./Component/landingPage/SecondaryFooter";
 import Chatbot from "./Component/chatBot";
 import Navbars from "./Component/navbars";
 import TruckDriver from "./Component/opportunities/TruckDriver";
 import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/#contact", ref: "contact" },
-];
-function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-}
-
-const handleClick = () => {
-    history.push("/", { scrollToElement: "news" });
-};
 
 export default function Opportunities(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
