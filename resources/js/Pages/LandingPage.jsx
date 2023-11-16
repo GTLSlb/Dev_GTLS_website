@@ -8,7 +8,7 @@ import {
 import SupportModal from "@/Pages/Component/modals/SupportModal";
 import MainSidebar from "@/Components/Main-sidebar";
 import { InertiaApp } from "@inertiajs/inertia-react";
-export default function LandingPage({ }) {
+export default function LandingPage({}) {
     const [apps, setApps] = useState();
     const [isClicked, setIsClicked] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
@@ -71,15 +71,17 @@ export default function LandingPage({ }) {
     const handleSearch = (event) => {
         const searchInput = event.target.value.toLowerCase();
         setSearchTerm(searchInput);
-        console.log(apps)
-        const filtered = apps.filter((app) =>
-            app.AppName.toLowerCase().includes(searchInput) || app.AppAbv.toLowerCase().includes(searchInput) 
+        console.log(apps);
+        const filtered = apps.filter(
+            (app) =>
+                app.AppName.toLowerCase().includes(searchInput) ||
+                app.AppAbv.toLowerCase().includes(searchInput)
         );
         setFilteredApps(filtered);
     };
 
     const GoAppPage = (app) => {
-        window.open(app.AppURL, '_blank');
+        window.open(app.AppURL, "_blank");
     };
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activePage, setactivePage] = useState(null);
@@ -93,14 +95,14 @@ export default function LandingPage({ }) {
     const [activeIndexInv, setActiveIndexInv] = useState(1);
     const [invoiceDetails, setInvoiceDetails] = useState();
     const [PODetails, setPODetails] = useState();
-    
+
     useEffect(() => {
         setGreeting(getGreeting());
     }, []);
 
-    const handleGTAMIndexChange = (e) =>{
+    const handleGTAMIndexChange = (e) => {
         setActiveIndexGtam(e);
-    }
+    };
     useEffect(() => {
         axios
             .get("/users")
@@ -114,37 +116,37 @@ export default function LandingPage({ }) {
             {appsApi && currentUser ? (
                 <div className="w-full h-full absolute">
                     <div className="flex flex-row w-full h-full">
-                    <div className="h-full">
-                    <MainSidebar
-                        setMobileMenuOpen={setMobileMenuOpen}
-                        setActiveIndexGtam={handleGTAMIndexChange}
-                        mobileMenuOpen={mobileMenuOpen}
-                        activePage={activePage}
-                        activeIndexGtam={activeIndexGtam}
-                        setactivePage={setactivePage}
-                        setActiveIndexGTRS={setActiveIndexGTRS}
-                        setActiveIndexInv={setActiveIndexInv}
-                        currentUser={currentUser}
-                    />
-                    </div>
-                    <div className="flex flex-col pl-20 w-full h-full">
-                        <div className="bg-gray-800 flex flex-col px-6 w-full h-30 text-white text-3xl py-8 opacity-60">
-                            <span>
-                                {greeting} 
-                                {currentUser.name}
-                            </span>
-                            <div className="my-4 w-1/4">
-                                {" "}
-                                <input
-                                    type="text"
-                                    className="w-full rounded-lg h-8 text-black focus:ring-gray-600"
-                                    onChange={handleSearch}
-                                />
-                            </div>
+                        <div className="h-full">
+                            <MainSidebar
+                                setMobileMenuOpen={setMobileMenuOpen}
+                                setActiveIndexGtam={handleGTAMIndexChange}
+                                mobileMenuOpen={mobileMenuOpen}
+                                activePage={activePage}
+                                activeIndexGtam={activeIndexGtam}
+                                setactivePage={setactivePage}
+                                setActiveIndexGTRS={setActiveIndexGTRS}
+                                setActiveIndexInv={setActiveIndexInv}
+                                currentUser={currentUser}
+                            />
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 my-8 px-6 gap-x-10 gap-y-8">
-                            <div
-                                className="bg-gray-100 bg-gray-200 bg-gray-300 bg-gray-400 bg-gray-500 bg-gray-600 bg-gray-700 bg-gray-800 bg-gray-900
+                        <div className="flex flex-col pl-20 w-full h-full bg-gray-800">
+                            <div className="bg-gray-800 flex flex-col px-6 w-full h-30 text-white text-3xl py-8">
+                                <span>
+                                    {greeting}
+                                    {currentUser.name}
+                                </span>
+                                <div className="my-4 w-1/4">
+                                    {" "}
+                                    <input
+                                        type="text"
+                                        className="w-full rounded-lg h-8 text-black focus:ring-gray-600"
+                                        onChange={handleSearch}
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 my-8 px-6 gap-x-10 gap-y-8">
+                                <div
+                                    className="bg-gray-100 bg-gray-200 bg-gray-300 bg-gray-400 bg-gray-500 bg-gray-600 bg-gray-700 bg-gray-800 bg-gray-900
                                     bg-red-100 bg-red-200 bg-red-300 bg-red-400 bg-red-500 bg-red-600 bg-red-700 bg-red-800 bg-red-900
                                     bg-yellow-100 bg-yellow-200 bg-yellow-300 bg-yellow-400 bg-yellow-500 bg-yellow-600 bg-yellow-700 bg-yellow-800 bg-yellow-900
                                     bg-green-100 bg-green-200 bg-green-300 bg-green-400 bg-green-500 bg-green-600 bg-green-700 bg-green-800 bg-green-900
@@ -155,9 +157,9 @@ export default function LandingPage({ }) {
                                     bg-indigo-100 bg-indigo-200 bg-indigo-300 bg-indigo-400 bg-indigo-500 bg-indigo-600 bg-indigo-700 bg-indigo-800 bg-indigo-900
                                     bg-purple-100 bg-purple-200 bg-purple-300 bg-purple-400 bg-purple-500 bg-purple-600 bg-purple-700 bg-purple-800 bg-purple-900
                                     bg-pink-100 bg-pink-200 bg-pink-300 bg-pink-400 bg-pink-500 bg-pink-600 bg-pink-700 bg-pink-800 bg-pink-900 hidden"
-                            ></div>
-                            <div
-                                className="from-gray-100 from-gray-200 from-gray-300 from-gray-400 from-gray-500 from-gray-600 from-gray-700 from-gray-800 from-gray-900
+                                ></div>
+                                <div
+                                    className="from-gray-100 from-gray-200 from-gray-300 from-gray-400 from-gray-500 from-gray-600 from-gray-700 from-gray-800 from-gray-900
                                 from-red-100 from-red-200 from-red-300 from-red-400 from-red-500 from-red-600 from-red-700 from-red-800 from-red-900
                                 from-yellow-100 from-yellow-200 from-yellow-300 from-yellow-400 from-yellow-500 from-yellow-600 from-yellow-700 from-yellow-800 from-yellow-900
                                 from-green-100 from-green-200 from-green-300 from-green-400 from-green-500 from-green-600 from-green-700 from-green-800 from-green-900
@@ -168,9 +170,9 @@ export default function LandingPage({ }) {
                                 from-indigo-100 from-indigo-200 from-indigo-300 from-indigo-400 from-indigo-500 from-indigo-600 from-indigo-700 from-indigo-800 from-indigo-900
                                 from-purple-100 from-purple-200 from-purple-300 from-purple-400 from-purple-500 from-purple-600 from-purple-700 from-purple-800 from-purple-900
                                 from-pink-100 from-pink-200 from-pink-300 from-pink-400 from-pink-500 from-pink-600 from-pink-700 from-pink-800 from-pink-900 hidden"
-                            ></div>
-                            <div
-                                className="to-gray-100 to-gray-200 to-gray-300 to-gray-400 to-gray-500 to-gray-600 to-gray-700 to-gray-800 to-gray-900
+                                ></div>
+                                <div
+                                    className="to-gray-100 to-gray-200 to-gray-300 to-gray-400 to-gray-500 to-gray-600 to-gray-700 to-gray-800 to-gray-900
                                 to-red-100 to-red-200 to-red-300 to-red-400 to-red-500 to-red-600 to-red-700 to-red-800 to-red-900
                                 to-yellow-100 to-yellow-200 to-yellow-300 to-yellow-400 to-yellow-500 to-yellow-600 to-yellow-700 to-yellow-800 to-yellow-900
                                 to-green-100 to-green-200 to-green-300 to-green-400 to-green-500 to-green-600 to-green-700 to-green-800 to-green-900
@@ -181,70 +183,82 @@ export default function LandingPage({ }) {
                                 to-indigo-100 to-indigo-200 to-indigo-300 to-indigo-400 to-indigo-500 to-indigo-600 to-indigo-700 to-indigo-800 to-indigo-900
                                 to-purple-100 to-purple-200 to-purple-300 to-purple-400 to-purple-500 to-purple-600 to-purple-700 to-purple-800 to-purple-900
                                 to-pink-100 to-pink-200 to-pink-300 to-pink-400 to-pink-500 to-pink-600 to-pink-700 to-pink-800 to-pink-900 hidden"
-                            ></div>
-                            {filteredApps?.length > 0
-                                ? filteredApps.map((app) => (
-                                      <button
-                                          id={app.AppName}
-                                          className={`bg-${app.Colors[0].ColorName} relative bg-opacity-5 rounded-xl shadow-md p-5 h-[18rem] hover:cursor-pointer hover:bg-opacity-20 hover:shadow-lg`}
-                                          onClick={() => {
-                                              GoAppPage(app);
-                                          }}
-                                      >
-                                          <div className="flex flex-row gap-x-6 items-center">
-                                              <div
-                                                  className={`bg-gradient-to-b  from-${app.Colors[0].ColorName} to-${app.Colors[1].ColorName} rounded-3xl w-auto p-5`}
-                                              >
-                                                  <img
-                                                      src={`AppLogo/${app.AppPic}`}
-                                                      alt=""
-                                                      className="h-10 w-10"
-                                                  />
-                                              </div>
-                                              <div className="flex flex-col gap-y-1">
-                                                  <div className="flex gap-x-3">
-                                                      <h1 className="font-bold text-xl">
-                                                          {app.AppAbv}
-                                                      </h1>{" "}
-                                                      <span className="text-xs text-gray-400">
-                                                          {app.AppVersion}
-                                                      </span>
+                                ></div>
+                                {filteredApps?.length > 0
+                                    ? filteredApps.map((app) => (
+                                          <button
+                                              id={app.AppName}
+                                              className={`bg-${app.Colors[0].ColorName} relative bg-opacity-5 rounded-xl shadow-md p-5 h-[18rem] hover:cursor-pointer hover:bg-opacity-20 hover:shadow-lg`}
+                                              onClick={() => {
+                                                  GoAppPage(app);
+                                              }}
+                                          >
+                                              <div className="flex flex-row gap-x-6 items-center">
+                                                  <div
+                                                      className={`bg-gradient-to-b  from-${app.Colors[0].ColorName} to-${app.Colors[1].ColorName} rounded-3xl w-auto p-5`}
+                                                  >
+                                                      <img
+                                                          src={`AppLogo/${app.AppPic}`}
+                                                          alt=""
+                                                          className="h-10 w-10"
+                                                      />
                                                   </div>
+                                                  <div className="flex flex-col gap-y-1">
+                                                      <div className="flex gap-x-3">
+                                                          <h1 className="font-bold text-xl">
+                                                              {app.AppAbv}
+                                                          </h1>{" "}
+                                                          <span className="text-xs text-gray-400">
+                                                              {app.AppVersion}
+                                                          </span>
+                                                      </div>
 
-                                                  {app.StatusId ? (
-                                                      <div className="flex items-center gap-x-2">
-                                                          <div className="rounded-full h-3 w-3 bg-green-500"></div>
-                                                          <span className="text-gray-500">
-                                                              Online
-                                                          </span>
-                                                      </div>
-                                                  ) : (
-                                                      <div className="flex items-center gap-x-2">
-                                                          <div className="rounded-full h-3 w-3 bg-red-500"></div>
-                                                          <span className="text-gray-500">
-                                                              Offline
-                                                          </span>
-                                                      </div>
-                                                  )}
+                                                      {app.StatusId ? (
+                                                          <div className="flex items-center gap-x-2">
+                                                              <div className="rounded-full h-3 w-3 bg-green-500"></div>
+                                                              <span className="text-gray-500">
+                                                                  Online
+                                                              </span>
+                                                          </div>
+                                                      ) : (
+                                                          <div className="flex items-center gap-x-2">
+                                                              <div className="rounded-full h-3 w-3 bg-red-500"></div>
+                                                              <span className="text-gray-500">
+                                                                  Offline
+                                                              </span>
+                                                          </div>
+                                                      )}
+                                                  </div>
                                               </div>
-                                          </div>
-                                          <div className="py-4">
-                                              <h1 className="font-bold text-dark">
-                                                  {app.AppName}
-                                              </h1>
-                                              <p className="mt-2">
-                                                  {app.AppDesc}
-                                              </p>
-                                          </div>
-                                      </button>
-                                  ))
-                                : null}
+                                              <div className="py-4">
+                                                  <h1 className="font-bold text-dark">
+                                                      {app.AppName}
+                                                  </h1>
+                                                  <p className="mt-2">
+                                                      {app.AppDesc}
+                                                  </p>
+                                              </div>
+                                          </button>
+                                      ))
+                                    : null}
+                            </div>
                         </div>
                     </div>
                 </div>
-                </div>
             ) : (
-                <div>Waiting</div>
+                <div className="min-h-screen md:pl-20 pt-16 h-full flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center">
+                        <div
+                            className={`h-5 w-5 bg-goldd rounded-full mr-5 animate-bounce`}
+                        ></div>
+                        <div
+                            className={`h-5 w-5 bg-goldd rounded-full mr-5 animate-bounce200`}
+                        ></div>
+                        <div
+                            className={`h-5 w-5 bg-goldd rounded-full animate-bounce400`}
+                        ></div>
+                    </div>
+                </div>
             )}
         </div>
     );

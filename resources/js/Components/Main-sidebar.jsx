@@ -51,14 +51,6 @@ export default function MainSidebar({
         const roleId = parseInt(currentUser.role_id, 10); // Convert to number using parseInt
         return invoicesRoles.includes(roleId);
     }
-    useEffect(() => {
-        if (checkUserRoleInvoices(currentUser)) {
-            handleSetActivePage(4);
-        } else {
-            handleSetActivePage(3);
-        }
-    }, []);
-
     const current_user_role = currentUser.role_id;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const sidebarNavigation = [
