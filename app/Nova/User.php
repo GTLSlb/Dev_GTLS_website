@@ -36,7 +36,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email','user_id'
+        'id', 'name', 'email','user_id','type'
     ];
 
     /**
@@ -50,23 +50,22 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Avatar::make('icon')->disk('public'),
+            // Avatar::make('icon')->disk('public'),
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255'),
-            BelongsTo::make('parent', 'parent', User::class)
-                ->sortable()
-                ->nullable()
-                ->resolveUsing(function ($value) {
-                    return $value ?? $this->relatedUser()->whereNull('parent_id')->first();
-                }),
-                Select::make('State')->options([
-                    1 => 'NSW',
-                    2 => 'QLD',
-                    3 => 'VIC',
-                ]),
-            Text::make('User Id')->sortable(),
-            BelongsTo::make('Role')->sortable(),
+            // BelongsTo::make('parent', 'parent', User::class)
+            //     ->sortable()
+            //     ->nullable()
+            //     ->resolveUsing(function ($value) {
+            //         return $value ?? $this->relatedUser()->whereNull('parent_id')->first();
+            //     }),
+            Select::make('Type')->options([
+                'Admin' => 'Admin',
+                'Editor' => 'Editor',
+            ]),
+            // Text::make('User Id')->sortable(),
+            // BelongsTo::make('Role')->sortable(),
             Text::make('Email')
                 ->sortable()
                 ->rules('required', 'email', 'max:254')

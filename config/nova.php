@@ -20,7 +20,7 @@ return [
     |
     */
 
-    'license_key' => env('NOVA_LICENSE_KEY'),
+    'license_key' => env('sbNUfcAJZZ9DKfX0LPuVQhUkWybkVRts1ZDXIKHncySD3bMWMN'),
 
     /*
     |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
     |
     */
 
-    'name' => env('NOVA_APP_NAME', env('APP_NAME')),
+    'name' => env('NOVA_APP_NAME', env('GTLS')),
 
     /*
     |--------------------------------------------------------------------------
@@ -59,7 +59,7 @@ return [
     |
     */
 
-    'path' => '/nova',
+    'path' => '/web_admin',
 
     /*
     |--------------------------------------------------------------------------
