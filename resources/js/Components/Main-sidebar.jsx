@@ -45,27 +45,19 @@ export default function MainSidebar({
     setActiveIndexGTRS,
     activePage,
 }) {
-    const invoicesRoles = [6, 7, 8, 9 , 10];
+    const invoicesRoles = [6, 7, 8, 9, 10];
     const [gtrsCurrent, setGtrsCurrent] = useState();
     function checkUserRoleInvoices(currentUser) {
         const roleId = parseInt(currentUser.role_id, 10); // Convert to number using parseInt
         return invoicesRoles.includes(roleId);
-      }
-    useEffect(() => {
-        if (checkUserRoleInvoices(currentUser)) {
-            handleSetActivePage(4);
-        } else {
-            handleSetActivePage(3);
-        }
-    }, []);
-
+    }
     const current_user_role = currentUser.role_id;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const sidebarNavigation = [
         {
             id: 0,
             name: "GTMS",
-            href: "#",
+            href: "https://gtms.gtls.au",
             icon: HomeIcon,
             current: false,
             role: ["1"],
@@ -73,7 +65,7 @@ export default function MainSidebar({
         {
             id: 1,
             name: "GTAM",
-            href: "#",
+            href: "https://gtam.gtls.au",
             icon: UsersIcon,
             current: false,
             options: [
@@ -113,14 +105,13 @@ export default function MainSidebar({
                     current: false,
                     role: ["1", "4"],
                 },
-                
             ],
             role: ["1"],
         },
         {
             id: 3,
             name: "GTRS",
-            href: "#",
+            href: "https://gtrs.gtls.au",
             icon: DocumentMagnifyingGlassIcon,
             current: false,
             options: [
@@ -194,13 +185,19 @@ export default function MainSidebar({
                     id: 12,
                     name: "Transit Days",
                     current: false,
-                    role: ["1", "4" ],
+                    role: ["1", "4"],
                 },
                 {
                     id: 13,
                     name: "Holidays",
                     current: false,
-                    role: ["1", "4" ],
+                    role: ["1", "4"],
+                },
+                {
+                    id: 14,
+                    name: "KPI Reasons",
+                    current: false,
+                    role: ["1", "4"],
                 },
             ],
             func: setActiveIndexGTRS,
@@ -209,7 +206,7 @@ export default function MainSidebar({
         {
             id: 4,
             name: "Invoices",
-            href: "#",
+            href: "https://gtis.gtls.au",
             icon: DocumentChartBarIcon,
             current: gtrsCurrent,
             options: [
@@ -223,46 +220,46 @@ export default function MainSidebar({
                     id: 1,
                     name: "Invoices",
                     current: false,
-                    role: ["1", "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
                 {
                     id: 2,
                     name: "Purchase order",
                     current: false,
-                    role: ["1",  "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
                 {
                     id: 3,
                     name: "Suppliers",
                     current: false,
-                    role: ["1",  "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
                 {
                     id: 4,
                     name: "Services",
                     current: false,
-                    role: ["1",  "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
                 {
                     id: 5,
                     name: "Companies",
                     current: false,
-                    role: ["1",  "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
                 {
                     id: 11,
                     name: "Categories",
                     current: false,
-                    role: ["1", "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
                 {
                     id: 12,
                     name: "Close reasons",
                     current: false,
-                    role: ["1", "6","7","8","9","10"],
+                    role: ["1", "6", "7", "8", "9", "10"],
                 },
             ],
-            role: ["1", "6","7","8","9","10"],
+            role: ["1", "6", "7", "8", "9", "10"],
         },
         {
             id: 5,
@@ -279,7 +276,7 @@ export default function MainSidebar({
             href: "https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx",
             img: JAIX,
             current: false,
-            role: ["1", "2", "3", "4", "5", "6","7","8","9","10"],
+            role: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
         },
 
         // { name: 'Settings', href: '#', icon: CogIcon, current: false },
@@ -318,7 +315,7 @@ export default function MainSidebar({
             setActiveIndexGTRS(tabind);
         } else if (index == 4) {
             setActiveIndexInv(tabind);
-        }else if (index == 1){
+        } else if (index == 1) {
             setActiveIndexGtam(tabind);
         }
 
@@ -373,11 +370,7 @@ export default function MainSidebar({
                                         <a
                                             href={item.href}
                                             key={item.id}
-                                            target={
-                                                item.id === 5 || item.id === 6
-                                                    ? "_blank"
-                                                    : undefined
-                                            }
+                                            target="_blank"
                                         >
                                             {" "}
                                             <button
@@ -538,6 +531,7 @@ export default function MainSidebar({
                                                 .map((item) => (
                                                     // {sidebarElements.map((item) => (
                                                     <Accordion
+                                                        name={item.name}
                                                         key={item.id}
                                                         transition={{
                                                             duration: "300ms",
@@ -582,7 +576,11 @@ export default function MainSidebar({
                                                                                     aria-hidden="true"
                                                                                 />
                                                                             )}
-                                                                            <span>
+                                                                            <span
+                                                                                id={
+                                                                                    item.name
+                                                                                }
+                                                                            >
                                                                                 {
                                                                                     item.name
                                                                                 }
@@ -590,7 +588,7 @@ export default function MainSidebar({
                                                                             <ChevronDownIcon className="h-3" />
                                                                         </AccordionHeader>
                                                                         {/* {sidebarElements.filter(item => item.role.includes(current_user_role)).map((item) => ( */}
-
+                                                                        {/* Mobile view  */}
                                                                         {item.options ? (
                                                                             <AccordionBody className="pl-8 flex flex-col">
                                                                                 {item.options
@@ -607,6 +605,9 @@ export default function MainSidebar({
                                                                                             option
                                                                                         ) => (
                                                                                             <button
+                                                                                                id={
+                                                                                                    option.name
+                                                                                                }
                                                                                                 onClick={() =>
                                                                                                     handleClickSide(
                                                                                                         item.id,
@@ -637,7 +638,11 @@ export default function MainSidebar({
                                                                     )
                                                                 }
                                                             >
-                                                                <AccordionItem>
+                                                                <AccordionItem
+                                                                    id={
+                                                                        item.name
+                                                                    }
+                                                                >
                                                                     {({
                                                                         open,
                                                                     }) => (
@@ -648,7 +653,7 @@ export default function MainSidebar({
                                                                                     item.current
                                                                                         ? "bg-gray-700 text-white"
                                                                                         : "text-gray-400 hover:bg-gray-900 hover:text-white",
-                                                                                    "group py-2 px-3 rounded-md flex gap-x-2 items-center text-sm font-medium w-full flex justify- items-center text-gray-600  p-4"
+                                                                                    "group py-2 px-3 rounded-md flex gap-x-2 items-center text-sm font-medium w-full text-gray-600  p-4"
                                                                                 )}
                                                                             >
                                                                                 {item.icon ? (
