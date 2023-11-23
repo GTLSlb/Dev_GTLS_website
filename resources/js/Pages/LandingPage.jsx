@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import tiger from "../assets/pictures/tiger.png";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import {
@@ -10,6 +10,7 @@ import MainSidebar from "@/Components/Main-sidebar";
 import { InertiaApp } from "@inertiajs/inertia-react";
 export default function LandingPage({}) {
     const [apps, setApps] = useState();
+    const [currentUser, setcurrentUser] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
@@ -23,9 +24,21 @@ export default function LandingPage({}) {
 
     useEffect(() => {
         axios
+            .get("/users")
+            .then((res) => {
+                console.log(res.data);
+                setcurrentUser(res.data);
+                console.log(res.data)
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
+    useEffect(() => {
+        if(currentUser){
+            axios
             .get(`${url}api/GTAM/Applications`, {
                 headers: {
-                    UserId: 98765423,
+                    UserId: currentUser.UserId,
                 },
             })
             .then((res) => {
@@ -47,7 +60,8 @@ export default function LandingPage({}) {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+        }
+    }, [currentUser]);
 
     function getGreeting() {
         const currentHour = new Date().getHours();
@@ -86,7 +100,6 @@ export default function LandingPage({}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activePage, setactivePage] = useState(null);
     const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [currentUser, setcurrentUser] = useState(null);
     const [activeCon, setactiveCon] = useState(0);
     const [loadingGtrs, setLoadingGtrs] = useState(false);
     const [activeIndexGTRS, setActiveIndexGTRS] = useState(0);
@@ -103,14 +116,7 @@ export default function LandingPage({}) {
     const handleGTAMIndexChange = (e) => {
         setActiveIndexGtam(e);
     };
-    useEffect(() => {
-        axios
-            .get("/users")
-            .then((res) => {
-                setcurrentUser(res.data);
-            })
-            .catch((error) => console.log(error));
-    }, []);
+
     return (
         <div className="h-full w-full relative">
             {appsApi && currentUser ? (
@@ -133,7 +139,7 @@ export default function LandingPage({}) {
                             <div className="bg-gray-800 flex flex-col px-6 w-full h-30 text-white text-3xl py-8">
                                 <span>
                                     {greeting}
-                                    {currentUser.name}
+                                    {currentUser?.FirstName} {currentUser?.LastName}
                                 </span>
                                 <div className="my-4 w-1/4">
                                     {" "}
@@ -259,6 +265,7 @@ export default function LandingPage({}) {
                         ></div>
                     </div>
                 </div>
+                
             )}
         </div>
     );
