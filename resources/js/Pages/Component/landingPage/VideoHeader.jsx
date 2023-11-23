@@ -79,7 +79,19 @@ export default function VideoHeader() {
     return (
         <div>
             <div className="bg-dark relative">
-                <div className="relative flex py-24 sm:py-36 items-center justify-center  bg-header bg-cover overflow-hidden bg-opacity-10">
+                <div className=" bg-red"> 
+                <div className="relative flex items-center  
+                    justify-center h-screen overflow-hidden"> 
+                    <video src= 
+            "https://media.geeksforgeeks.org/wp-content/uploads/20221105184949/ezgif.com-gif-maker.mp4"
+                        autoplay="{true}" loop muted 
+                        className="absolute z-10 w-auto  
+                        min-w-full min-h-full max-w-none"> 
+                    </video> 
+                </div>  
+                </div>
+                {/* <div className="relative flex py-24 sm:py-36 items-center justify-center  bg-header bg-cover overflow-hidden bg-opacity-10"> */}
+                <div className="relative flex py-24 sm:py-36 items-center justify-center   overflow-hidden bg-opacity-10">
                     <div className="relative isolate mx-auto max-w-7xl px-6 lg:px-8     ">
                         <div className=" lg:flex items-center lg:gap-x-10  ">
                             <div className="absolute">
