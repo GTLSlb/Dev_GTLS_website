@@ -3,8 +3,13 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Auth\UserProvider;
+use App\Providers\CustomAuthServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Middleware\CustomAuth;
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -19,8 +24,20 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register any authentication / authorization services.
      */
+    public function register(): void
+    {
+        $this->app->bind(ServiceProvider::class, CustomAuth::class);
+    }
+
     public function boot(): void
     {
-        //
+
+        $this->register();
+        
+        // you can choose a different name
+        Auth::provider('external', function ($app, array $config) {
+            return new CustomAuthServiceProvider();
+        });
     }
+
 }

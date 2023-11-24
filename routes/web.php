@@ -16,6 +16,7 @@ use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use SocialiteProviders\Azure\AzureProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,33 +38,37 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/LandingPage', function () {
+Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
+
+Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
+
+Route::get('/landingPage', function () {
     return Inertia::render('LandingPage');
-});
+})->middleware(['custom.auth'])->name('landing.page');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['custom.auth'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['auth', 'verified'])->name('gtms');
+})->middleware(['custom.auth'])->name('gtms');
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['auth', 'verified'])->name('gtam');
+})->middleware(['custom.auth'])->name('gtam');
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['auth', 'verified'])->name('gtrs');
+})->middleware(['custom.auth'])->name('gtrs');
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['auth', 'verified'])->name('gtw');
+})->middleware(['custom.auth'])->name('gtw');
 
-Route::get('/Main', function () {
+Route::get('/main', function () {
     return Inertia::render('Layout');
-})->middleware(['auth', 'verified'])->name('layout');
+})->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -156,7 +161,7 @@ Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'
 Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('custom.auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
