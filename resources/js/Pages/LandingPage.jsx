@@ -8,6 +8,8 @@ import {
 import SupportModal from "@/Pages/Component/modals/SupportModal";
 import MainSidebar from "@/Components/Main-sidebar";
 import { InertiaApp } from "@inertiajs/inertia-react";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import Footer from "./Component/landingPage/Footer";
 export default function LandingPage({}) {
     const [apps, setApps] = useState();
     const [currentUser, setcurrentUser] = useState(null);
@@ -67,11 +69,11 @@ export default function LandingPage({}) {
         const currentHour = new Date().getHours();
 
         if (currentHour >= 5 && currentHour < 12) {
-            return "Good morning, ";
+            return "Good morning";
         } else if (currentHour >= 12 && currentHour < 18) {
-            return "Good afternoon, ";
+            return "Good afternoon";
         } else {
-            return "Good evening, ";
+            return "Good evening";
         }
     }
 
@@ -116,38 +118,91 @@ export default function LandingPage({}) {
     const handleGTAMIndexChange = (e) => {
         setActiveIndexGtam(e);
     };
+    useEffect(() => {
+        axios
+            .get("/users")
+            .then((res) => {
+                setcurrentUser(res.data);
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
+    const handleLogout = () => {
+        const isLoggingOut = true;
+        axios
+            .post("/logoutAPI", isLoggingOut)
+            .then((response) => {
+                if (response.status == 200) {
+                    window.location.href = "/login";
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
-        <div className="h-full w-full relative">
+        <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
-                <div className="w-full h-full absolute">
+                <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
-                        <div className="h-full">
-                            <MainSidebar
-                                setMobileMenuOpen={setMobileMenuOpen}
-                                setActiveIndexGtam={handleGTAMIndexChange}
-                                mobileMenuOpen={mobileMenuOpen}
-                                activePage={activePage}
-                                activeIndexGtam={activeIndexGtam}
-                                setactivePage={setactivePage}
-                                setActiveIndexGTRS={setActiveIndexGTRS}
-                                setActiveIndexInv={setActiveIndexInv}
-                                currentUser={currentUser}
-                            />
-                        </div>
-                        <div className="flex flex-col pl-20 w-full h-full bg-gray-800">
-                            <div className="bg-gray-800 flex flex-col px-6 w-full h-30 text-white text-3xl py-8">
-                                <span>
-                                    {greeting}
-                                    {currentUser?.FirstName} {currentUser?.LastName}
-                                </span>
-                                <div className="my-4 w-1/4">
+                        <div className="flex flex-col  w-full min-h-screen bg-landing">
+                            <div className="bg-dark flex flex-row border-b-4 border-goldd shadow-md justify-between items-center px-6 w-full h-30 text-white text-3xl py-4">
+                                <p className="flex">
+                                    <a href="/">
+                                        <img src={tiger} alt="Image" />
+                                    </a>
+                                    <span>{greeting} </span>
+                                    <span className="text-goldd">
+                                        <span className="text-white">, </span>
+                                        {currentUser.name}
+                                    </span>
+                                </p>
+                                <div className="my-4 relative w-1/4">
                                     {" "}
                                     <input
                                         type="text"
+                                        placeholder="Looking for something....?"
                                         className="w-full rounded-lg h-8 text-black focus:ring-gray-600"
                                         onChange={handleSearch}
                                     />
+                                    <MagnifyingGlassIcon className="absolute w-5 top-3.5 right-2 text-gray-500" />
+                                </div>
+                                <div className="flex justify-center gap-x-2 items-center">
+                                    <a href="#" className="flex justify-center">
+                                        {" "}
+                                        <button
+                                            onClick={() => handleEditClick()}
+                                            className={classNames(
+                                                "text-gray-400 hover:bg-gray-700 hover:text-white",
+                                                "group w-auto p-3 rounded-md flex flex-col items-center text-xs font-medium"
+                                            )}
+                                            // aria-current={item.current ? 'page' : undefined}
+                                        >
+                                            <QuestionMarkCircleIcon
+                                                className={classNames(
+                                                    "text-gray-400 group-hover:text-goldt",
+                                                    "h-6 w-6"
+                                                )}
+                                                aria-hidden="true"
+                                            />
+
+                                            {/* <span className="mt-2">Support</span> */}
+                                        </button>
+                                    </a>
+
+                                    <ResponsiveNavLink
+                                        method="post"
+                                        // href={route("logout")}
+                                        as="button"
+                                        onClick={handleLogout}
+                                        className="flex flex-col hover:bg-gray-700 hover:text-white"
+                                    >
+                                        <ArrowRightOnRectangleIcon className="w-7 ml-2 text-goldt" />
+                                        {/* <span className="text-xs text-gray-400">
+                                    LOGOUT
+                                </span> */}
+                                    </ResponsiveNavLink>
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 my-8 px-6 gap-x-10 gap-y-8">
@@ -194,7 +249,7 @@ export default function LandingPage({}) {
                                     ? filteredApps.map((app) => (
                                           <button
                                               id={app.AppName}
-                                              className={`bg-${app.Colors[0].ColorName} relative bg-opacity-5 rounded-xl shadow-md p-5 h-[18rem] hover:cursor-pointer hover:bg-opacity-20 hover:shadow-lg`}
+                                              className={`bg-${app.Colors[0].ColorName} transition hover:scale-105 relative bg-opacity-5 rounded-xl shadow-md p-5 h-[14rem] hover:cursor-pointer hover:bg-opacity-20 hover:shadow-lg`}
                                               onClick={() => {
                                                   GoAppPage(app);
                                               }}
@@ -236,7 +291,7 @@ export default function LandingPage({}) {
                                                       )}
                                                   </div>
                                               </div>
-                                              <div className="py-4">
+                                              <div className="py-4 text-left">
                                                   <h1 className="font-bold text-dark">
                                                       {app.AppName}
                                                   </h1>
@@ -267,6 +322,9 @@ export default function LandingPage({}) {
                 </div>
                 
             )}
+            <div className="">
+                <Footer />
+            </div>
         </div>
     );
 }

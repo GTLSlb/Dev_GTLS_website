@@ -96,6 +96,24 @@ const navigation = {
     ],
 };
 
+const data = [
+    {
+        id: 0,
+        label: "GTLS Capability Statement",
+        href: "/capabilitystatement",
+    },
+    {
+        id: 1,
+        label: "Trading Terms and Conditions",
+        href: "/terms",
+    },
+    {
+        id: 2,
+        label: "GTLS Pallets T&C",
+        href: "/palletterms",
+    },
+];
+
 export default function Footer() {
     return (
         <footer
@@ -120,59 +138,20 @@ export default function Footer() {
                         <div className="  gap-8 col-span-2 mt-0 h-full flex ">
                             <div className=" flex flex-col items-center md:flex-row gap-x-24">
                                 <div className="flex space-x-6 ">
-                                    {/* {navigation.social.map((item) => (
-                                        <div
-                                            className="border border-goldt rounded-full p-1"
-                                            key={item.id}
-                                        >
+                                </div>
+                                {data?.map((item) => (
+                                    <div className="mt-10 md:mt-0" key={item.id}>
+                                        <div className="space-y-4">
                                             <a
                                                 href={item.href}
-                                                target="blank"
-                                                className="text-goldl hover:text-goldt "
+                                                className="text-sm leading-6 text-goldl hover:text-white"
                                             >
-                                                <span className="sr-only">
-                                                    {item.name}
-                                                </span>
-                                                <item.icon
-                                                    className="h-6 w-6"
-                                                    aria-hidden="true"
-                                                />
+                                               {item.label}
                                             </a>
                                         </div>
-                                    ))} */}
-                                </div>
-
-                                <div className="mt-10 md:mt-0">
-                                    <div className="space-y-4">
-                                        <a
-                                            href={"/capabilitystatement"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            GTLS Capability Statement
-                                        </a>
                                     </div>
-                                </div>
-
-                                <div className="mt-10 md:mt-0">
-                                    <div className=" space-y-4">
-                                        <a
-                                            href={"/terms"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            Trading Terms and Conditions
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="mt-10 md:mt-0">
-                                    <div className=" space-y-4">
-                                        <a
-                                            href={"/palletterms"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            GTLS Pallets T&C
-                                        </a>
-                                    </div>
-                                </div>
+                                ))}
+                                
                             </div>
                         </div>
                     </div>
