@@ -113,33 +113,36 @@ export default function LandingPage({}) {
             })
             .catch((error) => console.log(error));
     }, []);
+
+    const handleLogout = () => {
+        const isLoggingOut = true;
+        axios
+            .post("/logoutAPI", isLoggingOut)
+            .then((response) => {
+                if (response.status == 200) {
+                    window.location.href = "/login";
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
-                        <div className="h-full">
-                            {/* <MainSidebar
-                                setMobileMenuOpen={setMobileMenuOpen}
-                                setActiveIndexGtam={handleGTAMIndexChange}
-                                mobileMenuOpen={mobileMenuOpen}
-                                activePage={activePage}
-                                activeIndexGtam={activeIndexGtam}
-                                setactivePage={setactivePage}
-                                setActiveIndexGTRS={setActiveIndexGTRS}
-                                setActiveIndexInv={setActiveIndexInv}
-                                currentUser={currentUser}
-                            /> */}
-                        </div>
-                        <div className="flex flex-col  w-full h-full ">
-                            <div className="bg-dark flex flex-row justify-between items-center px-6 w-full h-30 text-white text-3xl py-5">
+                        <div className="flex flex-col  w-full min-h-screen bg-landing">
+                            <div className="bg-dark flex flex-row border-b-4 border-goldd shadow-md justify-between items-center px-6 w-full h-30 text-white text-3xl py-4">
                                 <p className="flex">
-                                <a href="/">
-                                    <img src={tiger} alt="Image" />
-                                </a>
+                                    <a href="/">
+                                        <img src={tiger} alt="Image" />
+                                    </a>
                                     <span>{greeting} </span>
                                     <span className="text-goldd">
-                                       <span className="text-white">, </span>{currentUser.name}
+                                        <span className="text-white">, </span>
+                                        {currentUser.name}
                                     </span>
                                 </p>
                                 <div className="my-4 relative w-1/4">
@@ -177,8 +180,9 @@ export default function LandingPage({}) {
 
                                     <ResponsiveNavLink
                                         method="post"
-                                        href={route("logout")}
+                                        // href={route("logout")}
                                         as="button"
+                                        onClick={handleLogout}
                                         className="flex flex-col hover:bg-gray-700 hover:text-white"
                                     >
                                         <ArrowRightOnRectangleIcon className="w-7 ml-2 text-goldt" />
