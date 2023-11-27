@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import tiger from "../assets/pictures/tiger.png";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import {
@@ -12,6 +12,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
 export default function LandingPage({}) {
     const [apps, setApps] = useState();
+    const [currentUser, setcurrentUser] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
@@ -25,9 +26,21 @@ export default function LandingPage({}) {
 
     useEffect(() => {
         axios
+            .get("/users")
+            .then((res) => {
+                console.log(res.data);
+                setcurrentUser(res.data);
+                console.log(res.data)
+            })
+            .catch((error) => console.log(error));
+    }, []);
+
+    useEffect(() => {
+        if(currentUser){
+            axios
             .get(`${url}api/GTAM/Applications`, {
                 headers: {
-                    UserId: 98765423,
+                    UserId: currentUser.UserId,
                 },
             })
             .then((res) => {
@@ -49,7 +62,8 @@ export default function LandingPage({}) {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+        }
+    }, [currentUser]);
 
     function getGreeting() {
         const currentHour = new Date().getHours();
@@ -88,7 +102,6 @@ export default function LandingPage({}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activePage, setactivePage] = useState(null);
     const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [currentUser, setcurrentUser] = useState(null);
     const [activeCon, setactiveCon] = useState(0);
     const [loadingGtrs, setLoadingGtrs] = useState(false);
     const [activeIndexGTRS, setActiveIndexGTRS] = useState(0);
@@ -307,6 +320,7 @@ export default function LandingPage({}) {
                         ></div>
                     </div>
                 </div>
+                
             )}
             <div className="">
                 <Footer />
