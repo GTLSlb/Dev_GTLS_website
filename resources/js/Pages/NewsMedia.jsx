@@ -13,12 +13,12 @@ const navigation = [
     { name: "News", href: "/#news", ref: "news" },
     { name: "Contact Us", href: "/#contact", ref: "contact" },
 ];
-
+ 
 const handleClick = () => {
     history.push("/", { scrollToElement: "news" });
 };
 
-export default function AboutUs(props) {
+export default function Newss(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -46,7 +46,7 @@ export default function AboutUs(props) {
 
     return (
         <>
-            <Head title="About GoldTiger" />
+            <Head title="News GoldTiger" />
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
                 <Navbars />

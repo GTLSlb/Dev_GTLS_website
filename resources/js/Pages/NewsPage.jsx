@@ -667,6 +667,15 @@ export default function NewsPage(props) {
 
     const pageUrl = window.location.href;
 
+
+    const baseURL = "http://127.0.0.1:8000/posts";
+    const [postss, setPost] = useState([]);
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+          setPost(response.data);
+        });
+      }, []);
+
     return (
         <>
             <Head title="News" />

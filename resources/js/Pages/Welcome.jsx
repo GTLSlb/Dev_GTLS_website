@@ -37,7 +37,7 @@ import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
 const navigation = [
     { id:1, name: "About Us", href: "/aboutus", link: true },
     { id:2, name: "Services", href: "services", link: false },
-    { id:3, name: "Technologies", href: "technologies", link: false },
+    { id:3, name: "Technologies", href: "/technologies", link: true },
     { id:4, name: "Media & News", href: "/news", link: true },
     { id:5, name: "Careers", href: "/opportunities", link: true },
     { id:6, name: "Contact Us", href: "contact", link: false },
@@ -409,6 +409,7 @@ export default function Welcome(props) {
                 </div>
 
                 <VideoHeader />
+                <AboutUs />
                 <PrimaryServices />
                 <GoingGreenSection/>
                 {/* <Benefits /> */}
@@ -417,13 +418,13 @@ export default function Welcome(props) {
                 <Safety/>
                 {/* <Video /> */}
 
-                <AboutUs />
+                
                 <Technologies />
                 <Softwares />
                 {/* <WhyGoldTiger /> */}
                 <Certifiactesw />
 
-                <News />
+                {/* <News /> */}
                 {/* <OpportuniotiesSection /> */}
                 <ContatcUs />
                 <Branches />

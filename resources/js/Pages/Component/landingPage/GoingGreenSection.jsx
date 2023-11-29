@@ -9,8 +9,8 @@ return(
                     <div className="bg-gg bg-cover">
                         <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-2 items-center">
                             <div className="md:w-1/2">
-                                <h1 className="gradient-text py-5 text-6xl font-bold">
-                                    Going Green
+                                <h1 className="gradient-text py-5 text-4xl font-bold">
+                                GTLS Towards A Green  Future
                                 </h1>
                                 <p className="mt-2 text-smooth">
                                     Gold Tiger is working toward a more
@@ -28,7 +28,7 @@ return(
                                 </p>
                                 <div className="flex items-center gap-x-1 text-goldt mt-2 hover:text-smooth">
                                 <a href="/goinggreen" className="text">Read more</a>
-                                <ChevronDoubleRightIcon className="h-4"/>
+                                    <ChevronDoubleRightIcon className="h-4"/>
                                 </div>
                             </div>
                             <div className="wfull md:w-1/2">

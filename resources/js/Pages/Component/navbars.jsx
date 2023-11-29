@@ -11,7 +11,7 @@ import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 const navigation = [
     { id:1, name: "Services", href: "/#services" },
     { id:2, name: "About Us", href: "/aboutus" },
-    { id:3, name: "Technologies", href: "/#technologies" },
+    { id:3, name: "Technologies", href: "/technologies" },
     { id:4, name: "Media & News", href: "/news" },
     { id:5, name: "Careers", href: "/opportunities" },
     { id:6, name: "Contact Us", href: "/#contact" },
