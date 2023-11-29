@@ -20,6 +20,8 @@ import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+// import LogoWhite from "../../../../../public/app/icons/";
  import {
     ArrowSmallRightIcon,
 } from "@heroicons/react/24/solid";
@@ -418,14 +420,14 @@ export default function News() {
 
 
     const baseURL = "http://127.0.0.1:8000/posts";
-    const [postss, setPost] = useState(!null);
+    const [postss, setPost] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {
           setPost(response.data);
         });
       }, []);
 
-    
+    console.log(postss);
     return (
         <div>
             <div className=" h-20" id="news"></div>
@@ -444,14 +446,54 @@ export default function News() {
                             </p>
                         </div>
                         <div className="text-xl text-white">
-                         dd {postss.title}
+                         {
+                            postss.map((post) => (
+                                <div key={post.id} className="px-5 ">
+                                    <Link href={route("news", { id: post.id })} className="">
+                                        <div className="h-full">
+                                        <div className="relative w-full www">
+                                            <img
+                                                src={'./app/icons/'+post.image}
+                                                alt={post.title}
+                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                            />
+                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
+                                        </div>
+                                        <article
+                                            key={post.id}
+                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
+                                        >
+                                            <div className="max-w-xl mx-4 mb-6  mt-12">
+                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
+                                                    <time
+                                                        dateTime={post.datetime}
+                                                        className="text-goldl font-bold"
+                                                    >
+                                                        {post.date}
+                                                    </time>
+                                                </div>
+                                                <div className="group relative">
+                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
+                                                        <span className="absolute inset-0" />
+                                                        {post.title}
+                                                    </h3>
+                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
+                                                        {post.desc}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </article>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))
+                         }
+
                         </div>
 
                         
 
-                        <Slider
-                           ref={sliderRef} {...settings}
-                        >
+                        <Slider ref={sliderRef} {...settings}>
                             {posts.map((post) => (
                                 <div key={post.id} className="px-5 ">
                                     <Link href={route("news", { id: post.id })} className="">

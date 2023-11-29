@@ -35,10 +35,10 @@ import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
 
 const navigation = [
-    { id:1, name: "About Us", href: "aboutus", link: false },
+    { id:1, name: "About Us", href: "/aboutus", link: true },
     { id:2, name: "Services", href: "services", link: false },
     { id:3, name: "Technologies", href: "technologies", link: false },
-    { id:4, name: "Media & News", href: "news", link: false },
+    { id:4, name: "Media & News", href: "/news", link: true },
     { id:5, name: "Careers", href: "/opportunities", link: true },
     { id:6, name: "Contact Us", href: "contact", link: false },
     { id:7, name: "Going Green", href: "/goinggreen",link: true },
@@ -415,7 +415,7 @@ export default function Welcome(props) {
                 {/* <Process /> */}
                 <Features />
                 <Safety/>
-                <Video />
+                {/* <Video /> */}
 
                 <AboutUs />
                 <Technologies />
