@@ -1,4 +1,6 @@
 import Player from "./videoComponent";
+
+
 function Video() {
     const playerStyle = {};
     const playerProps = { playing: true };

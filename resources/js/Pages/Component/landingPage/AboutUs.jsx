@@ -1,4 +1,4 @@
-import truckleft from "../../../assets/pictures/truckleft.webp";
+import truckleft from "../../../assets/pictures/goldtiger-imad-elmasri.webp";
 import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
 
 const faqs = [
@@ -52,30 +52,26 @@ export default function AboutUs() {
             >
                 <div className="flex flex-col md:flex-row mx-auto max-w-7xl items-center  px-6 lg:px-8 gap-x-28">
                     <div className="mx-auto  w-full">
-                        <p className="mt-2 text-4xl font-bold tracking-tight text-goldt sm:text-6xl">
-                            About us
+                        <p className="mt-2 text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
+                            About Gold<span className="text-white">Tiger</span>
                         </p>
                         <p className="mt-6  text-base  text-gray-300">
-                            Whether you need us for a single service –
-                            transport, line haul, warehousing, distribution – or
-                            an end-to-end 3PL or 4PL solution, Gold Tiger can
-                            customise its service offering to meet your
-                            business’s requirements. We will listen to what you
-                            want, offer our suggestions and devise competitive
-                            pricing for a top-quality service. Our team has
-                            expertise and experience in transition management,
-                            which means bringing your business to us can be done
-                            with the least possible disruption to your
-                            customers.
+                            Gold Tiger Logistics Solutions (Gold Tiger) was established in 2006 by the 19-year-old Imad El Masri, who was a truck enthusiast. He began with one truck and one driver – himself – and a first-year turnover of $50,000. Early in his career he became the youngest driver in Australia to earn a B-double licence.
+                            <br></br>
                         </p>
+                        <p className="mt-6  text-base  text-gray-300">
+                            With his passion for the business and his love of trucks, by the end of 2007 Mr El Masri had 10 trucks. By 2010 he had 20 trucks and had started doing interstate linehaul. The business’s continuing rapid growth prompted Mr El Masri to incorporate Gold Tiger in 2010.
+                            
+                        </p>
+                        <div className="text-goldt mt-3">
+                            <a href={"/aboutus"} className="text-sm leading-6 text-goldl hover:text-white">
+                                Read More
+                            </a>
+                        </div>
                     </div>
 
                     <div className="mx-auto mt-10 md:mt-0 w-full">
-                        <img
-                            src={truckleft}
-                            alt="truck"
-                            className="rounded-3xl"
-                        />
+                        <img src={truckleft} alt="truck" className="rounded-3xl"/>
                     </div>
                 </div>
             </div>

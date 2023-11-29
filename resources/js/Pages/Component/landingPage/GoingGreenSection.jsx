@@ -1,14 +1,14 @@
 import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid"
-import Green from "../../../assets/pictures/green.webp"
+import Green from "../../../assets/pictures/gogreen.webp"
 import "../../../../css/gradient.css"
 
 export default function GoingGreenSection (){
 return(
     <div>
-        <div className=" py-28 text-smooth ">
+        <div className=" text-smooth ">
                     <div className="bg-gg bg-cover">
-                        <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-20 items-center">
-                            <div className="md:w-6/12">
+                        <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-2 items-center">
+                            <div className="md:w-1/2">
                                 <h1 className="gradient-text py-5 text-6xl font-bold">
                                     Going Green
                                 </h1>
@@ -31,7 +31,7 @@ return(
                                 <ChevronDoubleRightIcon className="h-4"/>
                                 </div>
                             </div>
-                            <div className="">
+                            <div className="wfull md:w-1/2">
                                 <img src={Green} alt="" className="" />
                             </div>
                         </div>

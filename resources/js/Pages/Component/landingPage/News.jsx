@@ -23,6 +23,11 @@ import "slick-carousel/slick/slick-theme.css";
  import {
     ArrowSmallRightIcon,
 } from "@heroicons/react/24/solid";
+import axios from "axios";
+import React from 'react';
+
+
+
 
 const posts = [
     {
@@ -313,6 +318,8 @@ function SampleNextArrow(props) {
   }
 
 export default function News() {
+
+    
     
     const sliderRef = useRef(null);
 
@@ -409,6 +416,16 @@ export default function News() {
             : 0;
     }, []);
 
+
+    const baseURL = "http://127.0.0.1:8000/posts";
+    const [postss, setPost] = useState(!null);
+    useEffect(() => {
+        axios.get(baseURL).then((response) => {
+          setPost(response.data);
+        });
+      }, []);
+
+    
     return (
         <div>
             <div className=" h-20" id="news"></div>
@@ -426,6 +443,12 @@ export default function News() {
                                 Know more about our company.
                             </p>
                         </div>
+                        <div className="text-xl text-white">
+                         dd {postss.title}
+                        </div>
+
+                        
+
                         <Slider
                            ref={sliderRef} {...settings}
                         >

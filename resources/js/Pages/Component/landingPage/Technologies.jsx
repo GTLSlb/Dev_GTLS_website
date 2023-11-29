@@ -32,7 +32,7 @@ const features = [
     },
 ];
 
-export default function Technologies() {
+export default function dd() {
     return (
         <div className="bg-dark" id="technologies">
             <div className="mx-auto max-w-2xl py-24 px-4 sm:py-32 sm:px-6 lg:max-w-7xl lg:px-8">

@@ -23,6 +23,7 @@ import ScrollToTopButton from "@/Components/ScrollUpButton";
 import Benefits from "./Component/landingPage/Benefits";
 import Process from "./Component/landingPage/Process";
 import Features from "./Component/landingPage/Features";
+import Safety from "./Component/landingPage/Safety";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import {
@@ -411,8 +412,9 @@ export default function Welcome(props) {
                 <PrimaryServices />
                 <GoingGreenSection/>
                 {/* <Benefits /> */}
-                <Process />
+                {/* <Process /> */}
                 <Features />
+                <Safety/>
                 <Video />
 
                 <AboutUs />

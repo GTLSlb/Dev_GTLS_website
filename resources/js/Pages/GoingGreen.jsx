@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 import Footer from "./Component/landingPage/Footer";
 import Navbars from "./Component/navbars";
 import "../../css/gradient.css";
-import Green from "../assets/pictures/green.webp";
+import Green from "../assets/pictures/gogreen.webp";
 
 const content = [
     {
@@ -59,7 +59,7 @@ export default function GoingGreen() {
                                     impact global society.
                                 </p>
                             </div>
-                            <div className="">
+                            <div className="w-full md:w-1/2 ">
                                 <img src={Green} alt="" className="" />
                             </div>
                         </div>

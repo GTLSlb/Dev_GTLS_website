@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\FileController;
 use App\Http\Controllers\AzureAuthController;
 use App\Http\Controllers\SendDailyEmail;
+use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -84,6 +85,20 @@ Route::get('/palletterms', function () {
 Route::get('/capabilitystatement', function () {
     return Inertia::render('Capability');
 })->name('capabilitystatement');
+
+Route::get('/aboutus', function () {
+    return Inertia::render('Aboutus');
+})->name('aboutus');
+
+Route::get('/safetycompliance', function () {
+    return Inertia::render('SafetyCompliance');
+})->name('safetycompliance');
+
+Route::get('/news', function () {
+    return Inertia::render('NewsMedia');
+})->name('news');
+
+Route::resource('posts', BlogController::class);
 
 // Route::get('/news', function () {
 //     return Inertia::render('NewsPage');

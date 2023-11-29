@@ -120,7 +120,7 @@ export default function Footer() {
                         <div className="  gap-8 col-span-2 mt-0 h-full flex ">
                             <div className=" flex flex-col items-center md:flex-row gap-x-24">
                                 <div className="flex space-x-6 ">
-                                    {/* {navigation.social.map((item) => (
+                                    {navigation.social.map((item) => (
                                         <div
                                             className="border border-goldt rounded-full p-1"
                                             key={item.id}
@@ -139,7 +139,7 @@ export default function Footer() {
                                                 />
                                             </a>
                                         </div>
-                                    ))} */}
+                                    ))}
                                 </div>
 
                                 <div className="mt-10 md:mt-0">

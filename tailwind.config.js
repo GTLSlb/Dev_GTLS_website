@@ -13,6 +13,7 @@ module.exports = {
     theme: {
         extend: {
             backgroundImage: {
+                saftey:"url('/resources/js/assets/backgrounds/safety-and-compliences.webp')",
                 loginbackground:
                     "url('/resources/js/assets/backgrounds/loginBackground.webp')",
                 header:"url('/resources/js/assets/backgrounds/backgroundop.webp')",
