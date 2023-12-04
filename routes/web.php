@@ -29,14 +29,13 @@ use App\Http\Controllers\LoginController;
 |
 */
 
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
+
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+    return Inertia::render('Layout');
+})->middleware(['custom.auth'])->name('Main');
 
 Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
 
