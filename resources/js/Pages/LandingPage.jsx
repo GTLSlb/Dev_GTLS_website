@@ -38,7 +38,7 @@ export default function LandingPage({}) {
     useEffect(() => {
         if(currentUser){
             axios
-            .get(`${url}api/GTAM/Applications`, {
+            .get(`${url}api/GTAM/User/Permissions`, {
                 headers: {
                     UserId: currentUser.UserId,
                 },
@@ -140,7 +140,7 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
-
+console.log(filteredApps)
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
@@ -155,7 +155,7 @@ export default function LandingPage({}) {
                                     <span>{greeting} </span>
                                     <span className="text-goldd">
                                         <span className="text-white">, </span>
-                                        {currentUser.name}
+                                        {currentUser.FirstName} {currentUser.LastName}
                                     </span>
                                 </p>
                                 <div className="my-4 relative w-1/4">
@@ -169,10 +169,9 @@ export default function LandingPage({}) {
                                     <MagnifyingGlassIcon className="absolute w-5 top-3.5 right-2 text-gray-500" />
                                 </div>
                                 <div className="flex justify-center gap-x-2 items-center">
-                                    <a href="#" className="flex justify-center">
+                                    <a href="https://support.gtls.com.au/help/2703577665" target="_blank" className="flex justify-center">
                                         {" "}
                                         <button
-                                            onClick={() => handleEditClick()}
                                             className={classNames(
                                                 "text-gray-400 hover:bg-gray-700 hover:text-white",
                                                 "group w-auto p-3 rounded-md flex flex-col items-center text-xs font-medium"
@@ -274,21 +273,7 @@ export default function LandingPage({}) {
                                                           </span>
                                                       </div>
 
-                                                      {app.StatusId ? (
-                                                          <div className="flex items-center gap-x-2">
-                                                              <div className="rounded-full h-3 w-3 bg-green-500"></div>
-                                                              <span className="text-gray-500">
-                                                                  Online
-                                                              </span>
-                                                          </div>
-                                                      ) : (
-                                                          <div className="flex items-center gap-x-2">
-                                                              <div className="rounded-full h-3 w-3 bg-red-500"></div>
-                                                              <span className="text-gray-500">
-                                                                  Offline
-                                                              </span>
-                                                          </div>
-                                                      )}
+                                                     
                                                   </div>
                                               </div>
                                               <div className="py-4 text-left">
