@@ -37,7 +37,7 @@ class LoginController extends Controller
             $responseData = $response->json();
             if (!empty($responseData)) {
                 $user = new User($responseData[0]);
-                $authProvider = new CustomAuth(Auth::guard()->getProvider(), $request->session());
+                $authProvider = new CustomAuth();
                 $credentials = [
                     'EmailInput' => $request->input('Email'),
                     'EmailDb' => $responseData[0]['Email'],

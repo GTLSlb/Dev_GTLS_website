@@ -47,6 +47,7 @@ class CustomAuth extends Middleware
         $hasSession = $request->hasSession();
         if ($hasSession) {
             //$session = $request->session();
+            $request->headers->set('X-CSRF-TOKEN', csrf_token());
             $path = $request->path();
 
             // Allow access to the login route
