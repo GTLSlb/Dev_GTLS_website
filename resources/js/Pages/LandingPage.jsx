@@ -147,8 +147,8 @@ console.log(filteredApps)
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
                         <div className="flex flex-col  w-full min-h-screen bg-landing">
-                            <div className="bg-dark flex flex-row border-b-4 border-goldd shadow-md justify-between items-center px-6 w-full h-30 text-white text-3xl py-4">
-                                <p className="flex">
+                            <div className="relative bg-dark flex lg:flex-row flex-col  border-b-4 border-goldd shadow-md lg:justify-between lg:items-center px-6 w-full h-30 text-white md:text-3xl py-4">
+                                <p className="flex mt-12 md:mt-0">
                                     <a href="/">
                                         <img src={tiger} alt="Image" />
                                     </a>
@@ -158,7 +158,7 @@ console.log(filteredApps)
                                         {currentUser.FirstName} {currentUser.LastName}
                                     </span>
                                 </p>
-                                <div className="my-4 relative w-1/4">
+                                <div className="my-4 relative lg:w-1/4">
                                     {" "}
                                     <input
                                         type="text"
@@ -166,9 +166,9 @@ console.log(filteredApps)
                                         className="w-full rounded-lg h-8 text-black focus:ring-gray-600"
                                         onChange={handleSearch}
                                     />
-                                    <MagnifyingGlassIcon className="absolute w-5 top-3.5 right-2 text-gray-500" />
+                                    <MagnifyingGlassIcon className="absolute w-5 top-1.5 lg:top-3.5 right-2 text-gray-500" />
                                 </div>
-                                <div className="flex justify-center gap-x-2 items-center">
+                                <div className="absolute right-5 top-3 lg:relative lg:right-0 lg:top-0 flex justify-center gap-x-2 items-center">
                                     <a href="https://support.gtls.com.au/help/2703577665" target="_blank" className="flex justify-center">
                                         {" "}
                                         <button
