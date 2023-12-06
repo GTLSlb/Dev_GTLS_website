@@ -1,4 +1,4 @@
-name: Deploy Laravel Project on push www.gtls.au
+name: Deploy Laravel Project on push web-test.gtls.com.lb
 on:
     workflow_dispatch:
 jobs:
