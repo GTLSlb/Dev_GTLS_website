@@ -185,4 +185,7 @@ Route::fallback(function () {
     ]);
 });
 
+Route::get('/forgot-password', function () {
+    return Inertia::render('Auth/ForgotPassword');
+})->name('forgot.password');
 require __DIR__ . '/auth.php';
