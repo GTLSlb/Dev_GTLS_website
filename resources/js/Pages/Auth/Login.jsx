@@ -123,7 +123,7 @@ export default function Login({ status, canResetPassword }) {
                 .post("/loginapi", credentials)
                 .then((response)=>{
                     if(response.status == 200) {
-                       window.location.href = '/main';
+                       window.location.href = '/landingPage';
                     }else{
                         //window.location.href = '/login';
                     }
