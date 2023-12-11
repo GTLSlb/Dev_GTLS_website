@@ -66,9 +66,9 @@ Route::get('/gtw', function () {
     return Inertia::render('GTW');
 })->middleware(['custom.auth'])->name('gtw');
 
-Route::get('/main', function () {
-    return Inertia::render('Layout');
-})->middleware(['custom.auth'])->name('layout');
+// Route::get('/main', function () {
+//     return Inertia::render('Layout');
+// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -128,7 +128,7 @@ Route::get('/downloadGTLS-Pallets', function () {
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
 
-Route::post('/saveImg', [NewUserController::class, 'storePic']);
+// Route::post('/saveImg', [NewUserController::class, 'storePic']);
 
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
