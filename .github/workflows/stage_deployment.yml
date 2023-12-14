@@ -18,5 +18,5 @@ jobs:
       - name: Deploy to server
         run: |
           echo "Starting deployment..."
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no gtls@mia3000 "cd /home/gtls/web-stage.gtls.store && git pull origin main && composer install  && npm install && php artisan cache:clear && npm run build"
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no gtls@192.155.110.18 "cd /home/gtls/web-stage.gtls.store && git pull origin main && composer install  && npm install && php artisan cache:clear && npm run build"
           echo "Deployment completed."
