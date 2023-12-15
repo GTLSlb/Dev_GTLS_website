@@ -15,7 +15,7 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          cd ~/web-stage.gtls.store
+          cd ~/web-stage.gtls.store/Dev_GTLS_website
           git pull origin main
           composer install
           npm install
