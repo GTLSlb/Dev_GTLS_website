@@ -12,8 +12,8 @@ jobs:
         with:
           command: ls -a
           host: ${{ secrets.SSH_HOST }}
-          username: garygrossgarten
-          password: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.PRIVATE_KEY}}
+          username: gtls
+          password: ${{ secrets.SSH_PASSWORD }}
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY}}
         env:
           CI: true
