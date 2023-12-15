@@ -1,20 +1,17 @@
-name: Command via SSH
-
+name: remote ssh command
 on:
   workflow_dispatch:
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
 
+  build:
+    name: Build
+    runs-on: ubuntu-latest
     steps:
-      - name: ls -a via OPEN SSH Private Key
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          command: ls -a
-          host: ${{ secrets.SSH_HOST }}
-          username: gtls
-          password: ${{ secrets.SSH_PASSWORD }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY}}
-        env:
-          CI: true
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: whoami
