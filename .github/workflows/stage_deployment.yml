@@ -24,4 +24,4 @@ jobs:
           npm -v
           npm install
           source /home/gtls/nodevenv/web-stage.gtls.store/19/bin/activate && cd /home/gtls/web-stage.gtls.store
-          npm build
+          npm run build
