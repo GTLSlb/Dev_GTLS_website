@@ -15,13 +15,13 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          ls
-          # git pull origin main
-          # composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
-          # composer install
-          # npm -v
-          # source /home/gtls/nodevenv/web-stage.gtls.store/19/bin/activate && cd /home/gtls/web-stage.gtls.store
-          # npm -v
-          # npm install
-          # source /home/gtls/nodevenv/web-stage.gtls.store/19/bin/activate && cd /home/gtls/web-stage.gtls.store
-          # npm run build
+          cd /var/www/gtls.store/
+          git pull origin main
+          composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
+          composer install
+          npm -v
+          source /home/gtls/nodevenv/web-stage.gtls.store/19/bin/activate && cd /home/gtls/web-stage.gtls.store
+          npm -v
+          npm install
+          source /home/gtls/nodevenv/web-stage.gtls.store/19/bin/activate && cd /home/gtls/web-stage.gtls.store
+          npm run build
