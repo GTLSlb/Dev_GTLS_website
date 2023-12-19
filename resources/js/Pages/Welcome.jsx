@@ -107,7 +107,7 @@ export default function Welcome(props) {
                                 href="/opportunities"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
-                                Careers ... 
+                                Careers
                             </a>
                         </div>
                         <a
