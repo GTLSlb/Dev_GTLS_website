@@ -1,3 +1,4 @@
+import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
 const faqs = [
     {
         id: 1,
@@ -67,18 +68,22 @@ export default function Features() {
         <div className="bg-dark">
             <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                 <div className="mt-20">
-                    <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-4 lg:gap-x-10">
+                    <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-4 lg:gap-x-10 ">
                         <div className="col-span-4">
                             <div className=" text-4xl font-semibold leading-10 text-goldt">
                                 Why Gold<span className="text-white">Tiger</span>?
                             </div>
                         </div>
                         {faqs.map((faq) => (
-                            <div key={faq.id} className="border-l-[3px] pl-5 border-goldt transition-transform hover:scale-110 text-gray-300 hover:text-white hover:font-bold" >
+                            <div key={faq.id} className="border-l-[1px] shadow-2xl  pl-5 border-goldt transition-transform hover:scale-110 text-gray-300 hover:text-white hover:font-bold overflow-hidden" >
                                 <dt className="text-xl font-semibold leading-7 text-goldt">
                                     {faq.question}
                                 </dt>
-                                <dd className="mt-2 text-md leading-7 ">
+                                <dd className="mt-2 text-md leading-7 relative ">
+                                    <div className="absolute">
+                                        <img className="opacity-50" width="w-full"src={aboutcircle} alt="circle" />
+                                    </div>
+                                    
                                     {faq.answer}
                                 </dd>
                             </div>

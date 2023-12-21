@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import jobs from "../assets/pictures/jobs.webp";
+import jobs from "../assets/backgrounds/Goldtiger-Tech.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import { useState, useEffect } from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";

@@ -8,7 +8,7 @@ const navigation = {
         { name: "About", href: "about" },
         { name: "Services", href: "services" },
         { name: "News", href: "news" },
-        { name: "Contact", href: "contact" },
+        { name: "Contact", href: "/contact_us" },
     ],
     support: [
         // { name: "Trading Terms and Conditions", href: "/download-docx" },
@@ -83,18 +83,39 @@ const navigation = {
         //     </svg>
         //   ),
         // },
+        // {
+        //     id: 2,
+        //     name: "YouTube",
+        //     href: "https://www.youtube.com/@goldtiger-ol3em",
+        //     icon: (props) => (
+        //         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
+        //             <path
+        //                 fillRule="evenodd"
+        //                 d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"
+        //                 clipRule="evenodd"
+        //             />
+        //         </svg>
+        //     ),
+        // },
         {
             id: 2,
-            name: "YouTube",
-            href: "https://www.youtube.com/@goldtiger-ol3em",
+            name: "linkedin",
+            href: "https://www.linkedin.com/company/gold-tiger-logistics-solutions/posts/?feedView=all",
             icon: (props) => (
-                <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-                    <path
-                        fillRule="evenodd"
-                        d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"
-                        clipRule="evenodd"
-                    />
+                <svg className="m-20" fill="currentColor" height="20px" width="20px"  
+                    viewBox="0 0 310 310" xml:space="preserve" {...props}>
+                    <g id="XMLID_801_">
+                        <path id="XMLID_802_" d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73
+                            C77.16,101.969,74.922,99.73,72.16,99.73z"/>
+                        <path id="XMLID_803_" d="M41.066,0.341C18.422,0.341,0,18.743,0,41.362C0,63.991,18.422,82.4,41.066,82.4
+                            c22.626,0,41.033-18.41,41.033-41.038C82.1,18.743,63.692,0.341,41.066,0.341z"/>
+                        <path id="XMLID_804_" d="M230.454,94.761c-24.995,0-43.472,10.745-54.679,22.954V104.73c0-2.761-2.238-5-5-5h-59.599
+                            c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5h62.097c2.762,0,5-2.238,5-5v-98.918c0-33.333,9.054-46.319,32.29-46.319
+                            c25.306,0,27.317,20.818,27.317,48.034v97.204c0,2.762,2.238,5,5,5H305c2.762,0,5-2.238,5-5V194.995
+                            C310,145.43,300.549,94.761,230.454,94.761z"/>
+                    </g>
                 </svg>
+                
             ),
         },
     ],
@@ -269,8 +290,7 @@ export default function VideoHeader() {
                                                             TRANSPORT, INTERSTATE
                                                             LINE HAUL, WAREHOUSING,
                                                             DISTRIBUTION OR A FULL
-                                                            3PL OR 4PL SOLUTION -
-                                                            TAKE YOUR PICK
+                                                            3PL OR 4PL SOLUTION
                                                         </p>
                                                     </div>
                                                     
@@ -300,7 +320,7 @@ export default function VideoHeader() {
                                                                         {item.name}
                                                                     </span>
                                                                     <item.icon
-                                                                        className="h-8 w-8"
+                                                                        className="h-8 w-8 p-1"
                                                                         aria-hidden="true"
                                                                     />
                                                                 </a>
@@ -308,7 +328,7 @@ export default function VideoHeader() {
                                                         ))}
                                                     </div>
                                                     
-                                                    <div className="w-full sm:w-auto mt-5 inline-block ring-1 ring-goldt py-1 px-2 relative items-center gap-x-2 rounded-3xl md:rounded-full justify-center flex-col sm:flex-row text-lft text-sm leading-6 text-gray-600 ">
+                                                    {/* <div className="w-full sm:w-auto mt-5 inline-block ring-1 ring-goldt py-1 px-2 relative items-center gap-x-2 rounded-3xl md:rounded-full justify-center flex-col sm:flex-row text-lft text-sm leading-6 text-gray-600 ">
                                                         <table>
                                                             <tbody>
                                                                 <tr className="flex flex-col p-2 sm:p-0 flex gap-x-2 sm:flex-row ">
@@ -356,7 +376,7 @@ export default function VideoHeader() {
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                    </div>
+                                                    </div> */}
                                                     
                                                 </div>
                                                 

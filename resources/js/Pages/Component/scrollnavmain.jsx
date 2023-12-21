@@ -16,7 +16,7 @@ const navigation = [
     { id:3, name: "Technologies", href: "/technologies", link: true },
     { id:4, name: "Media & News", href: "/news", link: true },
     { id:5, name: "Careers", href: "/opportunities", link: true },
-    { id:6, name: "Contact Us", href: "contact", link: false },
+    { id:6, name: "Contact Us", href: "/contact_us", link: false },
     { id:7, name: "Going Green", href: "/goinggreen",link: true },
 ];
 
@@ -70,7 +70,7 @@ export default function ScrollNav() {
                     <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
                         <div className="hidden lg:flex gap-x-7">
                             <a
-                                href="#contact"
+                                href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 Contact Us

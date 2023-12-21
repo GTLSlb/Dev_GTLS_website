@@ -1,4 +1,5 @@
 import technologies from "../../../assets/pictures/goldtiger_technologies.webp";
+import technologiess from "../../../assets/pictures/goldtiger_technologies-2.png";
 import Tech from "../../../assets/partners/volvo.webp";
 import haccp from "../../../assets/partners/haccp.webp";
 import JAIX from "../../../assets/partners/JAIX.webp";
@@ -16,7 +17,8 @@ const features = [
 
 export default function Technologies() {
     return (
-        <div className="bg-dark" id="technologies">
+        <div className="overflow-hidden relative bg-dark py-10" id="technologies">
+            
             <div className="mx-auto max-w-2xl py-24 px-4 sm:py-32 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div className="flex flex-col justify-center  lg:flex-row items-center gap-y-16  ">
                     <div className="h-auto w-12/12   md:w-1/2 md:pr-16">
@@ -71,6 +73,9 @@ export default function Technologies() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="absolute top-0  right-[-20rem]"> 
+                <img src={technologiess} alt="volvo" className="h-[60rem] opacity-20"/>
             </div>
         </div>
     );

@@ -14,7 +14,7 @@ const navigation = [
     { id:3, name: "Technologies", href: "/technologies" },
     { id:4, name: "Media & News", href: "/news" },
     { id:5, name: "Careers", href: "/opportunities" },
-    { id:6, name: "Contact Us", href: "/#contact" },
+    { id:6, name: "Contact Us", href: "/contact_us" },
     { id:7, name: "Going Green", href: "/goinggreen" },
 ];
 export default function Navbars() {
@@ -62,7 +62,7 @@ export default function Navbars() {
                     <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-between">
                         <div className="flex gap-x-7">
                             <a
-                                href="#contact"
+                                href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 Contact Us

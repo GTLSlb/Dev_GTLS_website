@@ -16,6 +16,12 @@ class BlogController extends Controller
         return response()->json($posts, 200);
         //
     }
+    public function post(Request $request)
+    {
+        $posts = Blog::all();
+        return response()->json($posts, 200);
+        //
+    }
     
 
     /**

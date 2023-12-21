@@ -1,6 +1,8 @@
 import { Head } from "@inertiajs/react";
+import aboutimage from "../assets/pictures/goldtiger-imad-elmasri-2.webp";
 import jobs from "../assets/pictures/jobs.webp";
 import pallet from "../assets/pictures/pallet.webp";
+import Team from "../Pages/Component/landingPage/Team";
 import { useState, useEffect } from "react";
 
 import Footer from "./Component/landingPage/Footer";
@@ -50,11 +52,11 @@ export default function AboutUs(props) {
                 <Navbars />
                 {/* <HeroSection/> */}
 
-                <div aria-hidden="true" className="relative">
+                <div  aria-hidden="true" className="relative pt-20 w-full">
                     <img
-                        src={jobs}
+                        src={aboutimage}
                         alt="jobs"
-                        className="h-96 w-full object-cover object-center "
+                        className="pt-30 w-full h-96 object-cover object-top "
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
@@ -85,6 +87,38 @@ export default function AboutUs(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                                 Gold Tiger is also strengthened by its gold partner extended warranty contract with Volvo. The partnership includes a regular maintenance schedule to the highest manufacturer standards (OEM replacement parts), 24-hour breakdown repair around Australia, and replacement vehicles if trucks need to be off the road more than 24 hours. This is backed up by weekly checks and servicing by qualified mechanics in our own on-site workshops.
+                            </p>
+
+
+                            
+
+                            <figure className="mb-5">
+                                <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
+                                    Core values
+                                </h1>
+                                <p className="mt-3 text-smooth">
+                                    Commitment and dedication: we are dedicated and committed to delivering quality service, building lasting relationships and holding ourselves accountable.
+                                </p>
+                            </figure>
+                            
+                            <p className="mt-3 text-smooth">
+                                <span className="text-goldt font-bold">Collaboration: </span>we highly value nurturing positive relationships at all levels of the company, cohesively and collaboratively. We work together across diverse teams to support and achieve our common goals.
+
+                            </p>
+                            <p className="mt-3 text-smooth">
+                                <span className="text-goldt font-bold">Integrity and respect: </span> we highly value mutual respect and trust. Each team member brings unique skills and perspectives to the table; we take pride in this fact and act accordingly. We value communicating openly and honestly, making teammates feel appreciated and valued.
+                            </p>
+                            <p className="mt-3 text-smooth">
+                                <span className="text-goldt font-bold">Customer service: </span> our customers are our solid foundation. We aim to build relationships that will make a positive difference in our customers’ businesses.
+                            </p>
+                            <p className="mt-3 text-smooth">
+                                <span className="text-goldt font-bold">Sustainability: </span> we believe that we have the highest responsibility for the stewardship and protection of the environment. We aim to protect our most precious resources by taking steps to engage in sustainable business practices.
+                            </p>
+                            <p className="mt-3 text-smooth">
+                                <span className="text-goldt font-bold">Communication: </span> we invest to get to the heart of our customers’ challenges. We are open and transparent in the way we work.
+                            </p>
+                            <p className="mt-3 text-smooth">
+                                <span className="text-goldt font-bold">Creativity and innovation: </span> we are constantly developing better ways of working, thinking, learning and doing.
                             </p>
                             
 
@@ -121,40 +155,14 @@ export default function AboutUs(props) {
 
 
 
-                            <figure className="mb-5">
-                                <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    Core values
-                                </h1>
-                                <p className="mt-3 text-smooth">
-                                    Commitment and dedication: we are dedicated and committed to delivering quality service, building lasting relationships and holding ourselves accountable.
-                                </p>
-                            </figure>
                             
-                            <p className="mt-3 text-smooth">
-                                <span className="text-goldt font-bold">Collaboration: </span>we highly value nurturing positive relationships at all levels of the company, cohesively and collaboratively. We work together across diverse teams to support and achieve our common goals.
-
-                            </p>
-                            <p className="mt-3 text-smooth">
-                                <span className="text-goldt font-bold">Integrity and respect: </span> we highly value mutual respect and trust. Each team member brings unique skills and perspectives to the table; we take pride in this fact and act accordingly. We value communicating openly and honestly, making teammates feel appreciated and valued.
-                            </p>
-                            <p className="mt-3 text-smooth">
-                                <span className="text-goldt font-bold">Customer service: </span> our customers are our solid foundation. We aim to build relationships that will make a positive difference in our customers’ businesses.
-                            </p>
-                            <p className="mt-3 text-smooth">
-                                <span className="text-goldt font-bold">Sustainability: </span> we believe that we have the highest responsibility for the stewardship and protection of the environment. We aim to protect our most precious resources by taking steps to engage in sustainable business practices.
-                            </p>
-                            <p className="mt-3 text-smooth">
-                                <span className="text-goldt font-bold">Communication: </span> we invest to get to the heart of our customers’ challenges. We are open and transparent in the way we work.
-                            </p>
-                            <p className="mt-3 text-smooth">
-                                <span className="text-goldt font-bold">Creativity and innovation: </span> we are constantly developing better ways of working, thinking, learning and doing.
-                            </p>
 
                         </div>
 
 
                     </div>
                 </div>
+                <Team/>
 
                 <Footer />
             </div>

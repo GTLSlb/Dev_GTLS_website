@@ -439,17 +439,17 @@ export default function News() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">
                             <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                Latest news
+                                News 
                             </h2>
                             <p className="mt-2 text-lg leading-8 text-gray-300">
                                 Know more about our company.
                             </p>
                         </div>
-                        <div className="text-xl text-white">
+                        {/* <div className="text-xl text-white">
                          {
                             postss.map((post) => (
                                 <div key={post.id} className="px-5 ">
-                                    <Link href={route("news", { id: post.id })} className="">
+                                    <Link  href={route("news", { id: post.id })} className="">
                                         <div className="h-full">
                                         <div className="relative w-full www">
                                             <img
@@ -489,15 +489,13 @@ export default function News() {
                             ))
                          }
 
-                        </div>
+                        </div> */}
 
-                        
-
-                        <Slider ref={sliderRef} {...settings}>
-                            {posts.map((post) => (
-                                <div key={post.id} className="px-5 ">
+                        <div className="grid grid-cols-3 gap-4">
+                        {posts.map((post) => (
+                                <div key={post.id} className="px-5  ">
                                     <Link href={route("news", { id: post.id })} className="">
-                                        <div className="h-full">
+                                        <div className="h-full ">
                                         <div className="relative w-full www">
                                             <img
                                                 src={post.imageUrl}
@@ -534,6 +532,14 @@ export default function News() {
                                     </Link>
                                 </div>
                             ))}
+
+                        </div>
+                        
+
+                        
+
+                        <Slider ref={sliderRef} {...settings}>
+                            
                         </Slider>
                     </div>
                 </div>
