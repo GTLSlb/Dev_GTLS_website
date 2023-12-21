@@ -14,7 +14,7 @@ const navigation = [
     { id:3, name: "Technologies", href: "/technologies" },
     { id:4, name: "Media & News", href: "/news" },
     { id:5, name: "Careers", href: "/opportunities" },
-    { id:6, name: "Contact Us", href: "/contact_us" },
+    { id:6, name: "Contact Us", href: "/#contact" },
     { id:7, name: "Going Green", href: "/goinggreen" },
 ];
 export default function Navbars() {
