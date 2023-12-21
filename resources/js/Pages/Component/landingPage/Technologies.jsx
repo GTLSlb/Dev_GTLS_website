@@ -1,5 +1,8 @@
 import technologies from "../../../assets/pictures/goldtiger_technologies.webp";
+<<<<<<< Updated upstream
 import technologiess from "../../../assets/pictures/goldtiger_technologies-2.png";
+=======
+>>>>>>> Stashed changes
 import Tech from "../../../assets/partners/volvo.webp";
 import haccp from "../../../assets/partners/haccp.webp";
 import JAIX from "../../../assets/partners/JAIX.webp";
@@ -21,7 +24,11 @@ export default function Technologies() {
             
             <div className="mx-auto max-w-2xl py-24 px-4 sm:py-32 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div className="flex flex-col justify-center  lg:flex-row items-center gap-y-16  ">
+<<<<<<< Updated upstream
                     <div className="h-auto w-12/12   md:w-1/2 md:pr-16">
+=======
+                    <div className="h-auto w-9/12   md:w-7/12  md:">
+>>>>>>> Stashed changes
                         <a href="https://www.volvotrucks.com.au/en-au/" target="_blank">
                             <img
                                 src={technologies}

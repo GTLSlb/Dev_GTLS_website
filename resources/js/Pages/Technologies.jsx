@@ -9,7 +9,7 @@ import ContactForm from "./Component/landingPage/ContactForm";
 import Navbars from "./Component/navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
+    { name: "About", href: "/about", ref: "about" },
     { name: "News", href: "/#news", ref: "news" },
     { name: "Contact Us", href: "/#contact", ref: "contact" },
 ];
