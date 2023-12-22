@@ -66,9 +66,9 @@ Route::get('/gtw', function () {
     return Inertia::render('GTW');
 })->middleware(['custom.auth'])->name('gtw');
 
-Route::get('/main', function () {
-    return Inertia::render('Layout');
-})->middleware(['custom.auth'])->name('layout');
+// Route::get('/main', function () {
+//     return Inertia::render('Layout');
+// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');

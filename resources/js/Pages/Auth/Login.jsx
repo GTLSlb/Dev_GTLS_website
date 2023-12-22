@@ -85,6 +85,7 @@ export default function Login({ status, canResetPassword }) {
                 : event.target.value
         );
     };
+
     const handleOnChangePassword = (event) => {
         
         setData(
@@ -95,12 +96,13 @@ export default function Login({ status, canResetPassword }) {
         );
     setPassword(event.target.value);
     }
+    
     const gtamUrl = window.Laravel.gtamUrl;
+  
     const submit = (e) => {
         e.preventDefault();
         setErrorMessage("")
         const hashedPassword = CryptoJS.SHA256(password).toString();
-        
         axios
             .get(`${gtamUrl}Login`, {
                 headers: {
@@ -119,12 +121,10 @@ export default function Login({ status, canResetPassword }) {
                     Email: email,
                     Password: hashedPassword,
                 };
-                console.log('cred',credentials);
                 axios
                 .post("/loginapi", credentials)
                 .then((response)=>{
                     if(response.status == 200) {
-                        console.log(response);
                        window.location.href = '/landingPage';
                     }else{
                         //window.location.href = '/login';

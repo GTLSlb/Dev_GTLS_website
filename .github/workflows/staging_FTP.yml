@@ -1,6 +1,7 @@
-name: Deploy Laravel Project on push web-test.gtls.com.lb
+name: Staging Deployment
 on:
-    workflow_dispatch:
+  workflow_dispatch:
+
 jobs:
   web-deploy:
     name: Deploy
@@ -8,7 +9,16 @@ jobs:
     steps:
       - name: Get the latest code
         uses: actions/checkout@v2.3.2
-      - uses: actions/setup-node@master
+      
+      - name: Check branch
+        run: |
+          if [ "${{ github.ref }}" != "refs/heads/staging" ]; then
+            echo "Workflow can only be run from the 'staging' branch."
+            exit 1
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@master
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Authenticate Nova
@@ -26,7 +36,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          server: ${{ secrets.STAGE_FTP_SERVER }}
+          username: ${{ secrets.STAGE_FTP_USERNAME }}
+          password: ${{ secrets.STAGE_FTP_PASSWORD }}
           server-dir: /
