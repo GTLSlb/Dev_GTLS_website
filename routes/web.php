@@ -128,7 +128,7 @@ Route::get('/downloadGTLS-Pallets', function () {
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
 
-Route::post('/saveImg', [NewUserController::class, 'storePic']);
+//Route::post('/saveImg', [NewUserController::class, 'storePic']);
 
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
@@ -184,5 +184,9 @@ Route::fallback(function () {
         // Add any data you want to pass to the React component
     ]);
 });
+
+Route::get('/forgot-password', function () {
+    return Inertia::render('Auth/ForgotPassword');
+})->name('forgot.password');
 
 require __DIR__ . '/auth.php';

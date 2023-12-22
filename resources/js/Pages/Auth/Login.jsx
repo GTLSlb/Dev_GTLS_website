@@ -95,13 +95,14 @@ export default function Login({ status, canResetPassword }) {
         );
     setPassword(event.target.value);
     }
+    const gtamUrl = window.Laravel.gtamUrl;
     const submit = (e) => {
         e.preventDefault();
         setErrorMessage("")
         const hashedPassword = CryptoJS.SHA256(password).toString();
         
         axios
-            .get(`https://gtlslebs06-vm.gtls.com.au:5432/api/Login`, {
+            .get(`${gtamUrl}Login`, {
                 headers: {
                     Email: email,
                     Password: hashedPassword,
@@ -111,7 +112,6 @@ export default function Login({ status, canResetPassword }) {
                 const x = JSON.stringify(res.data);
                 const parsedDataPromise = new Promise((resolve, reject) => {
                     const parsedData = JSON.parse(x);
-                    console.log(parsedData);
                     resolve(parsedData);
                 });
                 
@@ -132,9 +132,11 @@ export default function Login({ status, canResetPassword }) {
                 })
                 .catch((error) => {
                     console.log(error);
+                    setErrorMessage(error.response.data.Message)
                 });
             })
             .catch((err) => {
+                console.log(err);
                 setErrorMessage(err.response.data.Message)
             });
             
@@ -241,13 +243,19 @@ export default function Login({ status, canResetPassword }) {
                                     <div className="flex items-center justify-end mt-0">
                                         {canResetPassword && (
                                             <Link
-                                                href={route("password.request")}
+                                                onClick={() =>
+                                                    (window.location.href =
+                                                        "/forgot-password")
+                                                }
                                                 className="underline text-sm text-goldd dark:text-smooth hover:text-gray-900 dark:hover:text-goldd rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                                             >
                                                 Forgot your password?
                                             </Link>
                                         )}
                                     </div>
+                                    {errorMessage && (
+                                        <div className="py-2 text-red-600">{errorMessage}</div>
+                                    )}
                                     <InputError
                                         message={errors.email}
                                         className="mt-2"

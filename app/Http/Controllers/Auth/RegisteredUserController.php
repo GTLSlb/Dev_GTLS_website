@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
@@ -55,59 +56,119 @@ class RegisteredUserController extends Controller
     }
     public function getCurrentUserName(Request $request)
     {
+
         if ($request->session()->get('user')!=null) {
             
-            $user = $request->session()->get('user');
-            $UserId = $user->UserId;
-            $UniqueId = $user->UniqueId;
-            $TypeId = $user->TypeId;
-            $TypeName =$user->TypeName;
-            $OwnerId = $user->OwnerId;
-            $GroupId = $user->GroupId;
-            $Username = $user->Username;
-            $FirstName = $user->FirstName;
-            $LastName = $user->LastName;
-            $Email = $user->Email;
-            $PhoneNo = $user->PhoneNo;
-            $Dob = $user->Dob;
-            $Address = $user->Address;
-            $Picture = $user->Picture;
-            $NationalityId = $user->NationalityId;
-            $NationalityName = $user->NationalityName;
-            $BranchId = $user->BranchId;
-            $RoleId = $user->RoleId;
-            $RoleName = $user->RoleName;
-            $ReportToId = $user->ReportToId;
-            $ReportToName = $user->ReportToName;
-            $HiringDate = $user->HiringDate;
-            $Applications = $user->Applications;
+
+            $sessionId = $request->session()->getId();
             
-            $user = array (
-                'UserId' => $UserId,
-                'UniqueId' => $UniqueId,
-                'TypeId' => $TypeId,
-                'TypeName' => $TypeName,
-                'OwnerId' => $OwnerId,
-                'GroupId' => $GroupId,
-                'Username' => $Username,
-                'FirstName' => $FirstName,
-                'LastName' => $LastName,
-                'Email' => $Email,
-                'PhoneNo' => $PhoneNo,
-                'Dob' => $Dob,
-                'Address' => $Address,
-                'Picture' => $Picture,
-                'NationalityId' => $NationalityId,
-                'NationalityName' => $NationalityName,
-                'BranchId' => $BranchId,
-                'RoleId' => $RoleId,
-                'RoleName' => $RoleName,
-                'ReportToId' => $ReportToId,
-                'ReportToName' => $ReportToName,
-                'HiringDate' => $HiringDate,
-                'Applications' => $Applications,
-            );
+            // Query the database to get the user based on the session ID
+            $user = DB::table('custom_sessions')
+                ->where('id', $sessionId)
+                ->value('user');
+
+            // Assuming the 'user' column contains JSON-encoded user data
+            $user = json_decode($user);
+
+            if($user->TypeId == 1) // the user is a customer
+            {
+                $UserId = $user->UserId;
+                $TypeId = $user->TypeId;
+                $TypeName =$user->TypeName;
+                $OwnerId = $user->OwnerId;
+                $GroupId = $user->GroupId;
+                $GroupName = $user->GroupName;
+                $Username = $user->Username;
+                $Email = $user->Email;
+                $user = array (
+                    'UserId' => $UserId,
+                    'TypeId' => $TypeId,
+                    'TypeName' => $TypeName,
+                    'OwnerId' => $OwnerId,
+                    'GroupId' => $GroupId,
+                    'GroupName' => $GroupName,
+                    'Username' => $Username,
+                    'Email' => $Email,
+                );
+            }else if($user->TypeId == 2) // the user is an employee
+            {
+                $UserId = $user->UserId;
+                $UniqueId = $user->UniqueId;
+                $TypeId = $user->TypeId;
+                $TypeName =$user->TypeName;
+                $OwnerId = $user->OwnerId;
+                $GroupId = $user->GroupId;
+                $Username = $user->Username;
+                $FirstName = $user->FirstName;
+                $LastName = $user->LastName;
+                $Email = $user->Email;
+                $PhoneNo = $user->PhoneNo;
+                $Dob = $user->Dob;
+                $Address = $user->Address;
+                $Picture = $user->Picture;
+                $NationalityId = $user->NationalityId;
+                $NationalityName = $user->NationalityName;
+                $BranchId = $user->BranchId;
+                $RoleId = $user->RoleId;
+                $RoleName = $user->RoleName;
+                $ReportToId = $user->ReportToId;
+                $ReportToName = $user->ReportToName;
+                $HiringDate = $user->HiringDate;
+                $StateId = $user->StateId;
+                $StateName = $user->StateName;
+                $user = array (
+                    'UserId' => $UserId,
+                    'UniqueId' => $UniqueId,
+                    'TypeId' => $TypeId,
+                    'TypeName' => $TypeName,
+                    'OwnerId' => $OwnerId,
+                    'GroupId' => $GroupId,
+                    'Username' => $Username,
+                    'FirstName' => $FirstName,
+                    'LastName' => $LastName,
+                    'Email' => $Email,
+                    'PhoneNo' => $PhoneNo,
+                    'Dob' => $Dob,
+                    'Address' => $Address,
+                    'Picture' => $Picture,
+                    'NationalityId' => $NationalityId,
+                    'NationalityName' => $NationalityName,
+                    'BranchId' => $BranchId,
+                    'RoleId' => $RoleId,
+                    'RoleName' => $RoleName,
+                    'ReportToId' => $ReportToId,
+                    'ReportToName' => $ReportToName,
+                    'HiringDate' => $HiringDate,
+                    'StateId' => $StateId,
+                    'StateName' => $StateName,
+                );
+            }
+            else{ // the user is a driver
+                $UserId = $user->UserId;
+                $TypeId = $user->TypeId;
+                $TypeName =$user->TypeName;
+                $Username = $user->Username;
+                $Email = $user->Email;
+                $truckNbr = $user->truckNbr;
+                $location = $user->location;
+                $driverNbr = $user->driverNbr;
+                $phoneNbr = $user->phoneNbr;
+                $user = array (
+                    'UserId' => $UserId,
+                    'TypeId' => $TypeId,
+                    'TypeName' => $TypeName,
+                    'truckNbr' => $truckNbr,
+                    'location' => $location,
+                    'driverNbr' => $driverNbr,
+                    'Username' => $Username,
+                    'Email' => $Email,
+                    'phoneNbr' => $phoneNbr,
+                );
+            }
+           
             
+
+
             return response()->json($user);
         } else {
             return response();
@@ -133,9 +194,12 @@ class RegisteredUserController extends Controller
             ]);
         }
     }
+
     public function getChildrens($id)
     {
-        $user = User::find($id);
+        $UserId=$id;
+        $user = User::find($UserId);
+        //dd($user);
         if ($user) {
             if ($user->parent_id == null) {
                 $children = User::where('parent_id', $user->id)->pluck('user_id')->all();

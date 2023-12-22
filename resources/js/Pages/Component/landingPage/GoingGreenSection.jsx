@@ -4,7 +4,7 @@ import "../../../../css/gradient.css"
 
 export default function GoingGreenSection (){
 return(
-    <div>
+    <div id="goingGreen">
         <div className=" py-28 text-smooth ">
                     <div className="bg-gg bg-cover">
                         <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-20 items-center">
@@ -27,7 +27,7 @@ return(
                                     impact global society.
                                 </p>
                                 <div className="flex items-center gap-x-1 text-goldt mt-2 hover:text-smooth">
-                                <a href="/goinggreen" className="text">Read more</a>
+                                <a href="/#goingGreen" className="text">Read more</a>
                                 <ChevronDoubleRightIcon className="h-4"/>
                                 </div>
                             </div>
