@@ -54,7 +54,7 @@ class CustomAuth extends Middleware
             if ($path == 'login' || $path == 'loginapi') {
                 return $next($request);
             }
-            if ($path !== 'login' && $path !== '/' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user') && $path !== 'goinggreen' && $path !== 'opportunities' && $path !== 'terms' && $path !== 'palletterms' && $path !== 'capabilitystatement' && $path !== 'aboutus' && $path !== 'safetycompliance' && $path !== 'news' && $path !== 'technologies' && $path !== 'contact_us' && $path !== 'downloadGTLS-Pallets' && $path !== 'download-docx' ) {
+            if (!$request->session()->has('user')) {
                 return redirect()->route('login');
             }
         } else {
