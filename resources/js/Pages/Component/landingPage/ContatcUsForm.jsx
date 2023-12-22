@@ -46,7 +46,7 @@ class ContactUsForm extends Component {
         formData.append("phone", this.state.phone);
 
         axios
-            .post("/contactus", formData)
+            .post("/contact_us", formData)
             .then((response) => {
                 this.setState({
                     name: "",

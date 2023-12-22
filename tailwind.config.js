@@ -12,6 +12,7 @@ module.exports = {
     theme: {
         extend: {
             backgroundImage: {
+                saftey:"url('/resources/js/assets/backgrounds/safety-and-compliences.webp')",
                 loginbackground:
                     "url('/resources/js/assets/backgrounds/loginBackground.webp')",
                 landing: "url('/resources/js/assets/backgrounds/Landing.webp')",
@@ -32,6 +33,7 @@ module.exports = {
                 goldo: "#f1dba238",
                 goldl: "#f1dba2", // customColor is the name of the color
                 dark: "#1A1E21",
+                darkk: "#0F1316",
                 smooth: "#f6f8f9",
                 gtw1: "#6C3197",
                 gtw2: "#9E43FA",
@@ -46,6 +48,9 @@ module.exports = {
                 bounce200: "bounce 1s infinite 200ms",
                 bounce400: "bounce 1s infinite 400ms",
             },
+            ringWidth: {
+                '10': '10px',
+              }
         },
     },
 

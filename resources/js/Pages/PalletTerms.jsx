@@ -114,21 +114,20 @@ export default function PalletTerms(props) {
                         <div className="relative lg:order-last lg:col-span-5">
                             <figure className="mb-10">
                                 <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    Gold Tiger Logistics Solutions Pty Ltd –
+                                Gold Tiger Group of Companies –
                                     Terms & Conditions of Pallet Service Trading
                                     Policy
                                 </h1>
                                 <p className=" font-bold text-smooth">
-                                    Gold Tiger Logistics Solutions will require
+                                Gold Tiger Group of Companies will require
                                     the following delay days from the date of
-                                    delivery to apply all transfers onto Gold
-                                    Tiger Logistics Solutions pallet accounts.
+                                    delivery to apply all transfers onto Gold Tiger Group of Companies pallet accounts.
                                     No Exchange of Pallets at pickup (unless
                                     agreed by Management) + 30 Day Delay to all
                                     receivers from date of collection (excluding
                                     Metcash, IGA ,Brave, Bidfood and Lawland
                                     which require a 55 Day Delay) from date of
-                                    collection. Gold Tiger Logistics hold a
+                                    collection. Gold Tiger Group of Companies hold a
                                     position as an intermediary party in regard
                                     to pallets.
                                 </p>
@@ -151,24 +150,21 @@ export default function PalletTerms(props) {
                                             active pallet accounts, transfers
                                             must be made between them. A copy of
                                             the pallet transfer docket must be
-                                            attached to the Gold Tiger Logistic
-                                            Solutions consignment note for
+                                            attached to the Gold Tiger Group of Companies consignment note for
                                             reference.
                                         </span>
                                     </li>
                                     <li className="flex gap-x-3 items-center">
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
-                                            Gold Tiger Logistic Solutions
+                                            Gold Tiger Group of Companies
                                             accepts the transfer of Loscam/Chep
-                                            wooden pallets only. Gold Tiger
-                                            Logistic Solutions only accept
+                                            wooden pallets only. Gold Tiger Group of Companies only accept
                                             transfers of Chep code 1001 and
                                             Loscam code WP pallets only. All
                                             other hire equipment (e.g.: cages,
                                             bins, plastic pallets etc.) will not
-                                            be accepted onto Gold Tiger Logistic
-                                            Solutions account.
+                                            be accepted onto Gold Tiger Group of Companies account.
                                         </span>
                                     </li>
                                     <li className="flex gap-x-3 items-center">
@@ -202,7 +198,7 @@ export default function PalletTerms(props) {
                                             place past the 30 days from the
                                             effective date, then the extra days
                                             shall be charged to the customer as
-                                            per Gold Tiger Logistics Solutions
+                                            per Gold Tiger Group of Companies
                                             Rate card. The number of extra days
                                             charged shall be based on Chep's or
                                             Loscam's calculations.
@@ -211,7 +207,7 @@ export default function PalletTerms(props) {
                                     <li className="flex gap-x-3 items-center">
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
-                                            Gold Tiger Logistic Solutions will
+                                            Gold Tiger Group of Companies will
                                             not accept responsibility or
                                             liability for pallet transactions or
                                             rejection enquiries received 30 days
@@ -221,7 +217,7 @@ export default function PalletTerms(props) {
                                     <li className="flex gap-x-3 items-center">
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
-                                            Gold Tiger Logistic Solutions
+                                            Gold Tiger Group of Companies
                                             reserve the right to correct, amend
                                             or reject any submitted transactions
                                         </span>
@@ -240,20 +236,17 @@ export default function PalletTerms(props) {
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
                                             In cases where Chep/Loscam pallets
-                                            have been transferred onto Gold
-                                            Tiger Logistics Solutions account
+                                            have been transferred onto  Gold Tiger Group of Companies account
                                             and the receiver does not have a
                                             Chep/Loscam pallet to exchange or a
-                                            Chep/Loscam pallet account then Gold
-                                            Tiger Logistics Solutions will hold
+                                            Chep/Loscam pallet account then  Gold Tiger Group of Companies will hold
                                             delivery of the goods and will
                                             notify the consignee to make other
                                             arrangements. It is the Consignee's
                                             responsibility to ensure that the
                                             receiving customer has a Chep or
                                             Loscam account or to organise other
-                                            arrangements before Gold Tiger
-                                            Logistics Solutions is retained for
+                                            arrangements before  Gold Tiger Group of Companies is retained for
                                             the job failing which, extra costs
                                             (including but not limited to
                                             demurrage) will be incurred.
@@ -266,7 +259,7 @@ export default function PalletTerms(props) {
                                             pallets does not have a Loscam/Chep
                                             account, or does not have pallets to
                                             exchange at the time of delivery,
-                                            Gold Tiger Logistic Solutions
+                                            Gold Tiger Group of Companies
                                             reserves the right to transfer the
                                             pallets back to the sender, with the
                                             same effective transfer date that we
@@ -284,7 +277,7 @@ export default function PalletTerms(props) {
                                             for raising the Loscam/Chep transfer
                                             docket at time of pick-up to affect
                                             the transfer of the pallets onto
-                                            Gold Tiger Logistic Solutions
+                                            Gold Tiger Group of Companies
                                             account. A copy of a fully completed
                                             transfer docket must be signed by
                                             and presented to our driver at time
@@ -293,7 +286,7 @@ export default function PalletTerms(props) {
                                             consignee must email Gold Tiger the
                                             relevant docket within 48 hours from
                                             the time of pick-up. Should this not
-                                            occur Gold Tiger Logistics Solutions
+                                            occur Gold Tiger Group of Companies
                                             shall not accept liability for the
                                             transfer of the pallets.
                                         </span>
@@ -301,7 +294,7 @@ export default function PalletTerms(props) {
                                     <li className="flex gap-x-3 items-center">
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
-                                            Gold Tiger Logistics has the right
+                                        Gold Tiger Group of Companies has the right
                                             to reject any pallets that have been
                                             transferred onto our account if it
                                             is deemed damaged, Then the transfer
@@ -334,9 +327,8 @@ export default function PalletTerms(props) {
                                         <span>
                                             An administration fee of $3.90 shall
                                             be incurred for any pallet transfer
-                                            to Gold Tiger Logistics Solutions
-                                            account or from Gold Tiger Logistics
-                                            Solutions account.
+                                            to Gold Tiger Group of Companies
+                                            account or from  Gold Tiger Group of Companies account.
                                         </span>
                                     </li>
                                     <li className="flex gap-x-3 items-center">
@@ -359,8 +351,7 @@ export default function PalletTerms(props) {
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
                                             Pallet bulk transfers are not
-                                            accepted at Gold Tiger Logistics
-                                            Solutions. Every consignment must
+                                            accepted at  Gold Tiger Group of Companies. Every consignment must
                                             have its own individual pallet
                                             transfer docket. Such transfer shall
                                             quote the Transfer Date, Consignment
@@ -371,11 +362,10 @@ export default function PalletTerms(props) {
                                     <li className="flex gap-x-3 items-center">
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
-                                            A signature by Gold Tiger Logistics
-                                            Solutions drivers is made on a
+                                            A signature by  Gold Tiger Group of Companies drivers is made on a
                                             "Subject to check" basis and
                                             consignments will be confirmed only
-                                            when Gold Tiger Logistics Solutions
+                                            when Gold Tiger Group of Companies
                                             accepts it. Any discrepancy between
                                             the number of pallets sent in
                                             accordance with the consignment note
@@ -391,17 +381,13 @@ export default function PalletTerms(props) {
                                             In instances where the pallet
                                             dockets are retained by the
                                             receiving customer and no copy is
-                                            provided to Gold Tiger Logistics
-                                            Solutions drivers, Gold Tiger
-                                            Logistics Solutions shall rely on
+                                            provided to  Gold Tiger Group of Companies drivers,  Gold Tiger Group of Companies shall rely on
                                             the receiving customer's signature
                                             on the Proof of Delivery to infer
                                             that the pallets have been received.
                                             Should the receiving customer
-                                            subsequently reject Gold Tiger
-                                            Logistics Solutions transfer despite
-                                            signing the Proof of Delivery, Gold
-                                            Tiger Logistics Solutions reserves
+                                            subsequently reject  Gold Tiger Group of Companies transfer despite
+                                            signing the Proof of Delivery,  Gold Tiger Group of Companies reserves
                                             its right to add or forward any
                                             charge incurred to the sending
                                             Customer. in such instances, the
@@ -418,12 +404,11 @@ export default function PalletTerms(props) {
                                         <span>
                                             Customers are expected to sign these
                                             Terms and Conditions and froward the
-                                            signed copy to Gold Tiger Logistics
-                                            Solutions offices within 7 working
+                                            signed copy to  Gold Tiger Group of Companies offices within 7 working
                                             days from the date of signature
                                             however, the customer acknowledges
                                             that transacting pallet movements
-                                            with Gold Tiger Logistic Solutions
+                                            with Gold Tiger Group of Companies
                                             constitutes an implicit and implied
                                             agreement to these terms and
                                             conditions and that these Terms and
@@ -434,9 +419,9 @@ export default function PalletTerms(props) {
                                     {/* <li className="flex gap-x-3 items-center">
                                         <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                         <span>
-                                        Consignee agrees that Pallet Services are provided subject to terms and of carriage as detailed in the Gold Tiger Logistic Solutions conditions of carriage and / or Storage. Freight is palletized for ease of delivery only. The Consignee agrees to accept transfer
-of hire charges or pay the current price for pallets when the exchange of equivalent pallets can have not been affected at the point of delivery. All Pallet Documentation must be received by Gold Tiger Logistic Solutions within 30 days of the Pickup / Delivery
-Date, documentation received after this date may be rejected or have an adjusted effective date applied at the discretion of Gold Tiger Logistic Solutions Pallet Control.
+                                        Consignee agrees that Pallet Services are provided subject to terms and of carriage as detailed in the Gold Tiger Group of Companies conditions of carriage and / or Storage. Freight is palletized for ease of delivery only. The Consignee agrees to accept transfer
+of hire charges or pay the current price for pallets when the exchange of equivalent pallets can have not been affected at the point of delivery. All Pallet Documentation must be received by Gold Tiger Group of Companies within 30 days of the Pickup / Delivery
+Date, documentation received after this date may be rejected or have an adjusted effective date applied at the discretion of Gold Tiger Group of Companies Pallet Control.
                                         </span>
                                     </li> */}
                                     {/* <li className="flex gap-x-3 items-center">
@@ -446,7 +431,7 @@ Date, documentation received after this date may be rejected or have an adjusted
                                             Solutions drivers is made on a
                                             "Subject to check" basis and
                                             consignments will be confirmed only
-                                            when Gold Tiger Logistics Solutions
+                                            when Gold Tiger Group of Companies
                                             accepts it. Any discrepancy between
                                             the number of pallets sent in
                                             accordance with the consignment note
@@ -494,7 +479,7 @@ Date, documentation received after this date may be rejected or have an adjusted
                                             days from the date of signature
                                             however, the customer acknowledges
                                             that transacting pallet movements
-                                            with Gold Tiger Logistic Solutions
+                                            with Gold Tiger Group of Companies
                                             constitutes an implicit and implied
                                             agreement to these terms and
                                             conditions and that these Terms and
@@ -522,7 +507,7 @@ Date, documentation received after this date may be rejected or have an adjusted
                                             Consignee agrees that Pallet
                                             Services are provided subject to
                                             terms and of carriage as detailed in
-                                            the Gold Tiger Logistic Solutions
+                                            the Gold Tiger Group of Companies
                                             conditions of carriage and / or
                                             Storage. Freight is palletized for
                                             ease of delivery only. The Consignee
@@ -532,14 +517,12 @@ Date, documentation received after this date may be rejected or have an adjusted
                                             equivalent pallets can have not been
                                             affected at the point of delivery.
                                             All Pallet Documentation must be
-                                            received by Gold Tiger Logistic
-                                            Solutions within 30 days of the
+                                            received by Gold Tiger Group of Companies within 30 days of the
                                             Pickup / Delivery Date,
                                             documentation received after this
                                             date may be rejected or have an
                                             adjusted effective date applied at
-                                            the discretion of Gold Tiger
-                                            Logistic Solutions Pallet Control.
+                                            the discretion of Gold Tiger Group of Companies Pallet Control.
                                         </span>
                                     </li>
                                 </ul>
@@ -552,19 +535,17 @@ Date, documentation received after this date may be rejected or have an adjusted
                                     Privacy Policy
                                 </h1>
                                 <p className="text-gray-200 mb-3">
-                                    “GTLS” shall mean Gold Tiger Logistics
-                                    Solutions Pty Ltd T/A GTLS.com.au and its
+                                    “GTLS” shall mean Gold Tiger Group of Companies Pty Ltd T/A GTLS.com.au and its
                                     successors and assigns or any person acting
-                                    on behalf of and with the authority of Gold
-                                    Tiger Logistics Solutions Pty Ltd T/A
+                                    on behalf of and with the authority of Gold Tiger Group of Companies Pty Ltd T/A
                                     GTLS.com.au.
                                 </p>
                                 <p className=" font-bold text-goldt">
-                                    Gold Tiger Logistics Solutions Privacy
+                                    Gold Tiger Group of Companies Privacy
                                     Policy
                                 </p>
                                 <p className="text-gray-200 mb-3">
-                                    Gold Tiger Logistics Solutions is committed
+                                    Gold Tiger Group of Companies is committed
                                     to providing you with the best possible
                                     customer service experience. GTLS is bound
                                     by the Privacy Act 1988 (Crh), which sets
@@ -655,7 +636,7 @@ Date, documentation received after this date may be rejected or have an adjusted
                                     Contacting us
                                 </p>
                                 <p className="text-gray-200 mb-3">
-                                    Gold Tiger Logistics Solutions welcomes your
+                                    Gold Tiger Group of Companies welcomes your
                                     comments regarding this Privacy Policy. If
                                     you have any questions about this Privacy
                                     Policy and would like further information,

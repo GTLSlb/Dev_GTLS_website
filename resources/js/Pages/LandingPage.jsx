@@ -18,7 +18,7 @@ export default function LandingPage({}) {
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState();
     const [appsApi, setAppsApi] = useState();
-    const url = "https://gtlslebs06-vm.gtls.com.au:5432/";
+    const url = window.Laravel.gtamUrl;
 
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
@@ -38,7 +38,7 @@ export default function LandingPage({}) {
     useEffect(() => {
         if(currentUser){
             axios
-            .get(`${url}api/GTAM/User/Permissions`, {
+            .get(`${url}User/Permissions`, {
                 headers: {
                     UserId: currentUser.UserId,
                 },

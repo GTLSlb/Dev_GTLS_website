@@ -6,12 +6,13 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
+import pdf from "../../../public/docs/Goldtiger-catalogue.pdf"
 import Navbars from "./Component/navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
     { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/#contact", ref: "contact" },
+    { name: "Contact Us", href: "/contact_us", ref: "contact" },
 ];
 const features = [
     { name: "Origin", description: "Designed by Good Goods, Inc." },
@@ -89,7 +90,8 @@ export default function Capability(props) {
                             Capability Statement
                         </h2>
                         <a
-                            href="/downloadGTLS-docx"
+                            // href="/downloadGTLS-docx"
+                            
                             className="w-auto inline-block "
                         >
                             <button className=" flex items-center gap-x-2 mt-5 rounded-3xl   px-10 py-2.5 text-center text-md font-bold text-white hover:text-goldt shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goldt">

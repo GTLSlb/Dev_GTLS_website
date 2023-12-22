@@ -18,7 +18,7 @@ const AbsolutelyPositionedPlayer = styled(Player)`
     top: 0;
     left: 0;
 `;
-
+ 
 const RelativePositionWrapper = styled.div`
     position: relative;
     padding-top: 56.25%;

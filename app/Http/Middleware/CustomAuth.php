@@ -35,7 +35,7 @@ class CustomAuth extends Middleware
         $passwordInput = $credentials['PasswordInput'];
         // Compare the provided credentials with the user's credentials
 
-        if ($emailDb == $emailInput) {
+        if (strtolower($emailDb) == strtolower($emailInput)) {
             return true; // Validation successful
         }
 
@@ -54,13 +54,13 @@ class CustomAuth extends Middleware
             if ($path == 'login' || $path == 'loginapi') {
                 return $next($request);
             }
-            if ($path !== 'login' && $path !== '/' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+            if (!$request->session()->has('user')) {
                 return redirect()->route('login');
             }
         } else {
             if ($request->path() == 'login' || $request->path() == 'loginapi') {
                 return $next($request);
-            }
+            } 
 
 
         }
