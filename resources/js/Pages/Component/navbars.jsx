@@ -15,7 +15,7 @@ const navigation = [
     { id:4, name: "Media & News", href: "/#news" },
     { id:5, name: "Careers", href: "/opportunities" },
     { id:6, name: "Contact Us", href: "/#contact" },
-    { id:7, name: "Going Green", href: "/goinggreen" },
+    { id:7, name: "Going Green", href: "goingGreen" },
 ];
 export default function Navbars() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

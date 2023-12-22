@@ -17,7 +17,7 @@ const navigation = [
     { id:4, name: "Media & News", href: "news", link: false },
     { id:5, name: "Careers", href: "/opportunities", link: true },
     { id:6, name: "Contact Us", href: "contact", link: false },
-    { id:7, name: "Going Green", href: "/goinggreen",link: true },
+    { id:7, name: "Going Green", href: "goingGreen",link: false },
 ];
 
 export default function ScrollNav() {
