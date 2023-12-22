@@ -5,12 +5,16 @@ import LogoWhite from "../assets/pictures/LogoWhite.webp";
 import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/inertia-react";
 import { Link as ScrollLink } from "react-scroll";
+import Branches from "./Component/landingPage/branches";
 import ContatcUs from "./Component/landingPage/ContactUs";
 import Footer from "./Component/landingPage/Footer";
 import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Video from "./Component/landingPage/video";
+import GTRS from "./Component/landingPage/GtrsDemo";
+import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
-import Branches from "./Component/landingPage/branches";
+
+
 import News from "./Component/landingPage/News";
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
@@ -23,6 +27,7 @@ import ScrollToTopButton from "@/Components/ScrollUpButton";
 import Benefits from "./Component/landingPage/Benefits";
 import Process from "./Component/landingPage/Process";
 import Features from "./Component/landingPage/Features";
+import Safety from "./Component/landingPage/Safety";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import {
@@ -34,13 +39,13 @@ import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
 
 const navigation = [
-    { id:1, name: "About Us", href: "aboutus", link: false },
+    { id:1, name: "About Us", href: "/aboutus", link: true },
     { id:2, name: "Services", href: "services", link: false },
-    { id:3, name: "Technologies", href: "technologies", link: false },
-    { id:4, name: "Media & News", href: "news", link: false },
+    { id:3, name: "Technologies", href: "/technologies", link: true },
+    { id:4, name: "Media & News", href: "/news", link: true },
     { id:5, name: "Careers", href: "/opportunities", link: true },
-    { id:6, name: "Contact Us", href: "contact", link: false },
-    { id:7, name: "Going Green", href: "goingGreen",link: false },
+    { id:6, name: "Contact Us", href: "/contact_us", link: false },
+    { id:7, name: "Going Green", href: "/goinggreen",link: true },
 ];
 
 // function scrollToDiv (myDivRef)  {
@@ -93,12 +98,13 @@ export default function Welcome(props) {
     return (
         <>
             <Head title="Welcome" />
+            
             <div className="relative isolate bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                 <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
                         <div className="hidden lg:flex gap-x-7">
                             <a
-                                href="#contact"
+                                href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 Contact Us
@@ -260,6 +266,7 @@ export default function Welcome(props) {
                                     </button>
                                 </div>
                             </a> */}
+                            <FeedbackButton/>
                             <Popover className="relative object-right flex-item md:ml-auto ">
                                 <Popover.Button
                                     className={` inline-flex items-center  px-4 py-2 border-2 border-goldt rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white`}
@@ -407,28 +414,36 @@ export default function Welcome(props) {
                     <ScrollNav />
                 </div>
 
+                
+
                 <VideoHeader />
+                <AboutUs />
                 <PrimaryServices />
                 <GoingGreenSection/>
+                
                 {/* <Benefits /> */}
-                <Process />
+                {/* <Process /> */}
                 <Features />
-                <Video />
+                <GTRS />
+                <Safety/>
+                {/* <Video /> */}
 
-                <AboutUs />
+                
                 <Technologies />
-                <Softwares />
+                {/* <Softwares /> */}
+                
                 {/* <WhyGoldTiger /> */}
                 <Certifiactesw />
+                
 
-                <News />
+                {/* <News /> */}
                 {/* <OpportuniotiesSection /> */}
-                <ContatcUs />
-                <Branches />
-
+                {/* <ContatcUs />
+                <Branches /> */}
+                
                 {/* <Partners/> */}
                 <Footer />
-                {/* <CookiePopup/> */}
+                <CookiePopup/>
                 <ScrollToTopButton />
                 <style>{`
             .max-w-8xl{

@@ -62,31 +62,28 @@ export default function Certifiactesw() {
     const renderModal = () => {
         if (selectedImage !== null) {
             return (
-                <div
-        className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center modal-overlay"
-        onClick={handleOverlayClick}
-      >
-        <button
-          className="absolute top-0 right-0 m-4 text-white hover:text-gray-300 focus:outline-none"
-          onClick={handleCloseModal}
-        >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-        <img src={selectedImage} alt={`Image ${selectedImage + 1}`} className="max-w-full max-h-full" />
-      </div>
+            <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center modal-overlay " onClick={handleOverlayClick}>
+                <button
+                className="absolute top-0 right-0 m-4 text-white hover:text-gray-300 focus:outline-none"
+                onClick={handleCloseModal}
+                >
+                <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                </button>
+                <img src={selectedImage} alt={`Image ${selectedImage + 1}`} className="max-w-full max-h-full" />
+            </div>
             );
         }
     };
     return (
-        <div className="bg-dark py-8 sm:py-32 sm:pt-48">
+        <div className="bg-dark py-8 sm:py-32 sm:pt-48 mb-32">
             <div className="bg-gradient-to-br from-goldd via-goldl to-goldd  bg-opacity-10">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <table className="table-auto w-full">
