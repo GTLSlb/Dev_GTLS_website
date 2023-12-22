@@ -13,15 +13,12 @@ return(
                                 <img src={Green} alt="" className="" />
                             </div>
                             <div className="md:w-1/2">
-<<<<<<< Updated upstream
                                 <h2 className="gradient-text py-5 text-4xl font-bold">
                                 GTLS Towards a Green  Future
                                 </h2>
-=======
                                 <h1 className="gradient-text py-5 text-4xl font-bold">
                                 GTLS Towards A Green Future
-                                </h1>
->>>>>>> Stashed changes
+
                                 <p className="mt-2 text-smooth">
                                     Gold Tiger is working toward a more
                                     sustained future by managing the risks of
