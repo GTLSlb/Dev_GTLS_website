@@ -47,24 +47,30 @@ class CustomAuth extends Middleware
         $hasSession = $request->hasSession();
         if ($hasSession) {
             //$session = $request->session();
-            $request->headers->set('X-CSRF-TOKEN', csrf_token());
+            $sessionToken = $request->session()->token();
             $path = $request->path();
-
+            $request->headers->set('X-CSRF-TOKEN', csrf_token());
             // Allow access to the login route
             if ($path == 'login' || $path == 'loginapi') {
                 return $next($request);
             }
-            if ($path !== '/' && $path !== 'login' && $path !== 'loginapi' && !$request->session()->has('user')) {
+            if ($path !== 'login' && $path !== '/' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user') && $path !== 'goinggreen' && $path !== 'opportunities' && $path !== 'terms' && $path !== 'palletterms' && $path !== 'capabilitystatement' && $path !== 'aboutus' && $path !== 'safetycompliance' && $path !== 'news' && $path !== 'technologies' && $path !== 'contact_us' && $path !== 'downloadGTLS-Pallets' && $path !== 'download-docx' ) {
                 return redirect()->route('login');
             }
         } else {
             if ($request->path() == 'login' || $request->path() == 'loginapi') {
                 return $next($request);
-            }
+            } 
 
 
         }
         return $next($request);
+    }
+
+    protected function verifyCsrfToken($token)
+    {
+        // Implementation using Laravel's built-in CSRF token verification:
+        return hash_equals($token, csrf_token());
     }
 }
 ?>

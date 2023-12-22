@@ -7,7 +7,21 @@
   background-color: red !important;
 }
 
+.hideNumberInputArrows {
+  /* For Chrome, Safari, Edge, Opera */
+  -webkit-appearance: none;
+  margin: 0;
 
+  /* For Firefox */
+  -moz-appearance: textfield;
+}
+
+/* For Chrome, Safari, Edge, Opera */
+.hideNumberInputArrows::-webkit-inner-spin-button,
+.hideNumberInputArrows::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 .slide-enter {
   opacity: 0;
@@ -17,9 +31,12 @@
 
 .cookie-popup {
   position: fixed;
-  bottom: 20px;
-  right: 100px;
-  max-width: 300px;
+
+
+  bottom:10%;
+  left:20%;
+  right:20%;
+
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 

@@ -1,53 +1,64 @@
+import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
 const faqs = [
     {
         id: 1,
-        question: "Reliable domestic transport",
-        answer: "Count on us for dependable and secure transportation services across Australia.",
+        question: "",
+        answer: "We have a can-do attitude to solving transport problems.",
     },
     {
         id: 2,
-        question: "Swift deliveries",
-        answer: "Experience timely and efficient deliveries, ensuring your goods reach their destination promptly.",
+        question: "",
+        answer: "We are flexible and able to tailor our services to our customers’ needs.",
     },
     {
         id: 3,
-        question: "Flexible warehousing and distribution",
-        answer: "Benefit from our adaptable solutions that can be tailored to meet your specific warehousing and distribution needs.",
+        question: "",
+        answer: "We place an emphasis on developing personal relationships and the overall partnership.",
     },
     {
         id: 4,
-        question: "Integrated logistics solutions",
-        answer: "We offer a comprehensive approach, combining various logistics services to provide a seamless and integrated solution for your business.",
+        question: "",
+        answer: "We have a flat management structure where customers can talk to the director whenever they want.",
     },
     {
         id: 5,
-        question: "Scalability",
-        answer: "Our services are designed to accommodate your evolving requirements, allowing you to scale operations smoothly.",
+        question: "",
+        answer: "We have a keen understanding of the transport and logistics industry, both at the client’s day-to-day level and how it is developing into the future.",
     },
     {
         id: 6,
-        question: "Cost-effective solutions",
-        answer: "We optimise logistics processes to minimise spending and maximise cost savings for your business.",
+        question: "",
+        answer: "We are reliable, proactive and transparent in our business and our dealings with clients.",
     },
     {
         id: 7,
-        question: "Expertise in interstate line haul",
-        answer: "Rely on our specialised knowledge and experience in efficient interstate line haul services.",
+        question: "",
+        answer: "Gold Tiger’s drivers are all employees, not contractors, which means they are exclusively dedicated to the needs of our clients.",
     },
     {
         id: 8,
-        question: "Point-to-point delivery",
-        answer: "We provide secure and direct transportation from the pick-up location to the designated drop-off point.",
+        question: "",
+        answer: "Gold Tiger owns its Sydney office, warehouse and its vehicle fleet.",
     },
     {
         id: 9,
-        question: "Nationwide coverage",
-        answer: "Our extensive network allows us to provide reliable transport services to destinations across Australia.",
+        question: "",
+        answer: "Driver and truck performance and location are monitored through Volvo’s Dynafleet on-board software package. The data produced is accessible to clients in real time.",
     },
     {
         id: 10,
-        question: "Dedicated customer support",
-        answer: "Receive exceptional customer service and assistance from our dedicated team.",
+        question: "",
+        answer: "Our gold partnership with Volvo provides a regular maintenance schedule to the highest manufacturer standards (OEM replacement parts), 24-hour breakdown repair around Australia, and replacement vehicles if trucks need to be off the road more than 24 hours.",
+    },
+    {
+        id: 11,
+        question: "",
+        answer: "We make excellent use of technology for track-and-trace, RFID and inventory management. We can integrate with client systems to provide access to extensive data and reports.",
+    },
+    {
+        id: 12,
+        question: "",
+        answer: "Each client has a dedicated Account Manager, Allocator and Customer Service representative attached to their account.",
     },
     // More questions...
 ];
@@ -57,19 +68,22 @@ export default function Features() {
         <div className="bg-dark">
             <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
                 <div className="mt-20">
-                    <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-4 lg:gap-x-10">
-                        <div className="col-span-2">
+                    <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:grid-cols-4 lg:gap-x-10 ">
+                        <div className="col-span-4">
                             <div className=" text-4xl font-semibold leading-10 text-goldt">
-                                What should you expect when you choose us as
-                                your partner ?
+                                Why Gold<span className="text-white">Tiger</span>?
                             </div>
                         </div>
                         {faqs.map((faq) => (
-                            <div key={faq.id} className="transition-transform hover:scale-110 text-gray-300 hover:text-white hover:font-bold" >
+                            <div key={faq.id} className="border-l-[1px] shadow-2xl  pl-5 border-goldt transition-transform hover:scale-110 text-gray-300 hover:text-white hover:font-bold overflow-hidden" >
                                 <dt className="text-xl font-semibold leading-7 text-goldt">
                                     {faq.question}
                                 </dt>
-                                <dd className="mt-2 text-md leading-7 ">
+                                <dd className="mt-2 text-md leading-7 relative ">
+                                    <div className="absolute">
+                                        <img className="opacity-50" width="w-full"src={aboutcircle} alt="circle" />
+                                    </div>
+                                    
                                     {faq.answer}
                                 </dd>
                             </div>
