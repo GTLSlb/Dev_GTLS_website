@@ -1,8 +1,9 @@
 import { Head } from "@inertiajs/react";
 import Footer from "./Component/landingPage/Footer";
+import Calc from "./Component/landingPage/Calc";
 import Navbars from "./Component/navbars";
 import "../../css/gradient.css";
-import Green from "../assets/pictures/green.webp";
+import Green from "../assets/pictures/gogreen.webp";
 
 const content = [
     {
@@ -41,8 +42,8 @@ export default function GoingGreen() {
                     <div className="bg-gg bg-cover">
                         <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-20 items-center">
                             <div className="md:w-6/12">
-                                <h1 className="gradient-text py-5 text-6xl font-bold">
-                                    Going Green
+                                <h1 className="gradient-text py-5 text-4xl font-bold">
+                                    GTLS Towards a Green  Future
                                 </h1>
                                 <p className="mt-2 text-smooth">
                                     Gold Tiger is working toward a more
@@ -58,8 +59,9 @@ export default function GoingGreen() {
                                     produce an outcome that will positively
                                     impact global society.
                                 </p>
+                                <Calc/>
                             </div>
-                            <div className="">
+                            <div className="w-full md:w-1/2 ">
                                 <img src={Green} alt="" className="" />
                             </div>
                         </div>
