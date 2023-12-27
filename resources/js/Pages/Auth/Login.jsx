@@ -97,12 +97,13 @@ export default function Login({ status, canResetPassword }) {
     setPassword(event.target.value);
     }
 
+    const gtamUrl = window.Laravel.gtamUrl;
     const submit = (e) => {
         e.preventDefault();
         setErrorMessage("")
         const hashedPassword = CryptoJS.SHA256(password).toString();
         axios
-            .get(`https://gtlslebs06-vm.gtls.com.au:5432/api/Login`, {
+            .get(`${gtamUrl}Login`, {
                 headers: {
                     Email: email,
                     Password: hashedPassword,

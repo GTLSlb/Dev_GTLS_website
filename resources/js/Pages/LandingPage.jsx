@@ -5,9 +5,6 @@ import {
     QuestionMarkCircleIcon,
     ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-import SupportModal from "@/Pages/Component/modals/SupportModal";
-import MainSidebar from "@/Components/Main-sidebar";
-import { InertiaApp } from "@inertiajs/inertia-react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
 export default function LandingPage({}) {
@@ -18,8 +15,7 @@ export default function LandingPage({}) {
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState();
     const [appsApi, setAppsApi] = useState();
-    const url = "https://gtlslebs06-vm.gtls.com.au:5432/";
-
+    const gtamUrl = window.Laravel.gtamUrl;
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
@@ -38,7 +34,7 @@ export default function LandingPage({}) {
     useEffect(() => {
         if(currentUser){
             axios
-            .get(`${url}api/GTAM/User/Permissions`, {
+            .get(`${gtamUrl}User/Permissions`, {
                 headers: {
                     UserId: currentUser.UserId,
                 },
