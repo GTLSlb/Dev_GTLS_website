@@ -15,6 +15,8 @@ import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import "../../../css/scroll.css";
 import axios from "axios";
 import CryptoJS from 'crypto-js';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 const msalConfig = {
     auth: {
         clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
@@ -35,6 +37,7 @@ export default function Login({ status, canResetPassword }) {
     const [recaptchaValue, setRecaptchaValue] = useState(false);
     const [passwordType, setPasswordType] = useState("password");
     const [errorMessage, setErrorMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const togglePassword = () => {
         if (passwordType === "password") {
             setPasswordType("text");
@@ -99,6 +102,7 @@ export default function Login({ status, canResetPassword }) {
 
     const gtamUrl = window.Laravel.gtamUrl;
     const submit = (e) => {
+        setLoading(true);
         e.preventDefault();
         setErrorMessage("")
         const hashedPassword = CryptoJS.SHA256(password).toString();
@@ -130,11 +134,12 @@ export default function Login({ status, canResetPassword }) {
                     }
                 })
                 .catch((error) => {
+                    setLoading(false);
                     console.log(error);
                 });
             })
             .catch((err) => {
-                console.log(err);
+                setLoading(false);
                 setErrorMessage(err.response.data.Message)
             });
             
@@ -248,6 +253,9 @@ export default function Login({ status, canResetPassword }) {
                                             </Link>
                                         )}
                                     </div>
+                                    {errorMessage && (
+                                        <div className="py-2 text-red-600">{errorMessage}</div>
+                                    )}
                                     <InputError
                                         message={errors.email}
                                         className="mt-2"
@@ -264,14 +272,18 @@ export default function Login({ status, canResetPassword }) {
                             <div className="flex items-center justify-between">
                                 <button
                                     className={`flex w-full justify-center ${
-                                        processing || !recaptchaValue
+                                        loading || !recaptchaValue
                                             ? "bg-gray-600 cursor-not-allowed text-white"
                                             : "bg-goldd hover:bg-goldt text-dark"
                                     } font-bold rounded-md border border-transparent bg-goldd py-2 px-4 text-sm font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
-                                    disabled={processing || !recaptchaValue}
+                                    disabled={loading || !recaptchaValue}
                                     type="submit"
                                 >
-                                    Sign In
+                                    {loading ? (
+                                        <AiOutlineLoading3Quarters className="animate-spin" />
+                                    ) : (
+                                        "Sign In"
+                                    )}
                                 </button>
                             </div>
                         </form>
