@@ -13,7 +13,7 @@ import image6 from "../../../assets/teams/Leslie_Haines.png";
 import image7 from "../../../assets/teams/josh.png";
 import image10 from "../../../assets/teams/Megan.png";
 import image15 from "../../../assets/teams/Ruby.png";
-import image4 from "../../../assets/teams/stan.png";
+import image4 from "../../../assets/teams/Stan.png";
 import image5 from "../../../assets/teams/Richelle.png";
 import image16 from "../../../assets/teams/Tracey.png";
 
