@@ -12,7 +12,7 @@ const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
     { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/#contact", ref: "contact" },
+    { name: "Contact Us", href: "/contact_us", ref: "contact" },
 ];
 const features = [
     { name: "Origin", description: "Designed by Good Goods, Inc." },
@@ -129,7 +129,7 @@ export default function Terms(props) {
                                                     1.1
                                                 </span>
                                                 <span>
-                                                    GTLS provides logistics
+                                                    Gold Tiger Group of Companies provides logistics
                                                     solutions including
                                                     transport, handling and
                                                     storage of Goods ("the
@@ -145,14 +145,14 @@ export default function Terms(props) {
                                                 </span>
                                                 <span>
                                                     Any instructions received by
-                                                    GTLS from the Customer for
+                                                    Gold Tiger Group of Companies from the Customer for
                                                     the supply of the Services
                                                     shall constitute acceptance
                                                     of the terms of this
                                                     Agreement. Instructions may
                                                     be received in writing
                                                     (including electronically)
-                                                    or orally by GTLS from the
+                                                    or orally by Gold Tiger Group of Companies from the
                                                     Customer.
                                                 </span>
                                             </div>
@@ -169,7 +169,7 @@ export default function Terms(props) {
                                                 rescinded in accordance with
                                                 these terms and conditions or
                                                 with the written consent of the
-                                                Managing Director of GTLS.
+                                                Managing Director of Gold Tiger Group of Companies.
                                             </span>
                                         </li>
                                     </ul>
@@ -247,13 +247,13 @@ export default function Terms(props) {
                                                         <li>
                                                             When the Customer
                                                             starts using the
-                                                            services of GTLS or
+                                                            services of Gold Tiger Group of Companies or
                                                         </li>
                                                         <li>
                                                             When the customer
                                                             pays for services
                                                             requested from and
-                                                            provided by GTLS
+                                                            provided by Gold Tiger Group of Companies
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -303,7 +303,7 @@ export default function Terms(props) {
                                                     "Consignee" shall mean the
                                                     person to whom the Goods are
                                                     to be delivered by way of
-                                                    GTLS’s Services.
+                                                    Gold Tiger Group of Companies’s Services.
                                                 </strong>
                                             </span>
                                         </li>
@@ -314,7 +314,7 @@ export default function Terms(props) {
                                             <span>
                                                 <strong>
                                                     "Customer" shall mean any
-                                                    customer who engages GTLS to
+                                                    customer who engages Gold Tiger Group of Companies to
                                                     provide the Services and
                                                     includes any person or
                                                     persons acting on behalf of
@@ -340,14 +340,14 @@ export default function Terms(props) {
                                                     "Goods" means any goods
                                                     collected, carried,
                                                     transported, delivered or
-                                                    stored by GTLS for or on
+                                                    stored by Gold Tiger Group of Companies for or on
                                                     behalf of the Customer, and
                                                     includes cargo together with
                                                     any container, packaging, or
                                                     pallet(s) to be moved from
                                                     one place to another by way
-                                                    of GTLS’s Services, or for
-                                                    storage by GTLS.
+                                                    of Gold Tiger Group of Companies’s Services, or for
+                                                    storage by Gold Tiger Group of Companies.
                                                 </strong>
                                             </span>
                                         </li>
@@ -378,13 +378,20 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 <strong>
-                                                    "GTLS" shall mean Gold Tiger
-                                                    Logistics Solutions Pty Ltd
-                                                    A.C.N. 142 447 818 and its
-                                                    successors and assigns or
-                                                    any person acting on behalf
-                                                    of and with the authority of
-                                                    GTLS.
+                                                “Gold Tiger Group of Companies” shall mean any or all of the below entities:
+                                                <br></br>
+                                                <br></br>
+• Gold Tiger Logistics QLD Pty Ltd A.B.N. 81 651 394 099
+<br></br>
+• Gold Tiger Logistics Sydney Pty Ltd A.B.N. 49 651 376 519
+<br></br>
+• Gold Tiger Logistics Victoria Pty Ltd A.B.N. 44 639 257 293
+<br></br>
+• Gold Tiger Maintenance Pty Ltd A.B.N. 64 635 551 110
+<br></br>
+• Linehaul Express Services Pty Ltd A.B.N. 34 607 088 460
+<br></br>
+• Gold Tiger Logistic Solution NSW Pty Ltd A.B.N. 13 653 722 064.
                                                 </strong>
                                             </span>
                                         </li>
@@ -455,7 +462,7 @@ export default function Terms(props) {
                                                     provided to the Customer;
                                                     otherwise, the price shall
                                                     be as indicated on invoices
-                                                    provided by GTLS to the
+                                                    provided by Gold Tiger Group of Companies to the
                                                     Customer in respect of
                                                     Services supplied.
                                                 </strong>
@@ -468,13 +475,13 @@ export default function Terms(props) {
                                             <span>
                                                 <strong>
                                                     "Services" shall mean all
-                                                    services supplied by GTLS to
+                                                    services supplied by Gold Tiger Group of Companies to
                                                     the Customer and are as
                                                     described on the quotations,
                                                     invoices, consignment note,
                                                     airway bills, manifests,
                                                     sales order or any other
-                                                    forms as provided by GTLS to
+                                                    forms as provided by Gold Tiger Group of Companies to
                                                     the Customer and includes
                                                     any advice or
                                                     recommendations.
@@ -513,7 +520,7 @@ export default function Terms(props) {
                                                     </span>
                                                     <span>
                                                         Any other person, firm
-                                                        or GTLS with whom GTLS
+                                                        or Gold Tiger Group of Companies with whom Gold Tiger Group of Companies
                                                         may arrange for the
                                                         carriage or storage of
                                                         any Goods the subject of
@@ -549,10 +556,10 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         These terms and conditions are to be
-                                        read in conjunction with GTLS’s
+                                        read in conjunction with Gold Tiger Group of Companies’s
                                         quotation, consignment note, agreement,
                                         airway bills, manifests, or any other
-                                        forms as provided by GTLS to the
+                                        forms as provided by Gold Tiger Group of Companies to the
                                         Customer. If there are any
                                         inconsistencies between these documents
                                         then the terms and conditions contained
@@ -573,18 +580,18 @@ export default function Terms(props) {
                                         The acceptance of these terms and
                                         conditions by the Customer means that an
                                         Agreement is created between the
-                                        Customer and GTLS and, unless the
+                                        Customer and Gold Tiger Group of Companies and, unless the
                                         Customer wishes to enter into a formal
-                                        and more permanent Contract with GTLS,
+                                        and more permanent Contract with Gold Tiger Group of Companies,
                                         this agreement is per consignment basis
                                         and is automatically renewed every time
                                         the customer retains the services of
-                                        GTLS. The length of the term of the
+                                        Gold Tiger Group of Companies. The length of the term of the
                                         agreement shall be dependent on the
-                                        Customer and GTLS unless otherwise
-                                        agreed in writing between GTLS and the
+                                        Customer and Gold Tiger Group of Companies unless otherwise
+                                        agreed in writing between Gold Tiger Group of Companies and the
                                         Customer. The Customer may renew the
-                                        Term by providing GTLS with further work
+                                        Term by providing Gold Tiger Group of Companies with further work
                                         however, either party can terminate the
                                         Agreement in accordance with the
                                         sub-clauses below
@@ -592,7 +599,7 @@ export default function Terms(props) {
 
                                     <p className="text-gray-200 mt-2">
                                         <span className="text-goldt">4.2</span>{" "}
-                                        GTLS may terminate this Agreement and
+                                        Gold Tiger Group of Companies may terminate this Agreement and
                                         cease to provide the Services
                                         immediately if:{" "}
                                     </p>
@@ -618,7 +625,7 @@ export default function Terms(props) {
                                                 The Customer fails to rectify a
                                                 breach of this Agreement within
                                                 fourteen (14) days after being
-                                                given notice by GTLS requiring
+                                                given notice by Gold Tiger Group of Companies requiring
                                                 it to do so;
                                             </span>
                                         </li>
@@ -651,7 +658,7 @@ export default function Terms(props) {
                                             <span>
                                                 If in accordance with clause
                                                 18.1 the Customer receives a
-                                                credit score, which in GTLS's
+                                                credit score, which in Gold Tiger Group of Companies's
                                                 absolute discretion is deemed
                                                 too low or is indicative that
                                                 the Customer is likely to be a
@@ -675,7 +682,7 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                GTLS fails to rectify a breach
+                                                Gold Tiger Group of Companies fails to rectify a breach
                                                 of this Agreement within
                                                 fourteen (14) days after being
                                                 given notice by the Customer
@@ -687,7 +694,7 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                GTLS enters any arrangement with
+                                                Gold Tiger Group of Companies enters any arrangement with
                                                 its creditors or becomes subject
                                                 to external administration or
                                                 ceases to be able to pay its
@@ -700,7 +707,7 @@ export default function Terms(props) {
                                                 c.
                                             </span>
                                             <span>
-                                                GTLS ceases to carry on
+                                                Gold Tiger Group of Companies ceases to carry on
                                                 business.
                                             </span>
                                         </li>
@@ -727,7 +734,7 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                GTLS shall immediately cease
+                                                Gold Tiger Group of Companies shall immediately cease
                                                 providing the Services; and
                                             </span>
                                         </li>
@@ -756,17 +763,17 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.1</span>{" "}
                                         In consideration for performance of the
-                                        Services, the Customer shall pay to GTLS
+                                        Services, the Customer shall pay to Gold Tiger Group of Companies
                                         the Price for all Services in accordance
                                         with this Agreement.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.2</span>{" "}
-                                        GTLS may by giving notice to the
+                                        Gold Tiger Group of Companies may by giving notice to the
                                         Customer increase the Price of the
                                         Services to reflect any increase in the
-                                        cost to GTLS beyond the reasonable
-                                        control of GTLS (including, without
+                                        cost to Gold Tiger Group of Companies beyond the reasonable
+                                        control of Gold Tiger Group of Companies (including, without
                                         limitation, foreign exchange
                                         fluctuations, or increases in taxes or
                                         customs duties or insurance premiums or
@@ -774,7 +781,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.3</span>{" "}
-                                        GTLS may charge freight by weight,
+                                        Gold Tiger Group of Companies may charge freight by weight,
                                         measurement or value, and may at any
                                         time re-weigh, or revalue or remeasure
                                         or require the Goods to be re-weighed,
@@ -784,14 +791,14 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.4</span>{" "}
-                                        GTLS’s charges shall be considered
+                                        Gold Tiger Group of Companies’s charges shall be considered
                                         earned in the case of Goods for carriage
                                         as soon as the Goods are loaded and
                                         despatched from the Customer’s premises.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.5</span>{" "}
-                                        GTLS shall render a tax invoice to the
+                                        Gold Tiger Group of Companies shall render a tax invoice to the
                                         Customer for the Services specifying the
                                         Price at the end of each consignment or
                                         alternatively at the end of each week or
@@ -807,12 +814,12 @@ export default function Terms(props) {
                                         due thirty (30) days following the date
                                         of the invoice. If an invoice is not
                                         paid by the due date, interest will be
-                                        payable by the Customer to GTLS in
+                                        payable by the Customer to Gold Tiger Group of Companies in
                                         accordance with clause 16.1.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.7</span>{" "}
-                                        At GTLS’s sole discretion;
+                                        At Gold Tiger Group of Companies’s sole discretion;
                                     </p>
 
                                     <ul
@@ -835,7 +842,7 @@ export default function Terms(props) {
                                             <span>
                                                 Payment for approved Customers
                                                 shall be made by instalments in
-                                                accordance with GTLS’s payment
+                                                accordance with Gold Tiger Group of Companies’s payment
                                                 schedule
                                             </span>
                                         </li>
@@ -846,7 +853,7 @@ export default function Terms(props) {
                                         cheque, or by bank cheque, or by credit
                                         card (plus a CC surcharge fee), or by
                                         direct credit, or by any other method as
-                                        agreed to between the Customer and GTLS.
+                                        agreed to between the Customer and Gold Tiger Group of Companies.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">5.9</span>{" "}
@@ -872,7 +879,7 @@ export default function Terms(props) {
                                             <span>
                                                 Pay reasonable surcharges as
                                                 arising and in accordance with
-                                                GTLS’s written or verbal
+                                                Gold Tiger Group of Companies’s written or verbal
                                                 communication of a requirement
                                                 to do so to ensure safe,
                                                 compliant, profitable, carriage
@@ -885,11 +892,11 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Pay reasonable charges arising
-                                                and in accordance with GTLS’s
+                                                and in accordance with Gold Tiger Group of Companies’s
                                                 written or verbal communication
                                                 of a requirement to do so for
                                                 freight services arising that
-                                                have not been quoted by GTLS.
+                                                have not been quoted by Gold Tiger Group of Companies.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -916,7 +923,7 @@ export default function Terms(props) {
                                             <span>
                                                 Pay demurrage charges in
                                                 accordance with clause 9 where a
-                                                GTLS vehicle is unduly delayed
+                                                Gold Tiger Group of Companies vehicle is unduly delayed
                                                 at collection or delivery.
                                             </span>
                                         </li>
@@ -967,9 +974,9 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Pay fees without notice or prior
-                                                agreement between GTLS and the
+                                                agreement between Gold Tiger Group of Companies and the
                                                 Customer, where charges are
-                                                reasonably levied by GTLS for
+                                                reasonably levied by Gold Tiger Group of Companies for
                                                 unforeseen circumstances or are
                                                 incurred to directly mitigate a
                                                 higher consequential cost to the
@@ -990,7 +997,7 @@ export default function Terms(props) {
                                                 hire, recovery and or
                                                 replacement of all pallets
                                                 listed on consignment notes by
-                                                GTLS for transportation of the
+                                                Gold Tiger Group of Companies for transportation of the
                                                 Goods, where the Customer’s
                                                 equipment exchange or transfer
                                                 procedures fail, and
@@ -1034,13 +1041,13 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">6.1</span>{" "}
-                                        If the Customer instructs GTLS to use a
+                                        If the Customer instructs Gold Tiger Group of Companies to use a
                                         particular method of carriage whether by
-                                        road, rail, sea or air GTLS will give
+                                        road, rail, sea or air Gold Tiger Group of Companies will give
                                         priority to the method designated but if
                                         that method cannot conveniently be
-                                        adopted by GTLS the Customer shall be
-                                        deemed to authorise GTLS to carry or
+                                        adopted by Gold Tiger Group of Companies the Customer shall be
+                                        deemed to authorise Gold Tiger Group of Companies to carry or
                                         have the Goods carried by another method
                                         or methods.
                                     </p>
@@ -1050,14 +1057,14 @@ export default function Terms(props) {
                                         authorise any deviation from the usual
                                         route or manner of carriage of Goods
                                         that may in the absolute discretion of
-                                        GTLS be deemed reasonable or necessary
+                                        Gold Tiger Group of Companies be deemed reasonable or necessary
                                         in the circumstances.
                                     </p>
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">6.3</span>{" "}
                                         If a container has not been stowed by or
-                                        on behalf of GTLS, GTLS shall not be
+                                        on behalf of Gold Tiger Group of Companies, Gold Tiger Group of Companies shall not be
                                         liable for loss of or damage to the
                                         Goods caused by:
                                     </p>
@@ -1109,14 +1116,14 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                GTLS is authorised to deliver
+                                                Gold Tiger Group of Companies is authorised to deliver
                                                 the Goods at the address given
-                                                to GTLS by the Customer for that
+                                                to Gold Tiger Group of Companies by the Customer for that
                                                 purpose and it is expressly
-                                                agreed that GTLS shall be taken
+                                                agreed that Gold Tiger Group of Companies shall be taken
                                                 to have delivered the Goods in
                                                 accordance with this Agreement
-                                                if at that address GTLS obtains
+                                                if at that address Gold Tiger Group of Companies obtains
                                                 from any person a receipt or a
                                                 signed docket for delivery of
                                                 the Goods.
@@ -1127,21 +1134,21 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                If the address given to GTLS for
+                                                If the address given to Gold Tiger Group of Companies for
                                                 the purposes of delivery is
                                                 unattended at the time of
                                                 delivery, or if delivery cannot
-                                                be effected by GTLS (other than
+                                                be effected by Gold Tiger Group of Companies (other than
                                                 by reason of the negligence)
-                                                then GTLS may deposit the Goods
+                                                then Gold Tiger Group of Companies may deposit the Goods
                                                 at that address (which shall be
                                                 deemed to be delivery under this
                                                 Agreement) or store the Goods at
-                                                a place where GTLS deems
+                                                a place where Gold Tiger Group of Companies deems
                                                 necessary or appropriate to
                                                 store those Goods, and if the
                                                 Goods are stored the Customer
-                                                shall pay GTLS for all costs and
+                                                shall pay Gold Tiger Group of Companies for all costs and
                                                 expenses incurred of and
                                                 incidental to that Storage and
                                                 redelivery.
@@ -1153,7 +1160,7 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 The Customer agrees that the
-                                                person delivering any Goods GTLS
+                                                person delivering any Goods Gold Tiger Group of Companies
                                                 for carriage or transportation
                                                 and or Storage is authorised to
                                                 sign the documentation
@@ -1173,8 +1180,8 @@ export default function Terms(props) {
                                 </h1>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
-                                        The Customer hereby authorises GTLS (if
-                                        GTLS should think fit to do so) to
+                                        The Customer hereby authorises Gold Tiger Group of Companies (if
+                                        Gold Tiger Group of Companies should think fit to do so) to
                                         arrange with a Sub-Contractor for the
                                         carriage of any Goods that are the
                                         subject of this Agreement. Any such
@@ -1184,9 +1191,9 @@ export default function Terms(props) {
                                         Sub-Contractor, who shall there upon be
                                         entitled to the full benefit of these
                                         terms and conditions to the same extent
-                                        as GTLS. In so far as it may be
+                                        as Gold Tiger Group of Companies. In so far as it may be
                                         necessary to ensure that such
-                                        Sub-Contractor shall be so entitled GTLS
+                                        Sub-Contractor shall be so entitled Gold Tiger Group of Companies
                                         shall be deemed to enter into this
                                         Agreement for its own benefit and also
                                         as agent for the Sub-Contractor.
@@ -1203,7 +1210,7 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">8.1</span>{" "}
-                                        The Customer shall give GTLS not less
+                                        The Customer shall give Gold Tiger Group of Companies not less
                                         than fourteen (14) days prior written
                                         notice of any proposed change of
                                         ownership of the Customer, including any
@@ -1217,7 +1224,7 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">8.2</span>{" "}
                                         The Customer shall be liable for any
-                                        loss incurred by GTLS as a result of the
+                                        loss incurred by Gold Tiger Group of Companies as a result of the
                                         Customer’s failure to comply with this
                                         clause.
                                     </p>
@@ -1232,24 +1239,48 @@ export default function Terms(props) {
                                 </h1>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
-                                        The Customer will be and shall remain
-                                        responsible to GTLS for all its proper
-                                        charges incurred for any reason. A
-                                        charge may be made by GTLS in respect of
-                                        any delay in excess of thirty (30)
-                                        minutes in loading or unloading
-                                        occurring other than from the default of
-                                        GTLS. Such permissible delay period
-                                        shall commence upon GTLS reporting for
-                                        loading or unloading at the gate (as
-                                        opposed to the dock), ready to load or
-                                        unload. Labour to load or unload the
-                                        vehicle shall be the responsibility and
-                                        expense of the Customer or Consignee.
-                                        Unless otherwise agreed in writing
-                                        between the parties, demurrage shall be
-                                        payable by the Customer to GTLS at the
-                                        rate of $90 per hour.
+                                        The Customer will be and shall remain responsible to Gold Tiger Group of Companies for all its proper 
+                                        charges incurred for any reason. A charge may be made by Gold Tiger Group of Companies in respect of 
+                                        any delay in excess of thirty (30) minutes in loading or unloading occurring other than from the default of Gold 
+                                        Tiger Group of Companies. Such permissible delay period shall commence upon Gold Tiger Group of 
+                                        Companies reporting for loading or unloading at the gate (as opposed to the dock), ready to load or unload. 
+                                        Labour to load or unload the vehicle shall be the responsibility and expense of the Customer or Consignee. 
+                                        Unless otherwise agreed in writing between the parties, demurrage shall be payable by the Customer to Gold 
+                                        Tiger Group of Companies at the rate stated below:
+
+                                        <table className="min-w-full divide-y divide-gray-700">
+                   
+                                            <tbody className="divide-y divide-gray-800">
+                                            
+                                                <tr>
+                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                Rigid - Demurrage - After 30 Minutes or Part Thereof pick and delivery
+                                                </td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$1.41</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Vehicle Waiting allowance 30 minutes > Time thereafter charged per minute</td>
+                                                
+                                                </tr>
+                                                <tr>
+                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                Semi - Demurrage - After 60 Minutes or Part Thereof
+                                                </td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2.08</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 60 minutes > Time 
+thereafter charged per minute</td>
+                                                
+                                                </tr>
+                                                <tr>
+                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                B-Double - Demurrage - After 90 Minutes or Part Thereof
+                                                </td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2.91</td>
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 90 minutes > Time 
+thereafter charged per minute</td>
+                                                
+                                                </tr>
+                                            
+                                            </tbody>
+                                        </table>
                                     </p>
                                 </div>
                             </figure>
@@ -1263,10 +1294,10 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">10.1</span>{" "}
-                                        GTLS has a general lien on Goods the
+                                        Gold Tiger Group of Companies has a general lien on Goods the
                                         subject of this Agreement for all
                                         amounts due or which become due on any
-                                        account to GTLS by the Customer or its
+                                        account to Gold Tiger Group of Companies by the Customer or its
                                         Related Entities (as defined in the
                                         Corporations Act 2001 (Cth), whether for
                                         the Services or otherwise
@@ -1275,10 +1306,10 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">10.2</span>{" "}
                                         If any amounts due or which become due
-                                        by the Customer to GTLS are not paid, or
+                                        by the Customer to Gold Tiger Group of Companies are not paid, or
                                         the Customer fails to take delivery or
                                         return of any products and/or goods,
-                                        GTLS may without notice (and in the case
+                                        Gold Tiger Group of Companies may without notice (and in the case
                                         of perishable or dangerous products
                                         and/or goods immediately):
                                     </p>
@@ -1292,7 +1323,7 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                Store the Goods as GTLS thinks
+                                                Store the Goods as Gold Tiger Group of Companies thinks
                                                 fit at the Customer’s risk and
                                                 expense;
                                             </span>
@@ -1303,7 +1334,7 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Open any package and sell all or
-                                                any of the Goods as GTLS thinks
+                                                any of the Goods as Gold Tiger Group of Companies thinks
                                                 fit and apply the proceeds to
                                                 discharge the lien and costs of
                                                 sale;
@@ -1316,7 +1347,7 @@ export default function Terms(props) {
                                             <span>
                                                 Deduct or set-off any monies
                                                 (including the costs of storage
-                                                of any Goods) due to GTLS by the
+                                                of any Goods) due to Gold Tiger Group of Companies by the
                                                 Customer under any this
                                                 Agreement or otherwise; and/or
                                             </span>
@@ -1359,10 +1390,10 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 For so long as any monies owing
-                                                by the Customer to GTLS under
+                                                by the Customer to Gold Tiger Group of Companies under
                                                 this Agreement remain unpaid,
                                                 the Customer acknowledges that
-                                                GTLS maintains a Security
+                                                Gold Tiger Group of Companies maintains a Security
                                                 Interest in the Goods under the
                                                 PPSA and this Agreement shall
                                                 constitute a Security Agreement
@@ -1376,7 +1407,7 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 The Customer will, at the
-                                                request of GTLS, do anything
+                                                request of Gold Tiger Group of Companies, do anything
                                                 (including obtaining consents,
                                                 giving notices or directions to
                                                 any person, making amendments to
@@ -1385,17 +1416,17 @@ export default function Terms(props) {
                                                 document) for the purpose of (i)
                                                 ensuring that any Security
                                                 Interest granted by the Customer
-                                                to GTLS attaches to the Goods or
+                                                to Gold Tiger Group of Companies attaches to the Goods or
                                                 collateral intended to be
                                                 covered by that Security
                                                 Interest, is enforceable,
                                                 perfected and otherwise
                                                 effective, and has the priority
-                                                required by GTLS; (ii) enabling
-                                                GTLS to prepare and register a
+                                                required by Gold Tiger Group of Companies; (ii) enabling
+                                                Gold Tiger Group of Companies to prepare and register a
                                                 financing statement or financing
                                                 change statement or (iii)
-                                                enabling GTLS to exercise any of
+                                                enabling Gold Tiger Group of Companies to exercise any of
                                                 its rights or powers in
                                                 connection with any such
                                                 Security Interest.
@@ -1408,10 +1439,10 @@ export default function Terms(props) {
                                             <span>
                                                 The Customer will promptly
                                                 provide any information
-                                                requested by GTLS in connection
+                                                requested by Gold Tiger Group of Companies in connection
                                                 with any Security Interest
-                                                granted by the Customer to GTLS
-                                                to enable GTLS to exercise any
+                                                granted by the Customer to Gold Tiger Group of Companies
+                                                to enable Gold Tiger Group of Companies to exercise any
                                                 of its rights or powers or
                                                 perform any of its obligations
                                                 under the PPSA.
@@ -1436,7 +1467,7 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Except if section 275(7) of the
-                                                PPSA applies, each of GTLS and
+                                                PPSA applies, each of Gold Tiger Group of Companies and
                                                 the Customer agree not to
                                                 disclose any information of the
                                                 kind referred to in section
@@ -1450,7 +1481,7 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Despite anything contained in
-                                                this Agreement, GTLS is not
+                                                this Agreement, Gold Tiger Group of Companies is not
                                                 required to disclose any
                                                 information of the kind referred
                                                 to in section 275(1) of the
@@ -1463,17 +1494,17 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Anything that the Customer is
-                                                required by GTLS to do under
+                                                required by Gold Tiger Group of Companies to do under
                                                 this clause 10.4 must be done by
                                                 the Customer at its own expense.
                                                 The Customer agrees to reimburse
-                                                on demand GTLS’s costs
+                                                on demand Gold Tiger Group of Companies’s costs
                                                 (including all legal and other
                                                 professional costs (including
                                                 all legal and other professional
                                                 costs on a full indemnity basis)
                                                 in connection with any action
-                                                taken by GTLS under or in
+                                                taken by Gold Tiger Group of Companies under or in
                                                 connection with this clause
                                                 10.4.
                                             </span>
@@ -1492,12 +1523,12 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.1</span>{" "}
                                         Unless otherwise agreed in advance in
-                                        writing with GTLS the Customer or his
+                                        writing with Gold Tiger Group of Companies the Customer or his
                                         authorised agent shall not tender for
                                         carriage or for storage any explosive,
                                         inflammable or otherwise Dangerous
                                         Goods. The Customer shall be liable for
-                                        and hereby indemnifies GTLS for all loss
+                                        and hereby indemnifies Gold Tiger Group of Companies for all loss
                                         or damage whatsoever caused by any
                                         Dangerous Goods.
                                     </p>
@@ -1505,14 +1536,14 @@ export default function Terms(props) {
                                         <span className="text-goldt">11.2</span>{" "}
                                         If the parties agree that Dangerous
                                         Goods are to be carried or stored by
-                                        GTLS, then prior to each delivery of
+                                        Gold Tiger Group of Companies, then prior to each delivery of
                                         Goods or collection for storage, the
-                                        Customer shall provide to GTLS in
+                                        Customer shall provide to Gold Tiger Group of Companies in
                                         writing the precise details of the
                                         class, volume and packaging type of
                                         dangerous or hazardous Goods by way of
                                         an appropriate Material Safety Sheet and
-                                        Emergency Procedure Guide so that GTLS
+                                        Emergency Procedure Guide so that Gold Tiger Group of Companies
                                         in its absolute discretion may accept or
                                         decline to proceed with the transaction,
                                         and should it proceed, accordingly
@@ -1522,9 +1553,9 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.3</span>{" "}
-                                        In the event of discovery by GTLS of
+                                        In the event of discovery by Gold Tiger Group of Companies of
                                         hazardous or dangerous Goods not being
-                                        disclosed GTLS may hold the discovered
+                                        disclosed Gold Tiger Group of Companies may hold the discovered
                                         dangerous Goods at a nominated depot, at
                                         the expense of the Customer, for the
                                         Customer to then arrange appropriate
@@ -1535,12 +1566,12 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.4</span>{" "}
                                         In the event that the Customer fails or
-                                        neglects to notify GTLS of dangerous
+                                        neglects to notify Gold Tiger Group of Companies of dangerous
                                         goods presented for carriage, handling
                                         or Storage, then the Customer will be
                                         liable for all and any loss or losses
                                         attributable to that nondisclosure to
-                                        GTLS.
+                                        Gold Tiger Group of Companies.
                                     </p>
                                 </div>
                             </figure>
@@ -1554,18 +1585,18 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.1</span>{" "}
-                                        GTLS reserves the right to refuse at its
+                                        Gold Tiger Group of Companies reserves the right to refuse at its
                                         discretion the storage of any Goods.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.2</span>{" "}
                                         All goods are stored entirely at the
-                                        risk of the Customer and GTLS accepts no
+                                        risk of the Customer and Gold Tiger Group of Companies accepts no
                                         liability for the Goods whatsoever.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.3</span>{" "}
-                                        GTLS relies on the Customer to supply
+                                        Gold Tiger Group of Companies relies on the Customer to supply
                                         details of the description,
                                         pallet/space, weight, items, quantity,
                                         value and measurement and condition of
@@ -1573,7 +1604,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.4</span>{" "}
-                                        GTLS will not be liable for loss or
+                                        Gold Tiger Group of Companies will not be liable for loss or
                                         damage to the Goods for ullage up to and
                                         including an amount equal to two percent
                                         (2%) of the value of the Goods.
@@ -1591,20 +1622,20 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">13.1</span>{" "}
                                         The Customer agrees without exception,
-                                        that GTLS has no obligation or right,
+                                        that Gold Tiger Group of Companies has no obligation or right,
                                         nor liability, to manage pallet
                                         equipment hire on behalf of the
                                         Customer, the consignee, the consignor,
-                                        or its Sub-contractors. GTLS will record
+                                        or its Sub-contractors. Gold Tiger Group of Companies will record
                                         pallet equipment details on its
                                         consignment notes if they are provided
-                                        by the Customer, however GTLS cannot
+                                        by the Customer, however Gold Tiger Group of Companies cannot
                                         verify and does not admit to the
                                         accuracy of this information.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">13.2</span>{" "}
-                                        The Customer shall indemnify GTLS
+                                        The Customer shall indemnify Gold Tiger Group of Companies
                                         without limitation against claims for
                                         any loss or costs arising from pallet
                                         equipment control errors and failed
@@ -1624,7 +1655,7 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.1</span>{" "}
                                         It is agreed that the person delivering
-                                        any Goods to GTLS for carriage or
+                                        any Goods to Gold Tiger Group of Companies for carriage or
                                         forwarding is authorised to sign the
                                         consignment note for the Customer.
                                     </p>
@@ -1638,19 +1669,19 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.3</span>{" "}
-                                        GTLS is authorised to deliver the Goods
-                                        at the address given to GTLS by the
+                                        Gold Tiger Group of Companies is authorised to deliver the Goods
+                                        at the address given to Gold Tiger Group of Companies by the
                                         Customer for that purpose and it is
-                                        expressly agreed that GTLS shall be
+                                        expressly agreed that Gold Tiger Group of Companies shall be
                                         taken to have delivered the Goods in
                                         accordance with this contract if at that
-                                        address GTLS obtains from any person a
+                                        address Gold Tiger Group of Companies obtains from any person a
                                         receipt or a signed delivery docket for
                                         the Goods
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.4</span>{" "}
-                                        The Customer expressly warrants to GTLS
+                                        The Customer expressly warrants to Gold Tiger Group of Companies
                                         that the Customer is either the owner or
                                         the authorised agent of the owner of any
                                         Goods or property that is the subject
@@ -1663,7 +1694,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.5</span>{" "}
-                                        GTLS may deliver the Goods in separate
+                                        Gold Tiger Group of Companies may deliver the Goods in separate
                                         instalments (in accordance with the
                                         agreed delivery schedule). Each separate
                                         instalment shall be invoiced and paid
@@ -1679,7 +1710,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.7</span>{" "}
-                                        The failure of GTLS to deliver shall not
+                                        The failure of Gold Tiger Group of Companies to deliver shall not
                                         entitle the Customer to treat this
                                         Agreement as repudiated.
                                     </p>
@@ -1695,12 +1726,12 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.1</span>{" "}
-                                        GTLS is not a Common Carrier and will
+                                        Gold Tiger Group of Companies is not a Common Carrier and will
                                         accept no liability as such. All
                                         articles are carried or transported and
                                         all storage and other services are
-                                        performed by GTLS subject only to these
-                                        conditions and GTLS reserves the right
+                                        performed by Gold Tiger Group of Companies subject only to these
+                                        conditions and Gold Tiger Group of Companies reserves the right
                                         to refuse the carriage or transport of
                                         articles for any person, corporation or
                                         body, and the carriage or transport of
@@ -1708,15 +1739,15 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.2</span>{" "}
-                                        GTLS accepts no liability for, and the
-                                        Customer releases and indemnifies GTLS
+                                        Gold Tiger Group of Companies accepts no liability for, and the
+                                        Customer releases and indemnifies Gold Tiger Group of Companies
                                         against all loss, damage, costs and
                                         expense from any claim by the Customer
                                         in tort (including negligence),
                                         contract, bailment or otherwise for loss
                                         or damage to any property, injury to, or
                                         death of any person arising out of the
-                                        acts or omissions of GTLS, or any or all
+                                        acts or omissions of Gold Tiger Group of Companies, or any or all
                                         of the Goods, any delay, non-delivery or
                                         other failure to supply the Goods,
                                         deterioration, damage, contamination or
@@ -1726,7 +1757,7 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.3</span>{" "}
                                         Except as expressly provided in this
-                                        agreement, GTLS is not under any
+                                        agreement, Gold Tiger Group of Companies is not under any
                                         liability to the Customer in respect of
                                         any loss, damage, injury, claims,
                                         demands, costs or expenses, howsoever
@@ -1758,7 +1789,7 @@ export default function Terms(props) {
                                                 The Goods and Services are
                                                 provided, carried, handled, and
                                                 stored solely at the Customer's
-                                                risk, and GTLS is under no
+                                                risk, and Gold Tiger Group of Companies is under no
                                                 obligation to arrange insurance
                                                 to cover Goods and Services for
                                                 the Customer against any form of
@@ -1787,12 +1818,12 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 No claim may be made against
-                                                GTLS for failure to arrange
+                                                Gold Tiger Group of Companies for failure to arrange
                                                 insurance on behalf of the
                                                 Customer or for not insuring
                                                 Goods in transit, handling, and
                                                 storage or for outcomes of
-                                                Services provided by GTLS.
+                                                Services provided by Gold Tiger Group of Companies.
                                             </span>
                                         </li>
                                     </ul>
@@ -1804,18 +1835,18 @@ export default function Terms(props) {
                                         loss of or damage to the Goods
                                         (including but not limited to chilled,
                                         frozen, refrigerated or perishable
-                                        Goods), GTLS shall not be under any
+                                        Goods), Gold Tiger Group of Companies shall not be under any
                                         liability for any damage to, loss,
                                         deterioration, mis-delivery, delay in
                                         delivery or non-delivery of the Goods
                                         (whether the Goods are or have been in
-                                        the possession of GTLS or not) nor for
+                                        the possession of Gold Tiger Group of Companies or not) nor for
                                         any instructions, advice, information or
                                         service given or provided to any person,
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.6</span>{" "}
-                                        In no event shall GTLS be liable for any
+                                        In no event shall Gold Tiger Group of Companies be liable for any
                                         special, incidental, indirect or
                                         consequential damages (including,
                                         without limiting generality, damages for
@@ -1828,12 +1859,12 @@ export default function Terms(props) {
 
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.7</span>{" "}
-                                        The Customer shall indemnify GTLS from,
-                                        and defend and hold GTLS harmless from
+                                        The Customer shall indemnify Gold Tiger Group of Companies from,
+                                        and defend and hold Gold Tiger Group of Companies harmless from
                                         and against any and all damages, losses,
                                         liability and expenses (including
                                         reasonable legal fees) suffered or
-                                        incurred by any GTLS or to which GTLS
+                                        incurred by any Gold Tiger Group of Companies or to which Gold Tiger Group of Companies
                                         becomes subject, arising out of or
                                         relating to any claim:
                                     </p>
@@ -1847,7 +1878,7 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                GTLS shall not be liable for any
+                                                Gold Tiger Group of Companies shall not be liable for any
                                                 claims or damages arising from
                                                 the Customer's breach of its
                                                 representations or warranties
@@ -1859,7 +1890,7 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                GTLS shall not be liable for any
+                                                Gold Tiger Group of Companies shall not be liable for any
                                                 claims or damages relating to
                                                 personal injury or property
                                                 damage to any Customer employee,
@@ -1872,7 +1903,7 @@ export default function Terms(props) {
                                                 c.
                                             </span>
                                             <span>
-                                                GTLS shall not be liable for any
+                                                Gold Tiger Group of Companies shall not be liable for any
                                                 claims or damages relating to
                                                 claims by the Customer's
                                                 suppliers and/or third-party
@@ -1884,7 +1915,7 @@ export default function Terms(props) {
                                                 d.
                                             </span>
                                             <span>
-                                                GTLS shall not be liable for any
+                                                Gold Tiger Group of Companies shall not be liable for any
                                                 other claims or damages arising
                                                 from the Customer's business,
                                                 resources, or services.
@@ -1897,12 +1928,12 @@ export default function Terms(props) {
                                         this sub-clause 15.7 shall be reduced
                                         proportionally to the extent that any
                                         unlawful, wrongful, wilful or negligent
-                                        act or omission of GTLS caused or
+                                        act or omission of Gold Tiger Group of Companies caused or
                                         contributed to the liability or loss.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.9</span>{" "}
-                                        The Customer acknowledges that, GTLS’s
+                                        The Customer acknowledges that, Gold Tiger Group of Companies’s
                                         liability to the Customer arising out of
                                         or in connection with this Agreement
                                         (including the performance or
@@ -1918,7 +1949,7 @@ export default function Terms(props) {
                                         <span className="text-goldt">
                                             15.10
                                         </span>{" "}
-                                        GTLS shall be deemed to have been
+                                        Gold Tiger Group of Companies shall be deemed to have been
                                         discharged from all liability in respect
                                         of the Services whether under contract,
                                         in tort, in equity, under statute or
@@ -1933,12 +1964,12 @@ export default function Terms(props) {
                                         </span>{" "}
                                         The Customer undertakes that no claim or
                                         allegation shall be made against any
-                                        servant or agent of GTLS which attempts
+                                        servant or agent of Gold Tiger Group of Companies which attempts
                                         to impose upon any of them any liability
                                         whatsoever in connection with the Goods
                                         and, if any such claim or allegation
                                         should nevertheless be made, to
-                                        indemnify GTLS and any such servant or
+                                        indemnify Gold Tiger Group of Companies and any such servant or
                                         agent against all consequences thereof.
                                     </p>
                                     <p className="text-gray-200 mb-2">
@@ -1959,14 +1990,14 @@ export default function Terms(props) {
                                         <span className="text-goldt">
                                             15.13
                                         </span>{" "}
-                                        Liability of GTLS arising out of any one
+                                        Liability of Gold Tiger Group of Companies arising out of any one
                                         incident whether or not there has been
                                         any declaration of value of the Goods,
                                         for breach of warranty implied into
                                         these terms and conditions by the
                                         Australian Consumer Law or howsoever
                                         arising, is limited to any of the
-                                        following as determined by GTLS;
+                                        following as determined by Gold Tiger Group of Companies;
                                     </p>
 
                                     <ul
@@ -1978,7 +2009,7 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                GTLS may, at its discretion,
+                                                Gold Tiger Group of Companies may, at its discretion,
                                                 supply the Services again.
                                             </span>
                                         </li>
@@ -1987,7 +2018,7 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                GTLS may, at its discretion, pay
+                                                Gold Tiger Group of Companies may, at its discretion, pay
                                                 the cost of having the Services
                                                 supplied again.
                                             </span>
@@ -2028,29 +2059,29 @@ export default function Terms(props) {
                                         <span className="text-goldt">16.2</span>{" "}
                                         If the Customer defaults in payment of
                                         any invoice when due, the Customer shall
-                                        indemnify GTLS from and against all
-                                        costs and disbursements incurred by GTLS
+                                        indemnify Gold Tiger Group of Companies from and against all
+                                        costs and disbursements incurred by Gold Tiger Group of Companies
                                         in pursuing the debt including legal
                                         costs on a solicitor and own client
-                                        basis and GTLS’s collection agency
+                                        basis and Gold Tiger Group of Companies’s collection agency
                                         costs.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.3</span>{" "}
                                         Without prejudice to any other remedies
-                                        GTLS may have, if at any time the
+                                        Gold Tiger Group of Companies may have, if at any time the
                                         Customer is in breach of any obligation
                                         (including those relating to payment),
-                                        GTLS may suspend or terminate the supply
+                                        Gold Tiger Group of Companies may suspend or terminate the supply
                                         of Services to the Customer and any of
                                         its other obligations under the terms
                                         and conditions.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.4</span>{" "}
-                                        GTLS will not be liable to the Customer
+                                        Gold Tiger Group of Companies will not be liable to the Customer
                                         for any loss or damage the Customer
-                                        suffers because GTLS exercised its
+                                        suffers because Gold Tiger Group of Companies exercised its
                                         rights under this clause.
                                     </p>
                                     <p className="text-gray-200 mb-3">
@@ -2065,13 +2096,13 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.6</span>{" "}
-                                        Without prejudice to GTLS’s other
-                                        remedies at law GTLS shall be entitled
+                                        Without prejudice to Gold Tiger Group of Companies’s other
+                                        remedies at law Gold Tiger Group of Companies shall be entitled
                                         to cancel all or any part of any order
                                         of the Customer which remains
                                         unperformed in addition to and without
                                         prejudice to any other remedies and all
-                                        amounts owing to GTLS shall, whether or
+                                        amounts owing to Gold Tiger Group of Companies shall, whether or
                                         not due for payment, become immediately
                                         payable in the event that:
                                     </p>
@@ -2084,8 +2115,8 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                If any money payable to GTLS
-                                                becomes overdue, or in GTLS’s
+                                                If any money payable to Gold Tiger Group of Companies
+                                                becomes overdue, or in Gold Tiger Group of Companies’s
                                                 opinion the Customer will be
                                                 unable to meet its payments as
                                                 they fall due.
@@ -2133,7 +2164,7 @@ export default function Terms(props) {
                                         <span className="text-goldt">17.1</span>{" "}
                                         Despite anything to the contrary
                                         contained herein or any other rights
-                                        which GTLS may have howsoever:
+                                        which Gold Tiger Group of Companies may have howsoever:
                                     </p>
 
                                     <ul
@@ -2154,7 +2185,7 @@ export default function Terms(props) {
                                                 and/or charge all of their joint
                                                 and/or several interest in the
                                                 said land, realty or any other
-                                                asset to GTLS or its nominee to
+                                                asset to Gold Tiger Group of Companies or its nominee to
                                                 secure.
                                             </span>
                                         </li>
@@ -2167,8 +2198,8 @@ export default function Terms(props) {
                                                 obligations payable under the
                                                 terms and conditions. The
                                                 Customer and/or the Guarantor
-                                                acknowledge and agree that GTLS
-                                                (or GTLS’s nominee) shall be
+                                                acknowledge and agree that Gold Tiger Group of Companies
+                                                (or Gold Tiger Group of Companies’s nominee) shall be
                                                 entitled to lodge where
                                                 appropriate a caveat, which
                                                 caveat shall be released once
@@ -2182,12 +2213,12 @@ export default function Terms(props) {
                                                 c.
                                             </span>
                                             <span>
-                                                Should GTLS elect to proceed in
+                                                Should Gold Tiger Group of Companies elect to proceed in
                                                 any manner in accordance with
                                                 this clause and/or its
                                                 subclauses, the Customer and/or
-                                                Guarantor shall indemnify GTLS
-                                                from and against all GTLS’s
+                                                Guarantor shall indemnify Gold Tiger Group of Companies
+                                                from and against all Gold Tiger Group of Companies’s
                                                 costs and disbursements
                                                 including legal costs on a
                                                 solicitor and own client basis.
@@ -2201,7 +2232,7 @@ export default function Terms(props) {
                                                 The Customer and/or the
                                                 Guarantor (if any) agree to
                                                 irrevocably nominate constitute
-                                                and appoint GTLS or GTLS’s
+                                                and appoint Gold Tiger Group of Companies or Gold Tiger Group of Companies’s
                                                 nominee as the Customer’s and/or
                                                 Guarantor’s true and lawful
                                                 attorney to perform all
@@ -2224,16 +2255,16 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">18.1</span>{" "}
                                         The Customer and/or the Guarantor/s
-                                        agree for GTLS to obtain from a credit
+                                        agree for Gold Tiger Group of Companies to obtain from a credit
                                         reporting agency a credit report
                                         containing personal credit information
                                         about the Customer and Guarantor/s in
-                                        relation to credit provided by GTLS.
+                                        relation to credit provided by Gold Tiger Group of Companies.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">18.2</span>{" "}
                                         The Customer and/or the Guarantor/s
-                                        agree that GTLS may exchange information
+                                        agree that Gold Tiger Group of Companies may exchange information
                                         about the Customer and the Guarantor/s
                                         with those credit providers either named
                                         as trade referees by the Customer or
@@ -2289,7 +2320,7 @@ export default function Terms(props) {
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">18.3</span>{" "}
-                                        The Customer consents to GTLS being
+                                        The Customer consents to Gold Tiger Group of Companies being
                                         given a consumer credit report to
                                         collect overdue payment on commercial
                                         credit (Section 18K(1)(h) Privacy Act
@@ -2300,9 +2331,9 @@ export default function Terms(props) {
                                         <span className="text-goldt">18.4</span>{" "}
                                         The Customer agrees that personal credit
                                         information provided may be used and
-                                        retained by GTLS for the following
+                                        retained by Gold Tiger Group of Companies for the following
                                         purposes and for other purposes as shall
-                                        be agreed between the Customer and GTLS
+                                        be agreed between the Customer and Gold Tiger Group of Companies
                                         or required by law from time to time:
                                     </p>
 
@@ -2321,7 +2352,7 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                Marketing of Services by GTLS,
+                                                Marketing of Services by Gold Tiger Group of Companies,
                                                 its agents or distributors in
                                                 relation to the Services.
                                             </span>
@@ -2367,7 +2398,7 @@ export default function Terms(props) {
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">18.5</span>{" "}
-                                        GTLS may give information about the
+                                        Gold Tiger Group of Companies may give information about the
                                         Customer to a credit reporting agency
                                         for the following purposes:
                                     </p>
@@ -2410,7 +2441,7 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">19.1</span>{" "}
-                                        GTLS may cancel any Services to which
+                                        Gold Tiger Group of Companies may cancel any Services to which
                                         these terms and conditions apply or
                                         cancel delivery of Goods at any time
                                         before the Goods are delivered by giving
@@ -2418,7 +2449,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">19.2</span>{" "}
-                                        GTLS shall not be liable for any loss or
+                                        Gold Tiger Group of Companies shall not be liable for any loss or
                                         damage whatever arising from such
                                         cancellation.
                                     </p>
@@ -2426,14 +2457,14 @@ export default function Terms(props) {
                                         <span className="text-goldt">19.3</span>{" "}
                                         In the event that the Customer cancels
                                         delivery of Goods the Customer shall be
-                                        liable for any loss incurred by GTLS
+                                        liable for any loss incurred by Gold Tiger Group of Companies
                                         (including, but not limited to, any loss
                                         of profits) up to the time of
                                         cancellation. Subject to clause 10, all
                                         and any monies owing by the Customer to
-                                        GTLS must be paid in full before any
-                                        Goods held by GTLS at the time of
-                                        cancellation are released by GTLS to the
+                                        Gold Tiger Group of Companies must be paid in full before any
+                                        Goods held by Gold Tiger Group of Companies at the time of
+                                        cancellation are released by Gold Tiger Group of Companies to the
                                         Customer.
                                     </p>
                                 </div>
@@ -2450,15 +2481,15 @@ export default function Terms(props) {
                                         <span className="text-goldt">20.1</span>{" "}
                                         The Customer acknowledges that all
                                         rights, title and interests in and to
-                                        GTLS Intellectual Property Rights,
+                                        Gold Tiger Group of Companies Intellectual Property Rights,
                                         including all modifications, changes and
                                         enhancements to the Intellectual
                                         Property Rights, are and shall be the
-                                        sole and exclusive property of GTLS or
+                                        sole and exclusive property of Gold Tiger Group of Companies or
                                         its licensor. The Customer hereby
                                         assigns, and shall cause its employees,
                                         agents and contractors to assign to
-                                        GTLS, all rights, title and interest in
+                                        Gold Tiger Group of Companies, all rights, title and interest in
                                         and to the Intellectual Property Rights
                                         including all modifications, changes and
                                         enhancements thereto.
@@ -2466,12 +2497,12 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">20.2</span>{" "}
                                         Notwithstanding anything to the contrary
-                                        in this Agreement or otherwise, GTLS
+                                        in this Agreement or otherwise, Gold Tiger Group of Companies
                                         shall retain all right, title and
                                         interest in and to any and all ideas,
                                         concepts, know-how, development tools,
                                         methodologies, processes, procedures,
-                                        technologies or algorithms ("GTLS
+                                        technologies or algorithms ("Gold Tiger Group of Companies
                                         Know-How").
                                     </p>
                                     <p className="text-gray-200 mb-3">
@@ -2492,7 +2523,7 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.1</span>{" "}
                                         In consideration of the Customer
-                                        contracting with GTLS, the Guarantor/s,
+                                        contracting with Gold Tiger Group of Companies, the Guarantor/s,
                                         evidenced by the Guarantor's signature
                                         to this Agreement, jointly and severally
                                         guarantee the performance by the
@@ -2501,7 +2532,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.2</span>{" "}
-                                        The Guarantor indemnifies GTLS against
+                                        The Guarantor indemnifies Gold Tiger Group of Companies against
                                         any cost or loss whatsoever arising as a
                                         result of the default by the Customer in
                                         performing its obligations under this
@@ -2509,13 +2540,13 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.3</span>{" "}
-                                        GTLS may seek to recover any loss from
+                                        Gold Tiger Group of Companies may seek to recover any loss from
                                         the Guarantor before seeking recovery
                                         from the Customer and any settlement or
                                         compromise with the Customer will not
                                         release the Guarantor from the
                                         obligation to pay any balance that may
-                                        be owing to GTLS
+                                        be owing to Gold Tiger Group of Companies
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.4</span>{" "}
@@ -2524,7 +2555,7 @@ export default function Terms(props) {
                                         administrators and assigns and the
                                         benefit of the guarantee is available to
                                         any assignee of the benefit of this
-                                        Agreement by GTLS.
+                                        Agreement by Gold Tiger Group of Companies.
                                     </p>
                                 </div>
                             </figure>
@@ -2802,16 +2833,16 @@ export default function Terms(props) {
                                         The Customer shall not be entitled to
                                         set off against or deduct from the Price
                                         any sums owed or claimed to be owed to
-                                        the Customer by GTLS.
+                                        the Customer by Gold Tiger Group of Companies.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">23.5</span>{" "}
-                                        GTLS reserves the right to review these
+                                        Gold Tiger Group of Companies reserves the right to review these
                                         terms and conditions at any time. If,
                                         following any such review, there is to
                                         be any change to these terms and
                                         conditions, then that change will take
-                                        effect from the date on which GTLS
+                                        effect from the date on which Gold Tiger Group of Companies
                                         notifies the Customer of such change.
                                     </p>
                                     <p className="text-gray-200 mb-3">
@@ -2835,10 +2866,10 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">23.8</span>{" "}
-                                        The failure by GTLS to enforce any
+                                        The failure by Gold Tiger Group of Companies to enforce any
                                         provision of these terms and conditions
                                         shall not be treated as a waiver of that
-                                        provision, nor shall it affect GTLS’s
+                                        provision, nor shall it affect Gold Tiger Group of Companies’s
                                         right to subsequently enforce that
                                         provision.
                                     </p>
@@ -2858,9 +2889,9 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">1.</span>{" "}
-                                        GTLS is committed to providing you with
+                                        Gold Tiger Group of Companies is committed to providing you with
                                         the best possible customer service
-                                        experience. GTLS is bound by the Privacy
+                                        experience. Gold Tiger Group of Companies is bound by the Privacy
                                         Act 1988 (Cth), which sets out a number
                                         of principles concerning the privacy of
                                         individuals
@@ -2873,7 +2904,7 @@ export default function Terms(props) {
                                         There are many aspects of the site which
                                         can be viewed without providing personal
                                         information, however, for access to
-                                        future GTLS customer support features
+                                        future Gold Tiger Group of Companies customer support features
                                         you are required to submit personally
                                         identifiable information. This may
                                         include but not be limited to a unique
@@ -2894,7 +2925,7 @@ export default function Terms(props) {
                                         shipping. Those companies will be
                                         permitted to obtain only the personal
                                         information they need to deliver the
-                                        service. GTLS takes reasonable steps to
+                                        service. Gold Tiger Group of Companies takes reasonable steps to
                                         ensure that these Organisations are
                                         bound by confidentiality and privacy
                                         obligations in relation to the
@@ -2954,7 +2985,7 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">7.</span>{" "}
-                                        GTLS reserves the right to make
+                                        Gold Tiger Group of Companies reserves the right to make
                                         amendments to this Privacy Policy at any
                                         time. If you have objections to the
                                         Privacy Policy, you should not access or
@@ -2970,7 +3001,7 @@ export default function Terms(props) {
                                         allowed by law. If you would like to do
                                         so, please let us know. You may be
                                         required to put your request in writing
-                                        for security reasons. GTLS reserves the
+                                        for security reasons. Gold Tiger Group of Companies reserves the
                                         right to charge a fee for searching for,
                                         and providing access to, your
                                         information on a per request basis.
@@ -2980,13 +3011,13 @@ export default function Terms(props) {
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">9.</span>{" "}
-                                        Gold Tiger Logistics Solutions welcomes
+                                        Gold Tiger Group of Companies welcomes
                                         your comments regarding this Privacy
                                         Policy. If you have any questions about
                                         this Privacy Policy and would like
                                         further information, please contact our
                                         Managing Director by email
-                                        imad@gtls.com.au
+                                        imad@Gold Tiger Group of Companies.com.au
                                     </p>
                                 </div>
                             </figure>
