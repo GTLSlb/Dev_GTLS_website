@@ -344,7 +344,19 @@ export default function MainSidebar({
         setIsModalOpen(isModalCurrentlyOpen);
         setMobileMenuOpen(false);
     };
-
+    const handleLogout = () => {
+        const isLoggingOut = true;
+        axios
+            .post("/logoutAPI", isLoggingOut)
+            .then((response) => {
+                if (response.status == 200) {
+                    window.location.href = "/login";
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
     return (
         <div>
             <div className="hidden md:flex md:flex-shrink-0 h-full fixed top-0 left-0 z-50 w-auto h-screen">
@@ -441,9 +453,11 @@ export default function MainSidebar({
                                 </button>
                             </a>
 
+                            <button
+                                className="text-white"
+                                onClick={() => handleLogout()}
+                            >
                             <ResponsiveNavLink
-                                method="post"
-                                href={route("logout")}
                                 as="button"
                                 className="flex flex-col hover:bg-gray-900 hover:text-white"
                             >
@@ -452,6 +466,7 @@ export default function MainSidebar({
                                     LOGOUT
                                 </span>
                             </ResponsiveNavLink>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -763,17 +778,20 @@ export default function MainSidebar({
                                         <span className="mt-2">Support</span>
                                     </button>
                                 </a>
-                                <ResponsiveNavLink
-                                    method="post"
-                                    href={route("logout")}
-                                    as="button"
-                                    className="flex flex-col hover:bg-gray-900 hover:text-white w-8 h-14"
-                                >
-                                    <ArrowRightOnRectangleIcon className="w-7 ml-2 text-gray-400" />
-                                    <span className="text-xs text-gray-400">
-                                        LOGOUT
-                                    </span>
-                                </ResponsiveNavLink>
+                                <button
+                                className="text-white"
+                                onClick={() => handleLogout()}
+                            >
+                            <ResponsiveNavLink
+                                as="button"
+                                className="flex flex-col hover:bg-gray-900 hover:text-white"
+                            >
+                                <ArrowRightOnRectangleIcon className="w-7 ml-2 text-gray-400" />
+                                <span className="text-xs text-gray-400">
+                                    LOGOUT
+                                </span>
+                            </ResponsiveNavLink>
+                            </button>
                             </Dialog.Panel>
                         </Transition.Child>
                         <div className="w-14 flex-shrink-0" aria-hidden="true">

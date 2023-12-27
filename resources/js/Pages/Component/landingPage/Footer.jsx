@@ -86,6 +86,24 @@ const navigation = {
     ],
 };
 
+const data = [
+    {
+        id: 0,
+        label: "GTLS Capability Statement",
+        href: "/capabilitystatement",
+    },
+    {
+        id: 1,
+        label: "Trading Terms and Conditions",
+        href: "/terms",
+    },
+    {
+        id: 2,
+        label: "GTLS Pallets T&C",
+        href: "/palletterms",
+    },
+];
+
 export default function Footer() {
     return (
         <footer
@@ -117,8 +135,7 @@ export default function Footer() {
                                         >
                                             <a
                                                 href={item.href}
-                                                target="blank"
-                                                className="text-goldl hover:text-goldt "
+                                                className="text-sm leading-6 text-goldl hover:text-white"
                                             >
                                                 <span className="sr-only">
                                                     {item.name}
@@ -142,28 +159,8 @@ export default function Footer() {
                                             Download Our Catalogue
                                         </a>
                                     </div>
-                                </div>
-
-                                <div className="mt-10 md:mt-0">
-                                    <div className=" space-y-4">
-                                        <a
-                                            href={"/terms"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            Trading Terms and Conditions
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="mt-10 md:mt-0">
-                                    <div className=" space-y-4">
-                                        <a
-                                            href={"/palletterms"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            GTLS Pallets T&C
-                                        </a>
-                                    </div>
-                                </div>
+                                ))}
+                                
                             </div>
                         </div>
                     </div>
