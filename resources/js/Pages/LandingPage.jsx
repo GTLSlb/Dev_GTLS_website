@@ -133,6 +133,7 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
+
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (

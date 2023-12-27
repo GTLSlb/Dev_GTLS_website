@@ -350,8 +350,8 @@ export default function MainSidebar({
             .post("/logoutAPI", isLoggingOut)
             .then((response) => {
                 if (response.status == 200) {
-                    window.location.href = '/';
-                 }
+                    window.location.href = "/login";
+                }
             })
             .catch((error) => {
                 console.log(error);

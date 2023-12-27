@@ -109,7 +109,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->flush();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/');
     }
 }
 ?>

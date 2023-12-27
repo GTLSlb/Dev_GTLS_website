@@ -46,15 +46,14 @@ class CustomAuth extends Middleware
     {
         $hasSession = $request->hasSession();
         if ($hasSession) {
-            //$session = $request->session();
             $sessionToken = $request->session()->token();
             $path = $request->path();
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
             // Allow access to the login route
-            if ($path == 'login' || $path == 'loginapi') {
+            if ($path == 'login' || $path == 'loginapi' || $path !== 'forgot-password' || $path !== 'logoutAPI') {
                 return $next($request);
             }
-            if ($path !== 'login' && $path !== '/' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+            if(!$request->session()->has('user')) {
                 return redirect()->route('login');
             }
         } else {
