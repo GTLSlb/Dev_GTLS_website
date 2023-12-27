@@ -11,7 +11,7 @@ const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
     { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/#contact", ref: "contact" },
+    { name: "Contact Us", href: "/contact_us", ref: "contact" },
 ];
  
 const handleClick = () => {
@@ -62,22 +62,23 @@ export default function Newss(props) {
                 </div>
                 <News />
 
-                <div className=" relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8 mt-10">
+                {/* <div className=" relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8 mt-10">
                     <figure className="mb-10">
                         <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                            {/* Media */}
+                           
                         </h1>
                     </figure>
                     
                     <Video />
-                    {/* <figure className="mb-10">
+                    
+                    
+                
+                </div> */}
+                {/* <figure className="mb-10">
                         <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
                             News
                         </h1>
                     </figure> */}
-                    
-                
-                </div>
                 
                 <Footer />
             </div>

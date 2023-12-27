@@ -11,7 +11,7 @@ const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/about", ref: "about" },
     { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/#contact", ref: "contact" },
+    { name: "Contact Us", href: "/contact_us", ref: "contact" },
 ];
 
 const handleClick = () => {

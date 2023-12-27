@@ -55,7 +55,7 @@ const features = [
 
 export default function PrimaryServices() {
     return (
-        <div className="bg-dark mt-2 pb-12 ">
+        <div className="bg-dark mt-[100px] pb-12 " id="services">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto pt-10 w-full">
                     <p className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">

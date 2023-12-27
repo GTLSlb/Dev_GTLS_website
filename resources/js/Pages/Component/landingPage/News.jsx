@@ -429,7 +429,7 @@ export default function News() {
 
     console.log(postss);
     return (
-        <div>
+        <div className="pb-20">
             <div className=" h-20" id="news"></div>
             <div className="bg-dark">
                 <div className="absolute ">
@@ -491,7 +491,7 @@ export default function News() {
 
                         </div> */}
 
-                        <div className="grid grid-cols-3 gap-4">
+                        <div className="grid lg:grid-cols-3 gap-4">
                         {posts.map((post) => (
                                 <div key={post.id} className="px-5  ">
                                     <Link href={route("news", { id: post.id })} className="">

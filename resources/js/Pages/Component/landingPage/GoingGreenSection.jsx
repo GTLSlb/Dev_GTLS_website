@@ -16,9 +16,7 @@ return(
                                 <h2 className="gradient-text py-5 text-4xl font-bold">
                                 GTLS Towards a Green  Future
                                 </h2>
-                                <h1 className="gradient-text py-5 text-4xl font-bold">
-                                GTLS Towards A Green Future
-
+                      
                                 <p className="mt-2 text-smooth">
                                     Gold Tiger is working toward a more
                                     sustained future by managing the risks of
