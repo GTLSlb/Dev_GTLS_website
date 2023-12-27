@@ -53,8 +53,8 @@ class CustomAuth extends Middleware
             if ($path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'logoutAPI') {
                 return $next($request);
             }
-            if(!$request->session()->has('user')) {
-                return redirect()->route('login');
+            if($request->session()->has('user')==false) {
+                return redirect('/login');
             }
         } else {
             if ($request->path() == 'login' || $request->path() == 'loginapi') {
