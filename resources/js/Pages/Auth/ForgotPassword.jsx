@@ -33,7 +33,7 @@ export default function ForgotPassword({ status }) {
     const [inputs, setInputs] = useState(Array(6).fill(""));
     const [isDisabled, setIsDisabled] = useState(false);
     const [timeLeft, setTimeLeft] = useState(60); // 60 seconds cooldown
-
+    const [errorMessage, setErrorMessage] = useState();
     const gtamUrl = window.Laravel.gtamUrl;
     useEffect(() => {
         let timer = null;
@@ -85,6 +85,7 @@ export default function ForgotPassword({ status }) {
                 },
             })
             .then((res) => {
+                setErrorMessage("");
                 setOTPLoading(false);
                 setCheckEmail(false);
                 setCheckOTP(true);
@@ -92,7 +93,7 @@ export default function ForgotPassword({ status }) {
             })
             .catch((err) => {
                 setOTPLoading(false);
-                console.log(err);
+                setErrorMessage(err.response.data.Message);
             });
     };
 
@@ -217,7 +218,9 @@ export default function ForgotPassword({ status }) {
                     )}
                 </form>
             )}
-
+            {errorMessage && (
+                <div className="py-2 text-red-600">{errorMessage}</div>
+            )}
             {checkEmail && (
                 <div className="p-10">
                     <button

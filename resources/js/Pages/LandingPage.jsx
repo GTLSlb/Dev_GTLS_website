@@ -24,9 +24,7 @@ export default function LandingPage({}) {
         axios
             .get("/users")
             .then((res) => {
-                console.log(res.data);
                 setcurrentUser(res.data);
-                console.log(res.data)
             })
             .catch((error) => console.log(error));
     }, []);
@@ -83,7 +81,6 @@ export default function LandingPage({}) {
     const handleSearch = (event) => {
         const searchInput = event.target.value.toLowerCase();
         setSearchTerm(searchInput);
-        console.log(apps);
         const filtered = apps.filter(
             (app) =>
                 app.AppName.toLowerCase().includes(searchInput) ||
@@ -136,7 +133,6 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
-console.log(filteredApps)
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
