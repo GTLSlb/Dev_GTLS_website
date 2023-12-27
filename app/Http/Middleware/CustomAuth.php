@@ -35,7 +35,7 @@ class CustomAuth extends Middleware
         $passwordInput = $credentials['PasswordInput'];
         // Compare the provided credentials with the user's credentials
 
-        if ($emailDb == $emailInput) {
+        if (strtolower($emailDb) == strtolower($emailInput)) {
             return true; // Validation successful
         }
 
@@ -46,16 +46,15 @@ class CustomAuth extends Middleware
     {
         $hasSession = $request->hasSession();
         if ($hasSession) {
-            //$session = $request->session();
             $sessionToken = $request->session()->token();
             $path = $request->path();
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
             // Allow access to the login route
-            if ($path == 'login' || $path == 'loginapi') {
+            if ($path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'logoutAPI') {
                 return $next($request);
             }
-            if ($path !== 'login' && $path !== '/' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
-                return redirect()->route('login');
+            if($request->session()->has('user')==false) {
+                return redirect('/login');
             }
         } else {
             if ($request->path() == 'login' || $request->path() == 'loginapi') {

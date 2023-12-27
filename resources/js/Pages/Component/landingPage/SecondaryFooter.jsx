@@ -20,7 +20,7 @@ const navigation = {
         { name: "About", href: "/#about" },
         { name: "Services", href: "/#services" },
         { name: "News", href: "/#news" },
-        { name: "Contact", href: "/#contact" },
+        { name: "Contact", href: "/contact_us" },
     ],
     support: [
         { name: "Trading Terms and Conditions", href: "/download-docx" },

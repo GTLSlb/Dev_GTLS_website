@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\FileController;
 use App\Http\Controllers\AzureAuthController;
 use App\Http\Controllers\SendDailyEmail;
+use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,35 +41,39 @@ Route::get('/', function () {
 
 Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
 
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
+Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
 
-Route::get('/landingPage', function () {
+Route::match(['get', 'post'], '/landingPage', function () {
+    if (request()->isMethod('post')) {
+        return redirect('/');
+    }
+    
     return Inertia::render('LandingPage');
-})->middleware(['custom.auth'])->name('landing.page');
+})->middleware(['custom'])->name('landing.page');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['custom.auth'])->name('dashboard');
+})->middleware(['custom'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['custom.auth'])->name('gtms');
+})->middleware(['custom'])->name('gtms');
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['custom.auth'])->name('gtam');
+})->middleware(['custom'])->name('gtam');
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['custom.auth'])->name('gtrs');
+})->middleware(['custom'])->name('gtrs');
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['custom.auth'])->name('gtw');
+})->middleware(['custom'])->name('gtw');
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
-// })->middleware(['custom.auth'])->name('layout');
+// })->middleware(['custom'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -90,6 +95,30 @@ Route::get('/capabilitystatement', function () {
     return Inertia::render('Capability');
 })->name('capabilitystatement');
 
+Route::get('/aboutus', function () {
+    return Inertia::render('Aboutus');
+})->name('aboutus');
+
+Route::get('/safetycompliance', function () {
+    return Inertia::render('SafetyCompliance');
+})->name('safetycompliance');
+
+Route::get('/news', function () {
+    return Inertia::render('NewsMedia');
+})->name('news');
+
+Route::get('/technologies', function () {
+    return Inertia::render('Technologies');
+})->name('technologies');
+
+Route::get('/contact_us', function () {
+    return Inertia::render('ContactUsPage');
+})->name('contact_us');
+
+
+
+Route::resource('posts', BlogController::class);
+// Route::resource('post', BlogController::class,'post');
 // Route::get('/news', function () {
 //     return Inertia::render('NewsPage');
 // })-> name('news');
@@ -103,11 +132,11 @@ Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'
 Route::post('/support', [SupportFormController::class, 'submitSupportForm'])->name('support.submit');
 
 Route::get('/download-docx', function () {
-    $pathToFile = public_path('pdf/20230630-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf');
+    $pathToFile = public_path('docs/20230913-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf');
     $headers = array(
         'Content-Type: application/pdf',
     );
-    return response()->download($pathToFile, '20230630-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf', $headers);
+    return response()->download($pathToFile, '20230913-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf', $headers);
 });
 // Route::post('/auth/azure', function (Request $request) {
 //     $data = $request->json()->all();
@@ -119,11 +148,11 @@ Route::get('/download-docx', function () {
 // });
 
 Route::get('/downloadGTLS-Pallets', function () {
-    $pathToFile = public_path('docs/GTLS Pallet Trading Policy 2023_08_23.pdf');
+    $pathToFile = public_path('docs/GTLS Pallet Trading Policy 14-12-23.pdf');
     $headers = array(
         'Content-Type: application/docx',
     );
-    return response()->download($pathToFile, 'GTLS Pallet Trading Policy 2023_08_23.pdf', $headers);
+    return response()->download($pathToFile, 'GTLS Pallet Trading Policy 14-12-23.pdf', $headers);
 });
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
@@ -145,11 +174,11 @@ Route::post('/upload', function (Request $request) {
 });
 
 Route::get('/downloadGTLS-docx', function () {
-    $pathToFile = public_path('docs/Gold-Tiger-Capability-Statement-2020-12-24.pdf');
+    $pathToFile = public_path('docs/Goldtiger-catalogue.pdf');
     $headers = array(
-        'Content-Type: application/docx',
+        'Content-Type: application/pdf',
     );
-    return response()->download($pathToFile, 'Gold-Tiger-Capability-Statement-2020-12-24.pdf', $headers);
+    return response()->download($pathToFile, 'Goldtiger-catalogue.pdf', $headers);
 });
 
 Route::get('/checkAuth', [AuthenticatedSessionController::class, 'checkAuth']);
@@ -161,7 +190,7 @@ Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'
 Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 
 
-Route::middleware('custom.auth')->group(function () {
+Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');

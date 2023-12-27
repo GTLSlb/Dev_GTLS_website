@@ -10,11 +10,11 @@ import { Fragment } from "react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 const navigation = [
     { id:1, name: "Services", href: "/#services" },
-    { id:2, name: "About Us", href: "/#aboutus" },
-    { id:3, name: "Technologies", href: "/#technologies" },
-    { id:4, name: "Media & News", href: "/#news" },
+    { id:2, name: "About Us", href: "/aboutus" },
+    { id:3, name: "Technologies", href: "/technologies" },
+    { id:4, name: "Media & News", href: "/news" },
     { id:5, name: "Careers", href: "/opportunities" },
-    { id:6, name: "Contact Us", href: "/#contact" },
+    { id:6, name: "Contact Us", href: "/contact_us" },
     { id:7, name: "Going Green", href: "/goinggreen" },
 ];
 export default function Navbars() {
@@ -58,11 +58,11 @@ export default function Navbars() {
     return (
         <div className="absolute  pb-2 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd shadow-xl shadow-bottom z-30  w-full">
             <div className="bg-dark">
-                <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
+                <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd px-2">
                     <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-between">
                         <div className="flex gap-x-7">
                             <a
-                                href="#contact"
+                                href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 Contact Us
@@ -355,7 +355,7 @@ export default function Navbars() {
                     <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
                         <div className="hidden lg:flex gap-x-7">
                             <a
-                                href="/#contact"
+                                href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 Contact Us

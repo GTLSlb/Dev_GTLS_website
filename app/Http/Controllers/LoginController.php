@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Middleware\ApiAuth;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Customer;
 use App\Models\Driver;
 use App\Models\Employee;
@@ -13,8 +14,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Middleware\CustomAuth;
-use Illuminate\Support\Facades\DB; 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -34,13 +35,15 @@ class LoginController extends Controller
             'Password' => $password,
         ];
 
-        $url = 'https://gtlslebs06-vm.gtls.com.au:5432/api/Login';
-        $response = Http::withHeaders($headers)->get($url);
+        $url = $_ENV['GTAM_API_URL'];
+        $response = Http::withHeaders($headers)->get("$url" . "Login");
+
         if ($response->successful()) {
             $responseData = $response->json();
+
             if (!empty($responseData)) {
-                //dd($responseData[0]);
                 $authProvider = new CustomAuth();
+
                 $credentials = [
                     'EmailInput' => $request->input('Email'),
                     'EmailDb' => $responseData[0]['Username'],
@@ -49,7 +52,7 @@ class LoginController extends Controller
                 ];
                 $authenticatedUser = $authProvider->attempt($credentials, true);
                 if ($authenticatedUser) {
-                    // Redirect to the intended page with the obtained user after checking the type of user and filling the correct model 
+                    // Redirect to the intended page with the obtained user after checking the type of user and filling the correct model
                     $user = null;
                     if($responseData[0]['TypeId'] == 1) // the user is a customer
                     {
@@ -61,8 +64,6 @@ class LoginController extends Controller
                     else{ // the user is a driver
                         $user = new Driver($responseData[0]);
                     }
-                    //dd($user['UserId']);
-                    //dd($user instanceof Employee);
                     $userId = $user['UserId'];
                     $request->session()->regenerate();
                     $request->session()->put('user', $user);
@@ -85,27 +86,23 @@ class LoginController extends Controller
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]);
-                    //dd($request->session()->get('user')->UserId);
                     $request->session()->save();
-                    //$request->session()->put('isLoggingOut', false);
-
-                    if ($request->session()->get('newRoute') && $request->session()->get('user')) {
-                        return response($request, 200);
-                    }
-
-                } else {
-                    $errorMessage = 'An error occurred.';
-                    $statusCode = 500;
-                    return response(['not auth' => $response], $statusCode);
-                }
+                        if ($request->session()->get('newRoute') && $request->session()->get('user')) {
+                            return response($request, 200);
+                        }
+                    }else{
+                        $errorMessage = 'Invalid Credentials';
+                        $statusCode = 500;
+                        return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
             }
         } else {
-            // Create a static error response
-            $errorMessage = 'An error occurred.';
+            $errorMessage = 'Invalid Credentials';
             $statusCode = 500;
-            return response(['error' => $response], $statusCode);
+            return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
         }
     }
+}
+
 
     public function logout(Request $request)
     {

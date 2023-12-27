@@ -9,6 +9,7 @@ import NewPassword from "./NewPassword";
 import CryptoJS from "crypto-js";
 import truck from "../../Components/lottie/Data/Truck.json";
 import LottieComponent from "@/Components/lottie/LottieComponent";
+import { useEffect } from "react";
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -30,11 +31,32 @@ export default function ForgotPassword({ status }) {
     const [checkOTP, setCheckOTP] = useState(false);
     const [back, setBack] = useState(false);
     const [inputs, setInputs] = useState(Array(6).fill(""));
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(60); // 60 seconds cooldown
+    const [errorMessage, setErrorMessage] = useState();
+    const gtamUrl = window.Laravel.gtamUrl;
+    useEffect(() => {
+        let timer = null;
+
+        if (isDisabled && timeLeft > 0) {
+            timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+        } else if (timeLeft === 0) {
+            setIsDisabled(false);
+            setTimeLeft(60);
+        }
+
+        return () => clearTimeout(timer);
+    }, [isDisabled, timeLeft]);
+    const handleClick = () => {
+        setIsDisabled(true);
+        // Add your submit logic here
+        submit();
+    };
     const submit = (e) => {
         e.preventDefault();
         setEmailLoading(true);
         axios
-            .get(`https://gtlslebs06-vm.gtls.com.au:5432/api/ResetPwd`, {
+            .get(`${gtamUrl}ResetPwd`, {
                 headers: {
                     Email: resetEmail,
                 },
@@ -56,16 +78,14 @@ export default function ForgotPassword({ status }) {
         setOTPLoading(true);
         let concatenatedNumber = parseInt(inputs.join(""), 10);
         axios
-            .get(
-                `https://gtlslebs06-vm.gtls.com.au:5432/api/OTP/Verification`,
-                {
-                    headers: {
-                        UserId: userId,
-                        OTP: concatenatedNumber,
-                    },
-                }
-            )
+            .get(`${gtamUrl}OTP/Verification`, {
+                headers: {
+                    UserId: userId,
+                    OTP: concatenatedNumber,
+                },
+            })
             .then((res) => {
+                setErrorMessage("");
                 setOTPLoading(false);
                 setCheckEmail(false);
                 setCheckOTP(true);
@@ -73,7 +93,7 @@ export default function ForgotPassword({ status }) {
             })
             .catch((err) => {
                 setOTPLoading(false);
-                console.log(err);
+                setErrorMessage(err.response.data.Message);
             });
     };
 
@@ -81,7 +101,7 @@ export default function ForgotPassword({ status }) {
         setResetLoading(true);
         const hashedPassword = CryptoJS.SHA256(password).toString();
         axios
-            .get(`https://gtlslebs06-vm.gtls.com.au:5432/api/New/Password`, {
+            .get(`${gtamUrl}New/Password`, {
                 headers: {
                     UserId: userId,
                     OTP_Id: OTP,
@@ -135,9 +155,8 @@ export default function ForgotPassword({ status }) {
             </div>
             {checkEmail == false && checkOTP == false && (
                 <div className="mb-4 text-sm text-white">
-                    Forgot your password? No problem. Just let us know your
-                    email address and we will email you a password reset link
-                    that will allow you to choose a new one.
+                    Kindly enter your email address to receive a verification
+                    code for password reset.
                 </div>
             )}
 
@@ -199,15 +218,21 @@ export default function ForgotPassword({ status }) {
                     )}
                 </form>
             )}
-
+            {errorMessage && (
+                <div className="py-2 text-red-600">{errorMessage}</div>
+            )}
             {checkEmail && (
                 <div className="p-10">
                     <button
-                        className="text-goldd p-3 font-bold text-md w-full text-center rounded border-2 hover:border-goldl border-goldd"
-                        onClick={submit}
-                        // disabled={emailLoading}
+                        className={`${
+                            isDisabled
+                                ? " text-gray-500  hover:border-gray-500 border-gray-500 cursor-not-allowed"
+                                : "text-goldd  hover:border-goldl border-goldd"
+                        } p-3 font-bold text-md w-full text-center rounded border-2`}
+                        onClick={handleClick}
+                        disabled={isDisabled}
                     >
-                        Send Again
+                        {isDisabled ? `${timeLeft} seconds` : "Send Again"}
                     </button>
                 </div>
             )}
