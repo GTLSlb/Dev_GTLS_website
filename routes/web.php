@@ -40,35 +40,39 @@ Route::get('/', function () {
 
 Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
 
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
+Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
 
-Route::get('/landingPage', function () {
+Route::match(['get', 'post'], '/landingPage', function () {
+    if (request()->isMethod('post')) {
+        return redirect('/');
+    }
+    
     return Inertia::render('LandingPage');
-})->middleware(['custom.auth'])->name('landing.page');
+})->middleware(['custom'])->name('landing.page');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['custom.auth'])->name('dashboard');
+})->middleware(['custom'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['custom.auth'])->name('gtms');
+})->middleware(['custom'])->name('gtms');
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['custom.auth'])->name('gtam');
+})->middleware(['custom'])->name('gtam');
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['custom.auth'])->name('gtrs');
+})->middleware(['custom'])->name('gtrs');
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['custom.auth'])->name('gtw');
+})->middleware(['custom'])->name('gtw');
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
-// })->middleware(['custom.auth'])->name('layout');
+// })->middleware(['custom'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -161,7 +165,7 @@ Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'
 Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 
 
-Route::middleware('custom.auth')->group(function () {
+Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
