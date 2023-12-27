@@ -136,6 +136,7 @@ export default function Footer() {
                                     <div className="space-y-4">
                                         <a
                                             href={pdf}
+                                            target="_blank"
                                             className="text-sm leading-6 text-goldl hover:text-white"
                                         >
                                             Download Our Catalogue
