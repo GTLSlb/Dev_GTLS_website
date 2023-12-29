@@ -86,6 +86,24 @@ const navigation = {
     ],
 };
 
+const data = [
+    {
+        id: 0,
+        label: "GTLS Capability Statement",
+        href: "/capabilitystatement",
+    },
+    {
+        id: 1,
+        label: "Trading Terms and Conditions",
+        href: "/terms",
+    },
+    {
+        id: 2,
+        label: "GTLS Pallets T&C",
+        href: "/palletterms",
+    },
+];
+
 export default function Footer() {
     return (
         <footer
@@ -136,6 +154,7 @@ export default function Footer() {
                                     <div className="space-y-4">
                                         <a
                                             href={pdf}
+                                            target="_blank"
                                             className="text-sm leading-6 text-goldl hover:text-white"
                                         >
                                             Download Our Catalogue

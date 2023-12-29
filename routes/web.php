@@ -17,6 +17,7 @@ use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use SocialiteProviders\Azure\AzureProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,33 +39,41 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/LandingPage', function () {
+Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
+
+Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
+
+Route::match(['get', 'post'], '/landingPage', function () {
+    if (request()->isMethod('post')) {
+        return redirect('/');
+    }
+    
     return Inertia::render('LandingPage');
-});
+})->middleware(['custom'])->name('landing.page');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['custom'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['auth', 'verified'])->name('gtms');
+})->middleware(['custom'])->name('gtms');
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['auth', 'verified'])->name('gtam');
+})->middleware(['custom'])->name('gtam');
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['auth', 'verified'])->name('gtrs');
+})->middleware(['custom'])->name('gtrs');
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['auth', 'verified'])->name('gtw');
+})->middleware(['custom'])->name('gtw');
 
-Route::get('/Main', function () {
-    return Inertia::render('Layout');
-})->middleware(['auth', 'verified'])->name('layout');
+// Route::get('/main', function () {
+//     return Inertia::render('Layout');
+// })->middleware(['custom'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -148,7 +157,7 @@ Route::get('/downloadGTLS-Pallets', function () {
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
 
-Route::post('/saveImg', [NewUserController::class, 'storePic']);
+// Route::post('/saveImg', [NewUserController::class, 'storePic']);
 
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
@@ -181,7 +190,7 @@ Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'
 Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
@@ -205,4 +214,7 @@ Route::fallback(function () {
     ]);
 });
 
+Route::get('/forgot-password', function () {
+    return Inertia::render('Auth/ForgotPassword');
+})->name('forgot.password');
 require __DIR__ . '/auth.php';
