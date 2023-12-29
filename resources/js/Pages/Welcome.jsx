@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import LogoWhite from "../assets/pictures/LogoWhite.webp";
+import Truck from "../assets/pictures/truck.png";
 import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/inertia-react";
 import { Link as ScrollLink } from "react-scroll";
@@ -98,6 +99,37 @@ export default function Welcome(props) {
     return (
         <>
             <Head title="Welcome" />
+            <div className="py-2 bg-dark overflow-hidden">
+                <div className="animate-moveRight w-auto ">
+                    
+                    
+                    <p className="text-white inline-block font-bold whitespace-nowrap">
+                        <img className="h-7 inline-block pr-5" src={Truck} alt="GoldTiger"/>
+                        Effective <span className="text-goldt">1</span>
+                        st January 2024 
+                        <span className="text-goldd"> Gold</span> 
+                        Tiger Group of Companies will be updating both our Chep and Loscam pallet accounts.For more details
+                        <a href={"/palletterms"} className="text-sm leading-6 text-goldl hover:text-white"> GTLS Pallets T&C</a>
+                    </p>
+                </div>
+
+                <style>
+                    {`
+                        @keyframes moveRight{
+                            0%{
+                                transform: translateX(100%)
+                            }
+                            100%{
+                                transform: translateX(-50%)
+                            }
+                            
+                        }
+                        .animate-moveRight{
+                            animation: moveRight 20s linear infinite;
+                        }
+                    `}
+                </style>
+            </div>
             
             <div className="relative isolate bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
@@ -118,7 +150,7 @@ export default function Welcome(props) {
                         </div>
                         <a
                             href="tel:+180040306"
-                            className="text-xs sm:text-sm font-bold flex h-full items-center"
+                            className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                         >
                             {" "}
                             <PhoneIcon
@@ -444,7 +476,7 @@ export default function Welcome(props) {
                 
                 {/* <Partners/> */}
                 <Footer />
-                <CookiePopup/>
+                <CookiePopup />
                 <ScrollToTopButton />
                 <style>{`
             .max-w-8xl{

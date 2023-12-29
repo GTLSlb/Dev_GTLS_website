@@ -15,7 +15,7 @@ const CookiePopup = () => {
 
   return (
     showPopup && (
-      <div className="cookie-popup bg-dark rounded-xl p-5 center button-0 border border-goldt text-white">
+      <div className="z-50 cookie-popup bg-dark rounded-xl p-5 center button-0 border border-goldt text-white">
         <p className='pb-5'>When you visit any website, it may store or retrieve information on your browser. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.</p>
         {/* <button onClick={handleAccept}>Accept</button> */}
         <div className='grid grid-cols-2 gap-4 '>
