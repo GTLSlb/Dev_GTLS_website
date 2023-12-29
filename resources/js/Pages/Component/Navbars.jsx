@@ -59,8 +59,8 @@ export default function Navbars() {
         <div className="absolute  pb-2 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd shadow-xl shadow-bottom z-30  w-full">
             <div className="bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd px-2">
-                    <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-between">
-                        <div className="flex gap-x-7">
+                <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
+                        <div className="hidden lg:flex gap-x-7">
                             <a
                                 href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
@@ -74,19 +74,19 @@ export default function Navbars() {
                                 Careers
                             </a>
                         </div>
-                        <a
-                            href="tel:+180040306"
-                            className="text-xs sm:text-sm font-bold flex h-full items-center"
-                        >
-                            {" "}
-                            <PhoneIcon
-                                className="h-5 sm:h-6 w-auto p-0.5"
-                                aria-hidden="true"
-                            />
-                            Call: 1800-040-306
-                        </a>
+                            <a
+                                href="tel:+180040306"
+                                className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
+                            >
+                                {" "}
+                                <PhoneIcon
+                                    className="h-5 sm:h-6 w-auto p-0.5"
+                                    aria-hidden="true"
+                                />
+                                Call: 1800-040-306
+                            </a>
+                        </div>
                     </div>
-                </div>
                 <nav
                     className="mx-auto lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10   flex items-center justify-between"
                     aria-label="Global"
@@ -369,7 +369,7 @@ export default function Navbars() {
                         </div>
                             <a
                                 href="tel:+180040306"
-                                className="text-xs sm:text-sm font-bold flex h-full items-center"
+                                className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 {" "}
                                 <PhoneIcon
