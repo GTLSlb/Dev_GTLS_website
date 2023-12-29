@@ -9,8 +9,9 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 const navigation = [
-    { id:1, name: "Services", href: "/#services" },
-    { id:2, name: "About Us", href: "/aboutus" },
+    
+    { id:1, name: "About Us", href: "/aboutus" },
+    { id:2, name: "Services", href: "/#services" },
     { id:3, name: "Technologies", href: "/technologies" },
     { id:4, name: "Media & News", href: "/news" },
     { id:5, name: "Careers", href: "/opportunities" },
