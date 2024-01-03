@@ -12,14 +12,7 @@ jobs:
       matrix:
         node-version: [16.x]
     
-    steps:
-    - name: Check branch
-      run: |
-          if [ "${{ github.ref }}" != "refs/heads/staging" ]; then
-            echo "Workflow can only be run from the 'staging' branch."
-            exit 1
-          fi
-          
+    steps:     
     - name: 🚚 Get latest code
       uses: actions/checkout@v2
 
