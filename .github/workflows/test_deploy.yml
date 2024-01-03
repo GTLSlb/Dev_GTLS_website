@@ -1,45 +1,58 @@
-name: 🚀 Deploy on push master
+name: Laravel Deployment
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main  # Change this to the branch you want to deploy
 
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
+  deploy:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [18.3.0]
-    
-    steps:     
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2
-    - name: Authenticate Nova
-      run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
-    - name: Install Dependencies
-      run: composer update --ignore-platform-reqs
-    - name: Cache Clear
-      run: php artisan cache:clear
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@master
-      with:
-        node-version: ${{ matrix.node-version }}
-        
-    - name: 🔨 Build Project 
-      run: |
-        composer update
-        npm install
-        npm run build
-        rm rf node_modules
-    
-    - name: List output files
-      run: find public/build/ -print
 
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
       with:
-        server: ${{ secrets.TEST_FTP_SERVER }}
-        username: ${{ secrets.TEST_FTP_USERNAME }}
-        password: ${{ secrets.TEST_FTP_PASSWORD }}
-        local-dir: /
+        php-version: '8.1'  # Adjust the PHP version as needed
+
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --prefer-dist
+
+    - name: Set up environment file
+      run: cp .env.example .env
+
+    - name: Generate application key
+      run: php artisan key:generate
+
+    - name: Run database migrations and seed
+      run: php artisan migrate --seed
+
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.3.0'  # Adjust the Node.js version as needed
+
+    - name: Install npm dependencies
+      run: npm install
+
+    - name: Build assets
+      run: npm run production
+
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        script: |
+          cd /path/to/your/laravel/project
+          git pull origin main  # Change this to your branch
+          composer install --no-interaction --prefer-dist
+          php artisan migrate --force
+          php artisan config:cache
+          php artisan route:cache
+          php artisan optimize
+          php artisan view:cache
