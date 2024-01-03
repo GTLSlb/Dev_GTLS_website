@@ -15,7 +15,8 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.1'  # Adjust the PHP version as needed
-
+    - name: Authenticate Nova
+      run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
     - name: Install Composer dependencies
       run: composer install --no-interaction --prefer-dist
 
