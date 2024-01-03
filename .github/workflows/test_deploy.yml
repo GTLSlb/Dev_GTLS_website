@@ -38,6 +38,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
+        port: 1588
         script: |
           cd /test.gtls.com.lb
           git pull origin main  # Change this to your branch
