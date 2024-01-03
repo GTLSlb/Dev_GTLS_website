@@ -15,7 +15,12 @@ jobs:
     steps:     
     - name: 🚚 Get latest code
       uses: actions/checkout@v2
-
+    - name: Authenticate Nova
+      run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
+    - name: Install Dependencies
+      run: composer update --ignore-platform-reqs
+    - name: Cache Clear
+      run: php artisan cache:clear
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@master
       with:
