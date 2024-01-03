@@ -28,6 +28,7 @@ jobs:
         
     - name: 🔨 Build Project 
       run: |
+        composer update
         npm install
         npm run build
     
