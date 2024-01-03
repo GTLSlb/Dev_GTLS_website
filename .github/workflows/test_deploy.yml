@@ -41,4 +41,6 @@ jobs:
         server: ${{ secrets.TEST_FTP_SERVER }}
         username: ${{ secrets.TEST_FTP_USERNAME }}
         password: ${{ secrets.TEST_FTP_PASSWORD }}
-        local-dir: public/build/
+        local-dir: |
+          public/build/
+          vendor
