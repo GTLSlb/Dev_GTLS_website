@@ -17,14 +17,9 @@ jobs:
         php-version: '8.1'  # Adjust the PHP version as needed
     - name: Authenticate Nova
       run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
+      
     - name: Install Composer dependencies
       run: composer install --no-interaction --prefer-dist
-
-    - name: Generate application key
-      run: php artisan key:generate
-
-    - name: Run database migrations and seed
-      run: php artisan migrate --seed
 
     - name: Install Node.js and npm
       uses: actions/setup-node@v2
