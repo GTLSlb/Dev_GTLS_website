@@ -30,7 +30,7 @@ jobs:
       run: npm install
 
     - name: Build assets
-      run: npm run production
+      run: npm run build
 
     - name: Deploy to server
       uses: appleboy/ssh-action@master
@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         script: |
-          cd /path/to/your/laravel/project
+          cd /test.gtls.com.lb
           git pull origin main  # Change this to your branch
           composer install --no-interaction --prefer-dist
           php artisan migrate --force
