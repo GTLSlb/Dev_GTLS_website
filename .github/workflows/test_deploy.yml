@@ -31,6 +31,7 @@ jobs:
         composer update
         npm install
         npm run build
+        rm rf node_modules
     
     - name: List output files
       run: find public/build/ -print
@@ -41,6 +42,4 @@ jobs:
         server: ${{ secrets.TEST_FTP_SERVER }}
         username: ${{ secrets.TEST_FTP_USERNAME }}
         password: ${{ secrets.TEST_FTP_PASSWORD }}
-        local-dir: |
-          public/build/
-          vendor
+        local-dir: /
