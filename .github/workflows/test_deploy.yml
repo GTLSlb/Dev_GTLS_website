@@ -40,7 +40,7 @@ jobs:
         password: ${{ secrets.SERVER_PASSWORD }}
         port: 1588
         script: |
-          cd /test.gtls.com.lb
+          cd test.gtls.com.lb/
           git pull origin main  # Change this to your branch
           composer install --no-interaction --prefer-dist
           php artisan config:cache
