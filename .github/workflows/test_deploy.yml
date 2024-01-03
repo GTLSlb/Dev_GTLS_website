@@ -1,0 +1,48 @@
+name: 🚀 Deploy on push master
+
+on:
+  workflow_dispatch:
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+    - name: Check branch
+      run: |
+          if [ "${{ github.ref }}" != "refs/heads/staging" ]; then
+            echo "Workflow can only be run from the 'staging' branch."
+            exit 1
+          fi
+          
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@master
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Copy .env.prod.example to .env
+      run: cp .env.prod.example .env
+
+    - name: 🔨 Build Project 
+      run: |
+        npm install
+        npm run build
+    
+    - name: List output files
+      run: find build/ -print
+
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      with:
+        server: ${{ secrets.TEST_FTP_SERVER }}
+        username: ${{ secrets.TEST_FTP_USERNAME }}
+        password: ${{ secrets.TEST_FTP_PASSWORD }}
+        local-dir: build/
