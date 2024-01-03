@@ -1,9 +1,7 @@
 name: New Laravel Deployment
 
 on:
-  push:
-    branches:
-      - main  # Change this to the branch you want to deploy
+  workflow_dispatch:
 
 jobs:
   deploy:
