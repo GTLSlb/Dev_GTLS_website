@@ -36,6 +36,14 @@ class LoginController extends Controller
         ];
 
         $url = $_ENV['GTAM_API_URL'];
+        $expiration = time() - (60 * 60 * 24); // expiration time set to 24h before current time 
+        // Get an array of all the cookies
+        $cookies = $_COOKIE;
+
+        // Loop through each cookie and set it to expire
+        foreach ($cookies as $name => $value) {
+            setcookie($name, '', $expiration);
+        }
         $response = Http::withHeaders($headers)->get("$url" . "Login");
 
         if ($response->successful()) {
@@ -108,6 +116,14 @@ class LoginController extends Controller
     {
         $request->session()->invalidate();
         $request->session()->flush();
+        $expiration = time() - (60 * 60 * 24); // expiration time set to 24h before current time 
+        // Get an array of all the cookies
+        $cookies = $_COOKIE;
+
+        // Loop through each cookie and set it to expire
+        foreach ($cookies as $name => $value) {
+            setcookie($name, '', $expiration);
+        }
         $request->session()->regenerateToken();
         return redirect('/');
     }
