@@ -3,6 +3,22 @@
 @tailwind utilities;
 
 
+.ellipse-right{
+  border-radius: 39% 61% 0% 100% / 0% 100% 0% 100% ;
+}
+
+.ellipse-left{
+  border-radius:61% 39% 100% 0% / 100% 0% 100% 0%  ;
+}
+
+.halfcircle-right{
+  border-radius:100% 0% 0% 100% / 0% 100% 0% 100%  ;
+}
+
+.halfcircle-left{
+  border-radius:0% 100% 100% 0% / 0% 100% 0% 100%  ;
+}
+
 .login-dropdown-option:hover{
   background-color: red !important;
 }
