@@ -41,7 +41,7 @@ import {
 } from "react-share";
 import Footer from "./Component/landingPage/Footer";
 import SecondaryFooter from "./Component/landingPage/SecondaryFooter";
-import Navbars from "./Component/navbars";
+import Navbars from "./Component/Navbars";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
