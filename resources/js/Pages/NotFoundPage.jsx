@@ -7,7 +7,7 @@ export default function NotFoundPage() {
             <div className="bg-tiremark bg-cover min-h-screen  flex flex-col ">
                 <div className="flex flex-col   items-center gap-y-24 mt-32">
                     <div className="w-full flex justify-center">
-                        <img src={LogoWhite} alt="" className="items-center" />
+                        <img src={LogoWhite} alt="" className="items-center w-1/4" />
                     </div>
                     <div className="w-full flex justify-center">
                         <img src={notFound} alt="" />

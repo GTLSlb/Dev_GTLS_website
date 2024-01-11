@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PhoneIcon } from "@heroicons/react/20/solid";
 import goldTigerLogo from "../../assets/pictures/goldTigerLogo.webp";
 import LogoWhite from "../../assets/pictures/LogoWhite.webp";
+import Truck from "../../assets/pictures/truck.png";
 import { Link as ScrollLink } from "react-scroll";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
@@ -60,11 +61,88 @@ export default function ScrollNav() {
     }, []);
     return (
         <div className="relative bg-goldt  ">
+            
             <div
                 className={`shadow-md shadow-bottom z-50 h-auto   pb-2 lg:pr-0 fixed bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd top-0 left-0 w-full transition duration-500 ease-in-out ${
                     showNavbar ? "opacity-100" : "opacity-0 -translate-y-full"
                 }`}
             >
+
+                {/* Start Notification */}
+                <div className="py-2 bg-dark overflow-hidden">
+                    <div className="animate-moveRight w-auto ">
+                        
+                        
+                        <p className="text-white inline-block font-bold whitespace-nowrap">
+                            <img className="h-7 inline-block pr-5" src={Truck} alt="Gold Tiger"/>
+                            Effective <span className="text-goldt">1</span>
+                            st January 2024 
+                            <span className="text-goldd"> Gold</span> 
+                            Tiger Group of Companies will be updating both our Chep and Loscam pallet accounts.For more details
+                            <a href={"/palletterms"} className="text-sm leading-6 text-goldl hover:text-white"> GTLS Pallets T&C</a>
+                        </p>
+                    </div>
+
+                    <style>
+                        {`
+                            @keyframes moveRight{
+                                0%{
+                                    transform: translateX(100%)
+                                }
+                                100%{
+                                    transform: translateX(-50%)
+                                }
+                            }
+                            
+                            .animate-moveRight{
+                                animation: moveRight 10s linear infinite;
+                            }
+                            @media all and (max-width: 800px) {
+                                @keyframes moveRight{
+                                    0%{
+                                        transform: translateX(100%)
+                                    }
+                                    100%{
+                                        transform: translateX(-150%)
+                                    }
+                                }
+                                .animate-moveRight{
+                                    animation: moveRight 10s linear infinite;
+                                }
+                            }
+                            @media all and (max-width: 500px) {
+                                @keyframes moveRight{
+                                    0%{
+                                        transform: translateX(100%)
+                                    }
+                                    100%{
+                                        transform: translateX(-250%)
+                                    }
+                                }
+                                .animate-moveRight{
+                                    animation: moveRight 13s linear infinite;
+                                }
+                            }
+                            @media all and (max-width: 350px) {
+                                @keyframes moveRight{
+                                    0%{
+                                        transform: translateX(100%)
+                                    }
+                                    100%{
+                                        transform: translateX(-400%)
+                                    }
+                                }
+                                .animate-moveRight{
+                                    animation: moveRight 10s linear infinite;
+                                }
+                            }
+                           
+                        `}
+                    </style>
+                </div>
+                {/* End Notification */}
+
+
                 <div className="bg-dark w-full">
                     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                     <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
@@ -84,7 +162,7 @@ export default function ScrollNav() {
                         </div>
                             <a
                                 href="tel:+180040306"
-                                className="text-xs sm:text-sm font-bold flex h-full items-center"
+                                className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 {" "}
                                 <PhoneIcon
@@ -105,7 +183,7 @@ export default function ScrollNav() {
                                 <img
                                     className="h-14"
                                     src={LogoWhite}
-                                    alt="Goldtiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>
@@ -318,7 +396,7 @@ export default function ScrollNav() {
                                 <img
                                     className="h-8"
                                     src={LogoWhite}
-                                    alt="Goldtiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>

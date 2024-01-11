@@ -26,7 +26,7 @@ export default function Technologies() {
 
                     <div className="h-auto w-12/12   md:w-1/2 md:pr-16">
 
-                        <a href="https://www.volvotrucks.com.au/en-au/" target="_blank">
+                        <a href="/technologies" target="_blank">
                             <img
                                 src={technologies}
                                 alt="volvo"

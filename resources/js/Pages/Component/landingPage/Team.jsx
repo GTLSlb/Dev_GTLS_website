@@ -65,11 +65,11 @@ const teams =[
         image:image6,
         name:"Leslie_Haines",
     },
-    {
-        id:7,
-        image:image7,
-        name:"josh",
-    },
+    // {
+    //     id:7,
+    //     image:image7,
+    //     name:"josh",
+    // },
     {
         id:8,
         image:image8,
@@ -100,16 +100,16 @@ const teams =[
         image:image13,
         name:"Debora",
     },
-    {
-        id:14,
-        image:image14,
-        name:"Florance",
-    },
-    {
-        id:15,
-        image:image15,
-        name:"Ruby",
-    },
+    // {
+    //     id:14,
+    //     image:image14,
+    //     name:"Florance",
+    // },
+    // {
+    //     id:15,
+    //     image:image15,
+    //     name:"Ruby",
+    // },
     {
         id:16,
         image:image16,

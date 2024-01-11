@@ -112,7 +112,7 @@ export default function SecondaryFooter() {
             </h2>
             <div className="mx-auto max-w-7xl px-6 pb-8 pt-16 sm:pt-24 lg:px-8 lg:pt-32">
                 <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-                    <img className="h-28" src={LogoWhite} alt="Goldtiger" />
+                    <img className="h-28" src={LogoWhite} alt="Gold Tiger" />
                     <div className="mt-16 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
                         <div className="md:grid md:grid-cols-3 md:gap-8">
                             <div>

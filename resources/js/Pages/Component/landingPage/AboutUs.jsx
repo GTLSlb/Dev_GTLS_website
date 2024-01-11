@@ -64,7 +64,7 @@ export default function AboutUs() {
                     </div>
                     <div className="mx-auto  w-full">
                         <p className="mt-2 text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
-                            About Gold<span className="text-white">Tiger</span>
+                            About Gold<span className="text-white"> Tiger</span>
                         </p>
                         <p className="mt-6  text-base  text-gray-300">
                             Gold Tiger Logistics Solutions (Gold Tiger) was established in 2006 by the 19-year-old Imad El Masri, who was a truck enthusiast. He began with one truck and one driver – himself – and a first-year turnover of $50,000. Early in his career he became the youngest driver in Australia to earn a B-double licence.

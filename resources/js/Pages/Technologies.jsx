@@ -46,7 +46,7 @@ export default function Capability(props) {
 
     return (
         <>
-            <Head title="About GoldTiger" />
+            <Head title="Technology" />
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
                 <Navbars />

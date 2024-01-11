@@ -291,8 +291,8 @@ class ContactForm extends Component {
                                         id="attachment"
                                         name="attachment"
                                         onChange={this.handleFileChange}
-                                        className="text-sm text-goldt focus:outline-none
-                                file:mr-5 file:py-3 file:px-2
+                                        className="w-full text-sm text-goldt focus:outline-none
+                                file: file:py-3 file:px-2
                                 file:rounded-full file:border-0
                                 file:text-md file:font-semibold  file:text-goldd
                                 file:bg-dark

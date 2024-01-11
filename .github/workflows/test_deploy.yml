@@ -1,0 +1,49 @@
+name: New Laravel Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'  # Adjust the PHP version as needed
+    - name: Authenticate Nova
+      run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
+      
+    - name: Install Composer dependencies
+      run: composer install --no-interaction --prefer-dist
+
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.3.0'  # Adjust the Node.js version as needed
+
+    - name: Install npm dependencies
+      run: npm install
+      
+    - name: Build assets
+      run: npm run build
+
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        port: 1588
+        script: |
+          cd test.gtls.com.lb/
+          git pull origin main  # Change this to your branch
+          composer install --no-interaction --prefer-dist --ignore-platform-req=ext-fileinfo
+          php artisan config:cache
+          php artisan route:cache
+          php artisan optimize
+          php artisan view:cache

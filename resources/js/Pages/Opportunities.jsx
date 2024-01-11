@@ -74,11 +74,14 @@ export default function Opportunities(props) {
         };
     }, []);
 
+  
+
     return (
         <>
+        
             <Head title="Opportunities" />
             <div className="relative isolate bg-dark">
-                <Chatbot />
+                {/* <Chatbot /> */}
                 <Navbars />
                 {/* <HeroSection/> */}
 
@@ -114,7 +117,7 @@ export default function Opportunities(props) {
                 <div className="relative isolate overflow-hidden  py-16 sm:py-16">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="mx-auto mt-16    lg:mx-0 lg:mt-10 ">
-                            <div className="relative ">
+                            <div className="relative lg:order-last lg:col-span-5">
                                 <figure className="mb-10">
                                     <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
                                         Attractive package of conditions

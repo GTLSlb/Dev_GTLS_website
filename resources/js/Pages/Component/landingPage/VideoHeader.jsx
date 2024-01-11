@@ -196,15 +196,15 @@ const socials = [
 export default function VideoHeader() {
     return (
         <div>
-            <div className="bg-dark relative">
+            <div className="bg-dark relative ">
                 <div className=" bg-red"> 
-                <div className="relative flex items-center justify-center h-screen overflow-hidden"> 
-                    <video src= {Gtlsh} autoplay="{true}" loop muted className="absolute  w-auto min-w-full min-h-full max-w-none"> </video> 
+                <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]"> 
+                    <video src= {Gtlsh} autoplay="{true}" loop muted="{true}" playsinline="{true}" className="absolute  w-auto min-w-full min-h-full max-w-none"> </video> 
                     <div className="opacity-70 bg-black absolute w-full h-full" ></div>
                     <div className=" lg:flex items-center lg:gap-x-10  ">
-                            <div className="absolute">
+                            {/* <div className="absolute">
                                 <img src={aus} alt="australia" />
-                            </div>
+                            </div> */}
                             <div className=" lg:flex items-center lg:gap-x-10  ">
                                 <table className="table-auto w-full">
                                     <tbody>
@@ -277,8 +277,8 @@ export default function VideoHeader() {
                                                             </a>
                                                         </div> */}
                                                     </div>
-                                                    <div className="text-center">
-                                                        <h1 className=" mt-10  text-3xl font-bold tracking-tight text-white sm:text-6xl sm:leading-tight">
+                                                    <div className="text-center ">
+                                                        <h1 className=" mt-10  text-3xl font-bold tracking-tight text-white sm:text-6xl sm:leading-tight ">
                                                             SMARTER SUPPLY CHAIN
                                                             MANAGEMENT 
                                                         </h1>
