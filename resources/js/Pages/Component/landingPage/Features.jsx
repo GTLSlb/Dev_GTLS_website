@@ -71,7 +71,7 @@ export default function Features() {
                     <dl className="space-y-16 sm:grid sm:grid-cols-4  sm:gap-x-6 sm:gap-y-16 sm:space-y-0 md:grid-cols-4 lg:grid-cols-4 lg:gap-x-10 ">
                         <div className="col-span-4">
                             <div className=" text-4xl font-semibold leading-10 text-goldt">
-                                Why Gold<span className="text-white">Tiger</span>?
+                                Why Gold<span className="text-white"> Tiger</span>?
                             </div>
                         </div>
                         {faqs.map((faq) => (

@@ -46,7 +46,7 @@ export default function Newss(props) {
 
     return (
         <>
-            <Head title="News GoldTiger" />
+            <Head title="News Gold Tiger" />
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
                 <Navbars />

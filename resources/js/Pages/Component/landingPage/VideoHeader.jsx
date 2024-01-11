@@ -202,9 +202,9 @@ export default function VideoHeader() {
                     <video src= {Gtlsh} autoplay="{true}" loop muted="{true}" playsinline="{true}" className="absolute  w-auto min-w-full min-h-full max-w-none"> </video> 
                     <div className="opacity-70 bg-black absolute w-full h-full" ></div>
                     <div className=" lg:flex items-center lg:gap-x-10  ">
-                            <div className="absolute">
+                            {/* <div className="absolute">
                                 <img src={aus} alt="australia" />
-                            </div>
+                            </div> */}
                             <div className=" lg:flex items-center lg:gap-x-10  ">
                                 <table className="table-auto w-full">
                                     <tbody>

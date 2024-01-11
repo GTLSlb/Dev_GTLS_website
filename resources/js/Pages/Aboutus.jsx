@@ -46,7 +46,7 @@ export default function AboutUs(props) {
 
     return (
         <>
-            <Head title="About GoldTiger" />
+            <Head title="About Gold Tiger" />
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
                 <Navbars />
@@ -88,9 +88,6 @@ export default function AboutUs(props) {
                             <p className="mt-3 text-smooth">
                                 Gold Tiger is also strengthened by its gold partner extended warranty contract with Volvo. The partnership includes a regular maintenance schedule to the highest manufacturer standards (OEM replacement parts), 24-hour breakdown repair around Australia, and replacement vehicles if trucks need to be off the road more than 24 hours. This is backed up by weekly checks and servicing by qualified mechanics in our own on-site workshops.
                             </p>
-
-
-                            
 
                             <figure className="mb-5">
                                 <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
@@ -152,14 +149,7 @@ export default function AboutUs(props) {
                                 We methodically cover areas such as service levels, technology, communication, relationships, expectations, reporting, KPIs and documentation so that we become an integrated part of your business.
                             </p>
 
-
-
-
-                            
-
                         </div>
-
-
                     </div>
                 </div>
                 <Team/>

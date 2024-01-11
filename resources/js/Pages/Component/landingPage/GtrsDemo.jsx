@@ -27,7 +27,7 @@ const RelativePositionWrapper = styled.div`
 const ResponsiveStyledPlayer = () => (
     <div className=" mx-auto max-w-2xl  px-4 mb-20 mt-20 py-32 sm:px-6 lg:max-w-7xl ">
         <p className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
-            Gold<span className="text-white">Tiger Reporting System</span>
+            Gold<span className="text-white"> Tiger Reporting System</span>
         </p>
         <RelativePositionWrapper className="mt-10">
             <AbsolutelyPositionedPlayer />

@@ -14,7 +14,7 @@ import { InertiaApp } from "@inertiajs/inertia-react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import "../../../css/scroll.css";
 import axios from "axios";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const msalConfig = {
