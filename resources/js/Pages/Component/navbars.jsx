@@ -98,7 +98,7 @@ export default function Navbars() {
                             <img
                                 className="h-14"
                                 src={LogoWhite}
-                                alt="GoldTiger"
+                                alt="Gold Tiger"
                             />
                         </a>
                     </div>
@@ -296,7 +296,7 @@ export default function Navbars() {
                             <img
                                 className="h-8"
                                 src={LogoWhite}
-                                alt="Goldtiger"
+                                alt="Gold Tiger"
                             />
                         </a>
                     </div>
@@ -391,7 +391,7 @@ export default function Navbars() {
                                 <img
                                     className="h-14"
                                     src={LogoWhite}
-                                    alt="Goldtiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>
@@ -603,7 +603,7 @@ export default function Navbars() {
                                 <img
                                     className="h-8"
                                     src={LogoWhite}
-                                    alt="Goldtiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>

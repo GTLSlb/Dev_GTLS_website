@@ -52,11 +52,11 @@ export default function HeroSection() {
                 >
                     <div className="flex lg:flex-1">
                         <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">GoldTiger</span>
+                            <span className="sr-only">Gold Tiger</span>
                             <img
                                 className="h-8"
                                 src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                alt="GoldTiger"
+                                alt="Gold Tiger"
                             />
                         </a>
                     </div>

@@ -74,7 +74,7 @@ export default function ScrollNav() {
                         
                         
                         <p className="text-white inline-block font-bold whitespace-nowrap">
-                            <img className="h-7 inline-block pr-5" src={Truck} alt="GoldTiger"/>
+                            <img className="h-7 inline-block pr-5" src={Truck} alt="Gold Tiger"/>
                             Effective <span className="text-goldt">1</span>
                             st January 2024 
                             <span className="text-goldd"> Gold</span> 
@@ -92,11 +92,51 @@ export default function ScrollNav() {
                                 100%{
                                     transform: translateX(-50%)
                                 }
-                                
                             }
+                            
                             .animate-moveRight{
-                                animation: moveRight 20s linear infinite;
+                                animation: moveRight 10s linear infinite;
                             }
+                            @media all and (max-width: 800px) {
+                                @keyframes moveRight{
+                                    0%{
+                                        transform: translateX(100%)
+                                    }
+                                    100%{
+                                        transform: translateX(-150%)
+                                    }
+                                }
+                                .animate-moveRight{
+                                    animation: moveRight 10s linear infinite;
+                                }
+                            }
+                            @media all and (max-width: 500px) {
+                                @keyframes moveRight{
+                                    0%{
+                                        transform: translateX(100%)
+                                    }
+                                    100%{
+                                        transform: translateX(-250%)
+                                    }
+                                }
+                                .animate-moveRight{
+                                    animation: moveRight 13s linear infinite;
+                                }
+                            }
+                            @media all and (max-width: 350px) {
+                                @keyframes moveRight{
+                                    0%{
+                                        transform: translateX(100%)
+                                    }
+                                    100%{
+                                        transform: translateX(-400%)
+                                    }
+                                }
+                                .animate-moveRight{
+                                    animation: moveRight 10s linear infinite;
+                                }
+                            }
+                           
                         `}
                     </style>
                 </div>
@@ -143,7 +183,7 @@ export default function ScrollNav() {
                                 <img
                                     className="h-14"
                                     src={LogoWhite}
-                                    alt="Goldtiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>
@@ -356,7 +396,7 @@ export default function ScrollNav() {
                                 <img
                                     className="h-8"
                                     src={LogoWhite}
-                                    alt="Goldtiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>

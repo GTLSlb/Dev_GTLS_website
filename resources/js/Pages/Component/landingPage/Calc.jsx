@@ -35,7 +35,7 @@ function Map() {
             const response = await axios.get(
                 `https://api.openrouteservice.org/geocode/autocomplete?api_key=${apiKey}&text=${encodeURIComponent(
                     query
-                )}`
+                )}&boundary.country=AU`
             );
 
             if (response.data.features && response.data.features.length > 0) {
@@ -60,7 +60,7 @@ function Map() {
             const response = await axios.get(
                 `https://api.openrouteservice.org/geocode/autocomplete?api_key=${apiKey}&text=${encodeURIComponent(
                     value
-                )}`
+                )}&boundary.country=AU`
             );
 
             if (response.data.features) {
