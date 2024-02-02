@@ -12,6 +12,7 @@ module.exports = {
     theme: {
         extend: {
             backgroundImage: {
+                goldmap: "url('/resources/js/assets/backgrounds/goldmap.webp')",
                 saftey:"url('/resources/js/assets/backgrounds/safety-and-compliences.webp')",
                 loginbackground:
                     "url('/resources/js/assets/backgrounds/loginBackground.webp')",
