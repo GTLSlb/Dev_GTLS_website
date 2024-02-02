@@ -122,7 +122,7 @@ export default function Footer() {
                             <img
                                 className="h-20 "
                                 src={LogoWhite}
-                                alt="GoldTiger"
+                                alt="Gold Tiger"
                             />
                         </a>
                         <div className="  gap-8 col-span-2 mt-0 h-full flex ">

@@ -39,14 +39,14 @@ const features = [
     {
         name: "3PL/4PL solutions",
         description:
-            "Gold Tiger offers solutions based on the third party and fourth party logistics models, with Gold Tiger supplying and managing all parts of the logistics chain.",
+            "Gold Tiger offers solutions based on the third party and fourth party logistics models.",
             icon: pl,
         state: "",
     },
     {
         name: "Distribution",
         description:
-            "Distribute from our warehouses to your distribution hubs or let us deliver that last mile to your individual stores. We use leading technologies throughout our operations, from track-and-trace through to radio frequency identification, customer portal, EDI, ePOD, sign-on glass and inventory management software. We can also integrate our systems with our clients’ systems, enabling you to see the same data that we do.",
+            "Distribute from our warehouses to your distribution hubs or let us deliver that last mile to your individual stores. We use leading technologies throughout our operations, from track-and-trace through to radio frequency identification, customer portal, EDI, ePOD, sign-on glass and inventory management software.",
             icon: earth,
         state: "",
     },

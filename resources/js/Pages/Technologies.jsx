@@ -46,7 +46,7 @@ export default function Capability(props) {
 
     return (
         <>
-            <Head title="About GoldTiger" />
+            <Head title="Technology" />
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
                 <Navbars />
@@ -80,13 +80,13 @@ export default function Capability(props) {
                             Technology plays an important role in Gold Tiger’s commitment to continuous improvement. It enables us to deliver transparent and responsive services and keeps us accountable for the commitments we make to our clients.
                             </p>
                             <p className="mt-3 text-smooth">
-                            We are Volvo partners, and our Volvo truck fleet uses innovative solutions such as Volvo’s fuel-saving I-Save technology. Our gas-powered Volvo FH trucks have a reduced environmental footprint even in long-haul transport.                            
+                            We are <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a> partners, and our <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a> truck fleet uses innovative solutions such as <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a>’s fuel-saving I-Save technology.                   
                             </p>
                             <p className="mt-3 text-smooth">
-                            Volvo’s dynamic steering offers perfect stability, total control at low speeds and reduced strain on our drivers. It also helps to avoid skidding and unintentional lane changes and lets drivers set steering wheel preferences.
+                            <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a>’s dynamic steering offers perfect stability, total control at low speeds and reduced strain on our drivers. It also helps to avoid skidding and unintentional lane changes and lets drivers set steering wheel preferences.
                             </p>
                             <p className="mt-3 text-smooth">
-                            We use leading technologies throughout our operations, from track-and-trace through to RF scanning and JAIX logistics software. We can also integrate our system with our customers’ system, enabling you to see the same data that we do. We can provide all kind of reporting including on-time performance, DIFOT, Power BI and KPI reports.
+                            We use leading technologies throughout our operations, from track-and-trace through to RF scanning and JAIX logistics software. We can also integrate our system with our customers’ system, enabling you to see the same data that we do. We can provide all kind of reporting including on-time performance, DIFOT and KPI reports.
                             </p>
                             <p className="mt-3 text-smooth">
                             Much of the data, with automatically generated reports, is available through the customer portal accessed via our website. It contains the important basics – where is my freight, when will it arrive, proof of delivery – through to more advanced information for forecasting, budgeting and reporting purposes. Anything not available in the portal can usually be provided by your Account Manager or Customer Service representative through one of our reporting systems.

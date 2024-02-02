@@ -36,7 +36,7 @@ function Feedback() {
             ) : (
             <form onSubmit={handleSubmit} className="">
                 {!emoji ? ( 
-                <p className="text-center text-gray-600 px-10 my-5">How likely would you be to recommend GoldTiger Logistics Soulutions website's to a colleage?</p>
+                <p className="text-center text-gray-600 px-10 my-5">How likely would you be to recommend Gold Tiger Group of Companies website's to a colleage?</p>
                 ) : (                   
                     <p></p>
                 )}

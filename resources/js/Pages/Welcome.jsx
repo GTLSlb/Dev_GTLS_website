@@ -104,7 +104,7 @@ export default function Welcome(props) {
                     
                     
                     <p className="text-white inline-block font-bold whitespace-nowrap">
-                        <img className="h-7 inline-block pr-5" src={Truck} alt="GoldTiger"/>
+                        <img className="h-7 inline-block pr-5" src={Truck} alt="Gold Tiger"/>
                         Effective <span className="text-goldt">1</span>
                         st January 2024 
                         <span className="text-goldd"> Gold</span> 
@@ -120,12 +120,12 @@ export default function Welcome(props) {
                                 transform: translateX(100%)
                             }
                             100%{
-                                transform: translateX(-50%)
+                                transform: translateX(-100%)
                             }
                             
                         }
                         .animate-moveRight{
-                            animation: moveRight 20s linear infinite;
+                            animation: moveRight 200s linear infinite;
                         }
                     `}
                 </style>
@@ -172,7 +172,7 @@ export default function Welcome(props) {
                                 <img
                                     className="h-20"
                                     src={LogoWhite}
-                                    alt="GoldTiger"
+                                    alt="Gold Tiger"
                                 />
                             </a>
                         </div>
@@ -375,7 +375,7 @@ export default function Welcome(props) {
                                     <img
                                         className="h-8"
                                         src={LogoWhite}
-                                        alt="GoldTiger"
+                                        alt="Gold Tiger"
                                     />
                                 </a>
                                 <button
