@@ -98,39 +98,7 @@ export default function Welcome(props) {
     const [showMoreLinks, setShowMoreLinks] = useState(false);
     return (
         <>
-            <Head title="Welcome" />
-            <div className="py-2 bg-dark overflow-hidden">
-                <div className="animate-moveRight w-auto ">
-                    
-                    
-                    <p className="text-white inline-block font-bold whitespace-nowrap">
-                        <img className="h-7 inline-block pr-5" src={Truck} alt="Gold Tiger"/>
-                        Effective <span className="text-goldt">1</span>
-                        st January 2024 
-                        <span className="text-goldd"> Gold</span> 
-                        Tiger Group of Companies will be updating both our Chep and Loscam pallet accounts.For more details
-                        <a href={"/palletterms"} className="text-sm leading-6 text-goldl hover:text-white"> GTLS Pallets T&C</a>
-                    </p>
-                </div>
-
-                <style>
-                    {`
-                        @keyframes moveRight{
-                            0%{
-                                transform: translateX(100%)
-                            }
-                            100%{
-                                transform: translateX(-100%)
-                            }
-                            
-                        }
-                        .animate-moveRight{
-                            animation: moveRight 200s linear infinite;
-                        }
-                    `}
-                </style>
-            </div>
-            
+            <Head title="Welcome" />            
             <div className="relative isolate bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                 <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
@@ -277,27 +245,6 @@ export default function Welcome(props) {
                             ))}
                         </div>
                         <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
-                            {/* <a
-                                href="/login"
-                                className="rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white"
-                            >
-                                <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                    <button className="font-bold  ">
-                                        Log In
-                                    </button>
-                                </div>
-                            </a>
-                            <a
-                                target={"_blank"}
-                                href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                                className="mr-6 bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt "
-                            >
-                                <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                    <button className=" rounded-3xl  font-bold  ">
-                                        Client Login
-                                    </button>
-                                </div>
-                            </a> */}
                             <FeedbackButton/>
                             <Popover className="relative object-right flex-item md:ml-auto ">
                                 <Popover.Button
@@ -394,17 +341,6 @@ export default function Welcome(props) {
                                 <div className="-my-6 divide-y divide-gray-500/10">
                                     <div className="space-y-2 py-6">
                                         {navigation.map((item) => (
-                                            // <ScrollLink
-                                            //     key={item.name}
-                                            //     to={item.href}
-                                            //     smooth={true}
-                                            //     onClick={() =>
-                                            //         setMobileMenuOpen(false)
-                                            //     }
-                                            //     className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
-                                            // >
-                                            //     {item.name}
-                                            // </ScrollLink>
                                              <div key={item.name}>
                                              {item.link ? (
                                                  <Link
