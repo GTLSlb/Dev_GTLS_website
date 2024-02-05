@@ -271,11 +271,12 @@ export default function LandingPage({}) {
                                                   }}
                                               >
                                                   <div className="flex flex-row gap-x-6 items-end">
+                                                    
                                                       <div
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`AppLogo/${app.AppPic}`}
+                                                              src={`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />
