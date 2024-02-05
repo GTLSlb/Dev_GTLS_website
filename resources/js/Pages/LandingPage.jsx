@@ -265,7 +265,7 @@ export default function LandingPage({}) {
                                         ? filteredApps.map((app) => (
                                               <div
                                                   id={app.AppName}
-                                                  className={`bg-gradient-to-tr border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
+                                                  className={`bg-gradient-to-tr sm:w-96 border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
                                                   onClick={() => {
                                                       GoAppPage(app);
                                                   }}
@@ -304,7 +304,7 @@ export default function LandingPage({}) {
                                                           {app.AppName}
                                                       </h1>
                                                       <p className="mt-2 text-gray-300">
-                                                          {app.AppDesc}
+                                                      {app.AppDesc}
                                                       </p>
                                                   </div>
                                                   <div className="absolute bottom-0 right-0 overflow-hidden flex flex-col justify-end opacity-20">
@@ -320,8 +320,10 @@ export default function LandingPage({}) {
                                                       </div>
                                                   </div>
                                               </div>
+                                              
                                           ))
                                         : null}
+                                        
                                 </div>
                             </div>
                         </div>
