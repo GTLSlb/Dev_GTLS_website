@@ -162,7 +162,7 @@ export default function LandingPage({}) {
                                 </p>
 
                                 <div className=" right-5 top-3 lg:relative lg:right-0 lg:top-0 flex justify-center gap-x-6 sm:gap-x-10 items-center">
-                                <div className="flex flex-row items-center gap-x-2 ">
+                                    <div className="flex flex-row items-center gap-x-2 ">
                                         <div
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
@@ -210,8 +210,6 @@ export default function LandingPage({}) {
                                         </button>
                                     </a>
 
-                                   
-
                                     <ResponsiveNavLink
                                         method="post"
                                         // href={route("logout")}
@@ -229,7 +227,7 @@ export default function LandingPage({}) {
                             {/* border */}
 
                             <div className=" flex flex-col mx-auto max-w-7xl px-6 py-12 sm:py-10 lg:px-8">
-                                <div className="text-white md:text-3xl py-4 my-4 ">
+                                <div className="text-white md:text-3xl  py-4 my-4 ">
                                     {" "}
                                     <span>{greeting} </span>
                                     <span className="text-goldd">
@@ -242,16 +240,16 @@ export default function LandingPage({}) {
                                 <h1 className="text-4xl text-white font-bold">
                                     {/* Built for Growth the future of{" "} */}
                                     <span className="text-goldd">Gold</span>
-                                    Tiger Group of Companies: Pioneering a
-                                    Future Geared Towards Expansion and Progress
+                                    Tiger Group of Companies: Spearheading The
+                                    Future
                                 </h1>
                                 <div className="w-4/12 bg-goldt h-[0.005rem] my-3"></div>
                                 <p className="text-goldl text-2xl font-bold ">
                                     GTLS Software Development Department
                                 </p>
                                 <p className="text-white text-md">
-                                    We're committed to continuously enhance your
-                                    experience with our software.
+                                    Enhancing Your Software Experience,
+                                    Continuously.
                                 </p>
                             </div>
 
@@ -271,7 +269,6 @@ export default function LandingPage({}) {
                                                   }}
                                               >
                                                   <div className="flex flex-row gap-x-6 items-end">
-                                                    
                                                       <div
                                                           className={` rounded-3xl w-auto`}
                                                       >
@@ -305,7 +302,7 @@ export default function LandingPage({}) {
                                                           {app.AppName}
                                                       </h1>
                                                       <p className="mt-2 text-gray-300">
-                                                      {app.AppDesc}
+                                                          {app.AppDesc}
                                                       </p>
                                                   </div>
                                                   <div className="absolute bottom-0 right-0 overflow-hidden flex flex-col justify-end opacity-20">
@@ -321,10 +318,8 @@ export default function LandingPage({}) {
                                                       </div>
                                                   </div>
                                               </div>
-                                              
                                           ))
                                         : null}
-                                        
                                 </div>
                             </div>
                         </div>
