@@ -29,14 +29,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        if($request->hasSession() && $request->session()->has('user')){
-            // $url = $request->getRequestUri();
-            $expiration = time() - (60 * 60 * 24);
-            //getcookie('previous_page', '', $expiration);
-           //dd($_COOKIE['previous_page']);
-            $url = $_COOKIE['previous_page'];
-            return redirect($url);
-        }else{
+        
         $email = $request->input('Email');
         $password = $request->input('Password');
 
@@ -119,7 +112,7 @@ class LoginController extends Controller
             return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
         }
     }
-    }
+    
 }
 
 

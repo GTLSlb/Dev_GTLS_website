@@ -22,22 +22,21 @@ class AuthenticatedSessionController extends Controller
     public function create(Request $request): Response
     {
 
-        $sessionId = $request->session()->getId();
-        $user = DB::table('custom_sessions')->where('id', $sessionId)->value('user');
-    
-        if ($user !== null) {
+        if($request->session()->has('user')){
+            // $url = $request->getRequestUri();
+            $expiration = time() - (60 * 60 * 24);
+            //getcookie('previous_page', '', $expiration);
+           //dd($_COOKIE['previous_page']);
+            $url = $_COOKIE['previous_page'];
+            return redirect($url);
+        }
+        else{
             // 'user' value exists and is not null, don't do anything
             return Inertia::render('Auth/Login', [
                 'canResetPassword' => Route::has('password.request'),
                 'status' => session('status'),
             ]);
         }
-    
-        // Continue with the original logic if 'user' value doesn't exist or is null
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
     }
 
     /**
