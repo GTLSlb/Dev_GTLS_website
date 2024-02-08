@@ -11,14 +11,29 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): Response
+    public function create(Request $request): Response
     {
+
+        $sessionId = $request->session()->getId();
+        $user = DB::table('custom_sessions')->where('id', $sessionId)->value('user');
+    
+        if ($user !== null) {
+            // 'user' value exists and is not null, don't do anything
+            return Inertia::render('Auth/Login', [
+                'canResetPassword' => Route::has('password.request'),
+                'status' => session('status'),
+            ]);
+        }
+    
+        // Continue with the original logic if 'user' value doesn't exist or is null
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),

@@ -16,7 +16,9 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Middleware\CustomAuth;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 class LoginController extends Controller
 {
     /**
@@ -27,6 +29,14 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        if($request->hasSession() && $request->session()->has('user')){
+            // $url = $request->getRequestUri();
+            $expiration = time() - (60 * 60 * 24);
+            //getcookie('previous_page', '', $expiration);
+           //dd($_COOKIE['previous_page']);
+            $url = $_COOKIE['previous_page'];
+            return redirect($url);
+        }else{
         $email = $request->input('Email');
         $password = $request->input('Password');
 
@@ -108,6 +118,7 @@ class LoginController extends Controller
             $statusCode = 500;
             return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
         }
+    }
     }
 }
 
