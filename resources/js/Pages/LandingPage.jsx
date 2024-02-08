@@ -226,7 +226,7 @@ export default function LandingPage({}) {
                             </div>
                             {/* border */}
 
-                            <div className=" flex flex-col mx-auto max-w-7xl px-6 py-12 sm:py-10 lg:px-8">
+                            <div className=" flex flex-col w-full mx-auto max-w-7xl px-6 py-12 sm:py-10 lg:px-8">
                                 <div className="text-white md:text-3xl  py-4 my-4 ">
                                     {" "}
                                     <span>{greeting} </span>
@@ -239,7 +239,7 @@ export default function LandingPage({}) {
 
                                 <h1 className="text-4xl text-white font-bold">
                                     {/* Built for Growth the future of{" "} */}
-                                    <span className="text-goldd">Gold</span>
+                                    <span className="text-goldd">Gold </span>
                                     Tiger Group of Companies: Spearheading The
                                     Future
                                 </h1>
