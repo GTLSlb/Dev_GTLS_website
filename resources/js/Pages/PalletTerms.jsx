@@ -3,7 +3,7 @@ import jobs from "../assets/pictures/jobs.webp";
 import { useState, useEffect } from "react";
 
 import Footer from "./Component/landingPage/Footer";
-import Navbars from "./Component/navbars";
+import Navbars from "./Component/Navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },

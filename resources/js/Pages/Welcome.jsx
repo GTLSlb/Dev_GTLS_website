@@ -98,8 +98,7 @@ export default function Welcome(props) {
     const [showMoreLinks, setShowMoreLinks] = useState(false);
     return (
         <>
-            <Head title="Welcome" />
-            
+            <Head title="Welcome" />            
             <div className="relative isolate bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                 <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
@@ -342,17 +341,6 @@ export default function Welcome(props) {
                                 <div className="-my-6 divide-y divide-gray-500/10">
                                     <div className="space-y-2 py-6">
                                         {navigation.map((item) => (
-                                            // <ScrollLink
-                                            //     key={item.name}
-                                            //     to={item.href}
-                                            //     smooth={true}
-                                            //     onClick={() =>
-                                            //         setMobileMenuOpen(false)
-                                            //     }
-                                            //     className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
-                                            // >
-                                            //     {item.name}
-                                            // </ScrollLink>
                                              <div key={item.name}>
                                              {item.link ? (
                                                  <Link
