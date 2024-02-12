@@ -134,6 +134,26 @@ export default function LandingPage({}) {
             });
     };
 
+    const [getfooter, setfooter] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
+
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
@@ -301,7 +321,7 @@ export default function LandingPage({}) {
                 
             )}
             <div className="">
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </div>
     );

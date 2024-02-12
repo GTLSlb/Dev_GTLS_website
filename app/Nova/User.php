@@ -36,7 +36,7 @@ class User extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'name', 'email','user_id','type'
+        'id', 'name', 'email','user_id','role_id'
     ];
 
     /**
@@ -60,9 +60,9 @@ class User extends Resource
             //     ->resolveUsing(function ($value) {
             //         return $value ?? $this->relatedUser()->whereNull('parent_id')->first();
             //     }),
-            Select::make('Type')->options([
-                'Admin' => 'Admin',
-                'Editor' => 'Editor',
+            Select::make('role_id')->options([
+                '1' => '1',
+                '2' => '2',
             ]),
             // Text::make('User Id')->sortable(),
             // BelongsTo::make('Role')->sortable(),

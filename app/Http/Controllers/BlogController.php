@@ -12,13 +12,13 @@ class BlogController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Blog::all();
+        $posts = Blog::orderBy('id', 'desc')->get();
         return response()->json($posts, 200);
         //
     }
     public function post(Request $request)
     {
-        $posts = Blog::all();
+        $posts = Blog::orderBy('id', 'desc')->get();
         return response()->json($posts, 200);
         //
     }

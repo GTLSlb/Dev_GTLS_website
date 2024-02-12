@@ -23,27 +23,31 @@ const people = [
     // More people...<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1768.1956935527426!2d152.958802024188!3d-27.581392949605526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b914f05d239f3dd%3A0xd22bdddb5823983a!2sGold%20Tiger%20Logistics%20Soltuions!5e0!3m2!1sen!2slb!4v1679896698046!5m2!1sen!2slb" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 ];
 
-export default function Branches() {
+export default function Branches(props) {
+
+    const getBranch=props.getBranch;
     return (
         <div className="bg-dark py-8 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="">
                     <h2 className="text-3xl  font-bold tracking-tight text-goldt sm:text-4xl ">
-                        Our branches
+                        {getBranch?.name}
+                        {/* Our branches */}
                     </h2>
-                    <p className="mt-2 text-lg text-white font-bold">
+                     <div className="mt-2 text-lg text-white font-bold" dangerouslySetInnerHTML={{ __html: getBranch?.description }}></div>
+                    {/* <p className="mt-2 text-lg text-white font-bold">
                         These are our three branches in south-east Australia.
-                    </p>
+                    </p> */}
                 </div>
                 <ul
                     role="list"
                     className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-20 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
                 >
-                    {people.map((person) => (
-                        <li key={person.name}>
+                    {getBranch?.elements?.map((branch) => (
+                        <li key={branch.name}>
                             <iframe
-                                title={person.name}
-                                src={person.mapUrl}
+                                title={branch.name} 
+                                src={branch.url}
                                 width="600"
                                 height="450"
                                 allowFullScreen=""
@@ -53,9 +57,9 @@ export default function Branches() {
                             ></iframe>
                             <div className="">
                                 <h3 className=" mt-2 text-lg font-bold leading-8 tracking-tight text-center text-white">
-                                    {person.name}
+                                    {branch.name}
                                 </h3>
-                                {/* <p className=" text-base leading-7 text-gray-600">{person.role}</p> */}
+                                {/* <p className=" text-base leading-7 text-gray-600">{branch.role}</p> */}
                             </div>
                             <ul role="list" className="mt-6 flex gap-x-6"></ul>
                         </li>

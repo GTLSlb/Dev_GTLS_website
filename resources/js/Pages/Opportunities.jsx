@@ -11,44 +11,98 @@ import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
 
 export default function Opportunities(props) {
+
+
+    const [getfooter, setfooter] = useState([]);
+    const [getCareerHead, setCareerHead] = useState([]);
+    const [getCareerAttractive, setCareerAttractive] = useState([]);
+    const [getCareerSkills, setCareerSkills] = useState([]);
+    const [getCareerJobs, setCareerJobs] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    //CareerHead 
+    useEffect(() => {
+        axios.get('/CareerHead')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setCareerHead(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    //Attractive 
+    useEffect(() => {
+        axios.get('/CareerAttractive')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setCareerAttractive(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    //skills 
+    useEffect(() => {
+        axios.get('/CareerSkills')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setCareerSkills(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    //Jobs 
+    useEffect(() => {
+        axios.get('/CareerJobs')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setCareerJobs(response.data);
+              setJobsarray(response.data.elements);
+              setActiveJob(0);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    //footer 
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
     const [resumePreview, setResumePreview] = useState(null);
-    const [jobsarray, setJobsarray] = useState([
-        {
-            id: 0,
-            name: "Truck driver",
-            description:
-                "Solid walnut base with rare earth magnets and polycarbonate add-ons.",
-            html: <TruckDriver />,
-            current: true,
-        },
-        {
-            id: 1,
-            name: "Diesel Mechanic",
-            description:
-                "Gold Tiger Maintenance is Australian owned family business offering Freight Distribution and Warehousing Solutions.",
-            html: <Mechanic />,
-            current: false,
-        },
-        {
-            id: 2,
-            name: "MC Linehaul Drivers",
-            description: "Hand sanded and finished with natural oil",
-            html: <HaulDriver />,
-            current: false,
-        },
-    ]);
-    const [activeJob, setActiveJob] = useState(0);
+    const [jobsarray, setJobsarray] = useState([]);
+    
+    console.log(jobsarray);
+    const [activeJob, setActiveJob] = useState(66);
 
     function changeActiveJob(index) {
         setActiveJob(index);
         const updatedElements = jobsarray.map((element) => {
             if (element.id === index) {
-                return { ...element, current: true };
+                return { ...element, image_alt: true };
             } else {
-                return { ...element, current: false };
+                return { ...element, image_alt: false };
             }
         });
         setJobsarray(updatedElements);
@@ -60,6 +114,7 @@ export default function Opportunities(props) {
     };
 
     useEffect(() => {
+        
         let prevScrollPosition = window.pageYOffset;
 
         function handleScroll() {
@@ -87,7 +142,7 @@ export default function Opportunities(props) {
 
                 <div aria-hidden="true" className="relative">
                     <img
-                        src={jobs}
+                        src={"/app/webimages/"+getCareerHead?.background}
                         alt="jobs"
                         className="h-96 w-full object-cover object-center "
                     />
@@ -97,9 +152,11 @@ export default function Opportunities(props) {
                 <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
                         <h2 className="text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                            CAREERS AT GOLD TIGER
+                            {/* CAREERS AT GOLD TIGER */}
+                            {getCareerHead?.name}
                         </h2>
-                        <p className="mt-4 text-gray-300">
+                        <div className="mt-4 text-gray-300" dangerouslySetInnerHTML={{ __html: getCareerHead?.description }}></div>
+                        {/* <p className="mt-4 text-gray-300">
                             Gold Tiger Logistic Solutions is a dynamic,
                             fast-growing national company that is constantly
                             seeking new employees across the areas of transport
@@ -111,7 +168,7 @@ export default function Opportunities(props) {
                             size, creating many opportunities for advancement
                             and for university and TAFE graduates to get their
                             first full-time job.
-                        </p>
+                        </p> */}
                     </div>
                 </div>
                 <div className="relative isolate overflow-hidden  py-16 sm:py-16">
@@ -120,18 +177,28 @@ export default function Opportunities(props) {
                             <div className="relative lg:order-last lg:col-span-5">
                                 <figure className="mb-10">
                                     <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                        Attractive package of conditions
+                                        {getCareerAttractive?.name}
+                                        {/* Attractive package of conditions */}
                                     </h1>
                                     <p className="text-gray-200">
-                                        Gold Tiger offers an attractive package
-                                        of work conditions:
+                                        <div className="mt-4 text-gray-300" dangerouslySetInnerHTML={{ __html: getCareerAttractive?.description }}></div>
+                                        {/* Gold Tiger offers an attractive package
+                                        of work conditions: */}
                                     </p>
 
                                     <ul
                                         role="list"
                                         className="mt-8 max-w-xl space-y-2 text-gray-300"
                                     >
-                                        <li className="flex gap-x-3 items-center">
+                                        {getCareerAttractive?.elements?.map((feature) => (
+                                            <li className="flex gap-x-3 items-center">
+                                            <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
+                                            <span>
+                                                {feature?.name}
+                                            </span>
+                                        </li>
+                                            ))}
+                                        {/* <li className="flex gap-x-3 items-center">
                                             <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                             <span>
                                                 Flexible working hours to help
@@ -195,17 +262,19 @@ export default function Opportunities(props) {
                                                 Strong work ethic and focus on
                                                 the customer.
                                             </span>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </figure>
                             </div>
                             <div className=" text-base leading-7 text-gray-700 ">
                                 <h1 className="mt-2 text-3xl pb-2 font-bold tracking-tight text-goldt sm:text-3xl">
-                                    Opportunities for graduates and workers with
-                                    relevant skills
+                                    {getCareerSkills?.name}
+                                    {/* Opportunities for graduates and workers with
+                                    relevant skills */}
                                 </h1>
                                 <p className="text-gray-300">
-                                    As an employer, we are keen to give new
+                                    <div className="mt-4 text-gray-300" dangerouslySetInnerHTML={{ __html: getCareerSkills?.description }}></div>
+                                    {/* As an employer, we are keen to give new
                                     graduates without industry experience the
                                     opportunity to begin and build their career
                                     in transport and logistics with us. We will
@@ -224,14 +293,18 @@ export default function Opportunities(props) {
                                     or holder of a visa with full-time work
                                     rights. To make a proactive approach to us,
                                     email your cover letter and CV to Mr Al
-                                    Nehmani, National Business Manager, at{" "}
+                                    Nehmani, National Business Manager, at{" "} */}
+                                    {getCareerSkills?.elements?.map((feature) => (
                                     <a
                                         className="text-goldt font-bold"
-                                        href="mailto:Al.Nehmani@gtls.com.au"
+                                        href={feature.url}
                                     >
-                                        Al.Nehmani@gtls.com.au
+                                        
+                                        <div className="text-goldt font-bold" dangerouslySetInnerHTML={{ __html: feature.content }}></div>
+                                            
                                     </a>
-                                    .
+                                    ))}
+                                    
                                 </p>
                             </div>
                         </div>
@@ -242,11 +315,11 @@ export default function Opportunities(props) {
                         <div className="relative isolate overflow-hidden  pb-16 sm:pb-16">
                             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                                 <ul className="flex space-x-2 mt-5 border-b">
-                                    {jobsarray.map((job, index) => (
+                                    {jobsarray?.map((job, index) => (
                                         <li
                                             key={index}
                                             className={`cursor-pointer text-xs sm:text-xl py-2 ${
-                                                job.current === true
+                                                Boolean(job.image_alt) === true
                                                     ? "text-goldt border-b-4  border-goldd font-bold "
                                                     : "text-smooth  "
                                             }`}
@@ -255,14 +328,21 @@ export default function Opportunities(props) {
                                             }
                                         >
                                             <div className="px-2">
-                                                {" "}
                                                 {job.name}
                                             </div>
                                         </li>
                                     ))}
                                 </ul>
                                 <div className="">
-                                    {jobsarray[activeJob].html}
+                                    {jobsarray?.map((job, index) => (
+                                        Boolean(job.image_alt) === true
+                                        
+                                        ?
+                                        <div className="mt-5 text-smooth" dangerouslySetInnerHTML={{ __html: job.content }}></div>
+                                        :null
+                                        
+                                    ))}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -297,7 +377,7 @@ export default function Opportunities(props) {
                         </div>
                     </div>
                 </div>
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );

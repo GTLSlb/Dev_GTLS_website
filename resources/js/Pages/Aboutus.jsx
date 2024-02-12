@@ -4,9 +4,13 @@ import jobs from "../assets/pictures/jobs.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import Team from "../Pages/Component/landingPage/Team";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import Footer from "./Component/landingPage/Footer";
 import Navbars from "./Component/navbars";
+import { JsonTypes } from "@azure/msal-common/dist/utils/Constants";
+import { parseJSON } from "date-fns";
+import { json } from "react-router-dom";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -19,15 +23,79 @@ const handleClick = () => {
 };
 
 export default function AboutUs(props) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [showNavbar, setShowNavbar] = useState(false);
-    const [resumeFile, setResumeFile] = useState(null);
-    const [resumePreview, setResumePreview] = useState(null);
 
-    const handleFileUpload = (file) => {
-        setResumeFile(file);
-        setResumePreview(URL.createObjectURL(file));
-    };
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    const [getfooter, setfooter] = useState([]);
+    const [getHeader, setHeader] = useState([]);
+    const [getCoreValue, setCoreValue] = useState([]);
+    const [getSolutions, setSolutions] = useState([]);
+    const [getTeam, setTeam] = useState([]);
+
+    useEffect(() => {
+
+        // Header
+        axios.get('/aboutPageHeader')
+            .then(response => {
+                // console.log('fetching data:',response.data);
+                setHeader(response.data);
+            })
+            .catch(error => {
+            console.error('Error fetching data:', error);
+            });
+
+        // CoreValue
+        axios.get('/aboutPageCoreValue')
+            .then(response => {
+                // console.log('fetching data:',response.data);
+                setCoreValue(response.data);
+            })
+            .catch(error => {
+            console.error('Error fetching data:', error);
+            });
+
+        // Solutions
+        axios.get('/aboutPageSolutions')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setSolutions(response.data);
+        })
+        .catch(error => {
+        console.error('Error fetching data:', error);
+        });
+
+        // Team
+        axios.get('/aboutPageTeam')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setTeam(response.data);
+        })
+        .catch(error => {
+        console.error('Error fetching data:', error);
+        });
+
+        // Footer
+
+        axios.get('/footer')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setfooter(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            });
+    }, []);
+
+    
+    // ********************************************************* 
+    // ********************* End requests  ********************* 
+    // ********************************************************* 
+
+
+    const [showNavbar, setShowNavbar] = useState(false);
 
     useEffect(() => {
         let prevScrollPosition = window.pageYOffset;
@@ -44,6 +112,7 @@ export default function AboutUs(props) {
         };
     }, []);
 
+
     return (
         <>
             <Head title="About Gold Tiger" />
@@ -54,8 +123,8 @@ export default function AboutUs(props) {
 
                 <div  aria-hidden="true" className="relative pt-20 w-full">
                     <img
-                        src={aboutimage}
-                        alt="jobs"
+                        src={"/app/webimages/"+getHeader[0]?.image}
+                        alt={getHeader[0]?.image_alt}
                         className="pt-30 w-full h-96 object-cover object-top "
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
@@ -73,10 +142,13 @@ export default function AboutUs(props) {
                         <div className="relative lg:order-last lg:col-span-5">
                             <figure className="mb-10">
                                 <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    About Gold<span className="text-white">Tiger</span>
+                                    {getHeader[0]?.name}
+                                    {/* About Gold<span className="text-white">Tiger</span> */}
                                 </h1>
                             </figure>
-                            <p className="mt-3 text-smooth">
+                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getHeader[0]?.description }}></div>
+
+                            {/* <p className="mt-3 text-smooth">
                                     Gold Tiger Logistics Solutions (Gold Tiger) was established in 2006 by the 19-year-old Imad El Masri, who was a truck enthusiast. He began with one truck and one driver – himself – and a first-year turnover of $50,000. Early in his career he became the youngest driver in Australia to earn a B-double licence.
                                 </p>
                             <p className="mt-3 text-smooth">
@@ -87,22 +159,31 @@ export default function AboutUs(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                                 Gold Tiger is also strengthened by its gold partner extended warranty contract with Volvo. The partnership includes a regular maintenance schedule to the highest manufacturer standards (OEM replacement parts), 24-hour breakdown repair around Australia, and replacement vehicles if trucks need to be off the road more than 24 hours. This is backed up by weekly checks and servicing by qualified mechanics in our own on-site workshops.
-                            </p>
+                            </p> */}
 
                             <figure className="mb-5">
-                                <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    Core values
-                                </h1>
-                                <p className="mt-3 text-smooth">
+                                <h2 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
+                                    {getCoreValue?.name}
+                                    {/* Core values */}
+                                </h2>
+                                <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getCoreValue?.description }}></div>
+                                {/* <p className="mt-3 text-smooth">
                                     Commitment and dedication: we are dedicated and committed to delivering quality service, building lasting relationships and holding ourselves accountable.
-                                </p>
+                                </p> */}
                             </figure>
-                            
-                            <p className="mt-3 text-smooth">
+                            {getCoreValue?.elements?.map((feature) => (
+                                <div className="mt-3 text-smooth pl-5">
+                                    <span className="text-goldt font-bold">- {feature.name}</span>
+                                    <div className="mt-3 text-smooth pl-5" dangerouslySetInnerHTML={{ __html: getCoreValue?.description }}></div>
+                                </div>
+                                    
+                                    ))}
+
+                            {/* <p className="mt-3 text-smooth">
                                 <span className="text-goldt font-bold">Collaboration: </span>we highly value nurturing positive relationships at all levels of the company, cohesively and collaboratively. We work together across diverse teams to support and achieve our common goals.
 
-                            </p>
-                            <p className="mt-3 text-smooth">
+                            </p> */}
+                            {/* <p className="mt-3 text-smooth">
                                 <span className="text-goldt font-bold">Integrity and respect: </span> we highly value mutual respect and trust. Each team member brings unique skills and perspectives to the table; we take pride in this fact and act accordingly. We value communicating openly and honestly, making teammates feel appreciated and valued.
                             </p>
                             <p className="mt-3 text-smooth">
@@ -116,18 +197,17 @@ export default function AboutUs(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                                 <span className="text-goldt font-bold">Creativity and innovation: </span> we are constantly developing better ways of working, thinking, learning and doing.
-                            </p>
+                            </p> */}
                             
-
-
-
-
                             <figure className="mb-10">
                                 <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    Integrated solutions
+                                    {getSolutions?.name}
+                                    {/* Integrated solutions */}
                                 </h1>
                             </figure>
-                            <p className="mt-3 text-smooth">
+                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getSolutions?.description }}></div>
+
+                            {/* <p className="mt-3 text-smooth">
                                 Gold Tiger is an integrated transport, warehousing and distribution company. We provide independent, proactive logistics services that seamlessly integrate with our clients’ operations.
                             </p>
                             <p className="mt-3 text-smooth">
@@ -147,14 +227,31 @@ export default function AboutUs(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                                 We methodically cover areas such as service levels, technology, communication, relationships, expectations, reporting, KPIs and documentation so that we become an integrated part of your business.
-                            </p>
+                            </p> */}
 
                         </div>
                     </div>
                 </div>
-                <Team/>
+                <Team getTeam={getTeam}/>
 
-                <Footer />
+                <div className="text-smooth " >
+                {/* {
+                getSec.map((sec)=>(<div>
+
+                    <div dangerouslySetInnerHTML={
+                                    { __html: sec.code }
+                                } />
+                    
+                      
+                    </div>))
+                } */}
+
+                
+                </div>
+                
+                {/* <div className="text-smooth">{getSec?.data[1].title} </div> */}
+
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );

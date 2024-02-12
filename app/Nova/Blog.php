@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Date;
+use Laravel\Nova\Fields\DatePicker;
+use Laravel\Nova\Fields\Trix;
+
 
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -23,7 +27,7 @@ class Blog extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'title';
 
     /**
      * The columns that should be searched.
@@ -31,7 +35,7 @@ class Blog extends Resource
      * @var array
      */
     public static $search = [
-        'id',
+        'id','title','desc'
     ];
 
     /**
@@ -44,9 +48,11 @@ class Blog extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('title')->sortable(),
-            Image::make('image')->sortable(),
-            Text::make('desc')->sortable(),
+            Text::make('Title','title')->sortable(),
+            Image::make('Image','image')->sortable(),
+            Text::make('Image Alt','image_alt')->sortable(),
+            Trix::make('Description','desc')->sortable(),
+            Date::make('Date', 'date')->filterable(),
         ];
     }
 

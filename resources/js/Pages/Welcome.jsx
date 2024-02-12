@@ -96,6 +96,148 @@ export default function Welcome(props) {
     }, []);
 
     const [showMoreLinks, setShowMoreLinks] = useState(false);
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    const[getVistis, setVistis] = useState([]);
+    useEffect(() => {
+        axios.get('/visitor')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setVistis(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+    
+    // About Us
+    const [getAbout,setGetAbout]= useState();
+    const fetch =()=>{
+        axios.get('/getaboutus').then((res) => {
+            // console.log("result",res.data)
+            setGetAbout(res)
+        })
+    }
+    useEffect(()=>{
+        fetch()
+    },[])
+
+
+    // Services
+
+    const [getservices, setServices] = useState([]);
+
+    useEffect(() => {
+      axios.get('/getservices')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setServices(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+    // Going
+
+    const [getGreen, setGreen] = useState([]);
+
+    useEffect(() => {
+      axios.get('/getgoingGreen')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setGreen(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+    // Why Gold Tiger
+    
+    const [getwhygtls, setwhygtls] = useState([]);
+
+    useEffect(() => {
+      axios.get('/whygtls')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setwhygtls(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+    // Safety
+
+    const [getSafety, setSafety] = useState([]);
+
+    useEffect(() => {
+      axios.get('/safety')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setSafety(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+
+    // Tecnologies
+    
+    const [gettecnologies, settecnologies] = useState([]);
+
+    useEffect(() => {
+      axios.get('/tecnologies')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            settecnologies(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+    // Certificates
+    
+    const [getcertificates, setcertificates] = useState([]);
+
+    useEffect(() => {
+      axios.get('/certificates')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setcertificates(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+    // Footer
+    
+    const [getfooter, setfooter] = useState([]);
+
+    useEffect(() => {
+      axios.get('/footer')
+        .then(response => {
+            // console.log('fetching data:',response.data);
+            setfooter(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }, []);
+
+
+    
+
+    // ********************************************************* 
+    // ********************* End requests  ********************* 
+    // ********************************************************* 
+
     return (
         <>
             <Head title="Welcome" />
@@ -139,7 +281,7 @@ export default function Welcome(props) {
                                 href="/contact_us"
                                 className="text-xs sm:text-sm font-bold flex h-full items-center"
                             >
-                                Contact Us
+                                Contact Us 
                             </a>
                             <a
                                 href="/opportunities"
@@ -445,28 +587,28 @@ export default function Welcome(props) {
                     </Dialog>
                     <ScrollNav />
                 </div>
-
                 
 
                 <VideoHeader />
-                <AboutUs />
+                <AboutUs getAbout={getAbout} setGetAbout={setGetAbout}/>
                 <div id="services"></div>
-                <PrimaryServices />
-                <GoingGreenSection/>
+                <PrimaryServices getservices={getservices} setServices={setServices}/>
+                <GoingGreenSection getGreen={getGreen} setGreen={setGreen}/>
                 
                 {/* <Benefits /> */}
                 {/* <Process /> */}
-                <Features />
+                
+                <Features getwhygtls={getwhygtls} setwhygtls={setwhygtls}/>
                 <GTRS />
-                <Safety/>
+                <Safety getSafety={getSafety}/>
                 {/* <Video /> */}
 
                 
-                <Technologies />
+                <Technologies gettecnologies={gettecnologies}/>
                 {/* <Softwares /> */}
                 
                 {/* <WhyGoldTiger /> */}
-                <Certifiactesw />
+                <Certifiactesw getcertificates={getcertificates}/>
                 
 
                 {/* <News /> */}
@@ -475,7 +617,7 @@ export default function Welcome(props) {
                 <Branches /> */}
                 
                 {/* <Partners/> */}
-                <Footer />
+                <Footer getfooter={getfooter}/>
                 <CookiePopup />
                 <ScrollToTopButton />
                 <style>{`

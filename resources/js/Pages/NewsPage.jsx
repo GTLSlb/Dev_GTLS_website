@@ -82,6 +82,41 @@ function SamplePrevArrow(props) {
 }
 
 export default function NewsPage(props) {
+
+    const [getfooter, setfooter] = useState([]);
+    const [getPosts, setPosts] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    // Posts 
+    useEffect(() => {
+        axios.get('/posts')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setPosts(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    // Footer 
+
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
     const settings = {
         dots: false,
         infinite: true,
@@ -667,6 +702,12 @@ export default function NewsPage(props) {
 
     const pageUrl = window.location.href;
 
+
+    console.log("younes");
+    
+    const {post} =usePage().props;
+    console.log({post});
+
     return (
         <>
             <Head title="News" />
@@ -676,7 +717,7 @@ export default function NewsPage(props) {
                 {id == 12 ? (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={contentJson[id].imgUrl}
+                            src={"/app/webimages/"+post.image}
                             alt="news"
                             className="h-[40rem] w-full object-cover  "
                         />
@@ -685,7 +726,7 @@ export default function NewsPage(props) {
                 ) : (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={contentJson[id].imgUrl}
+                            src={"/app/webimages/"+post.image}
                             alt="news"
                             className="h-96 w-full object-cover  "
                         />
@@ -700,20 +741,30 @@ export default function NewsPage(props) {
                         </p> */}
                         {/* {contentJson.map((post) => ( */}
                         <a
-                            href="/#news"
+                            href="/news"
                             className="relative inline-flex items-center justify-center text-black "
                         >
                             <ArrowLongLeftIcon className="h-5 text-goldt " />
                             <span className="p-1 text-white">Back to main</span>
                         </a>
-                        <div key={contentJson[id].id}>
+                        <div key={post.id}>
                             <h1 className="mt-2 text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                {contentJson[id].title}
+                                {post.title}
                             </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-200 text-justify">
-                                {contentJson[id].content1}
-                            </p>
-                            {contentJson[id].list ? (
+                            <time
+                                dateTime={post.date}
+                                className="text-gray-500 font-bold"
+                            >
+                                {post.date.split('T')[0]}
+                            </time>
+                            <dd
+                                className="mt-6 text-lg leading-8 text-gray-200 text-justify"
+                                dangerouslySetInnerHTML={{
+                                    __html: post.desc,
+                                }}
+                            ></dd>
+                           
+                            {/* {contentJson[id].list ? (
                                 <ol className="p-5">
                                     {contentJson[id].list?.map((item) => (
                                         <li
@@ -732,21 +783,21 @@ export default function NewsPage(props) {
                                         </li>
                                     ))}
                                 </ol>
-                            ) : null}
+                            ) : null} */}
 
-                            <div className="mt-10 text-lg  text-gray-200 text-justify">
+                            {/* <div className="mt-10 text-lg  text-gray-200 text-justify">
                                 <p
                                     style={{ whiteSpace: "pre-line" }}
                                     className="w-full"
                                 >
                                     {contentJson[id].content2}
                                 </p>
-                            </div>
+                            </div> */}
                             <figure className="mt-16">
                                 <img
                                     className="aspect-video rounded-xl bg-gray-50 object-cover"
-                                    src={contentJson[id].imgUrl}
-                                    alt={contentJson[id].title}
+                                    src={"/app/webimages/"+post.image}
+                                    alt={post.title}
                                 />
                             </figure>
                             <div className="mt-10">
@@ -755,25 +806,25 @@ export default function NewsPage(props) {
                                 </p>
                                 <FacebookShareButton
                                     url={pageUrl}
-                                    title={contentJson[id].title}
+                                    title={post.title}
                                 >
                                     <FacebookIcon className="rounded-md h-10 w-auto mr-3" />
                                 </FacebookShareButton>
                                 <TwitterShareButton
                                     url={pageUrl}
-                                    title={contentJson[id].title}
+                                    title={post.title}
                                 >
                                     <TwitterIcon className="rounded-md h-10 w-auto mr-3" />
                                 </TwitterShareButton>
                                 <LinkedinShareButton
                                     url={pageUrl}
-                                    title={contentJson[id].title}
+                                    title={post.title}
                                 >
                                     <LinkedinIcon className="rounded-md h-10 w-auto mr-3" />
                                 </LinkedinShareButton>
                                 <WhatsappShareButton
                                     url={pageUrl}
-                                    title={contentJson[id].title}
+                                    title={post.title}
                                 >
                                     <WhatsappIcon className="rounded-md h-10 w-auto mr-3" />
                                 </WhatsappShareButton>
@@ -790,16 +841,16 @@ export default function NewsPage(props) {
                             </h2>
                         </div>
                         <Slider {...settings}>
-                            {posts.map((post) => (
+                            {getPosts.map((post) => (
                                 <div key={post.id} className="px-5 ">
                                     <Link
-                                        href={route("news", { id: post.id })}
+                                        href={route("news", { id: post.slug})}
                                         className=""
                                     >
                                         <div className="h-full">
                                             <div className="relative w-full www">
                                                 <img
-                                                    src={post.imageUrl}
+                                                    src={"/app/webimages/"+post.image}
                                                     alt={post.title}
                                                     className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
                                                 />
@@ -817,17 +868,20 @@ export default function NewsPage(props) {
                                                             }
                                                             className="text-goldl font-bold"
                                                         >
-                                                            {post.date}
+                                                            {post?.date?.split('T')[0]}
                                                         </time>
                                                     </div>
                                                     <div className="group relative">
-                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
+                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold ">
                                                             <span className="absolute inset-0" />
-                                                            {post.title}
+                                                            {post?.title}
                                                         </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                            {post.description}
-                                                        </p>
+                                                        <div
+                                                            className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3 list-style-type: disc;"
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: post?.desc,
+                                                            }}
+                                                        ></div>
                                                     </div>
                                                 </div>
                                             </article>
@@ -838,7 +892,7 @@ export default function NewsPage(props) {
                         </Slider>
                     </div>
                 </div>
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );

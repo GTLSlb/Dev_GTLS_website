@@ -319,9 +319,10 @@ function SampleNextArrow(props) {
     );
   }
 
-export default function News() {
+export default function News(props) {
 
-    
+    const getPageDesc=props.getPageDesc;
+    const getPosts=props.getPosts;
     
     const sliderRef = useRef(null);
 
@@ -419,15 +420,6 @@ export default function News() {
     }, []);
 
 
-    const baseURL = "http://127.0.0.1:8000/posts";
-    const [postss, setPost] = useState([]);
-    useEffect(() => {
-        axios.get(baseURL).then((response) => {
-          setPost(response.data);
-        });
-      }, []);
-
-    console.log(postss);
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -439,22 +431,23 @@ export default function News() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">
                             <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                News 
+                                {getPageDesc?.name}
                             </h2>
-                            <p className="mt-2 text-lg leading-8 text-gray-300">
+                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getPageDesc?.description }}></div>
+                            {/* <p className="mt-2 text-lg leading-8 text-gray-300">
                                 Know more about our company.
-                            </p>
+                            </p> */}
                         </div>
-                        {/* <div className="text-xl text-white">
-                         {
-                            postss.map((post) => (
-                                <div key={post.id} className="px-5 ">
-                                    <Link  href={route("news", { id: post.id })} className="">
-                                        <div className="h-full">
+
+                        <div className="grid lg:grid-cols-3 gap-4">
+                        {getPosts?.map((post) => (
+                                <div key={post.id} className="px-5  ">
+                                    <Link href={route("news", { id: post.slug})} className="">
+                                        <div className="h-full ">
                                         <div className="relative w-full www">
                                             <img
-                                                src={'./app/icons/'+post.image}
-                                                alt={post.title}
+                                                src={"/app/webimages/"+post?.image}
+                                                alt={post?.title}
                                                 className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
                                             />
                                             <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
@@ -466,33 +459,33 @@ export default function News() {
                                             <div className="max-w-xl mx-4 mb-6  mt-12">
                                                 <div className="mt-5 flex items-center gap-x-4 text-xs">
                                                     <time
-                                                        dateTime={post.datetime}
+                                                        dateTime={post.created_at}
                                                         className="text-goldl font-bold"
                                                     >
-                                                        {post.date}
+                                                        {/* {post.date} */}
+                                                        {post?.date?.split('T')[0]}
                                                     </time>
                                                 </div>
                                                 <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
+                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
                                                         <span className="absolute inset-0" />
-                                                        {post.title}
+                                                        {post?.title}
                                                     </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.desc}
-                                                    </p>
+                                                    <dd
+                                                        className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: post?.desc,
+                                                        }}
+                                                    ></dd>
                                                 </div>
                                             </div>
                                         </article>
                                         </div>
                                     </Link>
                                 </div>
-                            ))
-                         }
-
-                        </div> */}
-
-                        <div className="grid lg:grid-cols-3 gap-4">
-                        {posts.map((post) => (
+                            ))}
+                        
+                        {/* {posts.map((post) => (
                                 <div key={post.id} className="px-5  ">
                                     <Link href={route("news", { id: post.id })} className="">
                                         <div className="h-full ">
@@ -531,7 +524,7 @@ export default function News() {
                                         </div>
                                     </Link>
                                 </div>
-                            ))}
+                            ))} */}
 
                         </div>
                         
