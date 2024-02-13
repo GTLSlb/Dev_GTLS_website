@@ -121,9 +121,6 @@ Route::get('/contact_us', function () {
     return Inertia::render('ContactUsPage');
 })->name('contact_us');
 
-
-
-
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
 Route::post('/support', [SupportFormController::class, 'submitSupportForm'])->name('support.submit');

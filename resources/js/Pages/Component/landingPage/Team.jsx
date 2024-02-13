@@ -144,7 +144,7 @@ function SampleNextArrow(props) {
 export default function News(props) {
 
     const getTeam = props.getTeam;
-    
+    console.log(props)
     const sliderRef = useRef(null);
 
     
@@ -241,7 +241,7 @@ export default function News(props) {
     }, []);
 
 
-    const baseURL = "http://127.0.0.1:8000/posts";
+    const baseURL = "/posts";
     const [postss, setPost] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {

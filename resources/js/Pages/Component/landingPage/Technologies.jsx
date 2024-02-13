@@ -9,7 +9,7 @@
 
 
 export default function Technologies(props) {
-    const gettecnologies = props.gettecnologies;
+    const gettechnologies = props.gettechnologies;
 
 
     const features = [
@@ -36,8 +36,8 @@ export default function Technologies(props) {
 
                         <a href="/technologies" target="_blank">
                             <img
-                                src={"/app/webimages/"+gettecnologies?.image}
-                                alt={gettecnologies?.image_alt}
+                                src={"/app/webimages/"+gettechnologies?.image}
+                                alt={gettechnologies?.image_alt}
                                 className="h-auto sm:h-auto w-full"
                             />
                         </a>
@@ -49,16 +49,16 @@ export default function Technologies(props) {
                         <div className=" pb-2">
                             <p className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
                                 {/* Technologies */}
-                                {gettecnologies?.name}
+                                {gettechnologies?.name}
                             </p>
                             <h2 className="text-gray-100 mt-2 font-bold">
-                                {/* {gettecnologies ? gettecnologies.elements[0].name:null} */}
-                                {/* {gettecnologies ? gettecnologies.elements[0].name:null} */}
+                                {/* {gettechnologies ? gettechnologies.elements[0].name:null} */}
+                                {/* {gettechnologies ? gettechnologies.elements[0].name:null} */}
                                 Modern technologies for an accountable service
                             </h2>
                         </div>
 
-                        {/* {gettecnologies?.elements?.map((feature) => (
+                        {/* {gettechnologies?.elements?.map((feature) => (
                             <div key={feature.name} className="  relative  flex flex-col lg:flex-row ">
                                 <div className=" top-0 left-0 flex mr-5 h-auto w-1/4 items-center mb-1 md:mb-0  rounded-lg ">
                                     <img className="w-full" src={"/app/webimages/"+feature.image} alt="" />
@@ -73,10 +73,10 @@ export default function Technologies(props) {
                                 </div>
                             </div>
                         ))} */}
-                        {gettecnologies?.elements?.map((feature) => (
+                        {gettechnologies?.elements?.map((feature) => (
                             <dl className="mt-5 ">
                                 <h2 className="mt-10 text-xl font-bold text-goldt">
-                                    {/* {gettecnologies?.elements[1]?.name} */}
+                                    {/* {gettechnologies?.elements[1]?.name} */}
                                     {feature.name}
                                 </h2>
                             
@@ -89,7 +89,7 @@ export default function Technologies(props) {
                                         }}
                                     ></dd>
                                     <div className="text-goldt mt-3">
-                                        <a href={gettecnologies?.url} className="text-sm leading-6 text-goldl hover:text-white">
+                                        <a href={gettechnologies?.url} className="text-sm leading-6 text-goldl hover:text-white">
                                             Read More
                                         </a>
                                     </div>
@@ -101,7 +101,7 @@ export default function Technologies(props) {
                 </div>
             </div>
             <div className="absolute top-0  right-[-20rem]"> 
-                <img src={"/app/webimages/"+gettecnologies?.background} alt="volvo" className="h-[60rem] opacity-20"/>
+                <img src={"/app/webimages/"+gettechnologies?.background} alt="volvo" className="h-[60rem] opacity-20"/>
             </div>
         </div>
     );

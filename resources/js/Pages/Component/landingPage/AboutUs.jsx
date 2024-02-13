@@ -45,8 +45,9 @@ const faqs = [
 
 
 export default function AboutUs(props) {
-    const getAbout = props.getAbout;
+    const getAbout = props.getAbout[0];
     const setGetAbout = props.setGetAbout;
+    console.log(getAbout)
     return (
         
         <div className="bg-dark py-32" id="aboutus">
@@ -66,15 +67,15 @@ export default function AboutUs(props) {
                                 <div className="h-full  bg-dark rounded-2xl"></div>
                         </div>
                         {/* <img src={aboutimage} alt="truck" className="rounded-3xl"/> */}
-                        <img src={getAbout ? "/app/webimages/"+getAbout.data[0].image:null} alt="truck" className="rounded-3xl"/>
+                        <img src={getAbout ? "/app/webimages/"+getAbout.image:null} alt="truck" className="rounded-3xl"/>
                     </div>
                     <div className="mx-auto  w-full">
                         <p className="mt-2 text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
-                           {getAbout ? getAbout.data[0].name:null}
+                           {getAbout ? getAbout.name:null}
                         </p>
 
                         <div className="mt-6  text-base  text-gray-300" dangerouslySetInnerHTML={getAbout ?
-                                    { __html: getAbout.data[0].description }:null
+                                    { __html: getAbout.description }:null
                                 }>
                         </div>
                         <br></br>
@@ -87,7 +88,7 @@ export default function AboutUs(props) {
                             
                         </p> */}
                         <div className="text-goldt mt-3">
-                            <a href={getAbout ? getAbout.data[0].url:null} className="text-sm leading-6 text-goldl hover:text-white">
+                            <a href={getAbout ? getAbout.url:null} className="text-sm leading-6 text-goldl hover:text-white">
                                 Read More
                             </a>
                         </div>

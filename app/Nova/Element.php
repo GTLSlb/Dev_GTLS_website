@@ -37,7 +37,7 @@ class Element extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','content'
+        'id','name','content','Section.name',
     ];
 
     /**

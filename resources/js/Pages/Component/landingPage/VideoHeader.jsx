@@ -1,7 +1,7 @@
 import headerImage from "../../../assets/pictures/header-image.webp";
 import aus from "../../../assets/pictures/aus.webp";
 import { PhoneIcon } from "@heroicons/react/24/outline";
-import Gtlsh from "../../../assets/videos/goldtiger-header.mp4"
+import Gtlsh from "../../../assets/videos/goldtiger-header.mp4";
 import { Link as ScrollLink } from "react-scroll";
 import { useState, useEffect, useRef } from "react";
 
@@ -77,23 +77,18 @@ const socials = [
         icon: PhoneIcon,
     },
 ];
- 
+
 export default function VideoHeader() {
-
-    
-
-    
-    const [getHeader,setGetHeader]= useState();
-    const fetch =()=>{
-        axios.get('/getheader').then((res) => {
-            console.log("result",res.data)
-            setGetHeader(res)
-        })
-    }
-    useEffect(()=>{
-        fetch()
-    },[])
-
+    const [getHeader, setGetHeader] = useState();
+    const fetch = () => {
+        axios.get("/getheader").then((res) => {
+            console.log("result", res.data);
+            setGetHeader(res);
+        });
+    };
+    useEffect(() => {
+        fetch();
+    }, []);
 
     const navigation = {
         solutions: [
@@ -105,7 +100,10 @@ export default function VideoHeader() {
         support: [
             // { name: "Trading Terms and Conditions", href: "/download-docx" },
             // { name: "GTLS Capability Statement", href: "/downloadGTLS-docx" },
-            { name: "Trading Terms and Conditions", href: "/termsandconditions" },
+            {
+                name: "Trading Terms and Conditions",
+                href: "/termsandconditions",
+            },
             { name: "GTLS Capability Statement", href: "/capabilitystatement" },
             {
                 name: "Client login",
@@ -122,13 +120,16 @@ export default function VideoHeader() {
         legal: [
             { name: "1800 04 03 06", href: "tel:+1800040306" },
             // { name: "0450 033 222", href: "tel:+0450033222" },
-            { name: "enquiries@gtls.com.au", href: "mailto:enquiries@gtls.com.au" },
+            {
+                name: "enquiries@gtls.com.au",
+                href: "mailto:enquiries@gtls.com.au",
+            },
         ],
         social: [
             {
                 id: 0,
                 name: "Facebook",
-                href: getHeader ? getHeader.data[3].content:null,
+                href: getHeader ? getHeader.data[3].content : null,
                 icon: (props) => (
                     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                         <path
@@ -142,7 +143,7 @@ export default function VideoHeader() {
             {
                 id: 1,
                 name: "Instagram",
-                href: getHeader ? getHeader.data[4].content:null,
+                href: getHeader ? getHeader.data[4].content : null,
                 icon: (props) => (
                     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                         <path
@@ -192,35 +193,59 @@ export default function VideoHeader() {
             {
                 id: 2,
                 name: "linkedin",
-                href: getHeader ? getHeader.data[5].content:null,
+                href: getHeader ? getHeader.data[5].content : null,
                 icon: (props) => (
-                    <svg className="m-20" fill="currentColor" height="20px" width="20px"  
-                        viewBox="0 0 310 310" xml:space="preserve" {...props}>
+                    <svg
+                        className="m-20"
+                        fill="currentColor"
+                        height="20px"
+                        width="20px"
+                        viewBox="0 0 310 310"
+                        xml:space="preserve"
+                        {...props}
+                    >
                         <g id="XMLID_801_">
-                            <path id="XMLID_802_" d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73
-                                C77.16,101.969,74.922,99.73,72.16,99.73z"/>
-                            <path id="XMLID_803_" d="M41.066,0.341C18.422,0.341,0,18.743,0,41.362C0,63.991,18.422,82.4,41.066,82.4
-                                c22.626,0,41.033-18.41,41.033-41.038C82.1,18.743,63.692,0.341,41.066,0.341z"/>
-                            <path id="XMLID_804_" d="M230.454,94.761c-24.995,0-43.472,10.745-54.679,22.954V104.73c0-2.761-2.238-5-5-5h-59.599
+                            <path
+                                id="XMLID_802_"
+                                d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73
+                                C77.16,101.969,74.922,99.73,72.16,99.73z"
+                            />
+                            <path
+                                id="XMLID_803_"
+                                d="M41.066,0.341C18.422,0.341,0,18.743,0,41.362C0,63.991,18.422,82.4,41.066,82.4
+                                c22.626,0,41.033-18.41,41.033-41.038C82.1,18.743,63.692,0.341,41.066,0.341z"
+                            />
+                            <path
+                                id="XMLID_804_"
+                                d="M230.454,94.761c-24.995,0-43.472,10.745-54.679,22.954V104.73c0-2.761-2.238-5-5-5h-59.599
                                 c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5h62.097c2.762,0,5-2.238,5-5v-98.918c0-33.333,9.054-46.319,32.29-46.319
                                 c25.306,0,27.317,20.818,27.317,48.034v97.204c0,2.762,2.238,5,5,5H305c2.762,0,5-2.238,5-5V194.995
-                                C310,145.43,300.549,94.761,230.454,94.761z"/>
+                                C310,145.43,300.549,94.761,230.454,94.761z"
+                            />
                         </g>
                     </svg>
-                    
                 ),
             },
         ],
     };
-    
+
     return (
         <div>
             <div className="bg-dark relative ">
-                <div className=" bg-red"> 
-                <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]"> 
-                    <video src= {Gtlsh} autoplay="{true}" loop muted="{true}" playsinline="{true}" className="absolute  w-auto min-w-full min-h-full max-w-none"> </video> 
-                    <div className="opacity-70 bg-black absolute w-full h-full" ></div>
-                    <div className=" lg:flex items-center lg:gap-x-10  ">
+                <div className=" bg-red">
+                    <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]">
+                        <video
+                            src={Gtlsh}
+                            autoplay="{true}"
+                            loop
+                            muted="{true}"
+                            playsinline="{true}"
+                            className="absolute  w-auto min-w-full min-h-full max-w-none"
+                        >
+                            {" "}
+                        </video>
+                        <div className="opacity-70 bg-black absolute w-full h-full"></div>
+                        <div className=" lg:flex items-center lg:gap-x-10  ">
                             {/* <div className="absolute">
                                 <img src={aus} alt="australia" />
                             </div> */}
@@ -298,24 +323,52 @@ export default function VideoHeader() {
                                                     </div>
                                                     <div className="text-center ">
                                                         <h1 className=" mt-10  text-3xl font-bold tracking-tight text-white sm:text-6xl sm:leading-tight ">
-                                                            {getHeader ? getHeader.data[0].content:null}
+                                                            {getHeader ? (
+                                                                <div
+                                                                    className=""
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: getHeader
+                                                                            .data[0]
+                                                                            .content,
+                                                                    }}
+                                                                ></div>
+                                                            ) : null}
+
                                                             {/* SMARTER SUPPLY CHAIN
                                                             MANAGEMENT  */}
                                                         </h1>
                                                         <p className="mt-4 mb-2 text-2xl leading-8 text-goldt font-bold border-b border-opacity-30 border-goldt py-6">
-                                                            {getHeader ? getHeader.data[1].content:null}
+                                                            {getHeader ? (
+                                                                <div
+                                                                    className=""
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: getHeader
+                                                                            .data[1]
+                                                                            .content,
+                                                                    }}
+                                                                ></div>
+                                                            ) : null}
                                                             {/* THIRD PARTY LOGISTICS
                                                             SPECIALISTS */}
                                                         </p>
                                                         <p className="text-white py-2">
-                                                            {getHeader ? getHeader.data[2].content:null}
+                                                            {getHeader ? (
+                                                                <div
+                                                                    className=""
+                                                                    dangerouslySetInnerHTML={{
+                                                                        __html: getHeader
+                                                                            .data[2]
+                                                                            .content,
+                                                                    }}
+                                                                ></div>
+                                                            ) : null}
                                                             {/* TRANSPORT, INTERSTATE
                                                             LINE HAUL, WAREHOUSING,
                                                             DISTRIBUTION OR A FULL
                                                             3PL OR 4PL SOLUTION */}
                                                         </p>
                                                     </div>
-                                                    
+
                                                     {/* <div className="flex  sm:items-center flex-col sm:flex-row gap-x-5 mt-5">
                                                         <div className=" flex items-center gap-x-6 ">
                                                             <ScrollLink
@@ -329,27 +382,36 @@ export default function VideoHeader() {
                                                     </div> */}
 
                                                     <div className=" space-x-6 mt-5 text-center item-center">
-                                                        {navigation.social.map((item) => (
-                                                            <div
-                                                                className="border border-goldt rounded-full p-1 inline-block"
-                                                                key={item.id}>
-                                                                <a
-                                                                    href={item.href}
-                                                                    target="blank"
-                                                                    className="text-goldl hover:text-goldt "
+                                                        {navigation.social.map(
+                                                            (item) => (
+                                                                <div
+                                                                    className="border border-goldt rounded-full p-1 inline-block"
+                                                                    key={
+                                                                        item.id
+                                                                    }
                                                                 >
-                                                                    <span className="sr-only">
-                                                                        {item.name}
-                                                                    </span>
-                                                                    <item.icon
-                                                                        className="h-8 w-8 p-1"
-                                                                        aria-hidden="true"
-                                                                    />
-                                                                </a>
-                                                            </div>
-                                                        ))}
+                                                                    <a
+                                                                        href={
+                                                                            item.href
+                                                                        }
+                                                                        target="blank"
+                                                                        className="text-goldl hover:text-goldt "
+                                                                    >
+                                                                        <span className="sr-only">
+                                                                            {
+                                                                                item.name
+                                                                            }
+                                                                        </span>
+                                                                        <item.icon
+                                                                            className="h-8 w-8 p-1"
+                                                                            aria-hidden="true"
+                                                                        />
+                                                                    </a>
+                                                                </div>
+                                                            )
+                                                        )}
                                                     </div>
-                                                    
+
                                                     {/* <div className="w-full sm:w-auto mt-5 inline-block ring-1 ring-goldt py-1 px-2 relative items-center gap-x-2 rounded-3xl md:rounded-full justify-center flex-col sm:flex-row text-lft text-sm leading-6 text-gray-600 ">
                                                         <table>
                                                             <tbody>
@@ -399,9 +461,7 @@ export default function VideoHeader() {
                                                             </tbody>
                                                         </table>
                                                     </div> */}
-                                                    
                                                 </div>
-                                                
                                             </td>
                                             {/* <td className="hidden lg:table-cell  px-4 py-2 ">
                                                 <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
@@ -418,7 +478,7 @@ export default function VideoHeader() {
                             </div>
                         </div>
 
-                    {/* <div className="absolute flex py-24 sm:py-36 items-center justify-center text-center overflow-hidden bg-opacity-10">
+                        {/* <div className="absolute flex py-24 sm:py-36 items-center justify-center text-center overflow-hidden bg-opacity-10">
                     <div className="absolute isolate mx-auto max-w-7xl px-6 lg:px-8">
                        
                     </div>
@@ -427,12 +487,9 @@ export default function VideoHeader() {
                         className="h-20 absolute top-auto bottom-0"
                     ></div>
                     </div> */}
-
-                    
-                    </div>  
+                    </div>
                 </div>
                 {/* <div className="relative flex py-24 sm:py-36 items-center justify-center  bg-header bg-cover overflow-hidden bg-opacity-10"> */}
-                
             </div>
         </div>
     );

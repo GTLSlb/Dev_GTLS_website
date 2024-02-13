@@ -11,6 +11,7 @@ import Navbars from "./Component/navbars";
 import { JsonTypes } from "@azure/msal-common/dist/utils/Constants";
 import { parseJSON } from "date-fns";
 import { json } from "react-router-dom";
+import BounceLoader from "react-spinners/BounceLoader";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -23,11 +24,9 @@ const handleClick = () => {
 };
 
 export default function AboutUs(props) {
-
-
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     const [getfooter, setfooter] = useState([]);
     const [getHeader, setHeader] = useState([]);
@@ -35,65 +34,54 @@ export default function AboutUs(props) {
     const [getSolutions, setSolutions] = useState([]);
     const [getTeam, setTeam] = useState([]);
 
+    const [loading, setLoading] = useState(true); // Add this state to manage loading state
+
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const requests = [
+                    axios.get("/aboutPageHeader"),
+                    axios.get("/aboutPageCoreValue"),
+                    axios.get("/aboutPageSolutions"),
+                    axios.get("/aboutPageTeam"),
+                    axios.get("/footer"),
+                ];
 
-        // Header
-        axios.get('/aboutPageHeader')
-            .then(response => {
-                // console.log('fetching data:',response.data);
-                setHeader(response.data);
-            })
-            .catch(error => {
-            console.error('Error fetching data:', error);
-            });
+                // Execute all requests concurrently
+                const responses = await Promise.all(requests);
 
-        // CoreValue
-        axios.get('/aboutPageCoreValue')
-            .then(response => {
-                // console.log('fetching data:',response.data);
-                setCoreValue(response.data);
-            })
-            .catch(error => {
-            console.error('Error fetching data:', error);
-            });
+                // Destructure responses array
+                const [
+                    headerResponse,
+                    coreValueResponse,
+                    solutionsResponse,
+                    teamResponse,
+                    footerResponse,
+                ] = responses;
 
-        // Solutions
-        axios.get('/aboutPageSolutions')
-        .then(response => {
-            // console.log('fetching data:',response.data);
-            setSolutions(response.data);
-        })
-        .catch(error => {
-        console.error('Error fetching data:', error);
-        });
+                // Set states with data
+                setHeader(headerResponse.data);
+                setCoreValue(coreValueResponse.data);
+                setSolutions(solutionsResponse.data);
+                setTeam(teamResponse.data);
+                setfooter(footerResponse.data);
 
-        // Team
-        axios.get('/aboutPageTeam')
-        .then(response => {
-            // console.log('fetching data:',response.data);
-            setTeam(response.data);
-        })
-        .catch(error => {
-        console.error('Error fetching data:', error);
-        });
+                // Set loading to false when all requests are completed
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+                // Optionally, handle error state here
+            }
+        };
 
-        // Footer
-
-        axios.get('/footer')
-        .then(response => {
-            // console.log('fetching data:',response.data);
-            setfooter(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-            });
+        fetchData();
     }, []);
 
-    
-    // ********************************************************* 
-    // ********************* End requests  ********************* 
-    // ********************************************************* 
+    // Now you can use the loading state to conditionally render loading indicators or content
 
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
 
     const [showNavbar, setShowNavbar] = useState(false);
 
@@ -112,43 +100,60 @@ export default function AboutUs(props) {
         };
     }, []);
 
-
     return (
         <>
-            <Head title="About Gold Tiger" />
-            <div className="relative isolate bg-dark">
-                {/* <Chatbot /> */}
-                <Navbars />
-                {/* <HeroSection/> */}
+            {loading ? (
+                <>
+                    {" "}
+                    <div className="flex justify-center items-center h-screen">
+                        {" "}
+                        <BounceLoader color="#e2b540" />
+                    </div>
+                </>
+            ) : (
+                <>
+                    <Head title="About Gold Tiger" />
+                    <div className="relative isolate bg-dark">
+                        {/* <Chatbot /> */}
+                        <Navbars />
+                        {/* <HeroSection/> */}
 
-                <div  aria-hidden="true" className="relative pt-20 w-full">
-                    <img
-                        src={"/app/webimages/"+getHeader[0]?.image}
-                        alt={getHeader[0]?.image_alt}
-                        className="pt-30 w-full h-96 object-cover object-top "
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark" />
-                </div>
+                        <div
+                            aria-hidden="true"
+                            className="relative pt-20 w-full"
+                        >
+                            <img
+                                src={"/app/webimages/" + getHeader[0]?.image}
+                                alt={getHeader[0]?.image_alt}
+                                className="pt-30 w-full h-96 object-cover object-top "
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-dark" />
+                        </div>
 
-                <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
-                    {/* <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
+                        <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
+                            {/* <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
                         <h2 className="text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
                             About Gold<span className="text-white">Tiger</span>
                         </h2>
                     </div> */}
-                </div>
-                <div className="relative isolate overflow-hidden  py-16 sm:py-16 mb-10">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="relative lg:order-last lg:col-span-5">
-                            <figure className="mb-10">
-                                <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    {getHeader[0]?.name}
-                                    {/* About Gold<span className="text-white">Tiger</span> */}
-                                </h1>
-                            </figure>
-                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getHeader[0]?.description }}></div>
+                        </div>
+                        <div className="relative isolate overflow-hidden  py-16 sm:py-16 mb-10">
+                            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                                <div className="relative lg:order-last lg:col-span-5">
+                                    <figure className="mb-10">
+                                        <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
+                                            {getHeader[0]?.name}
+                                            {/* About Gold<span className="text-white">Tiger</span> */}
+                                        </h1>
+                                    </figure>
+                                    <div
+                                        className="mt-3 text-smooth"
+                                        dangerouslySetInnerHTML={{
+                                            __html: getHeader[0]?.description,
+                                        }}
+                                    ></div>
 
-                            {/* <p className="mt-3 text-smooth">
+                                    {/* <p className="mt-3 text-smooth">
                                     Gold Tiger Logistics Solutions (Gold Tiger) was established in 2006 by the 19-year-old Imad El Masri, who was a truck enthusiast. He began with one truck and one driver – himself – and a first-year turnover of $50,000. Early in his career he became the youngest driver in Australia to earn a B-double licence.
                                 </p>
                             <p className="mt-3 text-smooth">
@@ -161,29 +166,40 @@ export default function AboutUs(props) {
                                 Gold Tiger is also strengthened by its gold partner extended warranty contract with Volvo. The partnership includes a regular maintenance schedule to the highest manufacturer standards (OEM replacement parts), 24-hour breakdown repair around Australia, and replacement vehicles if trucks need to be off the road more than 24 hours. This is backed up by weekly checks and servicing by qualified mechanics in our own on-site workshops.
                             </p> */}
 
-                            <figure className="mb-5">
-                                <h2 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    {getCoreValue?.name}
-                                    {/* Core values */}
-                                </h2>
-                                <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getCoreValue?.description }}></div>
-                                {/* <p className="mt-3 text-smooth">
+                                    <figure className="mb-5">
+                                        <h2 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
+                                            {getCoreValue?.name}
+                                            {/* Core values */}
+                                        </h2>
+                                        <div
+                                            className="mt-3 text-smooth"
+                                            dangerouslySetInnerHTML={{
+                                                __html: getCoreValue?.description,
+                                            }}
+                                        ></div>
+                                        {/* <p className="mt-3 text-smooth">
                                     Commitment and dedication: we are dedicated and committed to delivering quality service, building lasting relationships and holding ourselves accountable.
                                 </p> */}
-                            </figure>
-                            {getCoreValue?.elements?.map((feature) => (
-                                <div className="mt-3 text-smooth pl-5">
-                                    <span className="text-goldt font-bold">- {feature.name}</span>
-                                    <div className="mt-3 text-smooth pl-5" dangerouslySetInnerHTML={{ __html: getCoreValue?.description }}></div>
-                                </div>
-                                    
+                                    </figure>
+                                    {getCoreValue?.elements?.map((feature) => (
+                                        <div className="mt-3 text-smooth pl-5">
+                                            <span className="text-goldt font-bold">
+                                                - {feature.name}
+                                            </span>
+                                            <div
+                                                className="mt-3 text-smooth pl-5"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: getCoreValue?.description,
+                                                }}
+                                            ></div>
+                                        </div>
                                     ))}
 
-                            {/* <p className="mt-3 text-smooth">
+                                    {/* <p className="mt-3 text-smooth">
                                 <span className="text-goldt font-bold">Collaboration: </span>we highly value nurturing positive relationships at all levels of the company, cohesively and collaboratively. We work together across diverse teams to support and achieve our common goals.
 
                             </p> */}
-                            {/* <p className="mt-3 text-smooth">
+                                    {/* <p className="mt-3 text-smooth">
                                 <span className="text-goldt font-bold">Integrity and respect: </span> we highly value mutual respect and trust. Each team member brings unique skills and perspectives to the table; we take pride in this fact and act accordingly. We value communicating openly and honestly, making teammates feel appreciated and valued.
                             </p>
                             <p className="mt-3 text-smooth">
@@ -198,16 +214,21 @@ export default function AboutUs(props) {
                             <p className="mt-3 text-smooth">
                                 <span className="text-goldt font-bold">Creativity and innovation: </span> we are constantly developing better ways of working, thinking, learning and doing.
                             </p> */}
-                            
-                            <figure className="mb-10">
-                                <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    {getSolutions?.name}
-                                    {/* Integrated solutions */}
-                                </h1>
-                            </figure>
-                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getSolutions?.description }}></div>
 
-                            {/* <p className="mt-3 text-smooth">
+                                    <figure className="mb-10">
+                                        <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
+                                            {getSolutions?.name}
+                                            {/* Integrated solutions */}
+                                        </h1>
+                                    </figure>
+                                    <div
+                                        className="mt-3 text-smooth"
+                                        dangerouslySetInnerHTML={{
+                                            __html: getSolutions?.description,
+                                        }}
+                                    ></div>
+
+                                    {/* <p className="mt-3 text-smooth">
                                 Gold Tiger is an integrated transport, warehousing and distribution company. We provide independent, proactive logistics services that seamlessly integrate with our clients’ operations.
                             </p>
                             <p className="mt-3 text-smooth">
@@ -228,14 +249,13 @@ export default function AboutUs(props) {
                             <p className="mt-3 text-smooth">
                                 We methodically cover areas such as service levels, technology, communication, relationships, expectations, reporting, KPIs and documentation so that we become an integrated part of your business.
                             </p> */}
-
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <Team getTeam={getTeam}/>
+                        <Team getTeam={getTeam} />
 
-                <div className="text-smooth " >
-                {/* {
+                        <div className="text-smooth ">
+                            {/* {
                 getSec.map((sec)=>(<div>
 
                     <div dangerouslySetInnerHTML={
@@ -245,14 +265,14 @@ export default function AboutUs(props) {
                       
                     </div>))
                 } */}
+                        </div>
 
-                
-                </div>
-                
-                {/* <div className="text-smooth">{getSec?.data[1].title} </div> */}
+                        {/* <div className="text-smooth">{getSec?.data[1].title} </div> */}
 
-                <Footer getfooter={getfooter}/>
-            </div>
+                        <Footer getfooter={getfooter} />
+                    </div>
+                </>
+            )}
         </>
     );
 }
