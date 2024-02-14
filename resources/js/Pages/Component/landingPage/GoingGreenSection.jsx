@@ -22,7 +22,7 @@ return(
                                     {getGreen[0]?.name}
                                 </h2>
                       
-                                <p className="mt-2 text-smooth">
+                                <div className="mt-2 text-smooth">
                                     <div dangerouslySetInnerHTML={{ __html: getGreen[0]?.description }}></div>
                                     
                                     {/* Gold Tiger is working toward a more
@@ -38,7 +38,7 @@ return(
                                     the transport industry, our intention is to
                                     produce an outcome that will positively
                                     impact global society. */}
-                                </p>
+                                </div>
                                
                                 
                                 <div className="flex items-center gap-x-1 text-goldt mt-2 hover:text-smooth">

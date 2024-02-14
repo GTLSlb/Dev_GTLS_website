@@ -476,10 +476,8 @@ export default function NewsPage(props) {
     const pageUrl = window.location.href;
 
 
-    console.log("younes");
     
     const {post} =usePage().props;
-    console.log({post});
 
     return (
         <>

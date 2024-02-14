@@ -180,19 +180,19 @@ export default function Opportunities(props) {
                                         {getCareerAttractive?.name}
                                         {/* Attractive package of conditions */}
                                     </h1>
-                                    <p className="text-gray-200">
+                                    <div className="text-gray-200">
                                         <div className="mt-4 text-gray-300" dangerouslySetInnerHTML={{ __html: getCareerAttractive?.description }}></div>
                                         {/* Gold Tiger offers an attractive package
                                         of work conditions: */}
-                                    </p>
+                                    </div>
 
                                     <ul
                                         role="list"
                                         className="mt-8 max-w-xl space-y-2 text-gray-300"
                                     >
                                         {getCareerAttractive?.elements?.map((feature) => (
-                                            <li className="flex gap-x-3 items-center">
-                                            <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
+                                            <li key={feature.name} className="flex gap-x-3 items-center">
+                                            <div  className=" h-2 w-2 flex-none rounded-full bg-goldt" />
                                             <span>
                                                 {feature?.name}
                                             </span>
@@ -272,7 +272,7 @@ export default function Opportunities(props) {
                                     {/* Opportunities for graduates and workers with
                                     relevant skills */}
                                 </h1>
-                                <p className="text-gray-300">
+                                <div className="text-gray-300">
                                     <div className="mt-4 text-gray-300" dangerouslySetInnerHTML={{ __html: getCareerSkills?.description }}></div>
                                     {/* As an employer, we are keen to give new
                                     graduates without industry experience the
@@ -297,6 +297,7 @@ export default function Opportunities(props) {
                                     {getCareerSkills?.elements?.map((feature) => (
                                     <a
                                         className="text-goldt font-bold"
+                                        key={feature.name}
                                         href={feature.url}
                                     >
                                         
@@ -305,7 +306,7 @@ export default function Opportunities(props) {
                                     </a>
                                     ))}
                                     
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -317,7 +318,7 @@ export default function Opportunities(props) {
                                 <ul className="flex space-x-2 mt-5 border-b">
                                     {jobsarray?.map((job, index) => (
                                         <li
-                                            key={index}
+                                            key={ job.id}
                                             className={`cursor-pointer text-xs sm:text-xl py-2 ${
                                                 Boolean(job.image_alt) === true
                                                     ? "text-goldt border-b-4  border-goldd font-bold "
@@ -338,7 +339,7 @@ export default function Opportunities(props) {
                                         Boolean(job.image_alt) === true
                                         
                                         ?
-                                        <div className="mt-5 text-smooth" dangerouslySetInnerHTML={{ __html: job.content }}></div>
+                                        <div key={job.image_alt} className="mt-5 text-smooth" dangerouslySetInnerHTML={{ __html: job.content }}></div>
                                         :null
                                         
                                     ))}

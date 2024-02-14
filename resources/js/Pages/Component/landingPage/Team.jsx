@@ -144,7 +144,6 @@ function SampleNextArrow(props) {
 export default function News(props) {
 
     const getTeam = props.getTeam;
-    console.log(props)
     const sliderRef = useRef(null);
 
     
@@ -249,7 +248,6 @@ export default function News(props) {
         });
       }, []);
 
-    console.log(postss);
     return (
         <div>
             
@@ -262,10 +260,10 @@ export default function News(props) {
                                 {getTeam?.name}
                                 {/* Meet Our Team */}
                             </h2>
-                            <p className="mt-2 text-lg leading-8 text-gray-300">
+                            <div className="mt-2 text-lg leading-8 text-gray-300">
                                 <div  dangerouslySetInnerHTML={{ __html: getTeam?.description }}></div>
                                 {/* Know more about our Team. */}
-                            </p>
+                            </div>
                         </div>
                         
 

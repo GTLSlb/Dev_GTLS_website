@@ -12,12 +12,12 @@ export default function Technologies(props) {
     const gettechnologies = props.gettechnologies;
 
 
-    const features = [
-    {
-        name: "Sleek design",
-        description:
-            "Technology plays an important role in Gold Tiger’s commitment to continuous improvement. It enables us to deliver transparent and responsive services and keeps us accountable for the commitments we make to our clients.",
-    },
+    // const features = [
+    // {
+    //     name: "Sleek design",
+    //     description:
+    //         "Technology plays an important role in Gold Tiger’s commitment to continuous improvement. It enables us to deliver transparent and responsive services and keeps us accountable for the commitments we make to our clients.",
+    // },
     // const features = [
     //     {
     //         name: "Sleek design",
@@ -25,7 +25,7 @@ export default function Technologies(props) {
     //             "Technology plays an important role in Gold Tiger’s commitment to continuous improvement. It enables us to deliver transparent and responsive services and keeps us accountable for the commitments we make to our clients.",
     //     },
   
-];
+// ];
     return (
         <div className="overflow-hidden relative bg-dark py-10" id="technologies">
             
@@ -74,7 +74,7 @@ export default function Technologies(props) {
                             </div>
                         ))} */}
                         {gettechnologies?.elements?.map((feature) => (
-                            <dl className="mt-5 ">
+                            <dl className="mt-5 " key={feature.name}>
                                 <h2 className="mt-10 text-xl font-bold text-goldt">
                                     {/* {gettechnologies?.elements[1]?.name} */}
                                     {feature.name}

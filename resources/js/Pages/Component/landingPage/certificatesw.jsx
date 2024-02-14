@@ -110,7 +110,7 @@ export default function Certifiactesw(props) {
                                     <div className="relative  ">
                                         <div className="absolute w-full flex gap-x-20 -translate-y-2/4 ">
                                             {getcertificates?.elements?.map((feature) => (
-                                                <div className="relative transition-transform hover:scale-110">
+                                                <div key={feature.name} className="relative transition-transform hover:scale-110">
                                                 <img
                                                     src={"/app/webimages/"+feature.image}
                                                     alt="certification"
@@ -133,13 +133,13 @@ export default function Certifiactesw(props) {
                                                                 {feature.name}
                                                                 
                                                             </h3>
-                                                            <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
+                                                            <div className="mt-1 text-sm  text-gray-400 line-clamp-2">
                                                                 <div className="" dangerouslySetInnerHTML={{ __html: feature.content }}></div>
                                                                 {/* {
                                                                     posts[0]
                                                                         .description
                                                                 } */}
-                                                            </p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

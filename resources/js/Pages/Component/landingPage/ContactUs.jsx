@@ -43,7 +43,7 @@ export default function ContatcUs(props) {
                                 Get in touch
                             </h2> */}
                             {getContsct?.elements?.map((item) => (
-                                <div className="flex gap-x-6">
+                                <div key={item.id} className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <div className="h-7 w-6 text-goldt" dangerouslySetInnerHTML={{ __html: item.icon}}>

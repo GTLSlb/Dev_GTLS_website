@@ -78,17 +78,9 @@ const socials = [
     },
 ];
 
-export default function VideoHeader() {
-    const [getHeader, setGetHeader] = useState();
-    const fetch = () => {
-        axios.get("/getheader").then((res) => {
-            console.log("result", res.data);
-            setGetHeader(res);
-        });
-    };
-    useEffect(() => {
-        fetch();
-    }, []);
+export default function VideoHeader(props) {
+    const getHeader = props.getHeader;
+    
 
     const navigation = {
         solutions: [
@@ -201,7 +193,7 @@ export default function VideoHeader() {
                         height="20px"
                         width="20px"
                         viewBox="0 0 310 310"
-                        xml:space="preserve"
+                        xmlSpace="preserve"
                         {...props}
                     >
                         <g id="XMLID_801_">
@@ -236,10 +228,10 @@ export default function VideoHeader() {
                     <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]">
                         <video
                             src={Gtlsh}
-                            autoplay="{true}"
+                            autoPlay="{true}"
                             loop
                             muted="{true}"
-                            playsinline="{true}"
+                            playsInline="{true}"
                             className="absolute  w-auto min-w-full min-h-full max-w-none"
                         >
                             {" "}
@@ -337,7 +329,7 @@ export default function VideoHeader() {
                                                             {/* SMARTER SUPPLY CHAIN
                                                             MANAGEMENT  */}
                                                         </h1>
-                                                        <p className="mt-4 mb-2 text-2xl leading-8 text-goldt font-bold border-b border-opacity-30 border-goldt py-6">
+                                                        <div className="mt-4 mb-2 text-2xl leading-8 text-goldt font-bold border-b border-opacity-30 border-goldt py-6">
                                                             {getHeader ? (
                                                                 <div
                                                                     className=""
@@ -350,8 +342,8 @@ export default function VideoHeader() {
                                                             ) : null}
                                                             {/* THIRD PARTY LOGISTICS
                                                             SPECIALISTS */}
-                                                        </p>
-                                                        <p className="text-white py-2">
+                                                        </div>
+                                                        <div className="text-white py-2">
                                                             {getHeader ? (
                                                                 <div
                                                                     className=""
@@ -366,7 +358,7 @@ export default function VideoHeader() {
                                                             LINE HAUL, WAREHOUSING,
                                                             DISTRIBUTION OR A FULL
                                                             3PL OR 4PL SOLUTION */}
-                                                        </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* <div className="flex  sm:items-center flex-col sm:flex-row gap-x-5 mt-5">

@@ -41,7 +41,7 @@ class Section extends Resource
      * @var array
      */
     public static $search = [
-        'id','name','page','description'
+        'id','name','Page.name','description'
     ];
 
     /**

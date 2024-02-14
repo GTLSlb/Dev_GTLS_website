@@ -105,7 +105,7 @@ export default function AboutUs(props) {
             {loading ? (
                 <>
                     {" "}
-                    <div className="flex justify-center items-center h-screen">
+                    <div className="bg-dark flex justify-center items-center h-screen">
                         {" "}
                         <BounceLoader color="#e2b540" />
                     </div>
@@ -182,7 +182,7 @@ export default function AboutUs(props) {
                                 </p> */}
                                     </figure>
                                     {getCoreValue?.elements?.map((feature) => (
-                                        <div className="mt-3 text-smooth pl-5">
+                                        <div key={feature.id} className="mt-3 text-smooth pl-5">
                                             <span className="text-goldt font-bold">
                                                 - {feature.name}
                                             </span>

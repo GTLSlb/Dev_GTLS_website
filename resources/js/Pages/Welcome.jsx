@@ -102,6 +102,7 @@ export default function Welcome(props) {
     // ********************* All requests  *********************
     // *********************************************************
     const [getcertificates, setcertificates] = useState([]);
+    const [getHeader, setGetHeader] = useState();
 
     const [getAbout, setGetAbout] = useState();
     const [getVistis, setVistis] = useState([]);
@@ -117,6 +118,7 @@ export default function Welcome(props) {
         const fetchData = async () => {
             try {
                 const requests = [
+                    axios.get("/getheader"),
                     axios.get("/visitor"),
                     axios.get("/getaboutus"),
                     axios.get("/getservices"),
@@ -133,6 +135,7 @@ export default function Welcome(props) {
 
                 // Destructure responses array
                 const [
+                    headerResponse,
                     visitorResponse,
                     aboutResponse,
                     servicesResponse,
@@ -144,6 +147,7 @@ export default function Welcome(props) {
                     footerResponse,
                 ] = responses;
                 // Set states with data
+                setGetHeader(headerResponse);
                 setVistis(visitorResponse.data);
                 setGetAbout(aboutResponse.data);
                 setServices(servicesResponse.data);
@@ -174,7 +178,7 @@ export default function Welcome(props) {
     return (
         <>
             {loading ? (
-                <div className="flex justify-center items-center h-screen">
+                <div className="bg-dark flex justify-center items-center h-screen">
                     {" "}
                     <BounceLoader color="#e2b540" />
                 </div>
@@ -512,7 +516,7 @@ export default function Welcome(props) {
                             <ScrollNav />
                         </div>
 
-                        <VideoHeader />
+                        <VideoHeader getHeader={getHeader}/>
                         <AboutUs
                             getAbout={getAbout}
                             setGetAbout={setGetAbout}

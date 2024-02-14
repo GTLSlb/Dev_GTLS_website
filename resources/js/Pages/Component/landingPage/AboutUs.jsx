@@ -42,12 +42,11 @@ const faqs = [
 ];
 
 
-
+ 
 
 export default function AboutUs(props) {
     const getAbout = props.getAbout[0];
     const setGetAbout = props.setGetAbout;
-    console.log(getAbout)
     return (
         
         <div className="bg-dark py-32" id="aboutus">
