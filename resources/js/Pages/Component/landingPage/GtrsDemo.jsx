@@ -34,7 +34,7 @@ export default function ResponsiveStyledPlayer(props) {
     return (
         <div className=" mx-auto max-w-2xl  px-4 mb-20 mt-20 py-32 sm:px-6 lg:max-w-7xl ">
         <p className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
-            Gold<span className="">{getGtrs.name}</span>
+            <span className="">{getGtrs.name}</span>
         </p>
         <div className="text-gray-100 mt-2 font-bold" dangerouslySetInnerHTML={{ __html: getGtrs?.description }}></div>
         <RelativePositionWrapper className="mt-10">
