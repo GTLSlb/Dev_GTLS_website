@@ -48,11 +48,11 @@ class Blog extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('Title','title')->sortable(),
-            Image::make('Image','image')->sortable(),
+            Text::make('Title','title')->sortable()->rules('required'),
+            Image::make('Image','image')->sortable()->rules('required'),
             Text::make('Image Alt','image_alt')->sortable(),
-            Trix::make('Description','desc')->sortable(),
-            Date::make('Date', 'date')->filterable(),
+            Trix::make('Description','desc')->sortable()->rules('required'),
+            Date::make('Date', 'date')->filterable()->rules('required'),
         ];
     }
 

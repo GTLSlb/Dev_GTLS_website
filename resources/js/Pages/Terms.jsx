@@ -52,7 +52,6 @@ export default function Terms(props) {
     useEffect(() => {
         axios.get('/footer')
           .then(response => {
-              // console.log('fetching data:',response.data);
               setfooter(response.data);
           })
           .catch(error => {

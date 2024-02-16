@@ -27,7 +27,11 @@ class SectionController extends Controller
         return $about;
     }
     public function header(){
-        $header= Element::where('section_id', 5)->get();
+        $header= Section::with('elements')->find('5');
+        return response()->json($header);
+    }
+    public function gtrs(){
+        $header= Section::with('elements')->find('10');
         return response()->json($header);
     }
     public function services(){

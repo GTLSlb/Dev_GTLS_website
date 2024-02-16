@@ -65,7 +65,7 @@ const faqs = [
 
 export default function Features(props) {
     const getwhygtls = props.getwhygtls;
-    const setwhygtls = props.setwhygtls;
+    const setwhygtls = props.setwhygtls; 
 
     return (
         <div className="bg-dark">

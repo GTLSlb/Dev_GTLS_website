@@ -103,6 +103,7 @@ export default function Welcome(props) {
     // *********************************************************
     const [getcertificates, setcertificates] = useState([]);
     const [getHeader, setGetHeader] = useState();
+    const [getGtrs, setGtrs] = useState();
 
     const [getAbout, setGetAbout] = useState();
     const [getVistis, setVistis] = useState([]);
@@ -119,6 +120,7 @@ export default function Welcome(props) {
             try {
                 const requests = [
                     axios.get("/getheader"),
+                    axios.get("/getGtrs"),
                     axios.get("/visitor"),
                     axios.get("/getaboutus"),
                     axios.get("/getservices"),
@@ -136,6 +138,7 @@ export default function Welcome(props) {
                 // Destructure responses array
                 const [
                     headerResponse,
+                    GtrsResponse,
                     visitorResponse,
                     aboutResponse,
                     servicesResponse,
@@ -148,6 +151,7 @@ export default function Welcome(props) {
                 ] = responses;
                 // Set states with data
                 setGetHeader(headerResponse);
+                setGtrs(GtrsResponse);
                 setVistis(visitorResponse.data);
                 setGetAbout(aboutResponse.data);
                 setServices(servicesResponse.data);
@@ -538,7 +542,7 @@ export default function Welcome(props) {
                             getwhygtls={getwhygtls}
                             setwhygtls={setwhygtls}
                         />
-                        <GTRS />
+                        <GTRS getGtrs={getGtrs}/>
                         <Safety getSafety={getSafety} />
                         {/* <Video /> */}
 

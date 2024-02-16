@@ -209,6 +209,7 @@ Route::resource('section',SectionController::class);
 Route::get('/getSec/{id}',[SectionController::class,'getSec']);
 Route::get('/getaboutus',[SectionController::class,'about']);
 Route::get('/getheader',[SectionController::class,'header']);
+Route::get('/getGtrs',[SectionController::class,'gtrs']);
 Route::get('/getservices',[SectionController::class,'services']);
 Route::get('/getgoingGreen',[SectionController::class,'goingGreenSection']);
 Route::get('/whygtls',[SectionController::class,'whygtls']);

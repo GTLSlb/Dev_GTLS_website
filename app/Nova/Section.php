@@ -3,9 +3,11 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Middleware\ValidatePostSize;
 
 use Laravel\Nova\Fields\Text;
 use Mostafaznv\NovaVideo\Video;
+use DigitalCreative\Filepond\Filepond;
 use Laravel\Nova\Fields\TextArea;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\URL;
@@ -18,6 +20,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use InteractionDesignFoundation\NovaHtmlCodeField\HtmlCode;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
+
 
 class Section extends Resource
 {
@@ -59,6 +62,17 @@ class Section extends Resource
             HasMany::make('Elements', 'elements', Element::class),
             Trix::make('description')->alwaysShow(),
             Image::make('Image','image')->rules("image", "max:10000"),
+            Video::make('video')->rules('max:150000'),
+            // Filepond::make('video', 'video')
+            //     // ->rules('required')
+            //     ->prunable()
+            //     ->disablePreview()
+            //     ->multiple() 
+            //     ->limit(4),
+            // Video::make(trans('video'), 'video', 'public')
+            //     // ->rules('file', 'max:20000000', 'mimes:mp4', 'mimetypes:video/mp4')
+            //     ->creationRules('required')
+            //     ->updateRules('nullable'),
             // Image::make('Image','image')->disk('web')->path('sections')
             // ->storeOriginalName('image')
             // ->prunable()
@@ -73,7 +87,7 @@ class Section extends Resource
             // })
             
             Text::make('image_alt'),
-            Text::make('video'),
+            // Text::make('video'),
             // Video::make(trans('Video'), 'video','web')->rules('file', 'max:1900000', 'mimes:mp4', 'mimetypes:video/mp4')
             // ->creationRules('required')
             // ->updateRules('nullable'),

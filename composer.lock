@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "416ea4bf0daa908d3662870a534888df",
+    "content-hash": "ba16e311d481e44dca8bf6b17bba434a",
     "packages": [
         {
             "name": "alexazartsev/heroicon",
@@ -378,6 +378,68 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.2"
             },
             "time": "2022-10-27T11:44:00+00:00"
+        },
+        {
+            "name": "digital-creative/nova-filepond",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dcasia/nova-filepond.git",
+                "reference": "d2301c01e17da3fa2fff4a9ea3cddef7c9511af2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dcasia/nova-filepond/zipball/d2301c01e17da3fa2fff4a9ea3cddef7c9511af2",
+                "reference": "d2301c01e17da3fa2fff4a9ea3cddef7c9511af2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DigitalCreative\\Filepond\\FilepondServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DigitalCreative\\Filepond\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael Milewski"
+                }
+            ],
+            "description": "A Nova field for uploading File, Image and Video using filepond.",
+            "keywords": [
+                "field",
+                "file",
+                "laravel",
+                "nova",
+                "nova4",
+                "upload",
+                "video"
+            ],
+            "support": {
+                "issues": "https://github.com/dcasia/nova-filepond/issues",
+                "source": "https://github.com/dcasia/nova-filepond/tree/v1.0.6"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/milewski",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-01-31T04:51:42+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -10681,5 +10743,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

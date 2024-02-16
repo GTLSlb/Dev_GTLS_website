@@ -3,39 +3,50 @@ import ReactPlayer from "react-player";
 import styled from "styled-components";
 import Gtrs from "../../../assets/videos/GTRS-Demo.mp4"
 
-const Player = ({ className }) => (
-    <ReactPlayer
-        url={Gtrs}
-        className={className}
-        width="100%"
-        height="100%"
-        controls={true}
-    />
-);
 
-const AbsolutelyPositionedPlayer = styled(Player)`
-    position: absolute;
-    top: 0;
-    left: 0;
-`;
+
+
+
+export default function ResponsiveStyledPlayer(props) {
+    const getGtrs = props.getGtrs.data;
+    console.log(getGtrs);
+    const Player = ({ className }) => (
+        <ReactPlayer
+            url={getGtrs ? "/app/webimages/"+getGtrs.video:null}
+            className={className}
+            width="100%"
+            height="100%"
+            controls={true}
+        /> 
+    );
+    const AbsolutelyPositionedPlayer = styled(Player)`
+        position: absolute;
+        top: 0;
+        left: 0;
+    `;
  
-const RelativePositionWrapper = styled.div`
-    position: relative;
-    padding-top: 56.25%;
-`;
-
-const ResponsiveStyledPlayer = () => (
-    <div className=" mx-auto max-w-2xl  px-4 mb-20 mt-20 py-32 sm:px-6 lg:max-w-7xl ">
+    const RelativePositionWrapper = styled.div`
+        position: relative;
+        padding-top: 56.25%;
+    `;
+    
+    
+    return (
+        <div className=" mx-auto max-w-2xl  px-4 mb-20 mt-20 py-32 sm:px-6 lg:max-w-7xl ">
         <p className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
-            Gold<span className=""> Tiger Reporting System</span>
+            Gold<span className="">{getGtrs.name}</span>
         </p>
+        <div className="text-gray-100 mt-2 font-bold" dangerouslySetInnerHTML={{ __html: getGtrs?.description }}></div>
         <RelativePositionWrapper className="mt-10">
             <AbsolutelyPositionedPlayer />
         </RelativePositionWrapper>
     </div>
+    );}
+
+// const ResponsiveStyledPlayer = () => (
     
-);
+// );
 
 
 
-export default ResponsiveStyledPlayer;
+// export default ResponsiveStyledPlayer;

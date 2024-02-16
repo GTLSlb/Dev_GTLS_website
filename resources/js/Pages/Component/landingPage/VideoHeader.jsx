@@ -79,9 +79,8 @@ const socials = [
 ];
 
 export default function VideoHeader(props) {
-    const getHeader = props.getHeader;
+    const getHeader = props.getHeader.data;
     
-
     const navigation = {
         solutions: [
             { name: "About", href: "about" },
@@ -121,7 +120,7 @@ export default function VideoHeader(props) {
             {
                 id: 0,
                 name: "Facebook",
-                href: getHeader ? getHeader.data[3].content : null,
+                href: getHeader ? getHeader.elements[3].content : null,
                 icon: (props) => (
                     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                         <path
@@ -135,7 +134,7 @@ export default function VideoHeader(props) {
             {
                 id: 1,
                 name: "Instagram",
-                href: getHeader ? getHeader.data[4].content : null,
+                href: getHeader ? getHeader.elements[4].content : null,
                 icon: (props) => (
                     <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
                         <path
@@ -185,7 +184,7 @@ export default function VideoHeader(props) {
             {
                 id: 2,
                 name: "linkedin",
-                href: getHeader ? getHeader.data[5].content : null,
+                href: getHeader ? getHeader.elements[5].content : null,
                 icon: (props) => (
                     <svg
                         className="m-20"
@@ -227,7 +226,9 @@ export default function VideoHeader(props) {
                 <div className=" bg-red">
                     <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]">
                         <video
-                            src={Gtlsh}
+                            // src={Gtlsh}
+                            src={'/app/webimages/'+getHeader?.video}
+                            
                             autoPlay="{true}"
                             loop
                             muted="{true}"
@@ -320,7 +321,7 @@ export default function VideoHeader(props) {
                                                                     className=""
                                                                     dangerouslySetInnerHTML={{
                                                                         __html: getHeader
-                                                                            .data[0]
+                                                                            .elements[0]
                                                                             .content,
                                                                     }}
                                                                 ></div>
@@ -335,7 +336,7 @@ export default function VideoHeader(props) {
                                                                     className=""
                                                                     dangerouslySetInnerHTML={{
                                                                         __html: getHeader
-                                                                            .data[1]
+                                                                            .elements[1]
                                                                             .content,
                                                                     }}
                                                                 ></div>
@@ -349,7 +350,7 @@ export default function VideoHeader(props) {
                                                                     className=""
                                                                     dangerouslySetInnerHTML={{
                                                                         __html: getHeader
-                                                                            .data[2]
+                                                                            .elements[2]
                                                                             .content,
                                                                     }}
                                                                 ></div>
