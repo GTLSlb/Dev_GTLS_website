@@ -11,8 +11,11 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
+
+
 class CustomAuth extends Middleware
 {
+    
     /**
      * Attempt to authenticate a user using the given credentials.
      *
