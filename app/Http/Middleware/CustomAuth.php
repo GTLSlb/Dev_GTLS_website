@@ -10,6 +10,7 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class CustomAuth extends Middleware
 {
@@ -46,6 +47,14 @@ class CustomAuth extends Middleware
     {
         $hasSession = $request->hasSession();
         if ($hasSession) {
+            $sessionId = $request->session()->getId();
+            
+            // Query the database to get the user based on the session ID
+            $user = DB::table('custom_sessions')
+                ->where('id', $sessionId)
+                ->value('user');
+    
+            //dd($user);
             $sessionToken = $request->session()->token();
             $path = $request->path();
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
@@ -57,6 +66,7 @@ class CustomAuth extends Middleware
                 return redirect('/login');
             }
         } else {
+            //dd('$request');
             if ($request->path() == 'login' || $request->path() == 'loginapi') {
                 return $next($request);
             }

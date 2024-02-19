@@ -23,6 +23,11 @@ export default function LandingPage({}) {
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
+    
+    useEffect(() => {
+        console.log(window.location.href);
+        document.cookie = "previous_page=" + encodeURIComponent(window.location.href);
+    },[]);
 
     useEffect(() => {
         axios
