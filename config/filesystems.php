@@ -29,6 +29,13 @@ return [
     */
 
     'disks' => [
+        'web' =>[
+            'driver' => 'local',
+            'root' => public_path('webimages'),
+            'url' => env('APP_URL').'/webimages',
+            'visibility' => 'public',
+ 
+        ],
 
         'local' => [
             'driver' => 'local',
@@ -38,8 +45,8 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => public_path('app/icons'),
-            'url' => env('APP_URL:8000').'/app/icons',
+            'root' => public_path('app/webimages'),
+            'url' => env('APP_URL:8000').'/app/webimages',
             'visibility' => 'public',
             'throw' => false,
         ],

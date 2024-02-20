@@ -16,7 +16,7 @@ class SupportFormController extends Controller
         'name' => 'required',
         'email' => 'required|email',
         'message' => 'required',
-        // 'attachment' => 'sometimes|nullable|mimes:pdf,png,jpeg,jpg|max:2048',
+        'attachment' => 'sometimes|nullable|mimes:pdf,png,jpeg,jpg|max:22048',
     ]);
 
     // Store the uploaded file, if any

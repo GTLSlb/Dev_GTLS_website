@@ -47,6 +47,55 @@ export default function Capability(props) {
         };
     }, []);
 
+    const [getfooter, setfooter] = useState([]);
+    const [getContsct, setContsct] = useState([]);
+    const [getBranch, setBranch] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+    
+    // Contact us
+    useEffect(() => {
+        axios.get('/ContactPage')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setContsct(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    // Branches
+    useEffect(() => {
+        axios.get('/ContactPageBranches')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setBranch(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+    
+    
+    // Footer
+
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
+
     return (
         <>
             <Head title="Contact Us" />
@@ -63,8 +112,8 @@ export default function Capability(props) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
-                <ContatcUs />
-                <Branches />
+                <ContatcUs getContsct={getContsct}/>
+                <Branches getBranch={getBranch}/>
                 
 
                 {/* <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
@@ -85,7 +134,7 @@ export default function Capability(props) {
                     </div>
                 </div> */}
 
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );
