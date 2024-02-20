@@ -63,39 +63,10 @@ class Section extends Resource
             Trix::make('description')->alwaysShow(),
             Image::make('Image','image')->rules("image", "max:10000"),
             Video::make('video')->rules('max:150000'),
-            // Filepond::make('video', 'video')
-            //     // ->rules('required')
-            //     ->prunable()
-            //     ->disablePreview()
-            //     ->multiple() 
-            //     ->limit(4),
-            // Video::make(trans('video'), 'video', 'public')
-            //     // ->rules('file', 'max:20000000', 'mimes:mp4', 'mimetypes:video/mp4')
-            //     ->creationRules('required')
-            //     ->updateRules('nullable'),
-            // Image::make('Image','image')->disk('web')->path('sections')
-            // ->storeOriginalName('image')
-            // ->prunable()
-            // ->preview(function ($value, $disk) {
-            //     return url('/app/webimages/sections/' . $value);
-            // })
-            // ->thumbnail(function ($value, $disk) {
-            //     // Convert the image to WebP for thumbnail
-            //     $image = Image::class::make(storage_path("app/public/nova/posts/{$value}"));
-            //     $image->encode('webp');
-            //     return $image->encoded;
-            // })
-            
-            Text::make('image_alt'),
-            // Text::make('video'),
-            // Video::make(trans('Video'), 'video','web')->rules('file', 'max:1900000', 'mimes:mp4', 'mimetypes:video/mp4')
-            // ->creationRules('required')
-            // ->updateRules('nullable'),
-            // Video::make('video'),
-            
+            Text::make('image_alt'),            
             Image::make('Background','background')->rules("image", "max:10000"),
             Text::make('file'),
-            URL::make('URL','url'),
+            Text::make('URL','url'),
             
         ];
     }
