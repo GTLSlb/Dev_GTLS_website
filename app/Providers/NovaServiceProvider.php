@@ -2,8 +2,16 @@
 
 namespace App\Providers;
 
+
+use Laravel\Nova\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
+use Laravel\Nova\Menu\Menu;
+use Laravel\Nova\Menu\MenuItem;
+use Laravel\Nova\Menu\MenuSection;
+use Laravel\Nova\Dashboards\Main;
+use Illuminate\Support\Facades\Blade;
+
 use Laravel\Nova\NovaApplicationServiceProvider;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -16,6 +24,31 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+        // Nova::withBreadcrumbs();
+        // Nova::withoutThemeSwitcher();
+        Nova::footer(function ($request) {
+            return Blade::render('
+                @env(\'prod\')
+                    This is production!
+                @endenv
+            ');
+        });
+
+        // Nova::report(function ($exception) {
+        //     if (app()->bound('sentry')) {
+        //         app('sentry')->captureException($exception);
+        //     }
+        // });
+        
+        // Nova::mainMenu(function () {            
+        //     return [                
+        //         MenuSection::dashboard(Main::class)->icon('chart-bar'),                
+        //         MenuSection::make('Customers', [                    
+        //             MenuItem::resource(User::class),                   
+        //             ])->icon('user')->collapsable(),                
+             
+        //             ];        
+        //     });
     }
 
     /**
@@ -30,6 +63,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 ->withPasswordResetRoutes()
                 ->register();
     }
+    protected function saving()
+    {
+        Nova::serving(function (ServingNova $event) {
+            Post::saving(function (Section $section) {
+                // Convert image to WebP format before saving
+                $image = \Image::make(storage_path("app/webimages/sections/{$section->image_path}"));
+                $image->encode('webp');
+                $section->image_path = $section->image_path . '.webp';
+                Storage::disk('web')->put("sections/{$section->image_path}", $image->encoded);
+            });
+        });
+    }
+
+    
 
     /**
      * Register the Nova gate.

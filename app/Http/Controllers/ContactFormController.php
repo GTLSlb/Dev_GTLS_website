@@ -17,7 +17,7 @@ class ContactFormController extends Controller
             'email' => 'required|email',
             'message' => 'required',
             'phone' => 'required',
-            'attachment' => 'nullable|mimes:pdf|max:2048',
+            'attachment' => 'nullable|mimes:pdf|max:20048',
         ]);
     
         // store the uploaded PDF file, if any

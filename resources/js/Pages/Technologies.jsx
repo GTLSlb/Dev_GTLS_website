@@ -18,7 +18,59 @@ const handleClick = () => {
     history.push("/", { scrollToElement: "news" });
 };
 
-export default function Capability(props) {
+export default function Technology(props) {
+
+
+    const [getfooter, setfooter] = useState([]);
+    const [getTechnology, setTechnology] = useState([]);
+    const [getTechnologyIT, setTechnologyIT] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    // Header
+    
+    useEffect(() => {
+        axios.get('/technologiesPage')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setTechnology(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    // IT services
+    
+    useEffect(() => {
+        axios.get('/technologiesPageIT')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setTechnologyIT(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+    
+    // Footer
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
+
+      
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -54,8 +106,8 @@ export default function Capability(props) {
 
                 <div aria-hidden="true" className="relative">
                     <img
-                        src={jobs}
-                        alt="jobs"
+                        src={"/app/webimages/"+getTechnology?.image}
+                        alt={getTechnology?.image_alt}
                         className="h-96 w-full object-cover object-center "
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
@@ -73,10 +125,15 @@ export default function Capability(props) {
                         <div className="relative lg:order-last lg:col-span-5">
                             <figure className="mb-10">
                                 <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    Technology
+                                    {getTechnology?.name}
+                                    {/* Technology */}
                                 </h1>
                             </figure>
-                            <p className="mt-3 text-smooth">
+
+                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getTechnology?.description }}></div>
+
+
+                            {/* <p className="mt-3 text-smooth">
                             Technology plays an important role in Gold Tiger’s commitment to continuous improvement. It enables us to deliver transparent and responsive services and keeps us accountable for the commitments we make to our clients.
                             </p>
                             <p className="mt-3 text-smooth">
@@ -90,18 +147,18 @@ export default function Capability(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                             Much of the data, with automatically generated reports, is available through the customer portal accessed via our website. It contains the important basics – where is my freight, when will it arrive, proof of delivery – through to more advanced information for forecasting, budgeting and reporting purposes. Anything not available in the portal can usually be provided by your Account Manager or Customer Service representative through one of our reporting systems.
-                            </p>
+                            </p> */}
                             
-
-
-
 
                             <figure className="mb-10">
                                 <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                                    IT services
+                                    {getTechnologyIT?.name}
+                                    {/* IT services */}
                                 </h1>
                             </figure>
-                            <p className="mt-3 text-smooth">
+
+                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getTechnologyIT?.description }}></div>
+                            {/* <p className="mt-3 text-smooth">
                             Gold Tiger is developing a new IT infrastructure that will provide enhanced security measures for our systems and customer information.                            
                             </p>
                             <p className="mt-3 text-smooth">
@@ -109,7 +166,7 @@ export default function Capability(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                             With this new IT infrastructure, we are demonstrating our commitment to protecting our customers’ sensitive information and providing the highest level of security possible.
-                            </p>
+                            </p> */}
 
                         </div>
 
@@ -117,7 +174,7 @@ export default function Capability(props) {
                     </div>
                 </div>
 
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );

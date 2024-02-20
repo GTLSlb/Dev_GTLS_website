@@ -67,7 +67,7 @@ const navigation = {
             href: "https://www.linkedin.com/company/gold-tiger-logistics-solutions/posts/?feedView=all",
             icon: (props) => (
                 <svg className="" fill="currentColor" height="20px" width="20px"  
-                    viewBox="0 0 310 310" xml:space="preserve" {...props}>
+                    viewBox="0 0 310 310" xmlSpace="preserve" {...props}>
                     <g id="XMLID_801_">
                         <path id="XMLID_802_" d="M72.16,99.73H9.927c-2.762,0-5,2.239-5,5v199.928c0,2.762,2.238,5,5,5H72.16c2.762,0,5-2.238,5-5V104.73
                             C77.16,101.969,74.922,99.73,72.16,99.73z"/>
@@ -104,7 +104,8 @@ const data = [
     },
 ];
 
-export default function Footer() {
+export default function Footer(props) {
+    const getfooter = props.getfooter;
     return (
         <footer
             className="bg-dark pb-5 "
@@ -121,8 +122,8 @@ export default function Footer() {
                         <a href="/">
                             <img
                                 className="h-20 "
-                                src={LogoWhite}
-                                alt="Gold Tiger"
+                                src={"/app/webimages/"+getfooter?.image}
+                                alt={getfooter?.image_alt}
                             />
                         </a>
                         <div className="  gap-8 col-span-2 mt-0 h-full flex ">
@@ -149,38 +150,21 @@ export default function Footer() {
                                         </div>
                                     ))}
                                 </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                                    {getfooter?.elements?.map((feature) => (
+                                        <div key={feature.name} className="mt-10 md:mt-0">
+                                            <div className="space-y-4">
+                                                <a
+                                                    href={feature.url}
+                                                    target="_blank"
+                                                    className="text-sm leading-6 text-goldl hover:text-white"
+                                                >
+                                                    {feature.name}
+                                                </a>
+                                            </div>
+                                        </div>
 
-                                <div className="mt-10 md:mt-0">
-                                    <div className="space-y-4">
-                                        <a
-                                            href={pdf}
-                                            target="_blank"
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            Download Our Catalogue
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div className="mt-10 md:mt-0">
-                                    <div className=" space-y-4">
-                                        <a
-                                            href={"/terms"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            Trading Terms and Conditions
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="mt-10 md:mt-0">
-                                    <div className=" space-y-4">
-                                        <a
-                                            href={"/palletterms"}
-                                            className="text-sm leading-6 text-goldl hover:text-white"
-                                        >
-                                            GTLS Pallets T&C
-                                        </a>
-                                    </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -189,9 +173,10 @@ export default function Footer() {
             </div>
             <div className="bg-goldd h-6">
                 <div className="mx-auto max-w-7xl h-full px-6  lg:px-8 ">
-                    <p className="mt-8 text-xs h-full flex items-center font-bold leading-5 text-dark md:order-1 md:mt-0">
-                        &copy; 2024 Gold Tiger Group of Companies.
-                    </p>
+                    <div className="mt-8 text-xs h-full flex items-center font-bold leading-5 text-dark md:order-1 md:mt-0">
+                        <div className="" dangerouslySetInnerHTML={{ __html: getfooter?.description }}></div>
+                        {/* &copy; 2024 Gold Tiger Group of Companies. */}
+                    </div>
                 </div>
             </div>
         </footer>

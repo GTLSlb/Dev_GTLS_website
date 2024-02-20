@@ -19,6 +19,53 @@ const handleClick = () => {
 };
 
 export default function Newss(props) {
+
+    const [getfooter, setfooter] = useState([]);
+    const [getPageDesc, setPageDesc] = useState([]);
+    const [getPosts, setPosts] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    // Page desc 
+    useEffect(() => {
+        axios.get('/NewsPage')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setPageDesc(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    // Posts 
+    useEffect(() => {
+        axios.get('/posts')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setPosts(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    // Footer
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -60,7 +107,7 @@ export default function Newss(props) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
-                <News />
+                <News getPageDesc={getPageDesc} getPosts={getPosts}/>
 
                 {/* <div className=" relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8 mt-10">
                     <figure className="mb-10">
@@ -80,7 +127,7 @@ export default function Newss(props) {
                         </h1>
                     </figure> */}
                 
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );
