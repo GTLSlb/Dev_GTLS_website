@@ -11,18 +11,57 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Routing\RouteCollection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): Response
+    public function create(Request $request)
     {
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
+
+        if ($request->session()->has('user')) {
+            $url = $_COOKIE['previous_page'];
+            $delimiter = '/';
+            $position = 0;
+            $occurrence = 3;
+
+            for ($i = 0; $i < $occurrence; $i++) {
+                $position = strpos($url, $delimiter, $position + 1);
+
+                if ($position === false) {
+                    break;
+                }
+            }
+
+            if ($position !== false) {
+                $textAfterThirdSlash = substr($url, $position + 1);
+                $matchedRoute = $textAfterThirdSlash;
+            } else {
+                $matchedRoute = null;
+            }
+
+            if($matchedRoute == null){
+                return Inertia::render('LandingPage');
+            }else if($matchedRoute == 'login'){
+                return Inertia::render('Auth/Login', [
+                    'canResetPassword' => Route::has('password.request'),
+                    'status' => session('status'),
+                ]);
+            }
+            else{
+                return redirect($matchedRoute);
+            }  
+        } else {
+            // 'user' value exists and is not null, don't do anything
+            return Inertia::render('Auth/Login', [
+                'canResetPassword' => Route::has('password.request'),
+                'status' => session('status'),
+            ]);
+        }
     }
 
     /**
@@ -43,7 +82,7 @@ class AuthenticatedSessionController extends Controller
             return response()->json([
                 'error' => 'User is found',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'error' => 'User NOT found',
             ]);
