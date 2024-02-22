@@ -16,7 +16,12 @@ jobs:
       #       echo "Workflow can only be run from the 'staging' branch."
       #       exit 1
       #     fi
-
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+      - name: Test FTP Upload
+        run: |
+          echo "Testing file" > testfile.txt
+          curl -T testfile.txt -u ${{ secrets.STAGE_FTP_USERNAME }}:${{ secrets.STAGE_FTP_PASSWORD }} ftp://${{ secrets.STAGE_FTP_SERVER }}/${{ secrets.SERVER_DIR }}/testfile.txt
       - name: Setup Node
         uses: actions/setup-node@master
       - name: Copy .env
@@ -31,12 +36,7 @@ jobs:
         run: npm i
       - name: Npm Build
         run: npm run build
-      - name: Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache
-      - name: Test FTP Upload
-        run: |
-          echo "Testing file" > testfile.txt
-          curl -T testfile.txt -u ${{ secrets.STAGE_FTP_USERNAME }}:${{ secrets.STAGE_FTP_PASSWORD }} ftp://${{ secrets.STAGE_FTP_SERVER }}/${{ secrets.SERVER_DIR }}/testfile.txt
+
 
       # - name: 📂 Sync files
       #   uses: SamKirkland/FTP-Deploy-Action@4.0.0
