@@ -23,6 +23,7 @@ jobs:
           echo "Testing file" > testfile.txt
           curl -T testfile.txt -u ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }} ftp://${{ secrets.FTP_SERVER }}/testfile.txt
 
+
       # - name: Setup Node
       #   uses: actions/setup-node@master
       # - name: Copy .env
