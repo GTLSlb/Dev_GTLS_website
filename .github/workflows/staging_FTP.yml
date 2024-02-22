@@ -23,20 +23,20 @@ jobs:
           echo "Testing file" > testfile.txt
           curl -T testfile.txt -u ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }} ftp://${{ secrets.FTP_SERVER }}/testfile.txt
 
-      - name: Setup Node
-        uses: actions/setup-node@master
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      - name: Authenticate Nova
-        run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
-      - name: Install Dependencies
-        run: composer update --ignore-platform-reqs
-      - name: Cache Clear
-        run: php artisan cache:clear
-      - name: Npm install
-        run: npm i
-      - name: Npm Build
-        run: npm run build
+      # - name: Setup Node
+      #   uses: actions/setup-node@master
+      # - name: Copy .env
+      #   run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      # - name: Authenticate Nova
+      #   run: composer config http-basic.nova.laravel.com Jamalt@gtls.com.au m9CWNGKUiBwleCt6dQ1aVLkGE0w0eDxO2FsdVNa0h3EDHQDbhi
+      # - name: Install Dependencies
+      #   run: composer update --ignore-platform-reqs
+      # - name: Cache Clear
+      #   run: php artisan cache:clear
+      # - name: Npm install
+      #   run: npm i
+      # - name: Npm Build
+      #   run: npm run build
 
 
       # - name: 📂 Sync files
