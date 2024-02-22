@@ -21,7 +21,8 @@ jobs:
       - name: Test FTP Upload
         run: |
           echo "Testing file" > testfile.txt
-          curl -T testfile.txt -u ${{ secrets.STAGE_FTP_USERNAME }}:${{ secrets.STAGE_FTP_PASSWORD }} ftp://${{ secrets.STAGE_FTP_SERVER }}/${{ secrets.SERVER_DIR }}/testfile.txt
+          curl -T testfile.txt -u ${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }} ftp://${{ secrets.FTP_SERVER }}/testfile.txt
+
       - name: Setup Node
         uses: actions/setup-node@master
       - name: Copy .env
