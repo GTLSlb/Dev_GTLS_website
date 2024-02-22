@@ -166,21 +166,39 @@ export default function LandingPage({}) {
                                         <div
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
-                                            <p>
-                                                {" "}
-                                                {currentUser.FirstName.substring(
-                                                    0,
-                                                    1
-                                                ).toUpperCase()}
-                                                {currentUser.LastName.substring(
-                                                    0,
-                                                    1
-                                                ).toUpperCase()}
-                                            </p>
+                                            <>
+                                                {currentUser.FirstName &&
+                                                currentUser.LastName ? (
+                                                    <>
+                                                        <p>
+                                                            {currentUser.FirstName.substring(
+                                                                0,
+                                                                1
+                                                            ).toUpperCase()}
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p>
+                                                            {currentUser.Username.substring(
+                                                                0,
+                                                                1
+                                                            ).toUpperCase()}
+                                                        </p>
+                                                    </>
+                                                )}
+                                            </>
                                         </div>
-                                        <p className="text-sm text-white w-24 hidden sm:block">
-                                            {currentUser.FirstName}{" "}
-                                            {currentUser.LastName}
+                                        <p className="text-sm text-white w-32 hidden sm:block">
+                                            {currentUser.FirstName &&
+                                            currentUser.LastName ? (
+                                                <>
+                                                    {currentUser.FirstName}{" "}
+                                                    {currentUser.LastName}
+                                                </>
+                                            ) : (
+                                                <>{currentUser.Username}</>
+                                            )}
                                         </p>
                                     </div>
                                     <a
@@ -232,8 +250,15 @@ export default function LandingPage({}) {
                                     <span>{greeting} </span>
                                     <span className="text-goldd">
                                         <span className="text-white">, </span>
-                                        {currentUser.FirstName}{" "}
-                                        {currentUser.LastName}
+                                        {currentUser.FirstName &&
+                                        currentUser.LastName ? (
+                                            <>
+                                                {currentUser.FirstName}{" "}
+                                                {currentUser.LastName}
+                                            </>
+                                        ) : (
+                                            <>{currentUser.Username}</>
+                                        )}
                                     </span>
                                 </div>
 
