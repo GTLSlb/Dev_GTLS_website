@@ -18,12 +18,9 @@ import weighbridge from "../assets/news/weighbridge.webp";
 import Navman from "../assets/news/Navman.webp";
 import weighbridgenews from "../assets/news/weighbridgenews.webp";
 import Navmannews from "../assets/news/Navmannews.webp";
-import { useParams } from "react-router-dom";
+import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
-import { InstagramIcon } from "react-social-icons";
-import jobs from "../assets/pictures/jobs.webp";
-import { Dialog } from "@headlessui/react";
 import {
     Bars3Icon,
     XMarkIcon,
@@ -401,12 +398,33 @@ export default function NewsPage(props) {
                 },
             ],
             content2:
-                "We are aware of the seriousness of our obligation to make our clients' supply chains more sustainable. The broad use of solar panels is one of our core green business tactics. We are adamant that getting the best results requires patience and a firm dedication to the intended goals. With this knowledge, we're committed to looking for new, environmentally responsible solutions to improve our logistical processes and lessen their negative effects on the environment. We at Gold Tiger Group are leading an environmentally conscious revolution in the business, going beyond simply rethinking logistics. Join us on this thrilling adventure as we work to create a greener, more responsible future.",
+                "This not only lightens the burden on our road infrastructure\nbut also guarantees that all our vehicles operate within the legally prescribed weight limits..",
             imgUrl: greennews,
+        },
+        {
+            id: 12,
+            title: "Acknowledging Our Journey: On-Site Fleet Fuelling",
+
+            content1:
+                "Acknowledging Our Journey: On-Site Fleet Fuelling\n\nIn our continuous pursuit for excellence and innovation, we are proud to announce that we have enhanced operational efficiency with onsite fuel tanks. It is considered a significant stride forward for GTLS for its remarkable advantages.",
+            content2:
+                "Advantages of onsite Fleet Refueling\n\nIt provides more personalized and customizable fuelling schedules and options and can be much easier to handle. Also, it increases driver productivity and affects his total ability to reach his goals per day, freeing more time for productive tasks and possibly even more deliveries.\n\nOne of the most significant advantages of fleet fuelling is the ability to fuel trucks overnight and taking advantage of this downtime. Fleet fuelling can reduce the difference between your drivers' schedules and create a more efficient delivery schedule for the fleet.\n\nSustainability and Security: The move to onsite fuel tanks aligns with our commitment to sustainability. By streamlining our fuelling processes, we contribute to a greener and more environmentally responsible future.\n\nIt is more secure to have onsite tanks, as mentioned before, having a dedicated fuelling tank eliminates some of the problems with going to a retail fuelling station, which brings its own challenges. It represents a game-changing development for GTLS, which acknowledges that we are creating strong foundations, tailoring our services to our clients need individual needs. Such initiatives have proven the effectiveness and commitment to delivering top-notch services while prioritizing operational efficiency",
+            imgUrl: onSiteFueling,
         },
     ];
 
     const posts = [
+        {
+            id: 14,
+            title: "Acknowledging Our Journey On-Site Fleet Fueling",
+            href: "#",
+            description:
+                "In our continuous pursuit for excellence and innovation, we are proud to announce that we have enhanced operational efficiency with onsite fuel tanks. It is considered a significant stride forward for GTLS for its remarkable advantages. ",
+            imageUrl: onSiteFueling,
+            date: "March 12, 2024",
+            datetime: "2024-3-12",
+            category: { title: "", href: "#" },
+        },
         {
             id: 13,
             title: "Gold Tiger's Green Journey",
@@ -417,13 +435,6 @@ export default function NewsPage(props) {
             date: "October 24, 2023",
             datetime: "2023-10-24",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 12,
@@ -435,13 +446,6 @@ export default function NewsPage(props) {
             date: "September 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 11,
@@ -453,13 +457,6 @@ export default function NewsPage(props) {
             date: "September 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 10,
@@ -471,13 +468,6 @@ export default function NewsPage(props) {
             date: "June 2, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 9,
@@ -489,13 +479,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 8,
@@ -507,13 +490,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 7,
@@ -525,13 +501,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 6,
@@ -543,13 +512,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 5,
@@ -561,13 +523,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 4,
@@ -579,13 +534,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 3,
@@ -597,13 +545,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 2,
@@ -615,13 +556,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 1,
@@ -633,13 +567,6 @@ export default function NewsPage(props) {
             date: "October 13, 2022",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 0,
@@ -651,13 +578,6 @@ export default function NewsPage(props) {
             date: "October 31, 2022",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
 
         // More posts...
@@ -710,7 +630,13 @@ export default function NewsPage(props) {
                             <h1 className="mt-2 text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
                                 {contentJson[id].title}
                             </h1>
-                            <p className="mt-6 text-lg leading-8 text-gray-200 text-justify">
+                            <p className="text-gray-500 font-bold">
+                                {posts[id]?.date}
+                            </p>
+                            <p
+                                className="mt-6 text-lg leading-8 text-gray-200 text-justify"
+                                style={{ whiteSpace: "pre-line" }}
+                            >
                                 {contentJson[id].content1}
                             </p>
                             {contentJson[id].list ? (
@@ -726,7 +652,9 @@ export default function NewsPage(props) {
                                                     {item.title}
                                                 </span>
                                                 {item.content ? (
-                                                    <div className="text-gray-200">{item.content}</div>
+                                                    <div className="text-gray-200">
+                                                        {item.content}
+                                                    </div>
                                                 ) : null}
                                             </div>
                                         </li>

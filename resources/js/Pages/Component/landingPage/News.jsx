@@ -13,6 +13,7 @@ import tcapp from "../../../assets/news/tcapp.webp";
 import movers from "../../../assets/news/3movers.webp";
 import weighbridge from "../../../assets/news/weighbridge.webp";
 import Navman from "../../../assets/news/Navman.webp";
+import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import weighbridgenews from "../../../assets/news/weighbridgenews.webp";
 import Navmannews from "../../../assets/news/Navmannews.webp";
 import greennews from "../../../assets/news/greennews.webp";
@@ -33,6 +34,18 @@ import React from 'react';
 
 const posts = [
     {
+        id: 14,
+        title: "Acknowledging Our Journey On-Site Fleet Fueling",
+        href: "#",
+        description:
+            "In our continuous pursuit for excellence and innovation, we are proud to announce that we have enhanced operational efficiency with onsite fuel tanks. It is considered a significant stride forward for GTLS for its remarkable advantages. ",
+        imageUrl: onSiteFueling,
+        date: "March 12, 2024",
+        datetime: "2024-3-12",
+        category: { title: "", href: "#" },
+
+    },
+    {
         id: 13,
         title: "Gold Tiger's Green Journey",
         href: "#",
@@ -42,13 +55,7 @@ const posts = [
         date: "October 24, 2023",
         datetime: "2023-10-24",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },
     {
         id: 12,
@@ -60,13 +67,7 @@ const posts = [
         date: "September 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },
     {
         id: 11,
@@ -78,13 +79,7 @@ const posts = [
         date: "September 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },
     {
         id: 10,
@@ -96,13 +91,7 @@ const posts = [
         date: "June 2, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },
     {
         id: 9,
@@ -114,13 +103,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },
     {
         id: 8,
@@ -132,13 +115,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 7,
         title: "Gold Tiger Logistics Solutions Adopts State-of-the-Art Software to Enhance Staff Safety and Compliance",
@@ -149,13 +126,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 6,
         title: "Gold Tiger Logistics Solutions completes Fibre internet upgrade across all sites",
@@ -166,13 +137,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 5,
         title: "GTLS Expansion",
@@ -183,13 +148,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 4,
         title: "Driver PDA’s",
@@ -200,13 +159,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 3,
         title: "Vehicle Tracking",
@@ -217,13 +170,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 2,
         title: "TC8300 Touch Computer implementation",
@@ -234,13 +181,7 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 1,
         title: "Gold Tiger in $100m business expansion",
@@ -251,13 +192,7 @@ const posts = [
         date: "October 13, 2022",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },{
         id: 0,
         title: "Fleet boosted by 25 Volvo Euro 6 prime movers",
@@ -268,13 +203,7 @@ const posts = [
         date: "October 31, 2022",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-        author: {
-            name: "Michael Foster",
-            role: "Co-Founder / CTO",
-            href: "#",
-            imageUrl:
-                "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
+
     },
     
     
@@ -426,8 +355,7 @@ export default function News() {
           setPost(response.data);
         });
       }, []);
-
-    console.log(postss);
+    
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -445,53 +373,8 @@ export default function News() {
                                 Know more about our company.
                             </p>
                         </div>
-                        {/* <div className="text-xl text-white">
-                         {
-                            postss.map((post) => (
-                                <div key={post.id} className="px-5 ">
-                                    <Link  href={route("news", { id: post.id })} className="">
-                                        <div className="h-full">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={'./app/icons/'+post.image}
-                                                alt={post.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.datetime}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {post.date}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.desc}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))
-                         }
-
-                        </div> */}
-
                         <div className="grid lg:grid-cols-3 gap-4">
+                            {console.log(posts)}
                         {posts.map((post) => (
                                 <div key={post.id} className="px-5  ">
                                     <Link href={route("news", { id: post.id })} className="">
