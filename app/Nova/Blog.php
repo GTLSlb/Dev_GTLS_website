@@ -49,8 +49,11 @@ class Blog extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Title','title')->sortable()->rules('required'),
-            Image::make('Image','image')->sortable()->rules('required'),
-            Text::make('Image Alt','image_alt')->sortable(),
+            // Image::make('Image','image')->sortable()->rules('required'),
+            Image::make('Image','image')
+                    ->deletable(false) // deny deleting
+                    ->prunable()->creationRules('required'), // allow deleting old files on update/delete
+            Text::make('Image Alt','image_alt')->sortable()->rules('required'),
             Trix::make('Description','desc')->sortable()->rules('required'),
             Date::make('Date', 'date')->filterable()->rules('required'),
         ];
@@ -67,6 +70,10 @@ class Blog extends Resource
         return [];
     }
 
+    public function authorizedToReplicate(Request $request)
+    {
+        return false;
+    }
     /**
      * Get the filters available for the resource.
      *

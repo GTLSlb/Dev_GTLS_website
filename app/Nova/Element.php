@@ -10,7 +10,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\URL;
-use Laravel\Nova\Fields\File;
+use Illuminate\Support\Facades\Auth;
 use AlexAzartsev\Heroicon\Heroicon;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -77,6 +77,17 @@ class Element extends Resource
     {
         return [];
     }
+
+    public static function availableForNavigation($request)
+    {
+        // Get the currently authenticated user.
+        $user = Auth::user();
+
+        // Check if the user's role_id is 1.
+        // If the role_id is 1, then the resource will not be available for navigation.
+        return $user->role_id == 1;
+    }
+
 
     /**
      * Get the filters available for the resource.

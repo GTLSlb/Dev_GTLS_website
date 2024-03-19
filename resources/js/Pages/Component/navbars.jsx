@@ -8,23 +8,45 @@ import { Link } from "@inertiajs/inertia-react";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
+import TrainNotification from "@/Components/TrainNotification";
 const navigation = [
-    
-    { id:1, name: "About Us", href: "/aboutus" },
-    { id:2, name: "Services", href: "/#services" },
-    { id:3, name: "Technologies", href: "/technologies" },
-    { id:4, name: "Media & News", href: "/news" },
-    { id:5, name: "Careers", href: "/opportunities" },
-    { id:6, name: "Contact Us", href: "/contact_us" },
-    { id:7, name: "Going Green", href: "/goinggreen" },
+    { id: 1, name: "About Us", href: "/aboutus" },
+    { id: 2, name: "Services", href: "/#services" },
+    { id: 3, name: "Technologies", href: "/technologies" },
+    { id: 4, name: "Media & News", href: "/news" },
+    { id: 5, name: "Careers", href: "/opportunities" },
+    { id: 6, name: "Contact Us", href: "/contact_us" },
+    { id: 7, name: "Going Green", href: "/goinggreen" },
 ];
 export default function Navbars() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [nextPage, setNextPage] = useState(false);
+    const [getTrainNotification, setTrainNotification] = useState();
+
     const toggleElement = () => {
         setNextPage(!nextPage);
     };
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const requests = [axios.get("/getTrainNotification")];
+
+                // Execute all requests concurrently
+                const responses = await Promise.all(requests);
+
+                // Destructure responses array
+                const [getTrainNotificationResponse] = responses;
+                // Set states with data
+
+                setTrainNotification(getTrainNotificationResponse.data);
+            } catch (error) {
+                console.error("Error fetching news:", error);
+                // Optionally, handle error state here
+            }
+        };
+        fetchData();
+    }, []);
     useEffect(() => {
         function handleScroll() {
             const scrollTop =
@@ -58,9 +80,10 @@ export default function Navbars() {
     }, []);
     return (
         <div className="absolute  pb-2 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd shadow-xl shadow-bottom z-30  w-full">
+            <TrainNotification getTrainNotification={getTrainNotification} />
             <div className="bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd px-2">
-                <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
+                    <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
                         <div className="hidden lg:flex gap-x-7">
                             <a
                                 href="/contact_us"
@@ -75,19 +98,19 @@ export default function Navbars() {
                                 Careers
                             </a>
                         </div>
-                            <a
-                                href="tel:+180040306"
-                                className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
-                            >
-                                {" "}
-                                <PhoneIcon
-                                    className="h-5 sm:h-6 w-auto p-0.5"
-                                    aria-hidden="true"
-                                />
-                                Call: 1800-040-306
-                            </a>
-                        </div>
+                        <a
+                            href="tel:+180040306"
+                            className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
+                        >
+                            {" "}
+                            <PhoneIcon
+                                className="h-5 sm:h-6 w-auto p-0.5"
+                                aria-hidden="true"
+                            />
+                            Call: 1800-040-306
+                        </a>
                     </div>
+                </div>
                 <nav
                     className="mx-auto lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10   flex items-center justify-between"
                     aria-label="Global"
@@ -173,18 +196,19 @@ export default function Navbars() {
                         </button>
                     </div>
                     <div className="hidden lg:flex lg:gap-x-12 h-8">
-                        {navigation.map((item) => (
-                            item.id == 5||item.id==6?null:
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                // data={item.ref}
-                                // smooth={true}
-                                className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
-                            >
-                                {item.name}
-                            </Link>
-                        ))}
+                        {navigation.map((item) =>
+                            item.id == 5 || item.id == 6 ? null : (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    // data={item.ref}
+                                    // smooth={true}
+                                    className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                >
+                                    {item.name}
+                                </Link>
+                            )
+                        )}
                     </div>
                     <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
                         {/* {props.auth.user ? (
@@ -351,23 +375,26 @@ export default function Navbars() {
                     showNavbar ? "opacity-100" : "opacity-0 -translate-y-full"
                 }`}
             >
+                <TrainNotification
+                    getTrainNotification={getTrainNotification}
+                />
                 <div className="w-full bg-dark">
                     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
-                    <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
-                        <div className="hidden lg:flex gap-x-7">
-                            <a
-                                href="/contact_us"
-                                className="text-xs sm:text-sm font-bold flex h-full items-center"
-                            >
-                                Contact Us
-                            </a>
-                            <a
-                                href="/opportunities"
-                                className="text-xs sm:text-sm font-bold flex h-full items-center"
-                            >
-                                Careers
-                            </a>
-                        </div>
+                        <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
+                            <div className="hidden lg:flex gap-x-7">
+                                <a
+                                    href="/contact_us"
+                                    className="text-xs sm:text-sm font-bold flex h-full items-center"
+                                >
+                                    Contact Us
+                                </a>
+                                <a
+                                    href="/opportunities"
+                                    className="text-xs sm:text-sm font-bold flex h-full items-center"
+                                >
+                                    Careers
+                                </a>
+                            </div>
                             <a
                                 href="tel:+180040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
@@ -469,17 +496,18 @@ export default function Navbars() {
                             </button>
                         </div>
                         <div className="hidden lg:flex lg:gap-x-12 h-8">
-                            {navigation.map((item) => (
-                                 item.id == 5||item.id==6?null:
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    // smooth={true}
-                                    className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-md font-semibold leading-6 text-goldt hover:text-white"
-                                >
-                                    {item.name}
-                                </Link>
-                            ))}
+                            {navigation.map((item) =>
+                                item.id == 5 || item.id == 6 ? null : (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        // smooth={true}
+                                        className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-md font-semibold leading-6 text-goldt hover:text-white"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                )
+                            )}
                         </div>
                         <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
                             {/* {props.auth.user ? (
