@@ -620,7 +620,7 @@ export default function NewsPage(props) {
                         </p> */}
                         {/* {contentJson.map((post) => ( */}
                         <a
-                            href="/#news"
+                            href="/news"
                             className="relative inline-flex items-center justify-center text-black "
                         >
                             <ArrowLongLeftIcon className="h-5 text-goldt " />
@@ -631,7 +631,14 @@ export default function NewsPage(props) {
                                 {contentJson[id].title}
                             </h1>
                             <p className="text-gray-500 font-bold">
-                                {posts[id]?.date}
+                                
+                                {posts.map((post) => (
+                                    <>
+                                        {post.id == id ? (
+                                            <span className="">{post.date}</span>
+                                        ) : null}
+                                    </>
+                                ))}
                             </p>
                             <p
                                 className="mt-6 text-lg leading-8 text-gray-200 text-justify"
