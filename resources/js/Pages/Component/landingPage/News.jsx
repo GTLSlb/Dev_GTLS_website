@@ -11,6 +11,7 @@ import newSite from "../../../assets/news/newSite.webp";
 import goldt from "../../../assets/news/goldt.webp";
 import tcapp from "../../../assets/news/tcapp.webp";
 import movers from "../../../assets/news/3movers.webp";
+import EmployeesSafety from "../../../assets/news/EmployeesSafety.png";
 import weighbridge from "../../../assets/news/weighbridge.webp";
 import Navman from "../../../assets/news/Navman.webp";
 import onSiteFueling from "@/assets/news/onSiteFueling.webp";
@@ -35,11 +36,11 @@ import React from 'react';
 const posts = [
     {
         id: 15,
-        title: "GTLS WAY to lower risks",
+        title: "Employees safety and Health practices at GTLS",
         href: "#",
         description:
             "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers.",
-        imageUrl: goldt,
+        imageUrl: EmployeesSafety,
         date: "April 27, 2024",
         datetime: "2024-4-27",
         category: { title: "", href: "#" },

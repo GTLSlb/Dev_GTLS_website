@@ -15,6 +15,7 @@ import worker from "../assets/news/worker.webp";
 import goldt from "../assets/news/goldt.webp";
 import movers from "../assets/news/3movers.webp";
 import greennews from "../assets/news/greennews.webp";
+import EmployeesSafety from "../assets/news/EmployeesSafety.png";
 import weighbridge from "../assets/news/weighbridge.webp";
 import Navman from "../assets/news/Navman.webp";
 import weighbridgenews from "../assets/news/weighbridgenews.webp";
@@ -414,13 +415,13 @@ export default function NewsPage(props) {
         },
         {
             id: 15,
-            title: "GTLS WAY to lower risks",
+            title: "Employees safety and Health practices at GTLS",
 
             content1:
                 "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers. We give our team the knowledge and tools they need to handle safety procedures, equipment, and emergencies confidently. We make sure everything from our vehicles to our gear is in optimal working condition through regular check-ups and thorough training on how to use them safely. We even pay attention to small details like the right boots, gloves, or clothing we wear.",
             content2:
                 "To prevent injuries, we teach proper techniques and promote ergonomic practices, like using forklifts and pallet jacks the GTLS WAY to lower risks. We also stress the importance of safe driving, like sticking to speed limits, buckling up, and staying focused on the road. In case of emergencies, everyone knows exactly what to do thanks to clear communication about evacuation plans, fire drills, and first aid procedures. At Gold Tiger Group, we're all about keeping our team healthy and happy and goes home safety. We encourage everyone to speak up about any hazards or safety concerns they notice. We're always reviewing and updating our safety procedures to make sure we're following the best practices in the industry. By making safety a priority, we're creating an environment where our team can thrive without worrying about their well-being.",
-            imgUrl: goldt,
+            imgUrl: EmployeesSafety,
             videoUrl: gtlsway,
         },
     ];
@@ -428,11 +429,11 @@ export default function NewsPage(props) {
     const posts = [
         {
             id: 15,
-            title: "GTLS WAY to lower risks",
+            title: "Employees safety and Health practices at GTLS",
             href: "#",
             description:
                 "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers.",
-            imageUrl: goldt,
+            imageUrl: EmployeesSafety,
             date: "April 27, 2024",
             datetime: "2024-4-27",
             category: { title: "", href: "#" },
@@ -616,7 +617,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 ? (
+                {id == 12 || id == 15? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
