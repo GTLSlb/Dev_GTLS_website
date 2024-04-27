@@ -34,6 +34,17 @@ import React from 'react';
 
 const posts = [
     {
+        id: 15,
+        title: "GTLS WAY to lower risks",
+        href: "#",
+        description:
+            "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers.",
+        imageUrl: goldt,
+        date: "April 27, 2024",
+        datetime: "2024-4-27",
+        category: { title: "", href: "#" },
+    },
+    {
         id: 14,
         title: "Acknowledging Our Journey On-Site Fleet Fueling",
         href: "#",
@@ -374,7 +385,6 @@ export default function News() {
                             </p>
                         </div>
                         <div className="grid lg:grid-cols-3 gap-4">
-                            {console.log(posts)}
                         {posts.map((post) => (
                                 <div key={post.id} className="px-5  ">
                                     <Link href={route("news", { id: post.id })} className="">

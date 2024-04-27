@@ -1,6 +1,7 @@
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
 import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
+import gtlsway from "../assets/videos/GTLSWAY.mp4";
 import trucks from "../assets/news/trucks.webp";
 import postpic from "../assets/news/postpic.webp";
 import tcapp from "../assets/news/tcapp.webp";
@@ -402,7 +403,7 @@ export default function NewsPage(props) {
             imgUrl: greennews,
         },
         {
-            id: 12,
+            id: 14,
             title: "Acknowledging Our Journey: On-Site Fleet Fuelling",
 
             content1:
@@ -411,9 +412,31 @@ export default function NewsPage(props) {
                 "Advantages of onsite Fleet Refueling\n\nIt provides more personalized and customizable fuelling schedules and options and can be much easier to handle. Also, it increases driver productivity and affects his total ability to reach his goals per day, freeing more time for productive tasks and possibly even more deliveries.\n\nOne of the most significant advantages of fleet fuelling is the ability to fuel trucks overnight and taking advantage of this downtime. Fleet fuelling can reduce the difference between your drivers' schedules and create a more efficient delivery schedule for the fleet.\n\nSustainability and Security: The move to onsite fuel tanks aligns with our commitment to sustainability. By streamlining our fuelling processes, we contribute to a greener and more environmentally responsible future.\n\nIt is more secure to have onsite tanks, as mentioned before, having a dedicated fuelling tank eliminates some of the problems with going to a retail fuelling station, which brings its own challenges. It represents a game-changing development for GTLS, which acknowledges that we are creating strong foundations, tailoring our services to our clients need individual needs. Such initiatives have proven the effectiveness and commitment to delivering top-notch services while prioritizing operational efficiency",
             imgUrl: onSiteFueling,
         },
+        {
+            id: 15,
+            title: "GTLS WAY to lower risks",
+
+            content1:
+                "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers. We give our team the knowledge and tools they need to handle safety procedures, equipment, and emergencies confidently. We make sure everything from our vehicles to our gear is in optimal working condition through regular check-ups and thorough training on how to use them safely. We even pay attention to small details like the right boots, gloves, or clothing we wear.",
+            content2:
+                "To prevent injuries, we teach proper techniques and promote ergonomic practices, like using forklifts and pallet jacks the GTLS WAY to lower risks. We also stress the importance of safe driving, like sticking to speed limits, buckling up, and staying focused on the road. In case of emergencies, everyone knows exactly what to do thanks to clear communication about evacuation plans, fire drills, and first aid procedures. At Gold Tiger Group, we're all about keeping our team healthy and happy and goes home safety. We encourage everyone to speak up about any hazards or safety concerns they notice. We're always reviewing and updating our safety procedures to make sure we're following the best practices in the industry. By making safety a priority, we're creating an environment where our team can thrive without worrying about their well-being.",
+            imgUrl: goldt,
+            videoUrl: gtlsway,
+        },
     ];
 
     const posts = [
+        {
+            id: 15,
+            title: "GTLS WAY to lower risks",
+            href: "#",
+            description:
+                "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers.",
+            imageUrl: goldt,
+            date: "April 27, 2024",
+            datetime: "2024-4-27",
+            category: { title: "", href: "#" },
+        },
         {
             id: 14,
             title: "Acknowledging Our Journey On-Site Fleet Fueling",
@@ -631,11 +654,12 @@ export default function NewsPage(props) {
                                 {contentJson[id].title}
                             </h1>
                             <p className="text-gray-500 font-bold">
-                                
                                 {posts.map((post) => (
                                     <>
                                         {post.id == id ? (
-                                            <span className="">{post.date}</span>
+                                            <span className="">
+                                                {post.date}
+                                            </span>
                                         ) : null}
                                     </>
                                 ))}
@@ -678,11 +702,24 @@ export default function NewsPage(props) {
                                 </p>
                             </div>
                             <figure className="mt-16">
-                                <img
-                                    className="aspect-video rounded-xl bg-gray-50 object-cover"
-                                    src={contentJson[id].imgUrl}
-                                    alt={contentJson[id].title}
-                                />
+                                {contentJson[id].videoUrl ? (
+                                    <video
+                                    loop
+                                    autoPlay
+                                    controls
+                                    style={{ width: '100%' }}
+                                    src={contentJson[id].videoUrl}
+                                    type="video/mp4"
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+                                ) : (
+                                    <img
+                                        className="aspect-video rounded-xl bg-gray-50 object-cover"
+                                        src={contentJson[id].imgUrl}
+                                        alt={contentJson[id].title}
+                                    />
+                                )}
                             </figure>
                             <div className="mt-10">
                                 <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">
