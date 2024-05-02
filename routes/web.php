@@ -57,9 +57,6 @@ Route::match(['get', 'post'], '/landingPage', function () {
     return Inertia::render('LandingPage');
 })->middleware(['custom'])->name('landing.page');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['custom'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
