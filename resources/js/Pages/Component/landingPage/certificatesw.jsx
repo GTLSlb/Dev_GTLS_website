@@ -221,7 +221,7 @@ export default function Certifiactesw() {
                                             <img
                                                 src={cert1}
                                                 alt="certification"
-                                                className="rounded-xl"
+                                                className="rounded-xl sm:h-96 sm:w-96"
                                             />
                                             <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
                                                 <div className="max-w-xl p-6">
@@ -268,7 +268,7 @@ export default function Certifiactesw() {
                                             <img
                                                 src={cert2}
                                                 alt="certification"
-                                                className="rounded-xl"
+                                                className="rounded-xl sm:h-96 sm:w-96"
                                             />
                                             <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
                                                 <div className="max-w-xl p-6">
