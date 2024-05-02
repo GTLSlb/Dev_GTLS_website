@@ -39,6 +39,7 @@ const posts = [
                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         },
     },
+
     // More posts...
 ];
 
@@ -54,31 +55,43 @@ export default function Certifiactesw() {
     };
 
     const handleOverlayClick = (event) => {
-        if (event.target.classList.contains('modal-overlay')) {
-          handleCloseModal();
+        if (event.target.classList.contains("modal-overlay")) {
+            handleCloseModal();
         }
-      };
+    };
 
     const renderModal = () => {
         if (selectedImage !== null) {
             return (
-            <div className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center modal-overlay " onClick={handleOverlayClick}>
-                <button
-                className="absolute top-0 right-0 m-4 text-white hover:text-gray-300 focus:outline-none"
-                onClick={handleCloseModal}
+                <div
+                    className="fixed inset-0 z-50 bg-black bg-opacity-70 flex items-center justify-center modal-overlay "
+                    onClick={handleOverlayClick}
                 >
-                <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-                </button>
-                <img src={selectedImage} alt={`Image ${selectedImage + 1}`} className="max-w-full max-h-full" />
-            </div>
+                    <button
+                        className="absolute top-0 right-0 m-4 text-white hover:text-gray-300 focus:outline-none"
+                        onClick={handleCloseModal}
+                    >
+                        <svg
+                            className="h-6 w-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M6 18L18 6M6 6l12 12"
+                            />
+                        </svg>
+                    </button>
+                    <img
+                        src={selectedImage}
+                        alt={`Image ${selectedImage + 1}`}
+                        className="max-w-full max-h-full"
+                    />
+                </div>
             );
         }
     };
@@ -91,11 +104,12 @@ export default function Certifiactesw() {
                             <tr>
                                 <td className=" px-4 py-10 w-4/12">
                                     <div>
-                                    <h2 className="text-4xl font-bold tracking-tight text-dark">
-                              Certificates
-                          </h2>
+                                        <h2 className="text-4xl font-bold tracking-tight text-dark">
+                                            Certificates
+                                        </h2>
                                         <p className="mt-2 text-lg  text-gray-600">
-                                            We make sure that we meet all of our clients' expectations.
+                                            We make sure that we meet all of our
+                                            clients' expectations.
                                         </p>
                                     </div>
                                 </td>
@@ -106,8 +120,7 @@ export default function Certifiactesw() {
                                                 <img
                                                     src={cert1}
                                                     alt="certification"
-                                                    
-                                                    className="rounded-xl "
+                                                    className="rounded-xl h-96 w-96"
                                                 />
                                                 <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl  shadow-inner ">
                                                     <div className="max-w-xl p-6">
@@ -154,7 +167,7 @@ export default function Certifiactesw() {
                                                 <img
                                                     src={cert2}
                                                     alt="certification"
-                                                    className="rounded-xl "
+                                                    className="rounded-xl h-96 w-96"
                                                 />
                                                 <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
                                                     <div className="max-w-xl p-6">
@@ -203,109 +216,108 @@ export default function Certifiactesw() {
                             </tr>
                             <tr className="lg:hidden  ">
                                 <td>
-                                <div className="flex gap-x-5 flex-col sm:flex-row py-5 gap-y-5 px-5 sm:px-0">
-                                    <div className="relative">
-                                        <img
-                                            src={cert1}
-                                            alt="certification"
-                                            className="rounded-xl"
-                                        />
-                                        <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
-                                                    <div className="max-w-xl p-6">
-                                                        <div className=" flex items-center gap-x-4 text-xs">
-                                                            <time
-                                                                dateTime={
-                                                                    posts[0]
-                                                                        .datetime
-                                                                }
-                                                                className="text-gray-500"
-                                                            >
-                                                                {posts[0].date}
-                                                            </time>
-                                                        </div>
-                                                        <div className="group relative ">
-                                                            <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
-                                                                <span className="absolute inset-0" />
-                                                                {posts[0].title}
-                                                            </h3>
-                                                            <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
-                                                                {
-                                                                    posts[0]
-                                                                        .description
-                                                                }
-                                                            </p>
-                                                        </div>
+                                    <div className="flex gap-x-5 flex-col sm:flex-row py-5 gap-y-5 px-5 sm:px-0">
+                                        <div className="relative">
+                                            <img
+                                                src={cert1}
+                                                alt="certification"
+                                                className="rounded-xl"
+                                            />
+                                            <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
+                                                <div className="max-w-xl p-6">
+                                                    <div className=" flex items-center gap-x-4 text-xs">
+                                                        <time
+                                                            dateTime={
+                                                                posts[0]
+                                                                    .datetime
+                                                            }
+                                                            className="text-gray-500"
+                                                        >
+                                                            {posts[0].date}
+                                                        </time>
+                                                    </div>
+                                                    <div className="group relative ">
+                                                        <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
+                                                            <span className="absolute inset-0" />
+                                                            {posts[0].title}
+                                                        </h3>
+                                                        <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
+                                                            {
+                                                                posts[0]
+                                                                    .description
+                                                            }
+                                                        </p>
                                                     </div>
                                                 </div>
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleImageClick(cert1)
-                                            }
-                                            aria-label="zoom"
-                                            className="h-14 w-14 absolute bottom-28  right-0 mr-5 items-center gap-x-1.5 rounded-full bg-black py-1.5 px-1.5 text-sm font-semibold text-white shadow-sm hover:bg-goldt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                        >
-                                            <MagnifyingGlassPlusIcon
-                                                className=" h-6 w-6 mx-auto"
-                                                aria-hidden="true"
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleImageClick(cert1)
+                                                }
+                                                aria-label="zoom"
+                                                className="h-14 w-14 absolute bottom-28  right-0 mr-5 items-center gap-x-1.5 rounded-full bg-black py-1.5 px-1.5 text-sm font-semibold text-white shadow-sm hover:bg-goldt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            >
+                                                <MagnifyingGlassPlusIcon
+                                                    className=" h-6 w-6 mx-auto"
+                                                    aria-hidden="true"
+                                                />
+                                            </button>
+                                        </div>
+                                        <div className="relative">
+                                            <img
+                                                src={cert2}
+                                                alt="certification"
+                                                className="rounded-xl"
                                             />
-                                        </button>
-                                    </div>
-                                    <div className="relative">
-                                        <img
-                                            src={cert2}
-                                            alt="certification"
-                                            className="rounded-xl"
-                                        />
-                                        <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
-                                                    <div className="max-w-xl p-6">
-                                                        <div className=" flex items-center gap-x-4 text-xs">
-                                                            <time
-                                                                dateTime={
-                                                                    posts[1]
-                                                                        .datetime
-                                                                }
-                                                                className="text-gray-500"
-                                                            >
-                                                                {posts[1].date}
-                                                            </time>
-                                                        </div>
-                                                        <div className="group relative ">
-                                                            <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
-                                                                <span className="absolute inset-0" />
-                                                                {posts[1].title}
-                                                            </h3>
-                                                            <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
-                                                                {
-                                                                    posts[1]
-                                                                        .description
-                                                                }
-                                                            </p>
-                                                        </div>
+                                            <div className="absolute w-full bg-white bottom-0 rounded-br-xl rounded-bl-xl shadow-inner">
+                                                <div className="max-w-xl p-6">
+                                                    <div className=" flex items-center gap-x-4 text-xs">
+                                                        <time
+                                                            dateTime={
+                                                                posts[1]
+                                                                    .datetime
+                                                            }
+                                                            className="text-gray-500"
+                                                        >
+                                                            {posts[1].date}
+                                                        </time>
+                                                    </div>
+                                                    <div className="group relative ">
+                                                        <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
+                                                            <span className="absolute inset-0" />
+                                                            {posts[1].title}
+                                                        </h3>
+                                                        <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
+                                                            {
+                                                                posts[1]
+                                                                    .description
+                                                            }
+                                                        </p>
                                                     </div>
                                                 </div>
-                                        <button
-                                            type="button"
-                                            onClick={() =>
-                                                handleImageClick(cert2)
-                                            }
-                                            aria-label="zoom"
-                                            className="h-14 w-14 absolute bottom-28  right-0 mr-5 items-center gap-x-1.5 rounded-full bg-black py-1.5 px-1.5 text-sm font-semibold text-white shadow-sm hover:bg-goldt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                        >
-                                            <MagnifyingGlassPlusIcon
-                                                className=" h-6 w-6 mx-auto"
-                                                aria-hidden="true"
-                                            />
-                                        </button>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleImageClick(cert2)
+                                                }
+                                                aria-label="zoom"
+                                                className="h-14 w-14 absolute bottom-28  right-0 mr-5 items-center gap-x-1.5 rounded-full bg-black py-1.5 px-1.5 text-sm font-semibold text-white shadow-sm hover:bg-goldt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            >
+                                                <MagnifyingGlassPlusIcon
+                                                    className=" h-6 w-6 mx-auto"
+                                                    aria-hidden="true"
+                                                />
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     {renderModal()}
                 </div>
-                
             </div>
         </div>
     );
