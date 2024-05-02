@@ -28,7 +28,7 @@ const posts = [
         description:
             "Is registered as meeting the requirements of the SQF Food Safety Code: Storage and Distribution Edition 9, Certified HACCP Based Food Safety Plans. Scope of Registration: Food Sector Categories 26. Storage and Distribution. With Certificate number : 55111",
         imageUrl: cert2,
-        date: "Sep 29, 2022",
+        date: "Feb 20, 2024",
         datetime: "2020-03-16",
         category: { title: "Marketing", href: "#" },
         author: {
