@@ -9,6 +9,7 @@ import Navbars from "./Component/Navbars";
 import TruckDriver from "./Component/opportunities/TruckDriver";
 import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
+import BusinessExecutive from "./Component/opportunities/BusinessExecutive";
 
 export default function Opportunities(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,6 +38,13 @@ export default function Opportunities(props) {
             name: "MC Linehaul Drivers",
             description: "Hand sanded and finished with natural oil",
             html: <HaulDriver />,
+            current: false,
+        },
+        {
+            id: 3,
+            name: "Business Development Executive.",
+            description: "Hand sanded and finished with natural oil",
+            html: <BusinessExecutive />,
             current: false,
         },
     ]);
