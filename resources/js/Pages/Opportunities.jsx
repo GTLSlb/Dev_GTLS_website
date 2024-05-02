@@ -42,7 +42,7 @@ export default function Opportunities(props) {
         },
         {
             id: 3,
-            name: "Business Development Executive.",
+            name: "Business Development Executive",
             description: "Hand sanded and finished with natural oil",
             html: <BusinessExecutive />,
             current: false,
