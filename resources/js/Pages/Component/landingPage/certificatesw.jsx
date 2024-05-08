@@ -10,7 +10,7 @@ const posts = [
         description:
             "Has been assessed and certified as meeting the requirements of HACCP Certification, based upon Codex Alimentarius General Principles of Foof Hygiene CXC 1-1969 (2020) , for the following activities: Recieval, Storage & Distribution of Spices, Almond Milk, Popcorn and Glutan Free Products.",
         imageUrl: cert1,
-        date: "Sep 29, 2022",
+        date: "Feb 02, 2024",
         datetime: "2020-03-16",
         category: { title: "Marketing", href: "#" },
         author: {
