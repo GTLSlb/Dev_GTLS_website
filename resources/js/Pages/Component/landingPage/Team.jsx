@@ -19,51 +19,46 @@ import image16 from "../../../assets/teams/Tracey.png";
 
 import image12 from "../../../assets/teams/Veronica.png";
 
-
-
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
- import {
-    ArrowSmallRightIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from 'react';
+import React from "react";
 
-
-const teams =[
+const teams = [
     {
-        id:1,
-        image:image1,
-        name:"imad_el_masri",
+        id: 1,
+        image: image1,
+        name: "imad_el_masri",
     },
     {
-        id:2,
-        image:image2,
-        name:"Theodoros",
+        id: 2,
+        image: image2,
+        name: "Theodoros",
     },
     {
-        id:3,
-        image:image3,
-        name:"Aref_Al_Nehmani",
+        id: 3,
+        image: image3,
+        name: "Aref_Al_Nehmani",
     },
     {
-        id:4,
-        image:image4,
-        name:"stan",
+        id: 4,
+        image: image4,
+        name: "stan",
     },
     {
-        id:5,
-        image:image5,
-        name:"Richelle",
+        id: 5,
+        image: image5,
+        name: "Richelle",
     },
     {
-        id:6,
-        image:image6,
-        name:"Leslie_Haines",
+        id: 6,
+        image: image6,
+        name: "Leslie_Haines",
     },
     // {
     //     id:7,
@@ -71,34 +66,34 @@ const teams =[
     //     name:"josh",
     // },
     {
-        id:8,
-        image:image8,
-        name:"Antoine",
+        id: 8,
+        image: image8,
+        name: "Antoine",
     },
     {
-        id:9,
-        image:image9,
-        name:"Danialaa",
+        id: 9,
+        image: image9,
+        name: "Danialaa",
     },
     {
-        id:10,
-        image:image10,
-        name:"Megan",
+        id: 10,
+        image: image10,
+        name: "Megan",
     },
     {
-        id:11,
-        image:image11,
-        name:"jay",
+        id: 11,
+        image: image11,
+        name: "jay",
     },
     {
-        id:12,
-        image:image12,
-        name:"Veronica",
+        id: 12,
+        image: image12,
+        name: "Veronica",
     },
     {
-        id:13,
-        image:image13,
-        name:"Debora",
+        id: 13,
+        image: image13,
+        name: "Debora",
     },
     // {
     //     id:14,
@@ -111,11 +106,11 @@ const teams =[
     //     name:"Ruby",
     // },
     {
-        id:16,
-        image:image16,
-        name:"Tracey",
+        id: 16,
+        image: image16,
+        name: "Tracey",
     },
-]
+];
 
 // const posts = [
 //     {
@@ -362,74 +357,54 @@ const teams =[
 //                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 //         },
 //     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
 //     // More posts...
 // ];
 
-
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block"}}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block" }}
+            onClick={onClick}
+        />
     );
-  }
-  
-  function SamplePrevArrow(props) {
+}
+
+function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "" }}
-        onClick={onClick}
-      >
-        <ArrowSmallRightIcon/>
-      </div>
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "" }}
+            onClick={onClick}
+        >
+            <ArrowSmallRightIcon />
+        </div>
     );
-  }
+}
 
 export default function News() {
-
-    
-    
     const sliderRef = useRef(null);
 
-    
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
-          if (sliderRef.current) {
-            sliderRef.current.slickNext();
-          }
+            if (sliderRef.current) {
+                sliderRef.current.slickNext();
+            }
         }, delay);
-      };
+    };
 
-
-      useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
-          sliderRef.current.slickNext();
+            sliderRef.current.slickNext();
         }, 5000);
-    
+
         return () => {
-          clearInterval(interval);
+            clearInterval(interval);
         };
-      }, []);
+    }, []);
 
     const settings = {
         dots: false,
@@ -438,24 +413,24 @@ export default function News() {
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
             },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
             },
-          },
         ],
         nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
-      };
+        prevArrow: <SamplePrevArrow />,
+    };
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
@@ -504,21 +479,18 @@ export default function News() {
             : 0;
     }, []);
 
-
     const baseURL = "http://127.0.0.1:8000/posts";
     const [postss, setPost] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {
-          setPost(response.data);
+            setPost(response.data);
         });
-      }, []);
+    }, []);
 
     console.log(postss);
     return (
         <div>
-            
             <div className="bg-dark">
-                
                 <div className="py-2 sm:py-32 px-1 sm:pb-1">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">
@@ -529,68 +501,17 @@ export default function News() {
                                 Know more about our Team.
                             </p>
                         </div>
-                        {/* <div className="text-xl text-white">
-                         {
-                            postss.map((post) => (
-                                <div key={post.id} className="px-5 ">
-                                    <Link  href={route("news", { id: post.id })} className="">
-                                        <div className="h-full">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={'./app/icons/'+post.image}
-                                                alt={post.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.datetime}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {post.date}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.desc}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))
-                         }
-
-                        </div> */}
-
-                        
-                        
-
-                        
-
                         <Slider ref={sliderRef} {...settings}>
-                        {/* <div className="grid grid-cols-3 gap-4"> */}
-                        {teams.map((post) => (
+                            {/* <div className="grid grid-cols-3 gap-4"> */}
+                            {teams.map((post) => (
                                 <div key={post.id} className="px-5  ">
-                                        <img
-                                                src={post.image}
-                                                alt={post.name}
-                                                className=" rounded-2xl p-10 object-containh-96 w-full "
-                                            />
-                                  
-                                        {/* <div className="h-full ">
+                                    <img
+                                        src={post.image}
+                                        alt={post.name}
+                                        className=" rounded-2xl p-10 object-containh-96 w-full "
+                                    />
+
+                                    {/* <div className="h-full ">
                                         <div className="relative w-full www">
                                             
                                             <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
@@ -623,8 +544,7 @@ export default function News() {
                                 </div>
                             ))}
 
-                        {/* </div> */}
-                            
+                            {/* </div> */}
                         </Slider>
                         <div className=" h-20"></div>
                     </div>

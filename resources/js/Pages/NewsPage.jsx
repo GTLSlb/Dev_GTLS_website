@@ -766,7 +766,12 @@ export default function NewsPage(props) {
                             {posts.map((post) => (
                                 <div key={post.id} className="px-5 ">
                                     <Link
-                                        href={route("news", { id: post.id })}
+                                        href={route("news", {
+                                            id: post.id,
+                                            title: encodeURIComponent(
+                                                post.title
+                                            ),
+                                        })}
                                         className=""
                                     >
                                         <div className="h-full">

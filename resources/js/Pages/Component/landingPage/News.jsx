@@ -24,14 +24,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
- import {
-    ArrowSmallRightIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from 'react';
-
-
-
+import React from "react";
 
 const posts = [
     {
@@ -55,7 +50,6 @@ const posts = [
         date: "March 12, 2024",
         datetime: "2024-3-12",
         category: { title: "", href: "#" },
-
     },
     {
         id: 13,
@@ -67,7 +61,6 @@ const posts = [
         date: "October 24, 2023",
         datetime: "2023-10-24",
         category: { title: "", href: "#" },
-
     },
     {
         id: 12,
@@ -79,7 +72,6 @@ const posts = [
         date: "September 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
     },
     {
         id: 11,
@@ -91,7 +83,6 @@ const posts = [
         date: "September 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
     },
     {
         id: 10,
@@ -103,7 +94,6 @@ const posts = [
         date: "June 2, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
     },
     {
         id: 9,
@@ -115,7 +105,6 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
     },
     {
         id: 8,
@@ -127,8 +116,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 7,
         title: "Gold Tiger Logistics Solutions Adopts State-of-the-Art Software to Enhance Staff Safety and Compliance",
         href: "#",
@@ -138,8 +127,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 6,
         title: "Gold Tiger Logistics Solutions completes Fibre internet upgrade across all sites",
         href: "#",
@@ -149,8 +138,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 5,
         title: "GTLS Expansion",
         href: "#",
@@ -160,8 +149,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 4,
         title: "Driver PDA’s",
         href: "#",
@@ -171,8 +160,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 3,
         title: "Vehicle Tracking",
         href: "#",
@@ -182,8 +171,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 2,
         title: "TC8300 Touch Computer implementation",
         href: "#",
@@ -193,8 +182,8 @@ const posts = [
         date: "April 19, 2023",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 1,
         title: "Gold Tiger in $100m business expansion",
         href: "#",
@@ -204,8 +193,8 @@ const posts = [
         date: "October 13, 2022",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
-    },{
+    },
+    {
         id: 0,
         title: "Fleet boosted by 25 Volvo Euro 6 prime movers",
         href: "#",
@@ -215,76 +204,55 @@ const posts = [
         date: "October 31, 2022",
         datetime: "2020-03-16",
         category: { title: "", href: "#" },
-
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 
     // More posts...
 ];
 
-
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block"}}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block" }}
+            onClick={onClick}
+        />
     );
-  }
-  
-  function SamplePrevArrow(props) {
+}
+
+function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "" }}
-        onClick={onClick}
-      >
-        <ArrowSmallRightIcon/>
-      </div>
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "" }}
+            onClick={onClick}
+        >
+            <ArrowSmallRightIcon />
+        </div>
     );
-  }
+}
 
 export default function News() {
-
-    
-    
     const sliderRef = useRef(null);
 
-    
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
-          if (sliderRef.current) {
-            sliderRef.current.slickNext();
-          }
+            if (sliderRef.current) {
+                sliderRef.current.slickNext();
+            }
         }, delay);
-      };
+    };
 
-
-      useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
-          sliderRef.current.slickNext();
+            sliderRef.current.slickNext();
         }, 5000);
-    
+
         return () => {
-          clearInterval(interval);
+            clearInterval(interval);
         };
-      }, []);
+    }, []);
 
     const settings = {
         dots: false,
@@ -293,24 +261,24 @@ export default function News() {
         slidesToShow: 3,
         slidesToScroll: 1,
         responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
             },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
             },
-          },
         ],
         nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
-      };
+        prevArrow: <SamplePrevArrow />,
+    };
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
@@ -359,15 +327,14 @@ export default function News() {
             : 0;
     }, []);
 
-
     const baseURL = "http://127.0.0.1:8000/posts";
     const [postss, setPost] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {
-          setPost(response.data);
+            setPost(response.data);
         });
-      }, []);
-    
+    }, []);
+
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -379,62 +346,66 @@ export default function News() {
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">
                             <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                News 
+                                News
                             </h2>
                             <p className="mt-2 text-lg leading-8 text-gray-300">
                                 Know more about our company.
                             </p>
                         </div>
                         <div className="grid lg:grid-cols-3 gap-4">
-                        {posts.map((post) => (
+                            {posts.map((post) => (
                                 <div key={post.id} className="px-5  ">
-                                    <Link href={route("news", { id: post.id })} className="">
+                                    <Link
+                                        href={route("news", {
+                                            id: post.id,
+                                            title: encodeURIComponent(
+                                                post.title
+                                            ),
+                                        })}
+                                        className=""
+                                    >
                                         <div className="h-full ">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={post.imageUrl}
-                                                alt={post.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.datetime}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {post.date}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.description}
-                                                    </p>
-                                                </div>
+                                            <div className="relative w-full www">
+                                                <img
+                                                    src={post.imageUrl}
+                                                    alt={post.title}
+                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                                />
+                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
-                                        </article>
+                                            <article
+                                                key={post.id}
+                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
+                                            >
+                                                <div className="max-w-xl mx-4 mb-6  mt-12">
+                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
+                                                        <time
+                                                            dateTime={
+                                                                post.datetime
+                                                            }
+                                                            className="text-goldl font-bold"
+                                                        >
+                                                            {post.date}
+                                                        </time>
+                                                    </div>
+                                                    <div className="group relative">
+                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
+                                                            <span className="absolute inset-0" />
+                                                            {post.title}
+                                                        </h3>
+                                                        <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
+                                                            {post.description}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
                                     </Link>
                                 </div>
                             ))}
-
                         </div>
-                        
 
-                        
-
-                        <Slider ref={sliderRef} {...settings}>
-                            
-                        </Slider>
+                        <Slider ref={sliderRef} {...settings}></Slider>
                     </div>
                 </div>
             </div>

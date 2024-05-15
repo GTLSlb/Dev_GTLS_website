@@ -123,9 +123,10 @@ Route::resource('posts', BlogController::class);
 //     return Inertia::render('NewsPage');
 // })-> name('news');
 
-Route::get('/news/{id}', function ($id) {
-    return Inertia::render('NewsPage', ['id' => $id]);
+Route::get('/news/{id}/{title}', function ($id, $title) {
+    return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
 })->name('news');
+
 
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
@@ -138,14 +139,6 @@ Route::get('/download-docx', function () {
     );
     return response()->download($pathToFile, '20230913-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf', $headers);
 });
-// Route::post('/auth/azure', function (Request $request) {
-//     $data = $request->json()->all();
-//     $email = $data['email'];
-//     $UserId = $data['UserId'];
-//     return Socialite::driver('azure')
-//     ->with(['login_hint' => $email]) // Pass the email address as a parameter to the Azure AD login page
-//     ->redirect();
-// });
 
 Route::get('/downloadGTLS-Pallets', function () {
     $pathToFile = public_path('docs/GTLS Pallet Trading Policy 14-12-23.pdf');
@@ -156,8 +149,6 @@ Route::get('/downloadGTLS-Pallets', function () {
 });
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
-
-// Route::post('/saveImg', [NewUserController::class, 'storePic']);
 
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
