@@ -11,7 +11,7 @@ const posts = [
         description:
             "Has been assessed and certified as meeting the requirements of HACCP Certification, based upon Codex Alimentarius General Principles of Foof Hygiene CXC 1-1969 (2020) , for the following activities: Recieval, Storage & Distribution of Spices, Almond Milk, Popcorn and Glutan Free Products.",
         imageUrl: cert1,
-        date: "Sep 29, 2022",
+        date: "Feb 02, 2024",
         datetime: "2020-03-16",
     },
     {
@@ -21,7 +21,7 @@ const posts = [
         description:
             "Is registered as meeting the requirements of the SQF Food Safety Code: Storage and Distribution Edition 9, Certified HACCP Based Food Safety Plans. Scope of Registration: Food Sector Categories 26. Storage and Distribution. With Certificate number : 55111",
         imageUrl: cert2,
-        date: "Sep 29, 2022",
+        date: "Feb 20, 2024",
         datetime: "2020-03-16",
     },
     {

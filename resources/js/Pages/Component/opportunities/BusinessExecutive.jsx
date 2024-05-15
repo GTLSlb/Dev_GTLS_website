@@ -3,7 +3,7 @@ import React from "react";
 function BusinessExecutive() {
     return (
         <div className="mt-4">
-            <p className="font-bold text-smooth">Role Description.</p>
+            <p className="font-bold text-smooth">Role Description</p>
             <p className="mt-2 text-gray-300">
                 This is a full-time on-site role for a Business Development
                 Executive. As a Business Development Executive, you will be
@@ -15,7 +15,7 @@ function BusinessExecutive() {
                 require regular collaboration with the sales and operations
                 teams to ensure seamless customer experiences.
             </p>
-            <p className="font-bold text-smooth mt-4">Qualifications.</p>
+            <p className="font-bold text-smooth mt-4">Qualifications</p>
             <ul role="list" className="mt-4 max-w-xl space-y-2 text-gray-300">
                 <li className="flex gap-x-3 items-center">
                     <div className=" h-2 w-2 flex-none rounded-full bg-goldt" />
