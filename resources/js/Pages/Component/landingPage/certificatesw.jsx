@@ -26,13 +26,12 @@ const posts = [
     },
     {
         id: 3,
-        title: "Certificate of Registration Gold Tiger LS PTY LTD",
+        title: "Gold Tiger Maintenance PTY LTD",
         href: "#",
-        description:
-            "Is registered as meeting the requirements of the SQF Food Safety Code: Storage and Distribution Edition 9, Certified HACCP Based Food Safety Plans. Scope of Registration: Food Sector Categories 26. Storage and Distribution. With Certificate number : 55111",
+        description: "This is to certify that Gold Tiger Maintenance PTY LTD is licensed under the Motor Dealers and Repairers Act 2013.",
         imageUrl: cert3,
-        date: "Sep 29, 2022",
-        datetime: "2020-03-16",
+        date: "May 15, 2024",
+        datetime: "2024-05-15",
     },
     // More posts...
 ];
@@ -90,8 +89,8 @@ export default function Certifiactesw() {
         }
     };
     return (
-        <div className="relative h-full lg:h-screen">
-            <div className="flex flex-col gap-5 container mx-auto px-14 lg:px-32 py-10 pb-32">
+        <div className="relative h-full xl:h-screen">
+            <div className="flex flex-col gap-5 container mx-auto px-14 xl:px-32 py-10 pb-32">
                 <p className="text-4xl font-bold tracking-tight text-goldd">
                     Certificates
                 </p>
@@ -100,17 +99,17 @@ export default function Certifiactesw() {
                 </p>
             </div>
            
-            <div className="lg:absolute w-full bg-gradient-to-br lg:h-32 from-goldd via-goldl to-goldd  bg-opacity-10">
-                <div className="container mx-auto lg:px-32 items-center justify-center flex max-lg:flex-col gap-32 max-lg:py-14">
+            <div className="xl:absolute w-full bg-gradient-to-br xl:h-32 from-goldd via-goldl to-goldd  bg-opacity-10">
+                <div className="container mx-auto xl:px-32 items-center justify-center flex max-xl:flex-col gap-32 max-xl:py-14">
                     {posts.map((post) => (
-                        <div className="relative transition-transform lg:-translate-y-1/4  w-80  hover:scale-110">
+                        <div className="relative transition-transform xl:-translate-y-1/4 hover:scale-110">
                             <img
                                 src={post.imageUrl}
                                 alt="certification"
                                 className="rounded-xl h-96 w-80"
                             />
-                            <div className="absolute w-80 bg-white bottom-0 rounded-br-xl rounded-bl-xl  shadow-inner ">
-                                <div className="max-w-xl p-6">
+                            <div className="absolute bg-white bottom-0 rounded-br-xl rounded-bl-xl  shadow-inner ">
+                                <div className=" p-6">
                                     <div className=" flex items-center gap-x-4 text-xs">
                                         <time
                                             dateTime={post.datetime}

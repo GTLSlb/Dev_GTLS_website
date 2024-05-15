@@ -611,6 +611,13 @@ export default function NewsPage(props) {
 
     const pageUrl = window.location.href;
 
+    function customEncodeTitle(title) {
+        return title
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[^\w-]+/g, "");
+    }
+
     return (
         <>
             <Head title="News" />
@@ -768,7 +775,7 @@ export default function NewsPage(props) {
                                     <Link
                                         href={route("news", {
                                             id: post.id,
-                                            title: encodeURIComponent(
+                                            title: customEncodeTitle(
                                                 post.title
                                             ),
                                         })}

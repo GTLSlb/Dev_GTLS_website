@@ -335,6 +335,13 @@ export default function News() {
         });
     }, []);
 
+    function customEncodeTitle(title) {
+        return title
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[^\w-]+/g, "");
+    }
+    
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -358,7 +365,7 @@ export default function News() {
                                     <Link
                                         href={route("news", {
                                             id: post.id,
-                                            title: encodeURIComponent(
+                                            title: customEncodeTitle(
                                                 post.title
                                             ),
                                         })}

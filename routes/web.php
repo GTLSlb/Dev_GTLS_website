@@ -123,7 +123,7 @@ Route::resource('posts', BlogController::class);
 //     return Inertia::render('NewsPage');
 // })-> name('news');
 
-Route::get('/news/{id}/{title}', function ($id, $title) {
+Route::get('/news/{id}/{title?}', function ($id, $title = '') {
     return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
 })->name('news');
 
