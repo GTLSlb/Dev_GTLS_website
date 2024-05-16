@@ -30,8 +30,8 @@ const posts = [
         href: "#",
         description: "This is to certify that Gold Tiger Maintenance PTY LTD is licensed under the Motor Dealers and Repairers Act 2013.",
         imageUrl: cert3,
-        date: "May 15, 2024",
-        datetime: "2024-05-15",
+        date: "Dec 18, 2023",
+        datetime: "2023-12-18",
     },
     // More posts...
 ];
