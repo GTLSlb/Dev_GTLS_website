@@ -15,6 +15,7 @@ import worker from "../assets/news/worker.webp";
 import goldt from "../assets/news/goldt.webp";
 import movers from "../assets/news/3movers.webp";
 import greennews from "../assets/news/greennews.webp";
+import weeklySafety from "../assets/news/weeklySafety.webp";
 import EmployeesSafety from "../assets/news/EmployeesSafety.png";
 import weighbridge from "../assets/news/weighbridge.webp";
 import Navman from "../assets/news/Navman.webp";
@@ -424,9 +425,31 @@ export default function NewsPage(props) {
             imgUrl: EmployeesSafety,
             videoUrl: gtlsway,
         },
+        {
+            id: 16,
+            title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
+
+            content1:
+                "At Gold Tiger, ensuring road safety is not just a commitment but a core value we hold dearly. It's crucial for us to safeguard not only our employees and clients but also the wider community. To achieve this goal, we consistently invest in training programs for our drivers. These programs cover a wide range of topics, including defensive driving techniques, safe loading and unloading procedures. Additionally, we place a high priority on regular vehicle maintenance to ensure that all our trucks are in top-notch condition. By actively addressing both positive and negative driving behaviours, we're better equipped than ever to uphold the highest standards of safety, compliance, and efficiency in the logistics industry.",
+            content2:
+                "As part of our safety commitment, we conduct thorough checks on all movements before they leave our depots. This proactive approach helps us prevent overloaded vehicles from hitting the roads, reducing the risk to al road users.We continuously toolbox the importance of road safety to our team, stressing the significance of adhering to speed limits and driving according to road conditions, weather, and traffic patterns. Beyond our internal efforts, we actively engage with local communities to raise awareness about road safety issues. By taking a proactive stance in incident prevention and advocating for safer roads, we aim to make a positive impact that extends beyond our business operations.",
+            imgUrl: weeklySafety,
+            // videoUrl: gtlsway,
+        },
     ];
 
     const posts = [
+        {
+            id: 16,
+            title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
+            href: "#",
+            description:
+                "At Gold Tiger, ensuring road safety is not just a commitment but a core value we hold dearly. It's crucial for us to safeguard not only our employees and clients but also the wider community.",
+            imageUrl: weeklySafety,
+            date: "May 11, 2024",
+            datetime: "2024-5-11",
+            category: { title: "", href: "#" },
+        },
         {
             id: 15,
             title: "Employees safety and Health practices at GTLS",

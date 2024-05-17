@@ -189,7 +189,7 @@ export default function LandingPage({}) {
                                                 )}
                                             </>
                                         </div>
-                                        <p className="text-sm text-white w-32 hidden sm:block">
+                                        <p className="text-sm text-white w-71 hidden sm:block">
                                             {currentUser.FirstName &&
                                             currentUser.LastName ? (
                                                 <>

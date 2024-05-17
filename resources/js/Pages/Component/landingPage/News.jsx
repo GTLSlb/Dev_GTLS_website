@@ -10,6 +10,7 @@ import worker from "../../../assets/news/worker.webp";
 import newSite from "../../../assets/news/newSite.webp";
 import goldt from "../../../assets/news/goldt.webp";
 import tcapp from "../../../assets/news/tcapp.webp";
+import weeklySafety from "../../../assets/news/weeklySafety.webp";
 import movers from "../../../assets/news/3movers.webp";
 import EmployeesSafety from "../../../assets/news/EmployeesSafety.png";
 import weighbridge from "../../../assets/news/weighbridge.webp";
@@ -29,6 +30,17 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 16,
+        title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
+        href: "#",
+        description:
+            "At Gold Tiger, ensuring road safety is not just a commitment but a core value we hold dearly. It's crucial for us to safeguard not only our employees and clients but also the wider community.",
+        imageUrl: weeklySafety,
+        date: "May 11, 2024",
+        datetime: "2024-5-11",
+        category: { title: "", href: "#" },
+    },
     {
         id: 15,
         title: "Employees safety and Health practices at GTLS",
