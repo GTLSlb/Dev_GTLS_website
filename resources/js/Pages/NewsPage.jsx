@@ -2,6 +2,7 @@ import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
 import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
 import gtlsway from "../assets/videos/GTLSWAY.mp4";
+import RoadSafety from "../assets/videos/RoadSafety.mp4";
 import trucks from "../assets/news/trucks.webp";
 import postpic from "../assets/news/postpic.webp";
 import tcapp from "../assets/news/tcapp.webp";
@@ -434,7 +435,7 @@ export default function NewsPage(props) {
             content2:
                 "As part of our safety commitment, we conduct thorough checks on all movements before they leave our depots. This proactive approach helps us prevent overloaded vehicles from hitting the roads, reducing the risk to al road users.We continuously toolbox the importance of road safety to our team, stressing the significance of adhering to speed limits and driving according to road conditions, weather, and traffic patterns. Beyond our internal efforts, we actively engage with local communities to raise awareness about road safety issues. By taking a proactive stance in incident prevention and advocating for safer roads, we aim to make a positive impact that extends beyond our business operations.",
             imgUrl: weeklySafety,
-            // videoUrl: gtlsway,
+            videoUrl: RoadSafety,
         },
     ];
 
