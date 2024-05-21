@@ -151,7 +151,7 @@ export default function LandingPage({}) {
                             />
                             {/* navbar */}
                             <div className="relative border-b-2 border-goldt flex lg:flex-row flex-row justify-between lg:items-center sm:px-8 w-full h-30 text-white md:text-3xl py-4 mx-auto max-w-7xl ">
-                                <p className="flex  md:mt-0">
+                                <p className="flex w-full md:mt-0">
                                     <a href="/">
                                         <img
                                             src={tiger}
@@ -161,8 +161,8 @@ export default function LandingPage({}) {
                                     </a>
                                 </p>
 
-                                <div className=" right-5 top-3 lg:relative lg:right-0 lg:top-0 flex justify-center gap-x-6 sm:gap-x-10 items-center">
-                                    <div className="flex flex-row items-center gap-x-2 ">
+                                <div className="w-full right-5 top-3 lg:relative lg:right-0 lg:top-0 flex justify-center gap-x-6 sm:gap-x-10 items-center">
+                                    <div className="flex flex-row items-center gap-x-2 w-full">
                                         <div
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
