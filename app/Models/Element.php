@@ -13,4 +13,8 @@ class Element extends Model
     {
         return $this->belongsTo(Section::class);
     }
+    public function elementtype()
+    {
+        return $this->belongsTo(ElementTypes::class);
+    }
 }

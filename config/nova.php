@@ -20,7 +20,7 @@ return [
     |
     */
 
-    'license_key' => env('sbNUfcAJZZ9DKfX0LPuVQhUkWybkVRts1ZDXIKHncySD3bMWMN'),
+    'license_key' => 'N4ArkxorUa6vpgT56JjOxG4gx36FfEUHUOiBJVBdERSgAUqVAa',
 
     /*
     |--------------------------------------------------------------------------

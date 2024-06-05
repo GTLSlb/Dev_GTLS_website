@@ -16,6 +16,7 @@ use Ayvazyan10\Imagic\Imagic;
 
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 use InteractionDesignFoundation\NovaHtmlCodeField\HtmlCode;
 use Laravel\Nova\Fields\ID;
@@ -24,6 +25,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Section extends Resource
 {
+
+   
     /**
      * The model the resource corresponds to.
      *
@@ -53,21 +56,120 @@ class Section extends Resource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
+    
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->hideFromIndex(),
+            ID::make()->sortable(),
             Text::make('name')->sortable(),
             BelongsTo::make('Page', 'page', Page::class),
+            BelongsTo::make('SectionType','sectiontype',SectionsType::class),
             HasMany::make('Elements', 'elements', Element::class),
-            Trix::make('description')->alwaysShow(),
-            Image::make('Image','image')->rules("image", "max:10000"),
-            Video::make('video')->rules('max:150000'),
-            Text::make('image_alt'),            
-            Image::make('Background','background')->rules("image", "max:10000"),
-            Text::make('file'),
-            Text::make('URL','url'),
+            Trix::make('description')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
             
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_description == 1) {
+                        $field->rules([
+                            'required',
+                        ]);
+                    } else {
+                        $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Image::make('Image','image')
+            ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                $sectionTypeId = (int) $formData->sectiontype;
+        
+                // Query the database to check the contain_description field
+                $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+        
+                if ($sectionType && $sectionType->contain_image == 1) {
+                    $field->rules([
+                        'required',
+                    ]);
+                } else {
+                    $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            })
+            ->rules("image", "max:10000"),
+            Video::make('video')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                $sectionTypeId = (int) $formData->sectiontype;
+        
+                // Query the database to check the contain_description field
+                $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+        
+                if ($sectionType && $sectionType->contain_video == 1) {
+                    $field->rules([
+                        'required','max:150000'
+                    ]);
+                } else {
+                    $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            }),
+            Text::make('image_alt')->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                $sectionTypeId = (int) $formData->sectiontype;
+        
+                // Query the database to check the contain_description field
+                $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+        
+                if ($sectionType && $sectionType->contain_image == 1) {
+                    $field->rules([
+                        'required'
+                    ])->help('Required For the Image');
+                } else {
+                    $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            }),           
+            Image::make('Background','background')->rules("image", "max:10000")
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
+            
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_background == 1) {
+                        $field->rules([
+                            'required'
+                        ]);
+                    } else {
+                        $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Text::make('file')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
+            
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_file == 1) {
+                        $field->rules([
+                            'required'
+                        ]);
+                    } else {
+                        $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Text::make('URL','url')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
+            
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_url == 1) {
+                        $field->rules([
+                            'required'
+                        ]);
+                    } else {
+                        $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
         ];
     }
 
@@ -77,6 +179,7 @@ class Section extends Resource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
+
     public function cards(NovaRequest $request)
     {
         return [];

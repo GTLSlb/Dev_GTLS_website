@@ -12,7 +12,7 @@ use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\File;
 use AlexAzartsev\Heroicon\Heroicon;
-
+use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Element extends Resource
@@ -48,23 +48,87 @@ class Element extends Resource
      */
     public function fields(NovaRequest $request)
     {
-        return [
+        $fields = [
+            // Other fields...
+    
             ID::make()->hideFromIndex(),
             BelongsTo::make('Section', 'Section', Section::class),
-            Text::make('Title','name')->sortable(),
-            Trix::make('content')->alwaysShow(),
-            Image::make('Image','image')->rules("image", "max:100000"),
-            Text::make('Image Alt','image_alt')->sortable(),
-            Heroicon::make('Icon','icon'),
-            // File::make('Document', 'file')
-            //     ->disk('public')
-            //     ->storeOriginalName('file_name')
-            //     ->download(function ($model) {
-            //         return Storage::disk('public')->download($model->document_path);
-            // }),
-            // Text::make('file'),
-            URL::make('URL','url'),
+            BelongsTo::make('ElementType','elementtype',ElementTypes::class),
+            Text::make('Title','name')->sortable()
+            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                $elementtypeId = (int) $formData->elementtype;
+                
+                // Query the database to check the contain_description field
+                $elementType = DB::table('element_types')->find($elementtypeId);
+                
+                if ($elementType && $elementType->contain_name == 1) {
+                    $field->rules([
+                        'required',
+                    ]);
+                } else {
+                    $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            }),
+            Trix::make('content')->alwaysShow()->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                $elementtypeId = (int) $formData->elementtype;
+        
+                // Query the database to check the contain_description field
+                $elementType = DB::table('element_types')->find($elementtypeId);
+               
+                if ($elementType && $elementType->contain_content == 1) {
+                    $field->rules([
+                        'required',
+                    ]);
+                } else {
+                    $field->hide();
+                }
+            }),
+            Image::make('Image','image')
+            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                $elementtypeId = (int) $formData->elementtype;
+        
+                // Query the database to check the contain_description field
+                $elementType = DB::table('element_types')->find($elementtypeId);
+               
+                if ($elementType && $elementType->contain_image == 1) {
+                    $field->rules("required","image", "max:100000");
+                } else {
+                    $field->hide();
+                }
+            }),
+            Text::make('Image Alt','image_alt')->sortable()
+            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                $elementtypeId = (int) $formData->elementtype;
+        
+                // Query the database to check the contain_description field
+                $elementType = DB::table('element_types')->find($elementtypeId);
+               
+                if ($elementType && $elementType->contain_image == 1) {
+                    $field->rules("required");
+                } else {
+                    $field->hide();
+                }
+            }),
+            $this->hasIconField() ? 
+            Heroicon::make('Icon', 'icon')
+                ->rules('required', 'image', 'max:100000') 
+            : null,
+            URL::make('URL','url')
+            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                $elementtypeId = (int) $formData->elementtype;
+        
+                // Query the database to check the contain_description field
+                $elementType = DB::table('element_types')->find($elementtypeId);
+               
+                if ($elementType && $elementType->contain_url == 1) {
+                    $field->rules("required","image", "max:100000");
+                } else {
+                    $field->hide();
+                }
+            }),
         ];
+        return array_filter($fields);
+
     }
 
     /**
@@ -73,6 +137,28 @@ class Element extends Resource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
+
+// In your Nova resource
+    public function hasIconField()
+    {
+        $resource = $this->resource;
+
+        // Check if the resource has the elementtype relation loaded
+        if ($resource->relationLoaded('elementtype')) {
+            $elementType = $resource->elementtype;
+        } else {
+            // Load the relation if not already loaded
+            $elementType = $resource->elementtype()->first();
+        }
+
+        // Check the value of a specific attribute of elementType
+        if ($elementType && $elementType->contain_icon == 1) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function cards(NovaRequest $request)
     {
         return [];
