@@ -10,9 +10,12 @@ import worker from "../../../assets/news/worker.webp";
 import newSite from "../../../assets/news/newSite.webp";
 import goldt from "../../../assets/news/goldt.webp";
 import tcapp from "../../../assets/news/tcapp.webp";
+import weeklySafety from "../../../assets/news/weeklySafety.webp";
 import movers from "../../../assets/news/3movers.webp";
+import EmployeesSafety from "../../../assets/news/EmployeesSafety.png";
 import weighbridge from "../../../assets/news/weighbridge.webp";
 import Navman from "../../../assets/news/Navman.webp";
+import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import weighbridgenews from "../../../assets/news/weighbridgenews.webp";
 import Navmannews from "../../../assets/news/Navmannews.webp";
 import greennews from "../../../assets/news/greennews.webp";
@@ -22,9 +25,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
- import {
-    ArrowSmallRightIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import React from 'react';
 
@@ -32,26 +33,26 @@ import React from 'react';
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block"}}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block" }}
+            onClick={onClick}
+        />
     );
-  }
-  
-  function SamplePrevArrow(props) {
+}
+
+function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "" }}
-        onClick={onClick}
-      >
-        <ArrowSmallRightIcon/>
-      </div>
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "" }}
+            onClick={onClick}
+        >
+            <ArrowSmallRightIcon />
+        </div>
     );
-  }
+}
 
 export default function News(props) {
 
@@ -60,25 +61,23 @@ export default function News(props) {
     
     const sliderRef = useRef(null);
 
-    
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
-          if (sliderRef.current) {
-            sliderRef.current.slickNext();
-          }
+            if (sliderRef.current) {
+                sliderRef.current.slickNext();
+            }
         }, delay);
-      };
+    };
 
-
-      useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
-          sliderRef.current.slickNext();
+            sliderRef.current.slickNext();
         }, 5000);
-    
+
         return () => {
-          clearInterval(interval);
+            clearInterval(interval);
         };
-      }, []);
+    }, []);
 
     const settings = {
         dots: false,
@@ -87,24 +86,24 @@ export default function News(props) {
         slidesToShow: 3,
         slidesToScroll: 1,
         responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
             },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
             },
-          },
         ],
         nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
-      };
+        prevArrow: <SamplePrevArrow />,
+    };
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
@@ -152,7 +151,6 @@ export default function News(props) {
             ? carousel.current.scrollWidth - carousel.current.offsetWidth
             : 0;
     }, []);
-
 
     return (
         <div className="pb-20">
@@ -221,53 +219,58 @@ export default function News(props) {
                         
                         {/* {posts.map((post) => (
                                 <div key={post.id} className="px-5  ">
-                                    <Link href={route("news", { id: post.id })} className="">
+                                    <Link
+                                        href={route("news", {
+                                            id: post.id,
+                                            title: customEncodeTitle(
+                                                post.title
+                                            ),
+                                        })}
+                                        className=""
+                                    >
                                         <div className="h-full ">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={post.imageUrl}
-                                                alt={post.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.datetime}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {post.date}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.description}
-                                                    </p>
-                                                </div>
+                                            <div className="relative w-full www">
+                                                <img
+                                                    src={post.imageUrl}
+                                                    alt={post.title}
+                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                                />
+                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
-                                        </article>
+                                            <article
+                                                key={post.id}
+                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
+                                            >
+                                                <div className="max-w-xl mx-4 mb-6  mt-12">
+                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
+                                                        <time
+                                                            dateTime={
+                                                                post.datetime
+                                                            }
+                                                            className="text-goldl font-bold"
+                                                        >
+                                                            {post.date}
+                                                        </time>
+                                                    </div>
+                                                    <div className="group relative">
+                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
+                                                            <span className="absolute inset-0" />
+                                                            {post.title}
+                                                        </h3>
+                                                        <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
+                                                            {post.description}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
                                     </Link>
                                 </div>
                             ))} */}
 
                         </div>
-                        
 
-                        
-
-                        <Slider ref={sliderRef} {...settings}>
-                            
-                        </Slider>
+                        <Slider ref={sliderRef} {...settings}></Slider>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,8 @@
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
 import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
+import gtlsway from "../assets/videos/GTLSWAY.mp4";
+import RoadSafety from "../assets/videos/RoadSafety.mp4";
 import trucks from "../assets/news/trucks.webp";
 import postpic from "../assets/news/postpic.webp";
 import tcapp from "../assets/news/tcapp.webp";
@@ -14,16 +16,15 @@ import worker from "../assets/news/worker.webp";
 import goldt from "../assets/news/goldt.webp";
 import movers from "../assets/news/3movers.webp";
 import greennews from "../assets/news/greennews.webp";
+import weeklySafety from "../assets/news/weeklySafety.webp";
+import EmployeesSafety from "../assets/news/EmployeesSafety.png";
 import weighbridge from "../assets/news/weighbridge.webp";
 import Navman from "../assets/news/Navman.webp";
 import weighbridgenews from "../assets/news/weighbridgenews.webp";
 import Navmannews from "../assets/news/Navmannews.webp";
-import { useParams } from "react-router-dom";
+import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
-import { InstagramIcon } from "react-social-icons";
-import jobs from "../assets/pictures/jobs.webp";
-import { Dialog } from "@headlessui/react";
 import {
     Bars3Icon,
     XMarkIcon,
@@ -216,6 +217,39 @@ export default function NewsPage(props) {
 
     const posts = [
         {
+            id: 16,
+            title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
+            href: "#",
+            description:
+                "At Gold Tiger, ensuring road safety is not just a commitment but a core value we hold dearly. It's crucial for us to safeguard not only our employees and clients but also the wider community.",
+            imageUrl: weeklySafety,
+            date: "May 11, 2024",
+            datetime: "2024-5-11",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 15,
+            title: "Employees safety and Health practices at GTLS",
+            href: "#",
+            description:
+                "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers.",
+            imageUrl: EmployeesSafety,
+            date: "April 27, 2024",
+            datetime: "2024-4-27",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 14,
+            title: "Acknowledging Our Journey On-Site Fleet Fueling",
+            href: "#",
+            description:
+                "In our continuous pursuit for excellence and innovation, we are proud to announce that we have enhanced operational efficiency with onsite fuel tanks. It is considered a significant stride forward for GTLS for its remarkable advantages. ",
+            imageUrl: onSiteFueling,
+            date: "March 12, 2024",
+            datetime: "2024-3-12",
+            category: { title: "", href: "#" },
+        },
+        {
             id: 13,
             title: "Gold Tiger's Green Journey",
             href: "#",
@@ -225,13 +259,6 @@ export default function NewsPage(props) {
             date: "October 24, 2023",
             datetime: "2023-10-24",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 12,
@@ -243,13 +270,6 @@ export default function NewsPage(props) {
             date: "September 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 11,
@@ -261,13 +281,6 @@ export default function NewsPage(props) {
             date: "September 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 10,
@@ -279,13 +292,6 @@ export default function NewsPage(props) {
             date: "June 2, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 9,
@@ -297,13 +303,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 8,
@@ -315,13 +314,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 7,
@@ -333,13 +325,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 6,
@@ -351,13 +336,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 5,
@@ -369,13 +347,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 4,
@@ -387,13 +358,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 3,
@@ -405,13 +369,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 2,
@@ -423,13 +380,6 @@ export default function NewsPage(props) {
             date: "April 19, 2023",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 1,
@@ -441,13 +391,6 @@ export default function NewsPage(props) {
             date: "October 13, 2022",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
         {
             id: 0,
@@ -459,13 +402,6 @@ export default function NewsPage(props) {
             date: "October 31, 2022",
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
-            author: {
-                name: "Michael Foster",
-                role: "Co-Founder / CTO",
-                href: "#",
-                imageUrl:
-                    "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-            },
         },
 
         // More posts...
@@ -474,6 +410,13 @@ export default function NewsPage(props) {
     const filteredData = posts.filter((item) => item.id != id);
 
     const pageUrl = window.location.href;
+
+    function customEncodeTitle(title) {
+        return title
+            .toLowerCase()
+            .replace(/ /g, "-")
+            .replace(/[^\w-]+/g, "");
+    }
 
 
     
@@ -485,7 +428,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 ? (
+                {id == 12 || id == 15? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={"/app/webimages/"+post.image}
@@ -548,7 +491,9 @@ export default function NewsPage(props) {
                                                     {item.title}
                                                 </span>
                                                 {item.content ? (
-                                                    <div className="text-gray-200">{item.content}</div>
+                                                    <div className="text-gray-200">
+                                                        {item.content}
+                                                    </div>
                                                 ) : null}
                                             </div>
                                         </li>
@@ -565,11 +510,24 @@ export default function NewsPage(props) {
                                 </p>
                             </div> */}
                             <figure className="mt-16">
-                                <img
-                                    className="aspect-video rounded-xl bg-gray-50 object-cover"
-                                    src={"/app/webimages/"+post.image}
-                                    alt={post.title}
-                                />
+                                {contentJson[id].videoUrl ? (
+                                    <video
+                                    loop
+                                    autoPlay
+                                    controls
+                                    style={{ width: '100%' }}
+                                    src={contentJson[id].videoUrl}
+                                    type="video/mp4"
+                                  >
+                                    Your browser does not support the video tag.
+                                  </video>
+                                ) : (
+                                    <img
+                                        className="aspect-video rounded-xl bg-gray-50 object-cover"
+                                        src={"/app/webimages/"+post.image}
+                                        alt={post.title}
+                                    />
+                                )}
                             </figure>
                             <div className="mt-10">
                                 <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">
@@ -615,7 +573,12 @@ export default function NewsPage(props) {
                             {getPosts.map((post) => (
                                 <div key={post.id} className="px-5 ">
                                     <Link
-                                        href={route("news", { id: post.slug})}
+                                        href={route("news", {
+                                            id: post.id,
+                                            title: customEncodeTitle(
+                                                post.title
+                                            ),
+                                        })}
                                         className=""
                                     >
                                         <div className="h-full">

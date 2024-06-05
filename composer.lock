@@ -2019,6 +2019,7 @@
             },
             "require": {
                 "brick/math": "^0.9.3|^0.10.2|^0.11|^0.12",
+                "brick/math": "^0.9.3|^0.10.2|^0.11|^0.12",
                 "composer-runtime-api": "^2.2",
                 "doctrine/inflector": "^2.0.5",
                 "dragonmantank/cron-expression": "^3.3.2",
@@ -2048,6 +2049,7 @@
                 "symfony/error-handler": "^6.2",
                 "symfony/finder": "^6.2",
                 "symfony/http-foundation": "^6.4",
+                "symfony/http-foundation": "^6.4",
                 "symfony/http-kernel": "^6.2",
                 "symfony/mailer": "^6.2",
                 "symfony/mime": "^6.2",
@@ -2060,6 +2062,9 @@
                 "voku/portable-ascii": "^2.0"
             },
             "conflict": {
+                "carbonphp/carbon-doctrine-types": ">=3.0",
+                "doctrine/dbal": ">=4.0",
+                "phpunit/phpunit": ">=11.0.0",
                 "carbonphp/carbon-doctrine-types": ">=3.0",
                 "doctrine/dbal": ">=4.0",
                 "phpunit/phpunit": ">=11.0.0",
@@ -2212,13 +2217,18 @@
         {
             "name": "laravel/nova",
             "version": "4.32.11",
+            "version": "4.32.11",
             "source": {
                 "type": "git",
                 "url": "git@github.com:laravel/nova.git",
                 "reference": "d3587d9155095b391b4007daddb1d9541d5c1158"
+                "reference": "d3587d9155095b391b4007daddb1d9541d5c1158"
             },
             "dist": {
                 "type": "zip",
+                "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d3587d9155095b391b4007daddb1d9541d5c1158-zip-1acf6c.zip",
+                "reference": "d3587d9155095b391b4007daddb1d9541d5c1158",
+                "shasum": "823e555e08ac73e4484cf9ef5e9bcd52709050a4"
                 "url": "https://nova.laravel.com/dist/laravel/nova/laravel-nova-d3587d9155095b391b4007daddb1d9541d5c1158-zip-1acf6c.zip",
                 "reference": "d3587d9155095b391b4007daddb1d9541d5c1158",
                 "shasum": "823e555e08ac73e4484cf9ef5e9bcd52709050a4"
@@ -3755,6 +3765,7 @@
                 "source": "https://github.com/nette/utils/tree/v4.0.4"
             },
             "time": "2024-01-17T16:50:36+00:00"
+            "time": "2024-01-17T16:50:36+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3773,11 +3784,15 @@
             "require": {
                 "ext-ctype": "*",
                 "ext-json": "*",
+                "ext-ctype": "*",
+                "ext-json": "*",
                 "ext-tokenizer": "*",
+                "php": ">=7.4"
                 "php": ">=7.4"
             },
             "require-dev": {
                 "ircmaxell/php-yacc": "^0.0.7",
+                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
                 "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
             },
             "bin": [
@@ -7907,16 +7922,16 @@
         },
         {
             "name": "tightenco/ziggy",
-            "version": "v1.8.1",
+            "version": "v1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/ziggy.git",
-                "reference": "22dafc51f3f5ae5ed51f7cb6b566e6b9537f6937"
+                "reference": "939576ad0f3d3e633a9401c8c377bc7bc873ff35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/ziggy/zipball/22dafc51f3f5ae5ed51f7cb6b566e6b9537f6937",
-                "reference": "22dafc51f3f5ae5ed51f7cb6b566e6b9537f6937",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/939576ad0f3d3e633a9401c8c377bc7bc873ff35",
+                "reference": "939576ad0f3d3e633a9401c8c377bc7bc873ff35",
                 "shasum": ""
             },
             "require": {
@@ -7924,8 +7939,8 @@
                 "laravel/framework": ">=5.4@dev"
             },
             "require-dev": {
-                "orchestra/testbench": "^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0",
-                "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0 || ^9.0"
+                "orchestra/testbench": "^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0",
+                "phpunit/phpunit": "^6.0 || ^7.0 || ^8.0 || ^9.0 || ^10.0"
             },
             "type": "library",
             "extra": {
@@ -7968,9 +7983,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tighten/ziggy/issues",
-                "source": "https://github.com/tighten/ziggy/tree/v1.8.1"
+                "source": "https://github.com/tighten/ziggy/tree/v1.8.2"
             },
-            "time": "2023-10-12T18:31:26+00:00"
+            "time": "2024-02-20T19:56:04+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -8574,6 +8589,9 @@
                 "illuminate/console": "^9.52.16|^10.0|^11.0",
                 "illuminate/contracts": "^9.52.16|^10.0|^11.0",
                 "illuminate/support": "^9.52.16|^10.0|^11.0",
+                "illuminate/console": "^9.52.16|^10.0|^11.0",
+                "illuminate/contracts": "^9.52.16|^10.0|^11.0",
+                "illuminate/support": "^9.52.16|^10.0|^11.0",
                 "php": "^8.0",
                 "symfony/yaml": "^6.0|^7.0"
             },
@@ -8621,13 +8639,17 @@
         {
             "name": "mockery/mockery",
             "version": "1.6.7",
+            "version": "1.6.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
                 "reference": "0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06"
+                "reference": "0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06"
             },
             "dist": {
                 "type": "zip",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06",
+                "reference": "0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06",
                 "url": "https://api.github.com/repos/mockery/mockery/zipball/0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06",
                 "reference": "0cc058854b3195ba21dc6b1f7b1f60f4ef3a9c06",
                 "shasum": ""
@@ -8642,6 +8664,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^8.5 || ^9.6.10",
+                "symplify/easy-coding-standard": "^12.0.8"
                 "symplify/easy-coding-standard": "^12.0.8"
             },
             "type": "library",
@@ -8699,6 +8722,7 @@
                 "security": "https://github.com/mockery/mockery/security/advisories",
                 "source": "https://github.com/mockery/mockery"
             },
+            "time": "2023-12-10T02:24:34+00:00"
             "time": "2023-12-10T02:24:34+00:00"
         },
         {
@@ -9387,6 +9411,7 @@
                     "type": "tidelift"
                 }
             ],
+            "time": "2024-02-04T09:07:51+00:00"
             "time": "2024-02-04T09:07:51+00:00"
         },
         {
@@ -10741,5 +10766,6 @@
         "php": "^8.1"
     },
     "platform-dev": [],
+    "plugin-api-version": "2.3.0"
     "plugin-api-version": "2.3.0"
 }

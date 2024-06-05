@@ -13,7 +13,7 @@ const navigation = [
     { name: "News", href: "/#news", ref: "news" },
     { name: "Contact Us", href: "/contact_us", ref: "contact" },
 ];
- 
+
 const handleClick = () => {
     history.push("/", { scrollToElement: "news" });
 };

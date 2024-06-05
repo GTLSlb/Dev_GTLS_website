@@ -9,6 +9,7 @@ import Navbars from "./Component/Navbars";
 import TruckDriver from "./Component/opportunities/TruckDriver";
 import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
+import BusinessExecutive from "./Component/opportunities/BusinessExecutive";
 
 export default function Opportunities(props) {
 
@@ -93,7 +94,6 @@ export default function Opportunities(props) {
     const [resumePreview, setResumePreview] = useState(null);
     const [jobsarray, setJobsarray] = useState([]);
     
-    console.log(jobsarray);
     const [activeJob, setActiveJob] = useState(66);
 
     function changeActiveJob(index) {
