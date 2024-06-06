@@ -3,27 +3,25 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class ElementTypes extends Resource
+class MediaType extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\ElementTypes>
+     * @var class-string<\App\Models\MediaType>
      */
-    public static $model = \App\Models\ElementTypes::class;
+    public static $model = \App\Models\MediaType::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'typename';
+    public static $title = 'name';
 
     /**
      * The columns that should be searched.
@@ -31,7 +29,7 @@ class ElementTypes extends Resource
      * @var array
      */
     public static $search = [
-        'id','typename',
+        'id',
     ];
 
     /**
@@ -43,15 +41,8 @@ class ElementTypes extends Resource
     public function fields(NovaRequest $request)
     {
         return [
-            // ID::make()->sortable(),
-            Text::make('Type Name', 'typename')->sortable(),
-            Boolean::make('Contain Name','contain_name')->sortable(),
-            Boolean::make('Contain Content','contain_content')->sortable(),
-            Boolean::make('Contain Image','contain_image')->sortable(),
-            Boolean::make('Contain File','contain_file')->sortable(),
-            Boolean::make('Contain URL','contain_url')->sortable(),
-            Boolean::make('Contain Date','contain_date')->sortable(),
-            Boolean::make('Contain Icon','contain_icon')->sortable(),
+            ID::make()->sortable(),
+            Text::make('Media Type','name')->sortable(),
         ];
     }
 

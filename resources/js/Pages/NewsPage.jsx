@@ -84,6 +84,8 @@ function SamplePrevArrow(props) {
 
 export default function NewsPage(props) {
 
+
+    const { postslug } = usePage().props;
     const [getfooter, setfooter] = useState([]);
     const [getPosts, setPosts] = useState([]);
 
@@ -100,7 +102,6 @@ export default function NewsPage(props) {
                     axios.get('/posts'),
                     axios.get('/footer')
                 ]);
-    
                 setPosts(postsResponse.data);
                 setfooter(footerResponse.data);
                 setLoading(false);
@@ -147,37 +148,6 @@ export default function NewsPage(props) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
 
-    const movePrev = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex((prevState) => prevState - 1);
-        }
-    };
-
-    const moveNext = () => {
-        if (
-            carousel.current !== null &&
-            carousel.current.offsetWidth * currentIndex <=
-                maxScrollWidth.current
-        ) {
-            setCurrentIndex((prevState) => prevState + 1);
-        }
-    };
-
-    const isDisabled = (direction) => {
-        if (direction === "prev") {
-            return currentIndex <= 0;
-        }
-
-        if (direction === "next" && carousel.current !== null) {
-            return (
-                carousel.current.offsetWidth * currentIndex >=
-                maxScrollWidth.current
-            );
-        }
-
-        return false;
-    };
-
     useEffect(() => {
         if (carousel !== null && carousel.current !== null) {
             carousel.current.scrollLeft =
@@ -191,15 +161,10 @@ export default function NewsPage(props) {
             : 0;
     }, []);
 
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
-    const { id } = usePage().props;
+    const { post } = usePage().props;
 
-    const handleFileUpload = (file) => {
-        setResumeFile(file);
-        setResumePreview(URL.createObjectURL(file));
-    };
-
+    console.log(postslug)
     useEffect(() => {
         let prevScrollPosition = window.pageYOffset;
 
@@ -215,200 +180,6 @@ export default function NewsPage(props) {
         };
     }, []);
 
-    const posts = [
-        {
-            id: 16,
-            title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
-            href: "#",
-            description:
-                "At Gold Tiger, ensuring road safety is not just a commitment but a core value we hold dearly. It's crucial for us to safeguard not only our employees and clients but also the wider community.",
-            imageUrl: weeklySafety,
-            date: "May 11, 2024",
-            datetime: "2024-5-11",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 15,
-            title: "Employees safety and Health practices at GTLS",
-            href: "#",
-            description:
-                "At Gold Tiger Logistics Solutions, O.H&E one of our priority is making sure our team stays safe and healthy. We do this by constantly checking for any possible dangers related to equipment, whether it's at our own sites or where we're serving our customers.",
-            imageUrl: EmployeesSafety,
-            date: "April 27, 2024",
-            datetime: "2024-4-27",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 14,
-            title: "Acknowledging Our Journey On-Site Fleet Fueling",
-            href: "#",
-            description:
-                "In our continuous pursuit for excellence and innovation, we are proud to announce that we have enhanced operational efficiency with onsite fuel tanks. It is considered a significant stride forward for GTLS for its remarkable advantages. ",
-            imageUrl: onSiteFueling,
-            date: "March 12, 2024",
-            datetime: "2024-3-12",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 13,
-            title: "Gold Tiger's Green Journey",
-            href: "#",
-            description:
-                "Gold Tiger's Green Journey: Innovating with Harmony. As we firmly pledge to eco-friendliness, join us on the road to a better future. We at Gold Tiger Group are a force for positive change rather than just a logistics provider.",
-            imageUrl: greennews,
-            date: "October 24, 2023",
-            datetime: "2023-10-24",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 12,
-            title: "Maintaining the safety of your drivers is a primary concern to our organisation",
-            href: "#",
-            description:
-                "Gold Tiger Logistics solutions continues to maintain and develop best practice standards in all aspects of driver safety and constantly strives to ensure safety standards are both met and exceeded. A major focus in long distance transport safety is the issue of drivers’ fatigue. Utilising the latest technology as part of our safety and compliance processes, Gold Tiger has collaborated with Navman, one of the world’s most innovative companies in automotive technology and risk reduction.",
-            imageUrl: Navmannews,
-            date: "September 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 11,
-            title: "GTLS Enhances Road Safety and Efficiency with Advanced Weighbridge Integration",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions (GTLS) remains committed to the safety of all road users. As part of our ongoing safety innovation program, we take considerable pride in announcing a significant enhancement to our safety practices through the integration of two state-of-the-art weighbridge systems. ",
-            imageUrl: weighbridgenews,
-            date: "September 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 10,
-            title: "Gold Tiger Logistics Solutions Continues advancement with three new volvo F16 prime movers",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions has, this week taken delivery of three new Volvo F16 (Euro 6) prime movers as part of its continuing commitment to constantly modernising and upgrading the fleet. Gold Tiger has used Volvo equipment since the company was formed in 2006 and the partnership has gone from strength to strength over the years.",
-            imageUrl: movers,
-            date: "June 2, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 9,
-            title: "Gold Tiger Logistics Solutions: Unveiling exciting developments and expanding operations",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions and their group of companies are making strides towards expanding their operations with several exciting developments underway.",
-            imageUrl: newSite,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 8,
-            title: "Gold Tiger Logistics Solution Implements Gearbox Workshop Software for Streamlined Maintenance",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solution, a leading logistics and transportation company, has recently implemented Gearbox workshop software to manage their maintenance operations. The software, which was",
-            imageUrl: worker,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 7,
-            title: "Gold Tiger Logistics Solutions Adopts State-of-the-Art Software to Enhance Staff Safety and Compliance",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions, a leading logistics and transportation company, has announced the adoption of a new cloud-based software platform to enhance staff safety and",
-            imageUrl: safety,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 6,
-            title: "Gold Tiger Logistics Solutions completes Fibre internet upgrade across all sites",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions has announced the completion of its internet upgrade, bringing fibre internet to all of its sites. The upgrade is expected to",
-            imageUrl: earth,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 5,
-            title: "GTLS Expansion",
-            href: "#",
-            description:
-                "As part of the GTLS expansion a greenfield site has been purchased within the Ingleburn Industrial Estate. This is stage 1 in a major investment",
-            imageUrl: goldt,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 4,
-            title: "Driver PDA’s",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solution, a prominent logistics company, is making waves with its purchase of product – Zebra TX57 PDA’s. The company’s purchase has revolutionized",
-            imageUrl: device,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 3,
-            title: "Vehicle Tracking",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions, a company in the transportation and logistics industry, has recently adopted three cutting-edge technologies to improve its operations. Firstly, the VT102",
-            imageUrl: track,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 2,
-            title: "TC8300 Touch Computer implementation",
-            href: "#",
-            description:
-                "Gold Tiger Logistics Solutions, an Australian logistics company, revolutionised their business three years ago by implementing a cutting-edge product scanning system.",
-            imageUrl: tcapp,
-            date: "April 19, 2023",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 1,
-            title: "Gold Tiger in $100m business expansion",
-            href: "#",
-            description:
-                "Purpose-built transport hubs in Sydney and Brisbane are part of a $100-million business expansion now underway at Gold Tiger Logistic",
-            imageUrl: trucks,
-            date: "October 13, 2022",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-        {
-            id: 0,
-            title: "Fleet boosted by 25 Volvo Euro 6 prime movers",
-            href: "#",
-            description:
-                "Gold Tiger Logistic Solutions has added 25 new prime movers and trailers to its transport fleet, taking the total to",
-            imageUrl: postpic,
-            date: "October 31, 2022",
-            datetime: "2020-03-16",
-            category: { title: "", href: "#" },
-        },
-
-        // More posts...
-    ];
-
-    const filteredData = posts.filter((item) => item.id != id);
-
     const pageUrl = window.location.href;
 
     function customEncodeTitle(title) {
@@ -420,7 +191,7 @@ export default function NewsPage(props) {
 
 
     
-    const {post} =usePage().props;
+
 
     return (
         <>
@@ -428,10 +199,10 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15? (
+                {postslug.id == 12 || postslug.id == 15? (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={"/app/webimages/"+post.image}
+                            src={"/app/webimages/"+postslug.image}
                             alt="news"
                             className="h-[40rem] w-full object-cover  "
                         />
@@ -440,7 +211,7 @@ export default function NewsPage(props) {
                 ) : (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={"/app/webimages/"+post.image}
+                            src={"/app/webimages/"+postslug.image}
                             alt="news"
                             className="h-96 w-full object-cover  "
                         />
@@ -461,56 +232,24 @@ export default function NewsPage(props) {
                             <ArrowLongLeftIcon className="h-5 text-goldt " />
                             <span className="p-1 text-white">Back to main</span>
                         </a>
-                        <div key={post.id}>
+                        <div key={postslug.id}>
                             <h1 className="mt-2 text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                {post.title}
+                                {postslug.title}
                             </h1>
                             <time
-                                dateTime={post.date}
+                                dateTime={postslug.date}
                                 className="text-gray-500 font-bold"
                             >
-                                {post.date.split('T')[0]}
+                                {postslug.date.split('T')[0]}
                             </time>
                             <dd
                                 className="mt-6 text-lg leading-8 text-gray-200 text-justify"
                                 dangerouslySetInnerHTML={{
-                                    __html: post.desc,
+                                    __html: postslug.desc,
                                 }}
                             ></dd>
-                           
-                            {/* {contentJson[id].list ? (
-                                <ol className="p-5">
-                                    {contentJson[id].list?.map((item) => (
-                                        <li
-                                            key={item.id}
-                                            className="flex gap-x-3 "
-                                        >
-                                            <div className=" h-2 w-2 mt-2 flex-none rounded-full bg-goldt" />
-                                            <div>
-                                                <span className="text-smooth">
-                                                    {item.title}
-                                                </span>
-                                                {item.content ? (
-                                                    <div className="text-gray-200">
-                                                        {item.content}
-                                                    </div>
-                                                ) : null}
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ol>
-                            ) : null} */}
-
-                            {/* <div className="mt-10 text-lg  text-gray-200 text-justify">
-                                <p
-                                    style={{ whiteSpace: "pre-line" }}
-                                    className="w-full"
-                                >
-                                    {contentJson[id].content2}
-                                </p>
-                            </div> */}
                             <figure className="mt-16">
-                                {contentJson[id].videoUrl ? (
+                                {postslug.videoUrl ? (
                                     <video
                                     loop
                                     autoPlay
@@ -524,8 +263,8 @@ export default function NewsPage(props) {
                                 ) : (
                                     <img
                                         className="aspect-video rounded-xl bg-gray-50 object-cover"
-                                        src={"/app/webimages/"+post.image}
-                                        alt={post.title}
+                                        src={"/app/webimages/"+ postslug.image}
+                                        alt={postslug.title}
                                     />
                                 )}
                             </figure>
@@ -535,25 +274,25 @@ export default function NewsPage(props) {
                                 </p>
                                 <FacebookShareButton
                                     url={pageUrl}
-                                    title={post.title}
+                                    title={postslug.title}
                                 >
                                     <FacebookIcon className="rounded-md h-10 w-auto mr-3" />
                                 </FacebookShareButton>
                                 <TwitterShareButton
                                     url={pageUrl}
-                                    title={post.title}
+                                    title={postslug.title}
                                 >
                                     <TwitterIcon className="rounded-md h-10 w-auto mr-3" />
                                 </TwitterShareButton>
                                 <LinkedinShareButton
                                     url={pageUrl}
-                                    title={post.title}
+                                    title={postslug.title}
                                 >
                                     <LinkedinIcon className="rounded-md h-10 w-auto mr-3" />
                                 </LinkedinShareButton>
                                 <WhatsappShareButton
                                     url={pageUrl}
-                                    title={post.title}
+                                    title={postslug.title}
                                 >
                                     <WhatsappIcon className="rounded-md h-10 w-auto mr-3" />
                                 </WhatsappShareButton>

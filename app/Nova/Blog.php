@@ -1,17 +1,19 @@
 <?php
 
 namespace App\Nova;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Image;
 use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\DatePicker;
 use Laravel\Nova\Fields\Trix;
-
-
+use Mostafaznv\NovaVideo\Video;
+use Laravel\Nova\Fields\File;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\FormData;
 
 class Blog extends Resource
 {
@@ -43,18 +45,84 @@ class Blog extends Resource
      *
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
-     */
-    public function fields(NovaRequest $request)
+    */
+    public function fields(Request $request)
     {
-        return [
+        $fields = [
             ID::make()->sortable(),
-            Text::make('Title','title')->sortable()->rules('required'),
-            Image::make('Image','image')->sortable()->rules('required'),
-            Text::make('Image Alt','image_alt')->sortable(),
-            Trix::make('Description','desc')->sortable()->rules('required'),
+    
+            Text::make('Title', 'title')->sortable()->rules('required'),
+    
+            BelongsTo::make('Media Type', 'mediatype', MediaType::class),
+    
+            Image::make('Image', 'image')->sortable()
+                ->deletable(false)
+                ->prunable()
+                ->hide()
+                ->rules('sometimes')
+                ->dependsOn('mediatype', function (Image $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->mediatype == 1) {
+                        $field->show()->rules('required');
+                    }
+                }),
+    
+            Text::make('Image Alt', 'image_alt')->sortable()->creationRules('required'),
+    
+            Trix::make('Description', 'desc')->sortable()->rules('required'),
+    
             Date::make('Date', 'date')->filterable()->rules('required'),
+
+            Video::make('Video')
+            ->deletable(false)
+            ->prunable()
+            ->hide()
+            ->rules('sometimes')
+            ->dependsOn('mediatype', function (Video $field, NovaRequest $request, FormData $formData) {
+                if ($formData->mediatype == 1) {
+                    $field->show()->rules('required');
+                }
+            }),
+
+            File::make('Attachment'),
         ];
+    
+        // Conditionally add the Video field if media_type is video
+        if ($this->isVideoType()) {
+            $fields[] = Video::make('Video')->rules('sometimes|required');
+        }
+    
+        return $fields;
     }
+
+    public function isVideoType()
+    {
+        $resource = $this->resource;
+    
+        // Check if the resource has the mediatype relation loaded
+        if (!$resource->relationLoaded('mediatype')) {
+            // Load the relation if not already loaded
+            $resource->load('mediatype');
+        }
+    
+        // Get the mediatype relationship
+        $mediatype = $resource->mediatype;
+    
+        // Debugging output
+        if ($mediatype) {
+            Log::info('MediaType:', ['name' => $mediatype->name]);
+        } else {
+            Log::info('MediaType is null');
+        }
+    
+        // Check the value of the name attribute
+        if ($mediatype && $mediatype->name === 'video') {
+            return true;
+        }
+    
+        return false;
+    }
+    
+    
 
     /**
      * Get the cards available for the request.

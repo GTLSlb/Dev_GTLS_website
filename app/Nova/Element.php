@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -50,82 +51,102 @@ class Element extends Resource
     {
         $fields = [
             // Other fields...
-    
             ID::make()->hideFromIndex(),
             BelongsTo::make('Section', 'Section', Section::class),
             BelongsTo::make('ElementType','elementtype',ElementTypes::class),
+            DateTime::make('Date','date')
+                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                    $elementtypeId = (int) $formData->elementtype;
+                    
+                    // Query the database to check the contain_description field
+                    $elementType = DB::table('element_types')->find($elementtypeId);
+                    
+                    if ($elementType && $elementType->contain_date == 1) {
+                        $field->rules([
+                            'required',
+                        ]);
+                    } else {
+                        $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
             Text::make('Title','name')->sortable()
-            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
-                $elementtypeId = (int) $formData->elementtype;
+                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                    $elementtypeId = (int) $formData->elementtype;
+                    
+                    // Query the database to check the contain_description field
+                    $elementType = DB::table('element_types')->find($elementtypeId);
+                    
+                    if ($elementType && $elementType->contain_name == 1) {
+                        $field->rules([
+                            'required',
+                        ]);
+                    } else {
+                        $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Trix::make('content')->alwaysShow()
+                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                    $elementtypeId = (int) $formData->elementtype;
+            
+                    // Query the database to check the contain_description field
+                    $elementType = DB::table('element_types')->find($elementtypeId);
                 
-                // Query the database to check the contain_description field
-                $elementType = DB::table('element_types')->find($elementtypeId);
+                    if ($elementType && $elementType->contain_content == 1) {
+                        $field->rules([
+                            'required',
+                        ]);
+                    } else {
+                        $field->hide();
+                    }
+                }),
+            Image::make('Image','image')   
+                ->deletable(false) // deny deleting
+                ->prunable()
+                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                    $elementtypeId = (int) $formData->elementtype;
+            
+                    // Query the database to check the contain_description field
+                    $elementType = DB::table('element_types')->find($elementtypeId);
                 
-                if ($elementType && $elementType->contain_name == 1) {
-                    $field->rules([
-                        'required',
-                    ]);
-                } else {
-                    $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
-                }
-            }),
-            Trix::make('content')->alwaysShow()->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
-                $elementtypeId = (int) $formData->elementtype;
-        
-                // Query the database to check the contain_description field
-                $elementType = DB::table('element_types')->find($elementtypeId);
-               
-                if ($elementType && $elementType->contain_content == 1) {
-                    $field->rules([
-                        'required',
-                    ]);
-                } else {
-                    $field->hide();
-                }
-            }),
-            Image::make('Image','image')
-            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
-                $elementtypeId = (int) $formData->elementtype;
-        
-                // Query the database to check the contain_description field
-                $elementType = DB::table('element_types')->find($elementtypeId);
-               
-                if ($elementType && $elementType->contain_image == 1) {
-                    $field->rules("required","image", "max:100000");
-                } else {
-                    $field->hide();
-                }
-            }),
+                    if ($elementType && $elementType->contain_image == 1) {
+                        $field->creationRules("required","image", "max:100000");
+                    } else {
+                        $field->hide();
+                    }
+                }),
+            
             Text::make('Image Alt','image_alt')->sortable()
-            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
-                $elementtypeId = (int) $formData->elementtype;
-        
-                // Query the database to check the contain_description field
-                $elementType = DB::table('element_types')->find($elementtypeId);
-               
-                if ($elementType && $elementType->contain_image == 1) {
-                    $field->rules("required");
-                } else {
-                    $field->hide();
-                }
-            }),
+                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                    $elementtypeId = (int) $formData->elementtype;
+            
+                    // Query the database to check the contain_description field
+                    $elementType = DB::table('element_types')->find($elementtypeId);
+                
+                    if ($elementType && $elementType->contain_image == 1) {
+                        $field->rules("required");
+                    } else {
+                        $field->hide();
+                    }
+                }),
+
             $this->hasIconField() ? 
             Heroicon::make('Icon', 'icon')
                 ->rules('required', 'image', 'max:100000') 
             : null,
+
             URL::make('URL','url')
-            ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
-                $elementtypeId = (int) $formData->elementtype;
-        
-                // Query the database to check the contain_description field
-                $elementType = DB::table('element_types')->find($elementtypeId);
-               
-                if ($elementType && $elementType->contain_url == 1) {
-                    $field->rules("required","image", "max:100000");
-                } else {
-                    $field->hide();
-                }
-            }),
+                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+                    $elementtypeId = (int) $formData->elementtype;
+            
+                    // Query the database to check the contain_description field
+                    $elementType = DB::table('element_types')->find($elementtypeId);
+                
+                    if ($elementType && $elementType->contain_url == 1) {
+                        $field->rules("required","image", "max:100000");
+                    } else {
+                        $field->hide();
+                    }
+                }),
         ];
         return array_filter($fields);
 

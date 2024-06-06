@@ -129,9 +129,9 @@ Route::resource('posts', BlogController::class);
 //     return Inertia::render('NewsPage');
 // })-> name('news');
 
-Route::get('/news/{id}/{title?}', function ($id, $title = '') {
-    return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
-})->name('news');
+// Route::get('/news/{id}/{title?}', function ($id, $title = '') {
+//     return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
+// })->name('news');
 
 
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
@@ -242,7 +242,8 @@ Route::get('/vister',[UserVisitController::class,'index']);
 Route::get('/posts',[BlogController::class,'index']);
 Route::get('/news/{slug}', function ($slug) {
     $post = Blog::where('slug', $slug)->firstOrFail();
-    return Inertia::render('NewsPage', ['post' => $post]);
+    // $post = 123;
+    return Inertia::render('NewsPage', ['postslug' => $post]);
 })->name('news');
 // ******************************************************************
 

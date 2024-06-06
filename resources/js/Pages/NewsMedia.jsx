@@ -97,7 +97,6 @@ export default function Newss(props) {
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
                 <Navbars />
-                {/* <HeroSection/> */}
 
                 <div aria-hidden="true" className="relative">
                     <img
@@ -108,25 +107,7 @@ export default function Newss(props) {
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
                 <News getPageDesc={getPageDesc} getPosts={getPosts}/>
-
-                {/* <div className=" relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8 mt-10">
-                    <figure className="mb-10">
-                        <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                           
-                        </h1>
-                    </figure>
-                    
-                    <Video />
-                    
-                    
-                
-                </div> */}
-                {/* <figure className="mb-10">
-                        <h1 className="mt-2 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
-                            News
-                        </h1>
-                    </figure> */}
-                
+            
                 <Footer getfooter={getfooter}/>
             </div>
         </>

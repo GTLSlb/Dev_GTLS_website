@@ -1,24 +1,5 @@
 import { Link } from "@inertiajs/react";
-import trucks from "../../../assets/news/trucks.webp";
-import postpic from "../../../assets/news/postpic.webp";
 import newscircle from "../../../assets/pictures/newscircle.webp";
-import device from "../../../assets/news/device.webp";
-import earth from "../../../assets/news/earth.webp";
-import safety from "../../../assets/news/safety.webp";
-import track from "../../../assets/news/track.webp";
-import worker from "../../../assets/news/worker.webp";
-import newSite from "../../../assets/news/newSite.webp";
-import goldt from "../../../assets/news/goldt.webp";
-import tcapp from "../../../assets/news/tcapp.webp";
-import weeklySafety from "../../../assets/news/weeklySafety.webp";
-import movers from "../../../assets/news/3movers.webp";
-import EmployeesSafety from "../../../assets/news/EmployeesSafety.png";
-import weighbridge from "../../../assets/news/weighbridge.webp";
-import Navman from "../../../assets/news/Navman.webp";
-import onSiteFueling from "@/assets/news/onSiteFueling.webp";
-import weighbridgenews from "../../../assets/news/weighbridgenews.webp";
-import Navmannews from "../../../assets/news/Navmannews.webp";
-import greennews from "../../../assets/news/greennews.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -166,14 +147,11 @@ export default function News(props) {
                                 {getPageDesc?.name}
                             </h2>
                             <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getPageDesc?.description }}></div>
-                            {/* <p className="mt-2 text-lg leading-8 text-gray-300">
-                                Know more about our company.
-                            </p> */}
                         </div>
 
-                        <div className="grid lg:grid-cols-3 gap-4">
+                        <div className="grid lg:grid-cols-3 gap-5">
                         {getPosts?.map((post) => (
-                                <div key={post.id} className="px-5  ">
+                                <div key={post.id} className="">
                                     <Link href={route("news", { id: post.slug})} className="">
                                         <div className="h-full ">
                                         <div className="relative w-full www">
@@ -216,57 +194,7 @@ export default function News(props) {
                                     </Link>
                                 </div>
                             ))}
-                        
-                        {/* {posts.map((post) => (
-                                <div key={post.id} className="px-5  ">
-                                    <Link
-                                        href={route("news", {
-                                            id: post.id,
-                                            title: customEncodeTitle(
-                                                post.title
-                                            ),
-                                        })}
-                                        className=""
-                                    >
-                                        <div className="h-full ">
-                                            <div className="relative w-full www">
-                                                <img
-                                                    src={post.imageUrl}
-                                                    alt={post.title}
-                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                                />
-                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                            </div>
-                                            <article
-                                                key={post.id}
-                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                            >
-                                                <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                        <time
-                                                            dateTime={
-                                                                post.datetime
-                                                            }
-                                                            className="text-goldl font-bold"
-                                                        >
-                                                            {post.date}
-                                                        </time>
-                                                    </div>
-                                                    <div className="group relative">
-                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                            <span className="absolute inset-0" />
-                                                            {post.title}
-                                                        </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                            {post.description}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))} */}
+                    
 
                         </div>
 

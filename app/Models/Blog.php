@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -13,6 +12,11 @@ class Blog extends Model
         'date' => 'date'
     ];
     protected $fillable = ['title', 'date', 'slug'];
+
+    public function mediatype()
+    {
+        return $this->belongsTo(MediaType::class);
+    }
 
     protected static function boot()
     {
