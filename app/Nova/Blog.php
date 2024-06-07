@@ -53,43 +53,49 @@ class Blog extends Resource
     
             Text::make('Title', 'title')->sortable()->rules('required'),
     
-            BelongsTo::make('Media Type', 'mediatype', MediaType::class),
+            BelongsTo::make('Media Type', 'mediatype', MediaType::class)->hideFromIndex(),
     
-            Image::make('Image', 'image')->sortable()
+            Image::make('Cover Image', 'cover_image')
+                ->sortable()
                 ->deletable(false)
                 ->prunable()
-                ->hide()
-                ->rules('sometimes')
-                ->dependsOn('mediatype', function (Image $field, NovaRequest $request, FormData $formData) {
-                    if ($formData->mediatype == 1) {
-                        $field->show()->rules('required');
+                ->creationRules('required'),
+
+            Image::make('Image', 'image')
+            ->sortable()
+            ->deletable(false)
+            ->prunable()
+            ->rules('sometimes')
+            ->hideFromIndex()
+            ->dependsOn('mediatype', function (Image $field, NovaRequest $request, FormData $formData) {
+                if ($formData->mediatype == 1) {
+                    $field->show()->rules('required');
+                } else {
+                    $field->hide();
+                }
+            }),
+
+            File::make('Video','videoUrl')
+                ->onlyOnForms()
+                ->deletable(false)
+                ->prunable()
+                ->hideFromIndex()
+                ->acceptedTypes('video/mp4', 'video/x-msvideo', 'video/quicktime', 'video/x-ms-wmv', 'video/x-matroska') // Allow only video files
+                ->dependsOn('mediatype', function (File $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->mediatype == 2) {
+                        $field->show()->creationRules('required');
+                    } else {
+                        $field->hide();
                     }
                 }),
-    
-            Text::make('Image Alt', 'image_alt')->sortable()->creationRules('required'),
+
+            Video::make('Video', 'videoUrl')->onlyOnDetail(),
+            Text::make('Media Alt', 'image_alt')->sortable()->creationRules('required')->hideFromIndex(),
     
             Trix::make('Description', 'desc')->sortable()->rules('required'),
     
             Date::make('Date', 'date')->filterable()->rules('required'),
-
-            Video::make('Video')
-            ->deletable(false)
-            ->prunable()
-            ->hide()
-            ->rules('sometimes')
-            ->dependsOn('mediatype', function (Video $field, NovaRequest $request, FormData $formData) {
-                if ($formData->mediatype == 1) {
-                    $field->show()->rules('required');
-                }
-            }),
-
-            File::make('Attachment'),
         ];
-    
-        // Conditionally add the Video field if media_type is video
-        if ($this->isVideoType()) {
-            $fields[] = Video::make('Video')->rules('sometimes|required');
-        }
     
         return $fields;
     }

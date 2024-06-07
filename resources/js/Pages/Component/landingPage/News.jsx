@@ -156,7 +156,7 @@ export default function News(props) {
                                         <div className="h-full ">
                                         <div className="relative w-full www">
                                             <img
-                                                src={"/app/webimages/"+post?.image}
+                                                src={"/app/webimages/"+post?.cover_image}
                                                 alt={post?.title}
                                                 className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
                                             />

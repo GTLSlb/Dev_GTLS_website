@@ -83,42 +83,39 @@ function SamplePrevArrow(props) {
 }
 
 export default function NewsPage(props) {
-
-
     const { postslug } = usePage().props;
     const [getfooter, setfooter] = useState([]);
     const [getPosts, setPosts] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
     const [loading, setLoading] = useState(true);
 
-    // Posts 
+    // Posts
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [postsResponse, footerResponse] = await Promise.all([
-                    axios.get('/posts'),
-                    axios.get('/footer')
+                    axios.get("/posts"),
+                    axios.get("/footer"),
                 ]);
                 setPosts(postsResponse.data);
                 setfooter(footerResponse.data);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error("Error fetching data:", error);
                 // Optionally, handle error state here
                 setLoading(false);
             }
         };
-    
+
         fetchData();
     }, []);
-    
-    
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
     const settings = {
         dots: false,
         infinite: true,
@@ -164,7 +161,7 @@ export default function NewsPage(props) {
     const [showNavbar, setShowNavbar] = useState(false);
     const { post } = usePage().props;
 
-    console.log(postslug)
+    console.log(postslug);
     useEffect(() => {
         let prevScrollPosition = window.pageYOffset;
 
@@ -189,9 +186,7 @@ export default function NewsPage(props) {
             .replace(/[^\w-]+/g, "");
     }
 
-
-    
-
+    console.log(getPosts);
 
     return (
         <>
@@ -199,10 +194,10 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {postslug.id == 12 || postslug.id == 15? (
+                {postslug.id == 12 || postslug.id == 15 ? (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={"/app/webimages/"+postslug.image}
+                            src={"/app/webimages/" + postslug.image}
                             alt="news"
                             className="h-[40rem] w-full object-cover  "
                         />
@@ -211,7 +206,7 @@ export default function NewsPage(props) {
                 ) : (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={"/app/webimages/"+postslug.image}
+                            src={"/app/webimages/" + postslug.image}
                             alt="news"
                             className="h-96 w-full object-cover  "
                         />
@@ -240,7 +235,7 @@ export default function NewsPage(props) {
                                 dateTime={postslug.date}
                                 className="text-gray-500 font-bold"
                             >
-                                {postslug.date.split('T')[0]}
+                                {postslug.date.split("T")[0]}
                             </time>
                             <dd
                                 className="mt-6 text-lg leading-8 text-gray-200 text-justify"
@@ -251,21 +246,30 @@ export default function NewsPage(props) {
                             <figure className="mt-16">
                                 {postslug.videoUrl ? (
                                     <video
-                                    loop
-                                    autoPlay
-                                    controls
-                                    style={{ width: '100%' }}
-                                    src={contentJson[id].videoUrl}
-                                    type="video/mp4"
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
+                                        loop
+                                        autoPlay
+                                        controls
+                                        style={{ width: "100%" }}
+                                        src={
+                                            "/app/webimages/" +
+                                            postslug.videoUrl
+                                        }
+                                        type="video/mp4"
+                                    >
+                                        Your browser does not support the video
+                                        tag.
+                                    </video>
                                 ) : (
-                                    <img
-                                        className="aspect-video rounded-xl bg-gray-50 object-cover"
-                                        src={"/app/webimages/"+ postslug.image}
-                                        alt={postslug.title}
-                                    />
+                                    <div className="h-full w-full">
+                                        <img
+                                           className="aspect-video rounded-xl bg-gray-50 w-full object-cover"
+                                            src={
+                                                "/app/webimages/" +
+                                                postslug.image
+                                            }
+                                            alt={postslug.title}
+                                        />
+                                    </div>
                                 )}
                             </figure>
                             <div className="mt-10">
@@ -308,6 +312,7 @@ export default function NewsPage(props) {
                                 More News
                             </h2>
                         </div>
+
                         <Slider {...settings}>
                             {getPosts.map((post) => (
                                 <div key={post.id} className="px-5 ">
@@ -323,7 +328,10 @@ export default function NewsPage(props) {
                                         <div className="h-full">
                                             <div className="relative w-full www">
                                                 <img
-                                                    src={"/app/webimages/"+post.image}
+                                                    src={
+                                                        "/app/webimages/" +
+                                                        post.cover_image
+                                                    }
                                                     alt={post.title}
                                                     className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
                                                 />
@@ -341,7 +349,11 @@ export default function NewsPage(props) {
                                                             }
                                                             className="text-goldl font-bold"
                                                         >
-                                                            {post?.date?.split('T')[0]}
+                                                            {
+                                                                post?.date?.split(
+                                                                    "T"
+                                                                )[0]
+                                                            }
                                                         </time>
                                                     </div>
                                                     <div className="group relative">
@@ -365,7 +377,7 @@ export default function NewsPage(props) {
                         </Slider>
                     </div>
                 </div>
-                <Footer getfooter={getfooter}/>
+                <Footer getfooter={getfooter} />
             </div>
         </>
     );
