@@ -56,7 +56,6 @@ class RegisteredUserController extends Controller
     }
     public function getCurrentUserName(Request $request)
     {
-
         if ($request->session()->get('user')!=null) {
             
 

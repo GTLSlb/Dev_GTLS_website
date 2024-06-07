@@ -25,6 +25,11 @@ export default function LandingPage({}) {
     }
 
     useEffect(() => {
+        document.cookie =
+            "previous_page=" + encodeURIComponent(window.location.href);
+    }, []);
+
+    useEffect(() => {
         axios
             .get("/users")
             .then((res) => {
@@ -99,13 +104,6 @@ export default function LandingPage({}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activePage, setactivePage] = useState(null);
     const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [activeCon, setactiveCon] = useState(0);
-    const [loadingGtrs, setLoadingGtrs] = useState(false);
-    const [activeIndexGTRS, setActiveIndexGTRS] = useState(0);
-    const [activeHeader, setactiveHeader] = useState("null");
-    const [currentComponent, setcurrentComponent] = useState([]);
-    const [activeIndexInv, setActiveIndexInv] = useState(1);
-    const [invoiceDetails, setInvoiceDetails] = useState();
     const [PODetails, setPODetails] = useState();
 
     useEffect(() => {
@@ -138,6 +136,27 @@ export default function LandingPage({}) {
             });
     };
 
+    const [getfooter, setfooter] = useState([]);
+
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
+
+    useEffect(() => {
+        axios
+            .get("/footer")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setfooter(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
+
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
@@ -166,6 +185,28 @@ export default function LandingPage({}) {
                                         <div
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
+                                            <>
+                                                {currentUser.FirstName &&
+                                                currentUser.LastName ? (
+                                                    <>
+                                                        <p>
+                                                            {currentUser.FirstName.substring(
+                                                                0,
+                                                                1
+                                                            ).toUpperCase()}
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p>
+                                                            {currentUser.Username.substring(
+                                                                0,
+                                                                1
+                                                            ).toUpperCase()}
+                                                        </p>
+                                                    </>
+                                                )}
+                                            </>
                                             <>
                                                 {currentUser.FirstName &&
                                                 currentUser.LastName ? (
@@ -366,7 +407,7 @@ export default function LandingPage({}) {
                 </div>
             )}
             <div className="">
-                <Footer />
+                <Footer getfooter={getfooter} />
             </div>
         </div>
     );

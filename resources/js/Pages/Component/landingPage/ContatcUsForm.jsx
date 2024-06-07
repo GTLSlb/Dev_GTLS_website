@@ -60,7 +60,6 @@ class ContactUsForm extends Component {
                 });
             })
             .catch((error) => {
-                console.log(error.response);
                 this.setState({ errors: error.response.data.errors });
             });
     };

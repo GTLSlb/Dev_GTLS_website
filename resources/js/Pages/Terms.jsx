@@ -42,6 +42,26 @@ const handleClick = () => {
 };
 
 export default function Terms(props) {
+
+    const [getfooter, setfooter] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -3029,7 +3049,7 @@ thereafter charged per minute</td>
                     </div>
                 </div>
 
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );
