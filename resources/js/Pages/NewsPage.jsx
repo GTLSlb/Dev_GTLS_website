@@ -667,7 +667,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15? (
+                {id == 12 || id == 15 || id == 17? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
