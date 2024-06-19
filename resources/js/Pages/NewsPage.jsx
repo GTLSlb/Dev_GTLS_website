@@ -23,6 +23,7 @@ import Navman from "../assets/news/Navman.webp";
 import weighbridgenews from "../assets/news/weighbridgenews.webp";
 import Navmannews from "../assets/news/Navmannews.webp";
 import onSiteFueling from "@/assets/news/onSiteFueling.webp";
+import Efficiency from "../assets/news/Efficiency.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import {
@@ -436,6 +437,24 @@ export default function NewsPage(props) {
                 "As part of our safety commitment, we conduct thorough checks on all movements before they leave our depots. This proactive approach helps us prevent overloaded vehicles from hitting the roads, reducing the risk to al road users.We continuously toolbox the importance of road safety to our team, stressing the significance of adhering to speed limits and driving according to road conditions, weather, and traffic patterns. Beyond our internal efforts, we actively engage with local communities to raise awareness about road safety issues. By taking a proactive stance in incident prevention and advocating for safer roads, we aim to make a positive impact that extends beyond our business operations.",
             imgUrl: weeklySafety,
             videoUrl: RoadSafety,
+        },
+        {
+            id: 17,
+            title: " Elevating Safety and Efficiency: The Gearbox Training Program at Gold Tiger Logistics Solutions",
+
+            content1:
+                `At Gold Tiger Logistics Solutions (GTLS), safety and compliance are absolutely crucial. They're at the heart of our commitment to running efficiently and developing our team. A key part of this commitment is our "Gearbox" with the user software training program. It's tailored to enhance the technical skills of our maintenance crew.
+
+                The Gearbox training covered everything from how vehicles operate to preventive maintenance and safety protocols. It gives our team detailed insights into vehicle conditions, maintenance schedules, service procedures, tyre care, and timely maintenance alerts. Beyond the technical side, the training also delves into managerial aspects such as pre-start inspections, keeping maintenance records, managing workflows, and conducting compliance checks. This ensures we not only meet but exceed NHVR requirements, giving us the confidence to make on-time deliveries that meet our customers' growing demands.`,
+            content2:
+                `Moreover, our commitment to ongoing training extends across our workshop teams and management personnel. We equip them with essential tools and procedures such as dashboard metrics utilising a traffic light system, efficient vehicle record management, streamlined job card processing, optimised work scheduling, and meticulous parts inventory management. This accessibility is facilitated through a user-friendly live dashboard accessible via mobile devices or PCs, crucial in navigating today's fast-paced logistics environment.
+
+                Compliance remains a top priority at GTLS. While many of our vehicles benefit from Volvo's Platinum Maintenance package, our dedication to safety extends beyond routine maintenance. We conduct proactive random inspections based not only on timeframes but also on KM projections, leveraging our partnership with Navman for GPS tracking. This proactive approach ensures that we consistently uphold the highest standards and regulations, safeguarding the safety of our drivers, fleet, and all road users.
+                
+                At Gold Tiger Logistics Solutions, we are committed to setting new benchmarks in safety, efficiency, and customer satisfaction. Through our robust training programs, proactive maintenance strategies, and unwavering commitment to compliance, we continue to lead the way in delivering excellence across Australia's logistics landscape.
+                
+                Stay tuned as we share more insights and updates on how GTLS is transforming logistics with innovation and dedication.`,
+            imgUrl: Efficiency,
         },
     ];
 

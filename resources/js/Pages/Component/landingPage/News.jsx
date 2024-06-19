@@ -13,8 +13,7 @@ import tcapp from "../../../assets/news/tcapp.webp";
 import weeklySafety from "../../../assets/news/weeklySafety.webp";
 import movers from "../../../assets/news/3movers.webp";
 import EmployeesSafety from "../../../assets/news/EmployeesSafety.png";
-import weighbridge from "../../../assets/news/weighbridge.webp";
-import Navman from "../../../assets/news/Navman.webp";
+import Efficiency from "../../../assets/news/Efficiency.webp";
 import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import weighbridgenews from "../../../assets/news/weighbridgenews.webp";
 import Navmannews from "../../../assets/news/Navmannews.webp";
@@ -30,6 +29,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 17,
+        title: "Elevating Safety and Efficiency: The Gearbox Training Program at Gold Tiger Logistics Solutions.",
+        href: "#",
+        description: `At Gold Tiger Logistics Solutions (GTLS), safety and compliance are absolutely crucial. They're at the heart of our commitment to running efficiently and developing our team. A key part of this commitment is our "Gearbox" with the user software training program. It's tailored to enhance the technical skills of our maintenance crew.`,
+        imageUrl: Efficiency,
+        date: "June 18, 2024",
+        datetime: "2024-5-11",
+        category: { title: "", href: "#" },
+    },
     {
         id: 16,
         title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
@@ -353,7 +362,7 @@ export default function News() {
             .replace(/ /g, "-")
             .replace(/[^\w-]+/g, "");
     }
-    
+
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
