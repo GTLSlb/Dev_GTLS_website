@@ -1,11 +1,3 @@
-import {
-    RectangleGroupIcon,
-    BoltIcon,
-    MapIcon,
-    ArrowPathRoundedSquareIcon,
-} from "@heroicons/react/24/outline";
-import { useState, useEffect, useRef } from "react";
-import bolt from "../../../assets/json/bolt.json";
 import lottie from "lottie-web";
 import home from "../../../assets/pictures/home.gif";
 import pl from "../../../assets/pictures/3pl-4pl.gif";
@@ -27,39 +19,6 @@ export default function PrimaryServices(props) {
     const setServices = props.setServices;
 
 
-    const features = [
-   
-        {
-            name: "Warehousing",
-            description:
-                "Short or long-term storage solutions, container handling and cross-docking in warehouses around Australia. Check and manage your inventory in our warehouses through your computer system’s interface with our JAIX warehouse management system.",
-                icon: home,
-            state: "",
-        },
-        
-        {
-            name: "Transport",
-            description:
-                "Interstate linehaul, intrastate, cross dock, regional, metropolitan and last-mile delivery, express or general, all-around Australia.",
-                icon: trans,
-            state: "morph",
-        },
-        {
-            name: "3PL/4PL solutions",
-            description:
-                "Gold Tiger offers solutions based on the third party and fourth party logistics models.",
-                icon: pl,
-            state: "",
-        },
-        {
-            name: "Distribution",
-            description:
-                "Distribute from our warehouses to your distribution hubs or let us deliver that last mile to your individual stores. We use leading technologies throughout our operations, from track-and-trace through to radio frequency identification, customer portal, EDI, ePOD, sign-on glass and inventory management software.",
-                icon: earth,
-            state: "",
-        },
-        
-    ];
 
 
     return (

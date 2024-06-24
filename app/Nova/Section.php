@@ -2,8 +2,7 @@
 
 namespace App\Nova;
 
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Middleware\ValidatePostSize;
+use Illuminate\Support\Facades\Auth;
 
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
@@ -13,13 +12,12 @@ use Laravel\Nova\Fields\TextArea;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Image;
-use Ayvazyan10\Imagic\Imagic;
+use Laravel\Nova\Fields\Select;
 
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
-use InteractionDesignFoundation\NovaHtmlCodeField\HtmlCode;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -219,7 +217,15 @@ class Section extends Resource
     {
         return [];
     }
+    public static function availableForNavigation($request)
+    {
+        // Get the currently authenticated user.
+        $user = Auth::user();
 
+        // Check if the user's role_id is 1.
+        // If the role_id is 1, then the resource will not be available for navigation.
+        return $user->role_id == 1;
+    }
     /**
      * Get the lenses available for the resource.
      *

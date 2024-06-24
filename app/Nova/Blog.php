@@ -141,6 +141,10 @@ class Blog extends Resource
         return [];
     }
 
+    public function authorizedToReplicate(Request $request)
+    {
+        return false;
+    }
     /**
      * Get the filters available for the resource.
      *

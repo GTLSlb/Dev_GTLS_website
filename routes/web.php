@@ -57,9 +57,6 @@ Route::match(['get', 'post'], '/landingPage', function () {
     return Inertia::render('LandingPage');
 })->middleware(['custom'])->name('landing.page');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['custom'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
@@ -212,6 +209,7 @@ Route::resource('section',SectionController::class);
 Route::get('/getSec/{id}',[SectionController::class,'getSec']);
 Route::get('/getaboutus',[SectionController::class,'about']);
 Route::get('/getheader',[SectionController::class,'header']);
+Route::get('/getTrainNotification',[SectionController::class,'TrainNotification']);
 Route::get('/getGtrs',[SectionController::class,'gtrs']);
 Route::get('/getservices',[SectionController::class,'services']);
 Route::get('/getgoingGreen',[SectionController::class,'goingGreenSection']);
