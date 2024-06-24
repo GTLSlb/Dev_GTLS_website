@@ -152,12 +152,12 @@ class Element extends Resource
 
     }
 
-    public static function availableForNavigation(Request $request)
-    {
-        $user = $request->user();
-        // Check if the user has an admin role
-        return $user && $user->role_id == 1;
-    }
+    // public static function availableForNavigation(Request $request)
+    // {
+    //     $user = $request->user();
+    //     // Check if the user has an admin role
+    //     return $user && $user->role_id == 1;
+    // }
     
 
 

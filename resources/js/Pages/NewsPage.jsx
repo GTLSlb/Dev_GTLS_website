@@ -194,25 +194,14 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {postslug.id == 12 || postslug.id == 15 ? (
-                    <div aria-hidden="true" className="relative">
-                        <img
-                            src={"/app/webimages/" + postslug.image}
-                            alt="news"
-                            className="h-[40rem] w-full object-cover  "
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark" />
-                    </div>
-                ) : (
-                    <div aria-hidden="true" className="relative">
-                        <img
-                            src={"/app/webimages/" + postslug.image}
-                            alt="news"
-                            className="h-96 w-full object-cover  "
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark" />
-                    </div>
-                )}
+                <div aria-hidden="true" className="relative">
+                    <img
+                        src={"/app/webimages/" + postslug.image}
+                        alt="news"
+                        className="h-[40rem] w-full object-cover  "
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-dark" />
+                </div>
 
                 <div className="bg-dark pb-10 px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
@@ -262,7 +251,7 @@ export default function NewsPage(props) {
                                 ) : (
                                     <div className="h-full w-full">
                                         <img
-                                           className="aspect-video rounded-xl bg-gray-50 w-full object-cover"
+                                            className="aspect-video rounded-xl bg-gray-50 w-full object-cover"
                                             src={
                                                 "/app/webimages/" +
                                                 postslug.image

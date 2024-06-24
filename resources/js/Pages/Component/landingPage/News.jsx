@@ -7,9 +7,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
-import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from "react";
+import React from 'react';
+
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -19,15 +19,7 @@ function SampleNextArrow(props) {
             style={{ ...style, display: "block" }}
             onClick={onClick}
         />
-        <div
-            className={className}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        />
     );
-}
-
-function SamplePrevArrow(props) {
 }
 
 function SamplePrevArrow(props) {
@@ -40,49 +32,32 @@ function SamplePrevArrow(props) {
         >
             <ArrowSmallRightIcon />
         </div>
-        <div
-            className={className}
-            style={{ ...style, display: "block", background: "" }}
-            onClick={onClick}
-        >
-            <ArrowSmallRightIcon />
-        </div>
     );
-}
 }
 
 export default function News(props) {
-    const getPageDesc = props.getPageDesc;
-    const getPosts = props.getPosts;
 
+    const getPageDesc=props.getPageDesc;
+    const getPosts=props.getPosts;
+    
     const sliderRef = useRef(null);
-
 
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
             if (sliderRef.current) {
                 sliderRef.current.slickNext();
             }
-            if (sliderRef.current) {
-                sliderRef.current.slickNext();
-            }
         }, delay);
     };
-    };
 
-    useEffect(() => {
     useEffect(() => {
         const interval = setInterval(() => {
             sliderRef.current.slickNext();
-            sliderRef.current.slickNext();
         }, 5000);
-
 
         return () => {
             clearInterval(interval);
-            clearInterval(interval);
         };
-    }, []);
     }, []);
 
     const settings = {
@@ -106,24 +81,8 @@ export default function News(props) {
                     slidesToScroll: 1,
                 },
             },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
         ],
         nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-    };
         prevArrow: <SamplePrevArrow />,
     };
     const maxScrollWidth = useRef(0);
@@ -238,8 +197,6 @@ export default function News(props) {
                     
 
                         </div>
-
-                        <Slider ref={sliderRef} {...settings}></Slider>
 
                         <Slider ref={sliderRef} {...settings}></Slider>
                     </div>
