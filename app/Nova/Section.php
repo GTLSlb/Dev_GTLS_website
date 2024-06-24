@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Middleware\ValidatePostSize;
 
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 use Mostafaznv\NovaVideo\Video;
 use DigitalCreative\Filepond\Filepond;
 use Laravel\Nova\Fields\TextArea;
@@ -168,6 +169,20 @@ class Section extends Resource
                         ]);
                     } else {
                         $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+
+            Select::make('Status')->options([
+                    '1' => 'Active',
+                    '2' => 'Inactive',
+                ])->displayUsingLabels()->canSee(function ($request) {
+                    $resourceID = $request->resourceId;
+                    // dd($resourceID);
+                    switch($resourceID){
+                        case 29:
+                            return true;
+                        default:
+                            return false;
                     }
                 }),
         ];
