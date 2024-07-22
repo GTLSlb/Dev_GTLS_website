@@ -384,8 +384,8 @@ export default function Capability(props) {
                                             industrial and FMCG. Prominent
                                             clients include Unilever, Freedom
                                             Food, Sigma Healthcare, CIA
-                                            Logistics, Triangle Logistics, TMA
-                                            Group and Austral Bricks.
+                                            Logistics, Triangle Logistics and TMA
+                                            Group.
                                         </span>
                                     </li>
                                 </ul>

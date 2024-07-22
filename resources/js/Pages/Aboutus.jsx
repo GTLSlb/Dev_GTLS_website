@@ -137,7 +137,7 @@ export default function AboutUs(props) {
                                 Today, Gold Tiger transports more than 3.7 million tonnes of freight around Australia annually, with more than 800,000 tonnes moved for our largest client.
                             </p>
                             <p className="mt-3 text-smooth">
-                                We have more than 40 clients from industries including food, packaging, manufacturing, retail, industrial and FMCG. Prominent clients include Unilever, General Mills, Sigma Healthcare, CIA Logistics, Triangle Logistics, TMA Group and Austral Bricks.
+                                We have more than 40 clients from industries including food, packaging, manufacturing, retail, industrial and FMCG. Prominent clients include Unilever, General Mills, Sigma Healthcare, CIA Logistics, Triangle Logistics and TMA Group.
                             </p>
                             <p className="mt-3 text-smooth">
                                 Gold Tiger will listen to what you want, offer our suggestions, and customise a solution with you that meets your needs.
