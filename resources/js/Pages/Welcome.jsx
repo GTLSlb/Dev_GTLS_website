@@ -546,6 +546,8 @@ export default function Welcome(props) {
                         <Safety getSafety={getSafety} />
                         {/* <Video /> */}
 
+
+                                                <Map />
                         <Technologies gettechnologies={gettechnologies} />
                         {/* <Softwares /> */}
 
