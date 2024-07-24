@@ -24,6 +24,8 @@ import weighbridgenews from "../assets/news/weighbridgenews.webp";
 import Navmannews from "../assets/news/Navmannews.webp";
 import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import Efficiency from "../assets/news/Efficiency.webp";
+import JostCover from "../assets/news/Jost5Cover.jpeg";
+import BBWImage from "../assets/news/BPW.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import {
@@ -442,12 +444,10 @@ export default function NewsPage(props) {
             id: 17,
             title: " Elevating Safety and Efficiency: The Gearbox Training Program at Gold Tiger Logistics Solutions",
 
-            content1:
-                `At Gold Tiger Logistics Solutions (GTLS), safety and compliance are absolutely crucial. They're at the heart of our commitment to running efficiently and developing our team. A key part of this commitment is our "Gearbox" with the user software training program. It's tailored to enhance the technical skills of our maintenance crew.
+            content1: `At Gold Tiger Logistics Solutions (GTLS), safety and compliance are absolutely crucial. They're at the heart of our commitment to running efficiently and developing our team. A key part of this commitment is our "Gearbox" with the user software training program. It's tailored to enhance the technical skills of our maintenance crew.
 
                 The Gearbox training covered everything from how vehicles operate to preventive maintenance and safety protocols. It gives our team detailed insights into vehicle conditions, maintenance schedules, service procedures, tyre care, and timely maintenance alerts. Beyond the technical side, the training also delves into managerial aspects such as pre-start inspections, keeping maintenance records, managing workflows, and conducting compliance checks. This ensures we not only meet but exceed NHVR requirements, giving us the confidence to make on-time deliveries that meet our customers' growing demands.`,
-            content2:
-                `Moreover, our commitment to ongoing training extends across our workshop teams and management personnel. We equip them with essential tools and procedures such as dashboard metrics utilising a traffic light system, efficient vehicle record management, streamlined job card processing, optimised work scheduling, and meticulous parts inventory management. This accessibility is facilitated through a user-friendly live dashboard accessible via mobile devices or PCs, crucial in navigating today's fast-paced logistics environment.
+            content2: `Moreover, our commitment to ongoing training extends across our workshop teams and management personnel. We equip them with essential tools and procedures such as dashboard metrics utilising a traffic light system, efficient vehicle record management, streamlined job card processing, optimised work scheduling, and meticulous parts inventory management. This accessibility is facilitated through a user-friendly live dashboard accessible via mobile devices or PCs, crucial in navigating today's fast-paced logistics environment.
 
                 Compliance remains a top priority at GTLS. While many of our vehicles benefit from Volvo's Platinum Maintenance package, our dedication to safety extends beyond routine maintenance. We conduct proactive random inspections based not only on timeframes but also on KM projections, leveraging our partnership with Navman for GPS tracking. This proactive approach ensures that we consistently uphold the highest standards and regulations, safeguarding the safety of our drivers, fleet, and all road users.
                 
@@ -455,6 +455,126 @@ export default function NewsPage(props) {
                 
                 Stay tuned as we share more insights and updates on how GTLS is transforming logistics with innovation and dedication.`,
             imgUrl: Efficiency,
+        },
+        {
+            id: 18,
+            title: "Training Session Recap: Mastering the Jost 5th Wheel",
+
+            content1: `Today, our team at Gold Tiger Logistics Solutions (GTLS) participated in a comprehensive training session with Jost, focusing on the inner workings of the Jost 5th wheel.
+
+                While we’ll be holding a separate session for our drivers, today was all about our WHSP team.
+                
+                In-Depth Review for our WHSP Specialists
+                
+                While we plan to conduct a separate training session for our drivers, today's focus was on equipping our specialists with detailed knowledge about the Jost 5th wheel.
+
+                The session covered:`,
+            list: [
+                {
+                    id: 0,
+                    title: "Tolerances and Senses:",
+                    content:
+                        "Understanding the precise tolerances and sensory checks required for optimal performance.",
+                },
+                {
+                    id: 1,
+                    title: "Replacement Guidelines:",
+                    content:
+                        "Knowing when it's time to replace the 5th wheel to maintain safety and efficiency.",
+                },
+                {
+                    id: 2,
+                    title: "Torque Tension Requirements:",
+                    content:
+                        "Learning the exact torque tension needed for proper installation and maintenance.",
+                },
+            ],
+            content2: `Refresher and Introduction
+
+            Our WHSP team, comprising long-term members and six new specialists, benefited from this refresher session. It was an excellent opportunity for seasoned professionals to refresh their knowledge and for new team members to get up to speed. The session was highly interactive, allowing everyone to ask questions and gain insights from the Jost expert.
+            
+            Empowering Our Team
+            
+            The training aimed to empower our WHSP specialists, both veterans and newcomers, with the knowledge and confidence to ensure the safety and reliability of our fleet. By understanding the Jost 5th wheel in-depth, our team can better support our drivers and maintain the high standards of safety and efficiency that GTLS is known for.
+            
+            We extend our gratitude to the Jost team for their expertise and support in making this training session a success.
+            
+            Stay tuned for more updates as we continue to enhance our team's skills and knowledge.`,
+
+            imgUrl: JostCover,
+        },
+        {
+            id: 19,
+            title: "GTLS Unleashes the Power of BPW: A Recap of Our Wheel Hubs and Bearings Training!",
+
+            content1: `Power-Up with BPW Wheel Hubs Training!
+
+            Today, our workshop team participated in an engaging hands-on training session led by BPW Hub experts!
+            
+            We had the privilege of learning from leading industry professionals who imparted their invaluable knowledge and techniques.
+            
+            Wondering why GTLS relies on BPW Wheel hubs?
+            
+            Here’s the inside scoop! 👇
+            
+            What Are BPW Wheel Hubs?
+
+            BPW Wheel hubs are essential components for heavy vehicles, housing the wheel bearings that ensure smooth rotation around the axle. Engineered to handle substantial loads and tough driving conditions, BPW hubs come with an impressive 1 million KM warranty, highlighting their industry-leading reliability. At GTLS, our commitment goes beyond driver safety to enhance overall road safety. By opting for BPW hubs, we deliver superior performance, bolstering our service and solidifying our reputation as a preferred supplier for our clients with punctual, reliable deliveries.
+            
+            `,
+            listTitle: "Features of BPW Hubs:",
+            list: [
+                {
+                    id: 0,
+                    title: "Integrated Braking Systems",
+                    content:
+                        "Enhances safety and control by ensuring balanced braking.",
+                },
+                {
+                    id: 1,
+                    title: " Advanced Lubrication Systems",
+                    content:
+                        "Reduces maintenance needs and extends hub lifespan.",
+                },
+                {
+                    id: 2,
+                    title: "Exceptional Durability:",
+                    content:
+                        "Engineered to withstand heavy loads and the harsh conditions of Australian roads.",
+                },
+            ],
+            list2Title: "Today’s Highlights",
+            list2: [
+                {
+                    id: 0,
+                    title: "Integrated Braking Systems",
+                    content:
+                        "Enhances safety and control by ensuring balanced braking.",
+                },
+                {
+                    id: 1,
+                    title: " Advanced Lubrication Systems",
+                    content:
+                        "Reduces maintenance needs and extends hub lifespan.",
+                },
+                {
+                    id: 2,
+                    title: "Exceptional Durability:",
+                    content:
+                        "Engineered to withstand heavy loads and the harsh conditions of Australian roads.",
+                },
+            ],
+            content2: `With GTLS vehicles receiving B-level service regularly, our use of BPW bearings and hubs ensures we exceed industry standards and uphold our commitment to reducing heavy vehicle impact on Australian roads.
+
+            A massive shoutout to the GTLS team and BPW experts for making this training both informative and engaging!
+            
+            Let’s keep the momentum going as we continue to lead and innovate in the transport industry.
+            
+            Together, we’re steering towards a brighter future!
+            
+            #BPWTraining #InnovationInMotion #TeamExcellence #FutureReady`,
+
+            imgUrl: BBWImage,
         },
     ];
 
@@ -650,8 +770,6 @@ export default function NewsPage(props) {
         // More posts...
     ];
 
-    const filteredData = posts.filter((item) => item.id != id);
-
     const pageUrl = window.location.href;
 
     function customEncodeTitle(title) {
@@ -667,7 +785,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15 || id == 17? (
+                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -721,6 +839,11 @@ export default function NewsPage(props) {
                             >
                                 {contentJson[id].content1}
                             </p>
+                            {contentJson[id].listTitle ? (
+                                <div className="text-smooth">
+                                    {contentJson[id].listTitle}
+                                </div>
+                            ) : null}
                             {contentJson[id].list ? (
                                 <ol className="p-5">
                                     {contentJson[id].list?.map((item) => (
@@ -743,7 +866,33 @@ export default function NewsPage(props) {
                                     ))}
                                 </ol>
                             ) : null}
-
+                            {contentJson[id].list2Title ? (
+                                <div className="text-smooth">
+                                    {contentJson[id].list2Title}
+                                </div>
+                            ) : null}
+                            {contentJson[id].list2 ? (
+                                <ol className="p-5">
+                                    {contentJson[id].list2?.map((item) => (
+                                        <li
+                                            key={item.id}
+                                            className="flex gap-x-3 "
+                                        >
+                                            <div className=" h-2 w-2 mt-2 flex-none rounded-full bg-goldt" />
+                                            <div>
+                                                <span className="text-smooth">
+                                                    {item.title}
+                                                </span>
+                                                {item.content ? (
+                                                    <div className="text-gray-200">
+                                                        {item.content}
+                                                    </div>
+                                                ) : null}
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ol>
+                            ) : null}
                             <div className="mt-10 text-lg  text-gray-200 text-justify">
                                 <p
                                     style={{ whiteSpace: "pre-line" }}
@@ -755,15 +904,16 @@ export default function NewsPage(props) {
                             <figure className="mt-16">
                                 {contentJson[id].videoUrl ? (
                                     <video
-                                    loop
-                                    autoPlay
-                                    controls
-                                    style={{ width: '100%' }}
-                                    src={contentJson[id].videoUrl}
-                                    type="video/mp4"
-                                  >
-                                    Your browser does not support the video tag.
-                                  </video>
+                                        loop
+                                        autoPlay
+                                        controls
+                                        style={{ width: "100%" }}
+                                        src={contentJson[id].videoUrl}
+                                        type="video/mp4"
+                                    >
+                                        Your browser does not support the video
+                                        tag.
+                                    </video>
                                 ) : (
                                     <img
                                         className="aspect-video rounded-xl bg-gray-50 object-cover"

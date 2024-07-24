@@ -18,6 +18,8 @@ import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import weighbridgenews from "../../../assets/news/weighbridgenews.webp";
 import Navmannews from "../../../assets/news/Navmannews.webp";
 import greennews from "../../../assets/news/greennews.webp";
+import jost5news from "../../../assets/news/Jost5.webp";
+import BPWnews from "../../../assets/news/BPW.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -29,6 +31,30 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 19,
+        title: "GTLS Unleashes the Power of BPW: A Recap of Our Wheel Hubs and Bearings Training!",
+        href: "#",
+        description: `We had the privilege of learning from leading industry professionals who imparted their invaluable knowledge and techniques.
+
+        Wondering why GTLS relies on BPW Wheel hubs?
+        
+        Here’s the inside scoop! 👇`,
+        imageUrl: BPWnews,
+        date: "July 23, 2024",
+        datetime: "2024-5-11",
+        category: { title: "", href: "#" },
+    },
+    {
+        id: 18,
+        title: "Training Session Recap: Mastering the Jost 5th Wheel",
+        href: "#",
+        description: `Gold Tiger Logistics Solutions (GTLS) participated in a comprehensive training session with Jost, focusing on the inner workings of the Jost 5th wheel.`,
+        imageUrl: jost5news,
+        date: "July 24, 2024",
+        datetime: "2024-5-11",
+        category: { title: "", href: "#" },
+    },
     {
         id: 17,
         title: "Elevating Safety and Efficiency: The Gearbox Training Program at Gold Tiger Logistics Solutions.",
@@ -397,7 +423,7 @@ export default function News() {
                                                 <img
                                                     src={post.imageUrl}
                                                     alt={post.title}
-                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover  w-full "
                                                 />
                                                 <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
