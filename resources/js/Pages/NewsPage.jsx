@@ -28,11 +28,7 @@ import JostCover from "../assets/news/Jost5Cover.jpeg";
 import BBWImage from "../assets/news/BPW.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
-import {
-    Bars3Icon,
-    XMarkIcon,
-    ArrowLongLeftIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import {
     FacebookShareButton,
     FacebookIcon,
@@ -44,22 +40,10 @@ import {
     WhatsappIcon,
 } from "react-share";
 import Footer from "./Component/landingPage/Footer";
-import SecondaryFooter from "./Component/landingPage/SecondaryFooter";
 import Navbars from "./Component/Navbars";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/contact_us", ref: "contact" },
-];
-
-const handleClick = () => {
-    history.push("/", { scrollToElement: "news" });
-};
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;

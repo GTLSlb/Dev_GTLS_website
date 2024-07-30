@@ -115,6 +115,13 @@ Route::get('/contact_us', function () {
     return Inertia::render('ContactUsPage');
 })->name('contact_us');
 
+Route::get('/Unsubscribe/{id}', function ($id) {
+    return Inertia::render('Unsubscribe',['id'=> $id]);
+})->name('Unsubscribe');
+
+Route::get('/Subscribe/{id}', function ($id) {
+    return Inertia::render('Subscribe',['id'=> $id]);
+})->name('Subscribe');
 
 
 Route::resource('posts', BlogController::class);

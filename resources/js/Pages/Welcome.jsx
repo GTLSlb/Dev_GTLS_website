@@ -15,7 +15,6 @@ import GTRS from "./Component/landingPage/GtrsDemo";
 import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
 
-
 import News from "./Component/landingPage/News";
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
@@ -40,13 +39,13 @@ import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
 
 const navigation = [
-    { id:1, name: "About Us", href: "/aboutus", link: true },
-    { id:2, name: "Services", href: "services", link: false },
-    { id:3, name: "Technologies", href: "/technologies", link: true },
-    { id:4, name: "Media & News", href: "/news", link: true },
-    { id:5, name: "Careers", href: "/opportunities", link: true },
-    { id:6, name: "Contact Us", href: "/contact_us", link: true },
-    { id:7, name: "Going Green", href: "/goinggreen",link: true },
+    { id: 1, name: "About Us", href: "/aboutus", link: true },
+    { id: 2, name: "Services", href: "services", link: false },
+    { id: 3, name: "Technologies", href: "/technologies", link: true },
+    { id: 4, name: "Media & News", href: "/news", link: true },
+    { id: 5, name: "Careers", href: "/opportunities", link: true },
+    { id: 6, name: "Contact Us", href: "/contact_us", link: true },
+    { id: 7, name: "Going Green", href: "/goinggreen", link: true },
 ];
 
 // function scrollToDiv (myDivRef)  {
@@ -98,10 +97,10 @@ export default function Welcome(props) {
     const [showMoreLinks, setShowMoreLinks] = useState(false);
     return (
         <>
-            <Head title="Welcome" />            
+            <Head title="Welcome" />
             <div className="relative isolate bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
-                <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
+                    <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
                         <div className="hidden lg:flex gap-x-7 ">
                             <a
                                 href="/contact_us"
@@ -192,15 +191,7 @@ export default function Welcome(props) {
                                                         </div>
                                                     </a>
                                                 </div>
-                                            </div>
-                                            {/* <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
-                                                <button
-                                                    // onClick={handleDownloadExcel}
-                                                    className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-                                                >
-                                                    Export XLS
-                                                </button>
-                                            </div> */}
+                                            </div>{" "}
                                         </div>
                                     </Popover.Panel>
                                 </Transition>
@@ -218,34 +209,35 @@ export default function Welcome(props) {
                             </button>
                         </div>
                         <div className="hidden lg:flex lg:gap-x-8">
-                            {navigation.map((item) => (
-                                 item.id == 5||item.id==6?null:
-                                <div key={item.name}>
-                                    {item.link ? (
-                                        <Link
-                                            key={item.name}
-                                            href={item.href}
-                                            // data={item.ref}
-                                            // smooth={true}
-                                            className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    ) : (
-                                        <ScrollLink
-                                            key={item.name}
-                                            to={item.href}
-                                            smooth={true}
-                                            className="hover:cursor-pointer h-8 hover:border-b hover:border-goldt p-1 hover:text-white text-md font-semibold leading-6 text-goldt"
-                                        >
-                                            {item.name}
-                                        </ScrollLink>
-                                    )}
-                                </div>
-                            ))}
+                            {navigation.map((item) =>
+                                item.id == 5 || item.id == 6 ? null : (
+                                    <div key={item.name}>
+                                        {item.link ? (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                // data={item.ref}
+                                                // smooth={true}
+                                                className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        ) : (
+                                            <ScrollLink
+                                                key={item.name}
+                                                to={item.href}
+                                                smooth={true}
+                                                className="hover:cursor-pointer h-8 hover:border-b hover:border-goldt p-1 hover:text-white text-md font-semibold leading-6 text-goldt"
+                                            >
+                                                {item.name}
+                                            </ScrollLink>
+                                        )}
+                                    </div>
+                                )
+                            )}
                         </div>
                         <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
-                            <FeedbackButton/>
+                            <FeedbackButton />
                             <Popover className="relative object-right flex-item md:ml-auto ">
                                 <Popover.Button
                                     className={` inline-flex items-center  px-4 py-2 border-2 border-goldt rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white`}
@@ -341,28 +333,28 @@ export default function Welcome(props) {
                                 <div className="-my-6 divide-y divide-gray-500/10">
                                     <div className="space-y-2 py-6">
                                         {navigation.map((item) => (
-                                             <div key={item.name}>
-                                             {item.link ? (
-                                                 <Link
-                                                     key={item.name}
-                                                     href={item.href}
-                                                     // data={item.ref}
-                                                     // smooth={true}
-                                                     className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
-                                                     >
-                                                     {item.name}
-                                                 </Link>
-                                             ) : (
-                                                 <ScrollLink
-                                                     key={item.name}
-                                                     to={item.href}
-                                                     smooth={true}
-                                                     className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
-                                                     >
-                                                     {item.name}
-                                                 </ScrollLink>
-                                             )}
-                                         </div>
+                                            <div key={item.name}>
+                                                {item.link ? (
+                                                    <Link
+                                                        key={item.name}
+                                                        href={item.href}
+                                                        // data={item.ref}
+                                                        // smooth={true}
+                                                        className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                ) : (
+                                                    <ScrollLink
+                                                        key={item.name}
+                                                        to={item.href}
+                                                        smooth={true}
+                                                        className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
+                                                    >
+                                                        {item.name}
+                                                    </ScrollLink>
+                                                )}
+                                            </div>
                                         ))}
                                     </div>
                                     {/* <div className="py-6">
@@ -382,34 +374,30 @@ export default function Welcome(props) {
                     <ScrollNav />
                 </div>
 
-                
-
                 <VideoHeader />
                 <AboutUs />
                 <div id="services"></div>
                 <PrimaryServices />
-                <GoingGreenSection/>
-                
+                <GoingGreenSection />
+
                 {/* <Benefits /> */}
                 {/* <Process /> */}
                 <Features />
                 <GTRS />
-                <Safety/>
+                <Safety />
                 {/* <Video /> */}
 
-                
                 <Technologies />
                 {/* <Softwares /> */}
-                
+
                 {/* <WhyGoldTiger /> */}
                 <Certifiactesw />
-                
 
                 {/* <News /> */}
                 {/* <OpportuniotiesSection /> */}
                 {/* <ContatcUs />
                 <Branches /> */}
-                
+
                 {/* <Partners/> */}
                 <Footer />
                 <CookiePopup />
