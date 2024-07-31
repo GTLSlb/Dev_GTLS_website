@@ -14,7 +14,7 @@ import Video from "./Component/landingPage/video";
 import GTRS from "./Component/landingPage/GtrsDemo";
 import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
-
+import Map from '../Components/map'
 import News from "./Component/landingPage/News";
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";

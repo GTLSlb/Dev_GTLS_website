@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import L, { marker } from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { ArrowIcon } from "../assets/icons/ArrowIcon";
+// import { ArrowIcon } from "../assets/icons/ArrowIcon";
 import Roadworks from "../assets/pictures/Roadworks.png";
 import Crash from "../assets/pictures/Crash.png";
 import Hazard from "../assets/pictures/Hazard.png";
