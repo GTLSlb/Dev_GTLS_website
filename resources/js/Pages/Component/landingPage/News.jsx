@@ -20,6 +20,7 @@ import Navmannews from "../../../assets/news/Navmannews.webp";
 import greennews from "../../../assets/news/greennews.webp";
 import jost5news from "../../../assets/news/Jost5.webp";
 import BPWnews from "../../../assets/news/BPW.webp";
+import Conferencnews from "../../../assets/news/Conference.jpeg";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -31,6 +32,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 20,
+        title: "GTLS Shines at the 2024 Road Freight NSW Conference & Awards Day!",
+        href: "#",
+        description: `Mr. Imad El Masri, director of GTLS, made a notable contribution at the 2024 Road Freight NSW Conference & Awards day. This event was a significant gathering for networking and discussing pivotal transformations reshaping the road freight industry in NSW.`,
+        imageUrl: Conferencnews,
+        date: "July 30, 2024",
+        datetime: "2024-5-11",
+        category: { title: "", href: "#" },
+    },
     {
         id: 19,
         title: "GTLS Unleashes the Power of BPW: A Recap of Our Wheel Hubs and Bearings Training!",
@@ -423,7 +434,7 @@ export default function News() {
                                                 <img
                                                     src={post.imageUrl}
                                                     alt={post.title}
-                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover  w-full "
+                                                    className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full "
                                                 />
                                                 <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
