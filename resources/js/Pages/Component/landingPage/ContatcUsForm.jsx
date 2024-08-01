@@ -102,25 +102,6 @@ class ContactUsForm extends Component {
                                         Full name
                                     </label>
                                 </div>
-                                {/* <div className="mt-2.5 border-b border-goldt">
-                                    <label
-                                        htmlFor="name"
-                                        className="transform transition-all absolute top-0 left-0 h-full flex items-center pl-2 text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-full peer-valid:-translate-y-full group-focus-within:pl-0 peer-valid:pl-0 text-goldt"
-                                    >
-                                        Full name
-                                    </label>
-                                    <input
-                                        required
-                                        autoComplete="off"
-                                        type="text"
-                                        // placeholder="Full name"
-                                        id="name"
-                                        name="name"
-                                        className="appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-goldt"
-                                        onChange={this.handleChange}
-                                        value={this.state.name}
-                                    />
-                                </div> */}
                                 {errors.name && (
                                     <div className="error">
                                         {errors.name[0]}
@@ -148,25 +129,6 @@ class ContactUsForm extends Component {
                                         Company
                                     </label>
                                 </div>
-                                {/* <div className="mt-2.5 border-b border-goldt">
-                                    <label
-                                        htmlFor="company"
-                                        className="block text-sm mb-2 font-semibold leading-6 text-gray-300"
-                                    >
-                                        Company
-                                    </label>
-                                    <input
-                                        required
-                                        autoComplete="off"
-                                        type="text"
-                                        id="company"
-                                        // placeholder="Company"
-                                        name="company"
-                                        className="appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-goldt"
-                                        onChange={this.handleChange}
-                                        value={this.state.company}
-                                    />
-                                </div> */}
                                 {errors.company && (
                                     <div className="error">
                                         {errors.company[0]}
@@ -192,25 +154,6 @@ class ContactUsForm extends Component {
                                     Email
                                 </label>
                             </div>
-                            {/* <div className="mt-2.5 border-b border-goldt">
-                                <label
-                                    htmlFor="email"
-                                    className="block text-sm mb-2 font-semibold leading-6 text-gray-300"
-                                >
-                                    Email
-                                </label>
-                                <input
-                                    required
-                                    autoComplete="off"
-                                    type="email"
-                                    // placeholder="Email"
-                                    id="email"
-                                    name="email"
-                                    onChange={this.handleChange}
-                                    value={this.state.email}
-                                    className="appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-goldt"
-                                />
-                            </div> */}
                             {errors.email && (
                                 <div className="error text-goldt">
                                     {errors.email[0]}
@@ -235,30 +178,6 @@ class ContactUsForm extends Component {
                                     Phone
                                 </label>
                             </div>
-                            {/* <div className="mt-2.5 border-b border-goldt">
-                                {isTyping ? (
-                                    <label
-                                        htmlFor="phone"
-                                        className="block  text-sm mb-2 font-semibold leading-6 text-gray-300"
-                                    >
-                                        Phone
-                                    </label>
-                                ) : (
-                                    <div></div>
-                                )}
-
-                                <input
-                                    required
-                                    type="text"
-                                    autoComplete="off"
-                                    id="phone"
-                                    placeholder="Phone"
-                                    name="phone"
-                                    onChange={this.handleChange}
-                                    value={this.state.phone}
-                                    className="appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-goldt"
-                                />
-                            </div> */}
                             {errors.phone && (
                                 <div className="error">{errors.phone[0]}</div>
                             )}
@@ -289,10 +208,10 @@ class ContactUsForm extends Component {
                                 onChange={this.handleRecaptchaChange}
                                 onExpired={this.handleRecaptchaExpired}
                                 className="mt-4 flex justify-center"
-                            size="normal" // Set the desired size here: "compact", "normal", or "invisible"
-                            render="explicit" // Use "explicit" rendering
-                            theme="dark" // Set the desired theme: "light" or "dark"
-                            style={{ transform: 'scale(0.8)' }} // Use CSS transform to adjust the size
+                                size="normal" // Set the desired size here: "compact", "normal", or "invisible"
+                                render="explicit" // Use "explicit" rendering
+                                theme="dark" // Set the desired theme: "light" or "dark"
+                                style={{ transform: "scale(0.8)" }} // Use CSS transform to adjust the size
                             />
                             <div className="mt-8 flex justify-right w-full">
                                 <button
@@ -302,7 +221,7 @@ class ContactUsForm extends Component {
                                 >
                                     {isLoading ? (
                                         <div className="inset-0 flex justify-center items-center bg-opacity-50">
-                                            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-dark"></div>
+                                            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-dark" />
                                         </div>
                                     ) : (
                                         "Send"

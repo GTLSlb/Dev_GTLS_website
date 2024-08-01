@@ -14,20 +14,13 @@ import Video from "./Component/landingPage/video";
 import GTRS from "./Component/landingPage/GtrsDemo";
 import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
-
-import News from "./Component/landingPage/News";
+import Map from '../Components/map'
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
-import OpportuniotiesSection from "./Component/landingPage/OpportunitiesSection";
 import Technologies from "./Component/landingPage/Technologies";
-import WhyGoldTiger from "./Component/landingPage/whyGoldTiger";
 import ScrollNav from "./Component/scrollnavmain";
-import { Softwares } from "./Component/landingPage/Softwares";
 import ScrollToTopButton from "@/Components/ScrollUpButton";
-import Benefits from "./Component/landingPage/Benefits";
 import Process from "./Component/landingPage/Process";
-import Features from "./Component/landingPage/Features";
-import Safety from "./Component/landingPage/Safety";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import {
@@ -37,6 +30,9 @@ import {
 } from "@heroicons/react/20/solid";
 import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
+import Features from "./Component/landingPage/Features";
+import Safety from "./Component/landingPage/Safety";
+import Subscribe from "@/Components/Subscribe";
 
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
@@ -386,7 +382,8 @@ export default function Welcome(props) {
                 <GTRS />
                 <Safety />
                 {/* <Video /> */}
-
+                <Map />          
+                <Subscribe />         
                 <Technologies />
                 {/* <Softwares /> */}
 

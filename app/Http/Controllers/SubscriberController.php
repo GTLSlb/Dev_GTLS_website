@@ -2,15 +2,81 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SubscriberMail;
 use App\Models\ActionHistory;
+use App\Models\UnsubscribeReason;
 use App\Models\Subscribers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Log;
-use App\Mail\ContactUsFormMail;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class SubscriberController extends Controller
 {
+    public function addSubscriber($email)
+    {
+        // $validator = Validator::make(['email' => $email], [
+        //     'email' => 'required|email|unique:subscribers,email'
+        // ]);
+    
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Invalid email or email already exists.',
+        //         'errors' => $validator->errors()
+        //     ], 400);
+        // }
+    
+        DB::beginTransaction();
+
+        try {
+            // Check if the subscriber already exists
+            $subscriber = Subscribers::where('email', $email)->first();
+    
+            if ($subscriber) {
+                // If subscriber exists, update the status to 1
+                $subscriber->status = 1;
+                $subscriber->save();
+            } else {
+                // If subscriber doesn't exist, create a new record
+                $subscriber = new Subscribers();
+                $subscriber->email = $email;
+                $subscriber->status = 1;
+                $subscriber->first_send = 0;
+                $subscriber->save();
+            }
+    
+            DB::commit();
+    
+            $data = [
+                'email' => $email,
+                'id' => $subscriber->id,
+            ];
+    
+            // Return response before sending the email
+            $response = response()->json([
+                'success' => true,
+                'message' => 'You successfully subscribed to our notifications.',
+                'data' => $subscriber
+            ], 200);
+    
+            // Send the email after returning the response
+            Mail::to($email)->send(new SubscriberMail($data));
+    
+            return $response;
+    
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error occurred while updating the email received status: ' . $e->getMessage());
+    
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating the email received status.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
     public function getById($id)
     {
         // Retrieve the record by ID
@@ -45,19 +111,28 @@ class SubscriberController extends Controller
         return response()->json($item);
     }
 
-    public function unsubscribe($id){
-
+    public function unsubscribe(Request $request)
+    {
+        $id = $request->input('id');
+        $note = $request->input('note');
+    
         $item = Subscribers::findOrFail($id);
         $history = new ActionHistory();
         $history->action_id = 2;
         $history->user_id = $id;
         $history->date = now();
         $history->save();
-        
+    
+        $reason = new UnsubscribeReason(); 
+        $reason->subscriber_id = $id;
+        $reason->reason = $note;
+        $reason->action_history_id = $history->id;
+        $reason->save();
+
         $item->update([
             'status' => 2
         ]);
-
+    
         return response()->json($item);
     }
 

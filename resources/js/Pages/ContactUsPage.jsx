@@ -65,26 +65,6 @@ export default function Capability(props) {
                 </div>
                 <ContatcUs />
                 <Branches />
-                
-
-                {/* <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
-                    <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
-                        <h2 className="text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                            About Gold<span className="text-white">Tiger</span>
-                        </h2>
-                    </div>
-                </div> */}
-                {/* <div className="relative isolate overflow-hidden  py-16 sm:py-16 mb-10">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="relative lg:order-last lg:col-span-5">
-                            
-                            
-                        </div>
-
-
-                    </div>
-                </div> */}
-
                 <Footer />
             </div>
         </>

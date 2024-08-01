@@ -65,11 +65,13 @@ Route::post('/uploadPO', function (Request $request) {
 
 Route::get('subscriber/{id}', [SubscriberController::class, 'getById']);
 
+Route::get('add-subscriber/{email}', [SubscriberController::class, 'addSubscriber']);
+
 Route::get('allSubscribers', [SubscriberController::class, 'getAll']);
 
 Route::get('subscribe/{id}', [SubscriberController::class, 'subscribe']);
 
-Route::get('unsubscribe/{id}', [SubscriberController::class, 'unsubscribe']);
+Route::post('/unsubscribe', [SubscriberController::class, 'unsubscribe']);
 
 Route::post('add-history/{id}/{action}', [ActionHistoryController::class, 'AddHistory']);
 
