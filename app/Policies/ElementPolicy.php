@@ -41,7 +41,8 @@ class ElementPolicy
     public function update(User $user, Element $element): bool
     {
         //
-        return $user->role_id == null;
+        // return $user->role_id == null;
+        return true;
     }
 
     /**

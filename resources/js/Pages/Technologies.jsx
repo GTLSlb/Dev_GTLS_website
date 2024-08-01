@@ -3,7 +3,7 @@ import jobs from "../assets/backgrounds/Goldtiger-Tech.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import { useState, useEffect } from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-
+import DOMPurify from "dompurify";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import Navbars from "./Component/Navbars";
@@ -34,7 +34,7 @@ export default function Technology(props) {
     useEffect(() => {
         axios.get('/technologiesPage')
           .then(response => {
-              // console.log('fetching data:',response.data);
+              console.log('fetching data:',response.data);
               setTechnology(response.data);
           })
           .catch(error => {
@@ -95,6 +95,7 @@ export default function Technology(props) {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
+
 
     return (
         <>

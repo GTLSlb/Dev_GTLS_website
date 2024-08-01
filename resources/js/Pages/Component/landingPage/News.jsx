@@ -39,8 +39,37 @@ export default function News(props) {
 
     const getPageDesc=props.getPageDesc;
     const getPosts=props.getPosts;
-    
+    console.log(getPosts)
     const sliderRef = useRef(null);
+
+    // These two below func are to change the format of date to named month instead of numberd month
+    function getMonthName(monthNumber) {
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        return months[monthNumber - 1];
+    }
+
+    function formatDateString(dateString) {
+        const [year, month, day] = dateString.split("-");
+        const monthName = getMonthName(parseInt(month, 10));
+        return ` ${monthName} ${day} ,${year}`;
+    }
+
+    // Example usage
+    const originalDate = "2022-04-19";
+    const formattedDate = formatDateString(originalDate);
 
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
@@ -132,7 +161,7 @@ export default function News(props) {
             ? carousel.current.scrollWidth - carousel.current.offsetWidth
             : 0;
     }, []);
-
+    
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -146,56 +175,71 @@ export default function News(props) {
                             <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
                                 {getPageDesc?.name}
                             </h2>
-                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getPageDesc?.description }}></div>
+                            <div
+                                className="mt-3 text-smooth"
+                                dangerouslySetInnerHTML={{
+                                    __html: getPageDesc?.description,
+                                }}
+                            ></div>
                         </div>
 
                         <div className="grid lg:grid-cols-3 gap-5">
-                        {getPosts?.map((post) => (
+                            {getPosts?.map((post) => (
                                 <div key={post.id} className="">
-                                    <Link href={route("news", { id: post.slug})} className="">
+                                    <Link
+                                        href={route("news", { id: post.slug })}
+                                        className=""
+                                    >
                                         <div className="h-full ">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={"/app/webimages/"+post?.cover_image}
-                                                alt={post?.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.created_at}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {/* {post.date} */}
-                                                        {post?.date?.split('T')[0]}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
-                                                        <span className="absolute inset-0" />
-                                                        {post?.title}
-                                                    </h3>
-                                                    <dd
-                                                        className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: post?.desc,
-                                                        }}
-                                                    ></dd>
-                                                </div>
+                                            <div className="relative w-full www">
+                                                <img
+                                                    src={
+                                                        "/app/webimages/" +
+                                                        post?.cover_image
+                                                    }
+                                                    alt={post?.title}
+                                                    className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full  "
+                                                />
+                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
-                                        </article>
+                                            <article
+                                                key={post.id}
+                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
+                                            >
+                                                <div className="max-w-xl mx-4 mb-6  mt-12">
+                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
+                                                        <time
+                                                            dateTime={
+                                                                post.created_at
+                                                            }
+                                                            className="text-goldl font-bold"
+                                                        >
+                                                            {/* {post.date} */}
+                                                            {
+                                                                formatDateString(post?.date?.split(
+                                                                    "T"
+                                                                )[0])
+                                                            }
+                                                        </time>
+                                                    </div>
+                                                    <div className="group relative">
+                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
+                                                            <span className="absolute inset-0" />
+                                                            {post?.title}
+                                                        </h3>
+                                                        <dd
+                                                            className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: post?.desc,
+                                                            }}
+                                                        ></dd>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
                                     </Link>
                                 </div>
                             ))}
-                    
-
                         </div>
 
                         <Slider ref={sliderRef} {...settings}></Slider>

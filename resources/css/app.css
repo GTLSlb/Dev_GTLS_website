@@ -385,3 +385,17 @@ html {
       border-image: linear-gradient(to right, transparent 5px, black 5px) 1;
     }
   }
+    .colored-disc {
+      position: relative;
+      list-style: none;
+      padding-left: 30px;
+    }
+  
+    .colored-disc::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #ebcb7a;
+      font-size: 2.2em;
+      line-height: 0.7;
+    }

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use AlexAzartsev\Heroicon\Heroicon;
 use Illuminate\Support\Facades\DB;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Murdercode\TinymceEditor\TinymceEditor;
 
 class Element extends Resource
 {
@@ -84,21 +85,28 @@ class Element extends Resource
                         $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
                     }
                 }),
-            Trix::make('content')->alwaysShow()
-                ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
-                    $elementtypeId = (int) $formData->elementtype;
+
+            TinymceEditor::make(__('content'), 'content')
+                ->rules(['required', 'min:20'])
+                ->fullWidth()
+                ->help(__('The content of the article.')),
+            // Trix::make('content')->alwaysShow()
+            //     ->dependsOn('elementtype', function ($field, NovaRequest $request, $formData) {
+            //         $elementtypeId = (int) $formData->elementtype;
             
-                    // Query the database to check the contain_description field
-                    $elementType = DB::table('element_types')->find($elementtypeId);
+            //         // Query the database to check the contain_description field
+            //         $elementType = DB::table('element_types')->find($elementtypeId);
                 
-                    if ($elementType && $elementType->contain_content == 1) {
-                        $field->rules([
-                            'required',
-                        ]);
-                    } else {
-                        $field->hide();
-                    }
-                }),
+            //         if ($elementType && $elementType->contain_content == 1) {
+            //             $field->rules([
+            //                 'required',
+            //             ]);
+            //         } else {
+            //             $field->hide();
+            //         }
+            //     }),
+
+
             Image::make('Image','image')   
                 ->deletable(false) // deny deleting
                 ->prunable()
