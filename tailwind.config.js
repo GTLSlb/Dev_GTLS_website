@@ -1,4 +1,5 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const {nextui} = require("@nextui-org/react");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -60,5 +61,6 @@ module.exports = {
         require("@tailwindcss/line-clamp"),
         require("@tailwindcss/aspect-ratio"),
         require("tailwindcss-animated"),
+        nextui(),
     ],
 };

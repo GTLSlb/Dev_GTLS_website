@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ActionHistoryController;
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -60,5 +62,17 @@ Route::post('/uploadPO', function (Request $request) {
     }
 });
 
-// Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->middleware(['auth', 'api']);
-// Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
+
+Route::get('subscriber/{id}', [SubscriberController::class, 'getById']);
+
+Route::get('add-subscriber/{email}', [SubscriberController::class, 'addSubscriber']);
+
+Route::get('allSubscribers', [SubscriberController::class, 'getAll']);
+
+Route::get('subscribe/{id}', [SubscriberController::class, 'subscribe']);
+
+Route::post('/unsubscribe', [SubscriberController::class, 'unsubscribe']);
+
+Route::post('add-history/{id}/{action}', [ActionHistoryController::class, 'AddHistory']);
+
+Route::get('receivedEmail/{id}', [SubscriberController::class, 'receivedEmail']);

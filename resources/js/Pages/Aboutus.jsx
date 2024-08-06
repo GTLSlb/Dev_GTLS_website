@@ -5,7 +5,7 @@ import pallet from "../assets/pictures/pallet.webp";
 import Team from "../Pages/Component/landingPage/Team";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import DOMPurify from "dompurify";
 import Footer from "./Component/landingPage/Footer";
 import Navbars from "./Component/navbars";
 import { JsonTypes } from "@azure/msal-common/dist/utils/Constants";
@@ -36,6 +36,37 @@ export default function AboutUs(props) {
 
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
 
+    //////////////////////////////////////////////
+    // This function is to fix the coreValues form
+    //////////////////////////////////////////////
+    const modifyContent = (title, content) => {
+        // Sanitize and create a div to hold the content
+        const sanitizedContent = DOMPurify.sanitize(content);
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = sanitizedContent;
+        const innerContent = tempDiv.innerText || tempDiv.textContent;
+        const container = document.createElement("div");
+
+        // First span that contain the title of core vlaues
+
+        const span = document.createElement("span");
+        span.innerHTML = title;
+        // Styling of title
+
+        span.style.color = "#ebcb7a";
+        span.style.fontWeight = "bold";
+        span.style.marginRight = "4px";
+
+        // The second span that contain the content of each Core values
+        const span2 = document.createElement("span");
+        span2.innerHTML = innerContent;
+        container.appendChild(span);
+        container.appendChild(span2);
+
+        // console.log(container.innerHTML);
+        return container.innerHTML;
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -61,7 +92,9 @@ export default function AboutUs(props) {
 
                 // Set states with data
                 setHeader(headerResponse.data);
+                console.log(headerResponse.data);
                 setCoreValue(coreValueResponse.data);
+                // console.log(coreValueResponse.data)
                 setSolutions(solutionsResponse.data);
                 setTeam(teamResponse.data);
                 setfooter(footerResponse.data);
@@ -130,8 +163,7 @@ export default function AboutUs(props) {
                             <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                         </div>
 
-                        <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
-                        </div>
+                        <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8"></div>
                         <div className="relative isolate overflow-hidden  py-16 sm:py-16 mb-10">
                             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                                 <div className="relative lg:order-last lg:col-span-5">
@@ -159,22 +191,27 @@ export default function AboutUs(props) {
                                             }}
                                         ></div>
                                     </figure>
-                                    {getCoreValue?.elements?.map((feature) => (
-                                        <div
-                                            key={feature.id}
-                                            className="mt-3 text-smooth pl-5"
-                                        >
-                                            <span className="text-goldt font-bold">
-                                                - {feature.name}
-                                            </span>
+                                    {getCoreValue?.elements?.map(
+                                        (feature, index) => (
                                             <div
-                                                className="mt-3 text-smooth pl-5"
-                                                dangerouslySetInnerHTML={{
-                                                    __html: getCoreValue?.description,
-                                                }}
-                                            ></div>
-                                        </div>
-                                    ))}
+                                                key={feature.id}
+                                                className="mt-3 text-smooth "
+                                            >
+                                                <div
+                                                    className="mt-3 text-smooth "
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: modifyContent(
+                                                            feature?.name,
+                                                            getCoreValue
+                                                                ?.elements[
+                                                                index
+                                                            ]?.content
+                                                        ),
+                                                    }}
+                                                ></div>
+                                            </div>
+                                        )
+                                    )}
                                     <figure className="mb-10">
                                         <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
                                             {getSolutions?.name}

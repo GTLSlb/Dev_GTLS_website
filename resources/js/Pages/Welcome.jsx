@@ -14,7 +14,7 @@ import Video from "./Component/landingPage/video";
 import GTRS from "./Component/landingPage/GtrsDemo";
 import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
-
+import Map from "@/Components/map";
 import News from "./Component/landingPage/News";
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
@@ -40,7 +40,7 @@ import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
 import { BounceLoader } from "react-spinners";
 import TrainNotification from "@/Components/TrainNotification";
 import Navbars from "./Component/Navbars";
-
+import Subscribe from "@/Components/Subscribe";
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
     { id: 2, name: "Services", href: "services", link: false },
@@ -530,7 +530,10 @@ export default function Welcome(props) {
                             getAbout={getAbout}
                             setGetAbout={setGetAbout}
                         />
-                        <div id="services" className="lg:mb-32 hidden lg:block"></div>
+                        <div
+                            id="services"
+                            className="lg:mb-32 hidden lg:block"
+                        ></div>
                         <PrimaryServices
                             getservices={getservices}
                             setServices={setServices}
@@ -547,7 +550,8 @@ export default function Welcome(props) {
                         <GTRS getGtrs={getGtrs} />
                         <Safety getSafety={getSafety} />
                         {/* <Video /> */}
-
+                        <Map />
+                        <Subscribe />
                         <Technologies gettechnologies={gettechnologies} />
                         {/* <Softwares /> */}
 

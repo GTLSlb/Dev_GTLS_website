@@ -46,7 +46,7 @@ import Navbars from "./Component/Navbars";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import DOMPurify from "dompurify";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -81,7 +81,20 @@ function SamplePrevArrow(props) {
         </div>
     );
 }
+const modifyContent = (content) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = DOMPurify.sanitize(content);
+    console.log(tempDiv);
+    const bulletDiv = document.createElement("div");
+    // bulletDiv.style.width= '2px'
 
+    const listItems = tempDiv.querySelectorAll("li");
+    listItems.forEach((item) => {
+        item.classList.add("colored-disc");
+    });
+
+    return tempDiv.innerHTML;
+};
 export default function NewsPage(props) {
     const { postslug } = usePage().props;
     const [getfooter, setfooter] = useState([]);
@@ -188,6 +201,30 @@ export default function NewsPage(props) {
 
     console.log(getPosts);
 
+    function getMonthName(monthNumber) {
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        return months[monthNumber - 1];
+    }
+
+    function formatDateString(dateString) {
+        const [year, month, day] = dateString.split("-");
+        const monthName = getMonthName(parseInt(month, 10));
+        return ` ${monthName} ${day} ,${year}`;
+    }
+
     return (
         <>
             <Head title="News" />
@@ -224,12 +261,12 @@ export default function NewsPage(props) {
                                 dateTime={postslug.date}
                                 className="text-gray-500 font-bold"
                             >
-                                {postslug.date.split("T")[0]}
+                                {formatDateString(postslug.date.split("T")[0])}
                             </time>
                             <dd
                                 className="mt-6 text-lg leading-8 text-gray-200 text-justify"
                                 dangerouslySetInnerHTML={{
-                                    __html: postslug.desc,
+                                    __html: modifyContent(postslug.desc),
                                 }}
                             ></dd>
                             <figure className="mt-16">
