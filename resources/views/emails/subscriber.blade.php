@@ -29,7 +29,7 @@
         <p>
             If you are unsure you can unsubscribe from our notifications
         </p>
-        <a href="http://127.0.0.1:8000/Unsubscribe/{{ $data['id'] }} " target="_blank">
+        <a href="{{ config('app.url') }}/Unsubscribe/{{ $data['id'] }}" target="_blank">
             Unsubscribe
         </a>
     </div>

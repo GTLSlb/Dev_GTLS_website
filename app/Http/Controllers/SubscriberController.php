@@ -120,14 +120,9 @@ class SubscriberController extends Controller
         $history = new ActionHistory();
         $history->action_id = 2;
         $history->user_id = $id;
+        $history->note = $note;
         $history->date = now();
         $history->save();
-    
-        $reason = new UnsubscribeReason(); 
-        $reason->subscriber_id = $id;
-        $reason->reason = $note;
-        $reason->action_history_id = $history->id;
-        $reason->save();
 
         $item->update([
             'status' => 2

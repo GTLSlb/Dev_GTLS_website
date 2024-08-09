@@ -49,9 +49,9 @@ export default function Unsubsribe() {
                             <form className="flex flex-col w-full items-center gap-24">
                                 <Textarea
                                     variant="underlined"
-                                    label="Description"
+                                    label="Reason"
                                     labelPlacement="outside"
-                                    placeholder="Enter your description"
+                                    placeholder="Why are you unsubscribing ?"
                                     className="max-w-lg text-white"
                                     value={note}
                                     onValueChange={setNote}

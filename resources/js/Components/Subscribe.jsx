@@ -117,6 +117,7 @@ function Subscribe() {
                                                     onClick={() => {
                                                         setSuccess(false);
                                                         setStatus();
+                                                        setEmail();
                                                     }}
                                                     className="fill-current h-6 w-6 text-dark cursor-pointer"
                                                     xmlns="http://www.w3.org/2000/svg"
