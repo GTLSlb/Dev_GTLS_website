@@ -26,6 +26,18 @@ import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import Efficiency from "../assets/news/Efficiency.webp";
 import JostCover from "../assets/news/Jost5Cover.jpeg";
 import BBWImage from "../assets/news/BPW.webp";
+import Conferencnews from "../assets/news/Conference.jpeg";
+import Conferencnews2 from "../assets/news/Conference2.jpeg";
+import Conferencnews3 from "../assets/news/Conference3.jpeg";
+import Conferencnews4 from "../assets/news/Conference4.jpeg";
+import Conferencnews5 from "../assets/news/Conference5.jpeg";
+import Conferencnews6 from "../assets/news/Conference6.jpeg";
+import Conferencnews7 from "../assets/news/Conference7.jpeg";
+import Conferencnews8 from "../assets/news/Conference8.jpeg";
+import Conferencnews9 from "../assets/news/Conference9.jpg";
+import Conferencnews10 from "../assets/news/Conference10.jpeg";
+import Conferencnews11 from "../assets/news/Conference11.jpeg";
+
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
@@ -44,6 +56,10 @@ import Navbars from "./Component/Navbars";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -99,37 +115,6 @@ export default function NewsPage(props) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
 
-    const movePrev = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex((prevState) => prevState - 1);
-        }
-    };
-
-    const moveNext = () => {
-        if (
-            carousel.current !== null &&
-            carousel.current.offsetWidth * currentIndex <=
-                maxScrollWidth.current
-        ) {
-            setCurrentIndex((prevState) => prevState + 1);
-        }
-    };
-
-    const isDisabled = (direction) => {
-        if (direction === "prev") {
-            return currentIndex <= 0;
-        }
-
-        if (direction === "next" && carousel.current !== null) {
-            return (
-                carousel.current.offsetWidth * currentIndex >=
-                maxScrollWidth.current
-            );
-        }
-
-        return false;
-    };
-
     useEffect(() => {
         if (carousel !== null && carousel.current !== null) {
             carousel.current.scrollLeft =
@@ -143,14 +128,8 @@ export default function NewsPage(props) {
             : 0;
     }, []);
 
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const { id } = usePage().props;
-
-    const handleFileUpload = (file) => {
-        setResumeFile(file);
-        setResumePreview(URL.createObjectURL(file));
-    };
 
     useEffect(() => {
         let prevScrollPosition = window.pageYOffset;
@@ -180,7 +159,6 @@ export default function NewsPage(props) {
 
             imgUrl: postpic,
         },
-
         {
             id: 1,
             title: "GOLD TIGER IN $100M BUSINESS EXPANSION",
@@ -192,7 +170,6 @@ export default function NewsPage(props) {
 
             imgUrl: trucks,
         },
-
         {
             id: 2,
             title: "TC8300 Touch Computer implementation",
@@ -560,6 +537,71 @@ export default function NewsPage(props) {
 
             imgUrl: BBWImage,
         },
+        {
+            id: 20,
+            title: "GTLS Shines at the 2024 Road Freight NSW Conference & Awards Day!",
+            content1: `Mr. Imad El Masri, director of GTLS, made a notable contribution at the 2024 Road Freight NSW Conference & Awards day. This event was a significant gathering for networking and discussing pivotal transformations reshaping the road freight industry in NSW.
+
+            Key highlights included:
+            `,
+            list: [
+                {
+                    id: 0,
+                    title: "Government Initiatives:",
+                    content:
+                        "Mr. John Graham, Minister for Roads, and Ms. Jenny Aitchison, Minister for Transport and Regional Roads, emphasised making Sydney freight-friendly and improving regional roads.",
+                },
+                {
+                    id: 1,
+                    title: "Industry Issues",
+                    content: [
+                        "Various speakers addressed crucial issues such as compliance, Chain of Responsibility (CoR), and alternative energy sources.",
+                        "Key topics included road safety, load restraint, speed management, and fatigue management.",
+                    ],
+                },
+                {
+                    id: 2,
+                    title: "Environmental Innovations:",
+                    content: [
+                        "Mr. Aaron Smith discussed the shift to hydrogen/diesel dual fuel.",
+                        "BP representatives outlined the benefits of biodiesel.",
+                    ],
+                },
+                {
+                    id: 3,
+                    title: "Driver Health & Workplace Relations:",
+                    content:
+                        "Discussions centred around the latest changes to industrial relations laws and amendments to the Workplace Relations Act.",
+                },
+                {
+                    id: 4,
+                    title: "Interactive Learning:",
+                    content:
+                        "The conference featured a driving simulator, providing attendees with hands-on experience and highlighting the latest in driver training technology.",
+                },
+            ],
+            content2: `The conference provided a comprehensive exploration of the industry’s most pressing challenges and promising innovations, including PBLIS amendments, new compliance measures, and advancements in automation and security.
+
+            The event underscored the importance of collaboration and innovation in driving the road freight industry forward.
+            
+            Thanks to the organisers for a successful conference!
+            
+            #GTLS #RoadFreight #NSW #IndustryInnovation #Compliance #Sustainability #DriverHealth #WorkplaceRelations`,
+            imgUrl: Conferencnews,
+            imgSliders: [
+                Conferencnews,
+                Conferencnews2,
+                Conferencnews3,
+                Conferencnews4,
+                Conferencnews5,
+                Conferencnews6,
+                Conferencnews7,
+                Conferencnews8,
+                Conferencnews9,
+                Conferencnews10,
+                Conferencnews11,
+            ],
+        },
     ];
 
     const posts = [
@@ -750,8 +792,6 @@ export default function NewsPage(props) {
             datetime: "2020-03-16",
             category: { title: "", href: "#" },
         },
-
-        // More posts...
     ];
 
     const pageUrl = window.location.href;
@@ -772,9 +812,18 @@ export default function NewsPage(props) {
                 {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 ? (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={contentJson[id].imgUrl}
+                            src={contentJson[id].imgUrl[0]}
                             alt="news"
                             className="h-[40rem] w-full object-cover  "
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-dark" />
+                    </div>
+                ) : id == 20 ? (
+                    <div aria-hidden="true" className="relative">
+                        <img
+                            src={contentJson[id].imgUrl}
+                            alt="news"
+                            className="h-[40rem] w-full object-cover object-top "
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
@@ -791,10 +840,6 @@ export default function NewsPage(props) {
 
                 <div className="bg-dark pb-10 px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
-                        {/* <p className="text-base font-semibold leading-7 text-indigo-600">
-                            Introducing
-                        </p> */}
-                        {/* {contentJson.map((post) => ( */}
                         <a
                             href="/news"
                             className="relative inline-flex items-center justify-center text-black "
@@ -841,9 +886,27 @@ export default function NewsPage(props) {
                                                     {item.title}
                                                 </span>
                                                 {item.content ? (
-                                                    <div className="text-gray-200">
-                                                        {item.content}
-                                                    </div>
+                                                    Array.isArray(
+                                                        item.content
+                                                    ) ? (
+                                                        <ul className="text-gray-200 list-disc list-inside">
+                                                            {item.content.map(
+                                                                (i) => (
+                                                                    <li
+                                                                        key={
+                                                                            i.id
+                                                                        }
+                                                                    >
+                                                                        {i}
+                                                                    </li>
+                                                                )
+                                                            )}
+                                                        </ul>
+                                                    ) : (
+                                                        <div className="text-gray-200">
+                                                            {item.content}
+                                                        </div>
+                                                    )
                                                 ) : null}
                                             </div>
                                         </li>
@@ -898,6 +961,28 @@ export default function NewsPage(props) {
                                         Your browser does not support the video
                                         tag.
                                     </video>
+                                ) : contentJson[id].imgSliders &&
+                                  Array.isArray(contentJson[id].imgSliders) ? (
+                                    <Swiper
+                                        navigation={true}
+                                        modules={[Navigation]}
+                                        className="mySwiper"
+                                    >
+                                        {contentJson[id].imgSliders.map(
+                                            (item, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <img
+                                                        className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
+                                                        src={item}
+                                                        alt={
+                                                            contentJson[id]
+                                                                .title
+                                                        }
+                                                    />
+                                                </SwiperSlide>
+                                            )
+                                        )}
+                                    </Swiper>
                                 ) : (
                                     <img
                                         className="aspect-video rounded-xl bg-gray-50 object-cover"

@@ -280,7 +280,7 @@ export default function Login({ status, canResetPassword }) {
                                     type="submit"
                                 >
                                     {loading ? (
-                                        <AiOutlineLoading3Quarters className="animate-spin" />
+                                        <AiOutlineLoading3Quarters className="animate-spin w-5 h-5" />
                                     ) : (
                                         "Sign In"
                                     )}
