@@ -137,6 +137,49 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
+    const [appsImgs, setAppsImgs] = useState([]);
+    const [isFetchingImg, setIsFetchingImg] = useState(true);
+    const fetchImageData = async (picName, app) => {
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/getAppLogo",
+                responseType: "blob", // Set the expected response type as 'blob'
+                data: {
+                    filename: picName,
+                },
+            });
+            const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: blobUrl,
+            }));
+        } catch (error) {
+            console.log(error);
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: "/icons/NoPhoto.jpg",
+            }));
+        }
+    };
+
+    useEffect(() => {
+        if (filteredApps?.length > 0) {
+            filteredApps?.forEach((app) => {
+                if (!appsImgs[app.AppId]) {
+                    // Check if the image URL is not already loaded
+                    fetchImageData(app?.AppPic, app);
+                }
+            });
+        }
+    }, [filteredApps]);
+
+    useEffect(() => {
+        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
+        if (appsImgsArray?.length == filteredApps?.length) {
+            setIsFetchingImg(false);
+        }
+    }, [appsImgs, filteredApps]);
 
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
@@ -298,7 +341,7 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`${app.AppPic}`}
+                                                              src={appsImgs[app.AppId]}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />

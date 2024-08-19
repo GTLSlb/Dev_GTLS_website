@@ -73,7 +73,8 @@ class LoginController extends Controller
                     $tokenURL = $_ENV['GTAM_API_URL'];
                     $tokenRes = Http::withHeaders($TokenHeaders)
                     ->asForm()
-                    ->post("$tokenURL" . "/Token", $TokenBody);
+                    ->post("$tokenURL" . "Token", $TokenBody);
+
                     if($responseData[0]['TypeId'] == 1) // the user is a customer
                     {
                         $user = new Customer($responseData[0]);
@@ -84,29 +85,31 @@ class LoginController extends Controller
                     else{ // the user is a driver
                         $user = new Driver($responseData[0]);
                     }
+                        
                     if ($tokenRes->successful()) {
-
+                        
                         $token = $tokenRes->json();
                         $cookieName = 'access_token';
                         $cookieValue = $token['access_token'];
-                        $expiry = 60 * 60 * 24; // 24 hours
+                        // $expiry = $token['expires_in'];
+                        $expiry = 60 * 60 * 24; //24h
+                        //$expiry = 60;
                         $expirationTime = time() + $expiry;
-                        
-                        // Set cookies for the domain .gtls.store
-                        setcookie($cookieName, $cookieValue, $expirationTime, '/', $_ENV['SESSION_DOMAIN'], true, false);
-                        setcookie('gtfm_refresh_token', $token['refresh_token'], $expirationTime, '/', $_ENV['SESSION_DOMAIN'], true, false);
-                    
+                        setcookie($cookieName, $cookieValue, $expirationTime, '/', '', true);
+                        //dd($expirationTime);
+                        setcookie('web_refresh_token', $token['refresh_token'], $expirationTime, '/', '', true);
+                            
                         $userId = $user['UserId'];
                         $request->session()->regenerate();
                         $request->session()->put('user', $user);
                         $request->session()->put('user_id', $userId);
                         $request->session()->put('newRoute', route('loginapi'));
-                    
+
                         $sessionId = $request->session()->getId();
                         $payload = $request->session()->get('_token');
                         $userSession = $request->session()->get('user');
                         $user = json_encode($userSession->getAttributes());
-                    
+
                         $lastActivity = time();
                         DB::table('custom_sessions')->insert([
                             'id' => $sessionId,
@@ -117,17 +120,16 @@ class LoginController extends Controller
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);
-                        
+                        //dd($request->session()->get('user')->UserId);
                         $request->session()->save();
-                    
-                        if ($request->session()->get('newRoute') && $request->session()->get('user')) {
-                            return response($request, 200);
+                            if ($request->session()->get('newRoute') && $request->session()->get('user')) {
+                                return response($request, 200);
+                            }
+                        }else{
+                            $errorMessage = 'Something went wrong, try again later';
+                            $statusCode = 500;
+                            return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
                         }
-                    } else {
-                        $errorMessage = 'Something went wrong, try again later';
-                        $statusCode = 500;
-                        return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
-                    }
                     
 
                 } else {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\ContactFormController;
@@ -200,6 +201,8 @@ Route::middleware('custom')->group(function () {
     Route::get('/findUserById/{user_id}', [RegisteredUserController::class, 'searchUserByName']);
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
+    Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
+    
 });
 
 Route::get('/session-data', function () {
