@@ -95,9 +95,9 @@ class LoginController extends Controller
                         $expiry = 60 * 60 * 24; //24h
                         //$expiry = 60;
                         $expirationTime = time() + $expiry;
-                        setcookie($cookieName, $cookieValue, $expirationTime, '/', '', true);
-                        //dd($expirationTime);
-                        setcookie('web_refresh_token', $token['refresh_token'], $expirationTime, '/', '', true);
+                        
+                        setcookie($cookieName, $cookieValue, $expirationTime, '/', $_ENV['SESSION_DOMAIN'], true, false);
+                        setcookie('gtfm_refresh_token', $token['refresh_token'], $expirationTime, '/', $_ENV['SESSION_DOMAIN'], true, false);
                             
                         $userId = $user['UserId'];
                         $request->session()->regenerate();
