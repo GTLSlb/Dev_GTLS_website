@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
@@ -214,6 +215,9 @@ Route::fallback(function () {
         // Add any data you want to pass to the React component
     ]);
 });
+
+Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
+Route::get('/get-positions', [ApiController::class, 'index']);
 
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');

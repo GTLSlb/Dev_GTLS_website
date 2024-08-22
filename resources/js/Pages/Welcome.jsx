@@ -33,6 +33,8 @@ import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
 import Features from "./Component/landingPage/Features";
 import Safety from "./Component/landingPage/Safety";
 import Subscribe from "@/Components/Subscribe";
+import GoogleMap from "@/Components/GoogleMap";
+import GoogleMapComp from "@/Components/GoogleMap";
 
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
@@ -382,8 +384,9 @@ export default function Welcome(props) {
                 <GTRS />
                 <Safety />
                 {/* <Video /> */}
-                <Map />          
-                <Subscribe />         
+                {/* <Map />      */}
+                <GoogleMapComp />     
+                {/* <Subscribe />          */}
                 <Technologies />
                 {/* <Softwares /> */}
 
