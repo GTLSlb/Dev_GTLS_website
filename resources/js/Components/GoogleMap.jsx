@@ -49,14 +49,24 @@ function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
 
-    function getPositions() {
+    const getPositions = () => {
         axios.get("/get-positions").then((response) => {
             setOriginalData(response.data);
             setMarkerPositions(response.data);
         });
-    }
+    };
+
     useEffect(() => {
+        // Fetch positions initially
         getPositions();
+
+        // Set up an interval to fetch positions every 30 minutes
+        const intervalId = setInterval(() => {
+            getPositions();
+        }, 1800000); // 30 minutes in milliseconds
+
+        // Clean up the interval on component unmount
+        return () => clearInterval(intervalId);
     }, []);
     const mapContainerStyle = {
         height: "800px",

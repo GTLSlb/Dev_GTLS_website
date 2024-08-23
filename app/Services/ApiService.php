@@ -86,7 +86,7 @@ class ApiService
     
             try {
                 $response = Http::withHeaders([
-                    'Ocp-Apim-Subscription-Key' => 'f9ba977e5f7f40658e5c7bdc4cac3f7f',
+                    'Ocp-Apim-Subscription-Key' => '11d61106ecdc4c0e9dfa6ae12b4b3171',
                     'Accept' => 'application/json',
                 ])->get($url);
     
