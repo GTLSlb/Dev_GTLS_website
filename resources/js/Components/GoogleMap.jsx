@@ -75,6 +75,7 @@ function GoogleMapComp() {
             roadName: position.road_name,
             startDate: position.start_date,
             endDate: position.end_date,
+            lastUpdated: position.last_updated,
             advice: position.advice,
             information: position.information,
             reportedBy: position.api_source,
@@ -194,6 +195,7 @@ function GoogleMapComp() {
         NSW: true,
         QLD: true,
         SA: true,
+        VIC: true,
     });
 
     useEffect(() => {
@@ -227,7 +229,6 @@ function GoogleMapComp() {
                             eventType === "Crash")))
             );
         });
-
         setMarkerPositions(data);
     }, [eventFilter, stateFilter, originalData]);
 
@@ -253,6 +254,7 @@ function GoogleMapComp() {
     function handleClose() {
         setMarkerDetails(null);
     }
+
     return (
         <div className=" md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
             <div className="text-goldt text-4xl font-semibold">
@@ -583,12 +585,21 @@ function GoogleMapComp() {
                                                 markerDetails.startDate
                                             )}
                                         </p>
-                                        <p className="font-thin">
-                                            Ends At{" "}
-                                            {formatDateTime(
-                                                markerDetails.endDate
-                                            )}
-                                        </p>
+                                        {markerDetails.endDate ? (
+                                            <p className="font-thin">
+                                                Ends At{" "}
+                                                {formatDateTime(
+                                                    markerDetails.endDate
+                                                )}
+                                            </p>
+                                        ) : (
+                                            <p className="font-thin">
+                                                Last checked at{" "}
+                                                {formatDateTime(
+                                                    markerDetails.lastUpdated
+                                                )}
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                                 {markerDetails.advice && (
@@ -720,6 +731,37 @@ function GoogleMapComp() {
                                             defaultChecked
                                         />
                                         <p className="text-white ">SA</p>
+                                    </div>
+                                    {/* VIC State Filter */}
+                                    <div
+                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
+                                        onClick={(e) =>
+                                            setStateFilter((prev) => ({
+                                                ...prev,
+                                                VIC: !prev.VIC,
+                                            }))
+                                        }
+                                    >
+                                        <Checkbox
+                                            onChange={(e) =>
+                                                setStateFilter((prev) => ({
+                                                    ...prev,
+                                                    VIC: e.target.checked,
+                                                }))
+                                            }
+                                            checked={stateFilter["VIC"]}
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    fontSize: 28,
+                                                },
+                                                color: "#e2b540",
+                                                "&.Mui-checked": {
+                                                    color: "#ebcb7a",
+                                                },
+                                            }}
+                                            defaultChecked
+                                        />
+                                        <p className="text-white ">VIC</p>
                                     </div>
                                 </div>
                                 {/*  Event Filter */}

@@ -23,5 +23,8 @@ class ApiData extends Model
         'event_type',
         'impact',
         'source_url',
+        'advice',
+        'information',
+        'lastUpdated_date',
     ];
 }

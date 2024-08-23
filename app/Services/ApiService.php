@@ -16,6 +16,7 @@ class ApiService
         $this->processSAApi();
         $this->processNSWApi();
         $this->processQLDApi();
+        $this->processVICApi();
     }
 
     private function processSAApi()
@@ -25,32 +26,41 @@ class ApiService
     
             if ($response->successful()) {
                 $data = $response->json();
+
+                Log::info(now());
     
                 foreach ($data['features'] as $feature) {
                     $attributes = $feature['attributes'];
+                    $endDate = $attributes['END_DATE'];
     
-                    ApiData::updateOrCreate(
-                        [
-                            'api_source' => 'SA',
-                            'event_id' => $attributes['ROADWORKS_AND_INCIDENTS_ID'],
-                        ],
-                        [
-                            'description' => $attributes['DESCRIPTION'],
-                            'start_date' => $this->convertTimestampToDatetime($attributes['START_DATE']),
-                            'end_date' => $this->convertTimestampToDatetime($attributes['END_DATE']),
-                            'latitude' => $attributes['LATITUDE'],
-                            'longitude' => $attributes['LONGITUDE'],
-                            'suburb' => $attributes['SUBURB'],
-                            'traffic_direction' => $attributes['TRAFFIC_DIR'],
-                            'road_name' => $attributes['LOCAL_ROAD'], // Road Name
-                            'status' => $attributes['ACTIVE'], // Assuming 'ACTIVE' is status
-                            'event_type' => $attributes['REC_TYPE'], // Event Type
-                            'impact' => $attributes['NO_LANES_CLOSED'], // Impact
-                            'source_url' => $attributes['GIS_LINK_ID'], // Assuming GIS_LINK_ID could be a source identifier
-                            'advice' => $attributes['advice'] ?? '', // Insert combined advice
-                            'information' => $attributes['information'] ?? '',
-                        ]
-                    );
+                    // Convert end date to a DateTime object
+                    $endDateTime = $this->convertComparedTimestampToDatetime($endDate);
+    
+                    // Check if the current time is before the end date
+                    if (now()->lt($endDateTime)) {
+                        ApiData::updateOrCreate(
+                            [
+                                'api_source' => 'SA',
+                                'event_id' => $attributes['ROADWORKS_AND_INCIDENTS_ID'],
+                            ],
+                            [
+                                'description' => $attributes['DESCRIPTION'],
+                                'start_date' => $this->convertTimestampToDatetime($attributes['START_DATE']),
+                                'end_date' => $endDateTime,
+                                'latitude' => $attributes['LATITUDE'],
+                                'longitude' => $attributes['LONGITUDE'],
+                                'suburb' => $attributes['SUBURB'],
+                                'traffic_direction' => $attributes['TRAFFIC_DIR'],
+                                'road_name' => $attributes['LOCAL_ROAD'], // Road Name
+                                'status' => $attributes['ACTIVE'], // Assuming 'ACTIVE' is status
+                                'event_type' => $attributes['REC_TYPE'], // Event Type
+                                'impact' => $attributes['NO_LANES_CLOSED'], // Impact
+                                'source_url' => $attributes['source_url'] ?? '', // Assuming GIS_LINK_ID could be a source identifier
+                                'advice' => $attributes['advice'] ?? '', // Insert combined advice
+                                'information' => $attributes['information'] ?? '',
+                            ]
+                        );
+                    }
                 }
             }
         } catch (\Exception $e) {
@@ -58,61 +68,92 @@ class ApiService
         }
     }
     
+    private function convertComparedTimestampToDatetime($timestamp)
+    {
+        return \Carbon\Carbon::createFromTimestamp($timestamp / 1000); // Assuming the timestamp is in milliseconds
+    }
+    
     private function processVICApi()
     {
-        try {
-            $response = Http::get('https://vicroadsopendata-vicroadsmaps.opendata.arcgis.com/datasets/traffic-volume/api');
-
-            if ($response->successful()) {
-                $data = $response->json();
-
-                foreach ($data['features'] as $feature) {
-                    $attributes = $feature['attributes'];
-                    $geometry = $feature['geometry'];
-
-                    $averageCoordinates = $this->getAverageCoordinates($geometry);
-
-                    $apiData = [
-                        'api_source' => 'VIC',
-                        'event_id' => $attributes['OBJECTID_1'],
-                        'description' => $attributes['HMGNS_LNK_DESC'],
-                        'start_date' => null, // No date fields in the provided JSON, so set to null
-                        'end_date' => null,   // No date fields in the provided JSON, so set to null
-                        'suburb' => $attributes['LGA_SHORT_NM'],
-                        'traffic_direction' => $attributes['FLOW'],
-                        'road_name' => $attributes['LOCAL_ROAD_NM'],
-                        'status' => null, // No status field in the provided JSON, so set to null
-                        'event_type' => 'Traffic Volume', // Example, set a static event type
-                        'impact' => null, // No impact field in the provided JSON, so set to null
-                        'source_url' => null, // No source URL in the provided JSON, so set to null
-                    ];
-
-                    if (!is_null($averageCoordinates['latitude']) && !is_null($averageCoordinates['longitude'])) {
-                        $apiData['latitude'] = $averageCoordinates['latitude'];
-                        $apiData['longitude'] = $averageCoordinates['longitude'];
+        // Map URLs to their respective event types
+        $requests = [
+            ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v1/planned?format=GeoJson'],
+            ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v1/unplanned?format=GeoJson'],
+        ];
+    
+        foreach ($requests as $request) {
+            $url = $request['url'];
+    
+            try {
+                $response = Http::withHeaders([
+                    'Ocp-Apim-Subscription-Key' => 'f9ba977e5f7f40658e5c7bdc4cac3f7f',
+                    'Accept' => 'application/json',
+                ])->get($url);
+    
+                if ($response->successful()) {
+                    $data = $response->json();
+                    foreach ($data['features'] as $feature) {
+                        $attributes = $feature['properties'];
+                        $duration = $attributes['duration'] ?? null;
+                        
+                        // Accessing the first geometry coordinates
+                        $geometry = $feature['geometry']['geometries'][0] ?? null;
+                        $latitude = $geometry['coordinates'][1] ?? null;
+                        $longitude = $geometry['coordinates'][0] ?? null;
+    
+                        // Accessing other properties
+                        $eventType = $attributes['eventType'] ?? null;
+                        $status = $attributes['status'] ?? null;
+                        $description = $attributes['description'] ?? '';
+                        $start_date = $this->convertIsoToDatetime($duration['start'] ?? null);
+                        $end_date = $this->convertIsoToDatetime($duration['end'] ?? null);
+                        $suburb = $attributes['roads'][0]['suburb'] ?? '';
+                        $traffic_direction = $attributes['impact']['direction'] ?? '';
+                        $advice = $attributes['advice'] ?? '';
+                        $road_name = $attributes['closedRoadName'] ?? '';
+                        $impact = $attributes['impact']['impactType'] ?? '';
+                        $source_url = $attributes['source']['sourceName'] ?? '';
+                        $information = $attributes['information'] ?? '';
+    
+                        // Only proceed if the current time is before the end date
+                        if ($end_date && now()->lt($end_date)) {
+                            try {
+                                ApiData::updateOrCreate(
+                                    [
+                                        'api_source' => 'VIC',
+                                        'event_id' => $attributes['id'],
+                                    ],
+                                    [
+                                        'description' => $description,
+                                        'start_date' => $start_date,
+                                        'end_date' => $end_date,
+                                        'latitude' => $latitude,
+                                        'longitude' => $longitude,
+                                        'suburb' => $suburb,
+                                        'traffic_direction' => $traffic_direction,
+                                        'road_name' => $road_name,
+                                        'status' => $status,
+                                        'event_type' => $eventType,
+                                        'impact' => $impact,
+                                        'source_url' => $source_url,
+                                        'advice' => $advice,
+                                        'information' => $information,
+                                    ]
+                                );
+                            } catch (\Exception $e) {
+                                Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ' from URL ' . $url . ': ' . $e->getMessage());
+                            }
+                        }
                     }
-
-                    // Check for duplicates before creating a new record
-                    $existingData = ApiData::where('api_source', 'VIC')
-                        ->where('event_id', $attributes['OBJECTID_1'])
-                        ->first();
-
-                    if ($existingData) {
-                        // Update the existing record
-                        $existingData->update($apiData);
-                    } else {
-                        // Create a new record
-                        ApiData::create($apiData);
-                    }
+                } else {
+                    Log::error('Request to ' . $url . ' was not successful. Status: ' . $response->status());
                 }
+            } catch (\Exception $e) {
+                Log::error('API request to ' . $url . ' failed: ' . $e->getMessage());
             }
-        } catch (\Exception $e) {
-            Log::error('VIC API request failed: ' . $e->getMessage());
         }
     }
-
     
-
     private function processNSWApi()
     {
         // Map URLs to their respective event types
@@ -140,26 +181,31 @@ class ApiService
                     $data = $response->json();
                     foreach ($data['features'] as $feature) {
                         $attributes = $feature['properties'];
+                        $geometry = $feature['geometry'];
     
                         // Check if each key exists before accessing it
                         $status = $attributes['status'] ?? null;
                         $description = $attributes['displayName'] ?? '';
                         $start_date = $this->convertTimestampToDatetime($attributes['created'] ?? null);
-                        $end_date = $this->convertTimestampToDatetime($attributes['lastUpdated'] ?? null);
-                        $latitude = $feature['geometry']['coordinates'][1] ?? null;
-                        $longitude = $feature['geometry']['coordinates'][0] ?? null;
+                        $lastUp_date = $this->convertTimestampToDatetime($attributes['lastUpdated'] ?? null);
+    
+                        // Ensure correct access to coordinates (assuming it's a point in NSW API)
+                        $latitude = $geometry['coordinates'][1] ?? null;
+                        $longitude = $geometry['coordinates'][0] ?? null;
+    
                         $suburb = $attributes['roads'][0]['suburb'] ?? '';
-                        $traffic_direction = $attributes['impactingNetwork'] ?? '';
+                        $traffic_direction = $attributes['roads'][0]['impactedLanes'][0]['affectedDirection'] ?? '';
                         $road_name = $attributes['roads'][0]['mainStreet'] ?? '';
-                        $impact = $attributes['impactingNetwork'] ?? '';
+                        $impact = $this->generateImpactDescription($attributes['roads'][0]['impactedLanes'] ?? []);
                         $source_url = $attributes['weblinkUrl'] ?? '';
     
                         // Combine AdviceA, AdviceB, AdviceC into one field
-                        $adviceA = $attributes['AdviceA'] ?? '';
-                        $adviceB = $attributes['AdviceB'] ?? '';
-                        $adviceC = $attributes['AdviceC'] ?? '';
+                        $adviceA = $attributes['adviceA'] ?? null;
+                        $adviceB = $attributes['adviceB'] ?? null;
+                        $adviceC = $attributes['adviceC'] ?? null;
                         $combinedAdvice = implode(' / ', array_filter([$adviceA, $adviceB, $adviceC]));
-    
+                        
+                        
                         try {
                             ApiData::updateOrCreate(
                                 [
@@ -169,7 +215,7 @@ class ApiService
                                 [
                                     'description' => $description,
                                     'start_date' => $start_date,
-                                    'end_date' => $end_date,
+                                    'lastUpdated_date' => $lastUp_date,
                                     'latitude' => $latitude,
                                     'longitude' => $longitude,
                                     'suburb' => $suburb,
@@ -177,7 +223,7 @@ class ApiService
                                     'road_name' => $road_name,
                                     'status' => $status,
                                     'event_type' => $staticEventType, // Use static event type
-                                    'impact' => $impact,
+                                    'impact' => $impact, // Insert readable impact
                                     'source_url' => $source_url,
                                     'advice' => $combinedAdvice, // Insert combined advice
                                     'information' => $attributes['information'] ?? '',
@@ -195,10 +241,7 @@ class ApiService
             }
         }
     }
-    
-    
-    
-    
+        
     private function processQLDApi()
     {
         try {
@@ -209,28 +252,29 @@ class ApiService
     
                 foreach ($data['features'] as $feature) {
                     $attributes = $feature['properties'];
+    
+                    // Skip features where source_name is "TFNSW"
+                    if ($attributes['source']['source_name'] === 'TfNSW') {
+                        continue;
+                    }
+    
                     $geometry = $feature['geometry'];
     
                     $averageCoordinates = $this->getAverageCoordinates($geometry);
-    
-                    // Handle array fields like 'advice'
-                    $advice = isset($attributes['advice']) && is_array($attributes['advice'])
-                        ? implode(' / ', $attributes['advice'])
-                        : $attributes['advice'];
-    
+                    $end_date = $attributes['duration']['end'];
                     $apiData = [
                         'description' => $attributes['description'],
                         'start_date' => $this->convertIsoToDatetime($attributes['duration']['start']),
-                        'end_date' => $this->convertIsoToDatetime($attributes['duration']['end']),
+                        'end_date' => $attributes['duration']['end'] ? $this->convertIsoToDatetime($attributes['duration']['end']) : null,
                         'suburb' => $attributes['road_summary']['locality'] ?? '',
                         'traffic_direction' => $attributes['impact']['direction'] ?? '',
-                        'road_name' => $attributes['road_summary']['road_name'] ?? '', // Road Name
-                        'status' => is_array($attributes['status']) ? implode(' / ', $attributes['status']) : $attributes['status'], // Handle Status
-                        'event_type' => is_array($attributes['event_type']) ? implode(' / ', $attributes['event_type']) : $attributes['event_type'], // Handle Event Type
-                        'impact' => is_array($attributes['impact']['impact_type']) ? implode(' / ', $attributes['impact']['impact_type']) : $attributes['impact']['impact_type'], // Handle Impact
-                        'source_url' => $attributes['url'], // Source URL
-                        'advice' => $advice, // Insert combined advice
-                        'information' => is_array($attributes['information']) ? implode(' / ', $attributes['information']) : $attributes['information'], // Handle Information
+                        'road_name' => $attributes['road_summary']['road_name'] ?? '',
+                        'status' => is_array($attributes['status']) ? implode(' / ', $attributes['status']) : $attributes['status'],
+                        'event_type' => is_array($attributes['event_type']) ? implode(' / ', $attributes['event_type']) : $attributes['event_type'],
+                        'impact' => $this->createQLDImpactSentence($attributes['impact']),
+                        'source_url' => $attributes['url'],
+                        'advice' => $attributes['advice'],
+                        'information' => $attributes['information'],
                     ];
     
                     if (!is_null($averageCoordinates['latitude']) && !is_null($averageCoordinates['longitude'])) {
@@ -238,23 +282,26 @@ class ApiService
                         $apiData['longitude'] = $averageCoordinates['longitude'];
                     }
     
-                    ApiData::updateOrCreate(
-                        [
-                            'api_source' => 'QLD',
-                            'event_id' => $attributes['id'],
-                        ],
-                        $apiData
-                    );
+                    if( $end_date && now()->lt($end_date)){
+                        try {
+                            ApiData::updateOrCreate(
+                                [
+                                    'api_source' => 'QLD',
+                                    'event_id' => $attributes['id'],
+                                ],
+                                $apiData
+                            );
+                        } catch (\Exception $e) {
+                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . $e->getMessage());
+                        }
+                    }
                 }
             }
         } catch (\Exception $e) {
             Log::error('QLD API request failed: ' . $e->getMessage());
         }
-    }
-    
-    
-    
-    
+    }  
+       
     private function getAverageCoordinates($geometry)
     {
         if (!isset($geometry['coordinates']) || empty($geometry['coordinates'])) {
@@ -293,7 +340,6 @@ class ApiService
         ];
     }
     
-    
     private function calculateAverageCoordinates($lines)
     {
         $totalLat = 0;
@@ -314,8 +360,6 @@ class ApiService
         ];
     }
     
-    
-
     private function convertTimestampToDatetime($timestamp)
     {
         if ($timestamp && $timestamp > 0) {
@@ -343,5 +387,33 @@ class ApiService
             return null; // Return null if DateTime creation fails
         }
     }
+        
+    private function generateImpactDescription(array $impactedLanes)
+    {
+        $impacts = [];
+        foreach ($impactedLanes as $lane) {
+            $direction = $lane['affectedDirection'] ?? '';
+            $extent = $lane['extent'] ?? '';
+            $description = $lane['description'] ?? '';
+            $roadType = $lane['roadType'] ?? '';
     
+            $impacts[] = "In $direction, $extent $roadType is impacted. Details: $description.";
+        }
+        return implode(', ', $impacts);
+    }
+    
+    private function createQLDImpactSentence($impact) {
+        // Check if 'towards' is provided
+        $towards_phrase = $impact['towards'] ? " towards {$impact['towards']}" : "";
+    
+        // Construct the sentence
+        $sentence = "In the {$impact['direction']} direction{$towards_phrase}, the road is impacted by {$impact['impact_type']} with {$impact['impact_subtype']}. {$impact['delay']}.";
+    
+        return $sentence;
+    }
+
+    private function convertComparedIsoToDatetime($isoString)
+    {
+        return $isoString ? \Carbon\Carbon::parse($isoString) : null;
+    }
 }

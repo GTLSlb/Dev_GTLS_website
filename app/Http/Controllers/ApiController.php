@@ -41,7 +41,10 @@ class ApiController extends Controller
         $apiData = $query->get();
     
         // Transform the data to rename fields and ensure lat/lng are numbers
-        $transformedData = $apiData->map(function ($item) {
+        $transformedData = $apiData->filter(function ($item) {
+            // Ensure lat and lng are not null
+            return isset($item->latitude) && isset($item->longitude);
+        })->map(function ($item) {
             return [
                 'id' => $item->id,
                 'api_source' => $item->api_source,
@@ -49,8 +52,8 @@ class ApiController extends Controller
                 'description' => $item->description,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
-                'lat' => isset($item->latitude) ? (float) $item->latitude : null,
-                'lng' => isset($item->longitude) ? (float) $item->longitude : null,
+                'lat' => (float) $item->latitude,
+                'lng' => (float) $item->longitude,
                 'suburb' => $item->suburb,
                 'traffic_direction' => $item->traffic_direction,
                 'road_name' => $item->road_name,
@@ -63,10 +66,9 @@ class ApiController extends Controller
                 'created_at' => $item->created_at,
                 'updated_at' => $item->updated_at,
             ];
-        });
+        })->values()->all();  // Use values() to reindex the array and all() to ensure it's an array
     
         // Return the transformed results as a JSON response
         return response()->json($transformedData);
     }
-    
 }
