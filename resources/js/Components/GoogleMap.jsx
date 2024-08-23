@@ -193,11 +193,11 @@ function GoogleMapComp() {
     const [eventFilter, setEventFilter] = useState({
         Roadworks: true,
         Incident: true,
-        Flooding: true,
-        Hazard: true,
-        "Major Event": true,
-        Alpine: true,
-        "Regional LGA Incident": true,
+        Flooding: false,
+        Hazard: false,
+        "Major Event": false,
+        Alpine: false,
+        "Regional LGA Incident": false,
         Congestion: true,
     });
 
