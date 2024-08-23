@@ -78,7 +78,7 @@ class ApiService
         // Map URLs to their respective event types
         $requests = [
             ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v1/planned?format=GeoJson'],
-            ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v1/unplanned?format=GeoJson'],
+            ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v2/unplanned?format=GeoJson'],
         ];
     
         foreach ($requests as $request) {
