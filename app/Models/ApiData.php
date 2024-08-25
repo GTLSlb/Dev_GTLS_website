@@ -26,5 +26,6 @@ class ApiData extends Model
         'advice',
         'information',
         'lastUpdated_date',
+        'otherAdvice',
     ];
 }

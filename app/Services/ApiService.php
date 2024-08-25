@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\ApiData;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
@@ -18,7 +19,7 @@ class ApiService
         $this->processQLDApi();
         $this->processVICApi();
     }
-
+    
     private function processSAApi()
     {
         try {
@@ -154,6 +155,7 @@ class ApiService
         }
     }
     
+    
     private function processNSWApi()
     {
         // Map URLs to their respective event types
@@ -175,7 +177,8 @@ class ApiService
                 $response = Http::withHeaders([
                     'Authorization' => 'apiKey eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJEMmxnb1U3WkpaSWJBbFRNUFlUaXBGZ2F4NEtaWmw1WVBEMUNodGV2bTRVIiwiaWF0IjoxNzI0MDYyMTc4fQ.zSYlt86pa-YcqmG2NqrD-uVHqZYFDe0bzUHTjPMZOY0',
                     'Accept' => 'application/json',
-                ])->get($url);
+                ])->timeout(240) // Increase the timeout to 120 seconds
+                  ->get($url);
     
                 if ($response->successful()) {
                     $data = $response->json();
@@ -183,13 +186,13 @@ class ApiService
                         $attributes = $feature['properties'];
                         $geometry = $feature['geometry'];
     
-                        // Check if each key exists before accessing it
+                        // Safely access properties with null coalescing operator
                         $status = $attributes['status'] ?? null;
                         $description = $attributes['displayName'] ?? '';
                         $start_date = $this->convertTimestampToDatetime($attributes['created'] ?? null);
                         $lastUp_date = $this->convertTimestampToDatetime($attributes['lastUpdated'] ?? null);
     
-                        // Ensure correct access to coordinates (assuming it's a point in NSW API)
+                        // Ensure correct access to coordinates
                         $latitude = $geometry['coordinates'][1] ?? null;
                         $longitude = $geometry['coordinates'][0] ?? null;
     
@@ -204,9 +207,9 @@ class ApiService
                         $adviceB = $attributes['adviceB'] ?? null;
                         $adviceC = $attributes['adviceC'] ?? null;
                         $combinedAdvice = implode(' / ', array_filter([$adviceA, $adviceB, $adviceC]));
-                        
-                        
-                        try {
+    
+                        // Use a transaction to ensure data integrity
+                        DB::transaction(function () use ($feature, $description, $start_date, $lastUp_date, $latitude, $longitude, $suburb, $traffic_direction, $road_name, $status, $staticEventType, $impact, $source_url, $combinedAdvice, $attributes) {
                             ApiData::updateOrCreate(
                                 [
                                     'api_source' => 'NSW',
@@ -222,25 +225,26 @@ class ApiService
                                     'traffic_direction' => $traffic_direction,
                                     'road_name' => $road_name,
                                     'status' => $status,
-                                    'event_type' => $staticEventType, // Use static event type
-                                    'impact' => $impact, // Insert readable impact
+                                    'event_type' => $staticEventType,
+                                    'impact' => $impact,
                                     'source_url' => $source_url,
-                                    'advice' => $combinedAdvice, // Insert combined advice
-                                    'information' => $attributes['information'] ?? '',
+                                    'advice' => $combinedAdvice,
+                                    'otherAdvice' => $attributes['otherAdvice'] ?? '',
                                 ]
                             );
-                        } catch (\Exception $e) {
-                            Log::error('Error creating or updating record for event ID ' . $feature['id'] . ' from URL ' . $url . ': ' . $e->getMessage());
-                        }
+                        });
                     }
                 } else {
                     Log::error('Request to ' . $url . ' was not successful. Status: ' . $response->status());
                 }
+            } catch (\Illuminate\Http\Client\RequestException $e) {
+                Log::error('HTTP request to ' . $url . ' failed: ' . $e->getMessage());
             } catch (\Exception $e) {
-                Log::error('API request to ' . $url . ' failed: ' . $e->getMessage());
+                Log::error('An error occurred while processing the API request to ' . $url . ': ' . $e->getMessage());
             }
         }
     }
+    
         
     private function processQLDApi()
     {

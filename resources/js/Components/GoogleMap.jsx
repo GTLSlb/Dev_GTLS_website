@@ -32,7 +32,7 @@ import {
 } from "@mui/icons-material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CloseIcon from "@mui/icons-material/Close";
-
+import "../../css/scroll.css";
 const center = {
     lat: -25.2744,
     lng: 133.7751,
@@ -68,10 +68,6 @@ function GoogleMapComp() {
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
     }, []);
-    const mapContainerStyle = {
-        height: "800px",
-        width: "100%",
-    };
 
     // const [sidebarVisible, setSidebarVisible] = useState(false);
     const [markerDetails, setMarkerDetails] = useState(null);
@@ -89,6 +85,7 @@ function GoogleMapComp() {
             advice: position.advice,
             information: position.information,
             reportedBy: position.api_source,
+            otherAdvice: position.otherAdvice,
         });
     };
 
@@ -215,8 +212,10 @@ function GoogleMapComp() {
 
             // Check if the state is enabled in the stateFilter
             const isStateSelected = stateFilter[eventState];
+            // const positionId = position.event_id == "111121";
 
             return (
+                // positionId &&
                 isStateSelected && // Only proceed if the state is selected
                 ((eventFilter.Roadworks &&
                     (eventType === "ROADWORKS" ||
@@ -239,6 +238,7 @@ function GoogleMapComp() {
                             eventType === "Crash")))
             );
         });
+        console.log(data);
         setMarkerPositions(data);
     }, [eventFilter, stateFilter, originalData]);
 
@@ -270,7 +270,7 @@ function GoogleMapComp() {
             <div className="text-goldt text-4xl font-semibold">
                 Live Traffic
             </div>
-            <div className="text-smooth">Weather & Flood Notification</div>
+            {/* <div className="text-smooth">Weather & Flood Notification</div> */}
             <div className="hidden h-full">
                 {/* Filter for mobile */}
                 <Accordion
@@ -553,7 +553,7 @@ function GoogleMapComp() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="h-full w-72 bg-[#2A3034] rounded-l-2xl p-4 overflow-y-auto">
+                    <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
                                 <div className="flex justify-between">
@@ -625,7 +625,7 @@ function GoogleMapComp() {
                                         </div>
                                     </div>
                                 )}
-                                {markerDetails.information && (
+                                {markerDetails.information ? (
                                     <div className="mt-8 flex gap-7 items-start">
                                         <HelpCenterRounded
                                             sx={{ color: "#e0c981" }}
@@ -634,12 +634,31 @@ function GoogleMapComp() {
                                             <p className="font-semibold">
                                                 Information
                                             </p>
-                                            <p className=" font-thin">
+                                            <p className=" font-thin max-h-[300px] overflow-y-auto pr-2 containerscroll">
                                                 {markerDetails.information}
                                             </p>
                                         </div>
                                     </div>
-                                )}
+                                ) : markerDetails.otherAdvice ? (
+                                    <div className="mt-8 flex gap-7 items-start">
+                                        <HelpCenterRounded
+                                            sx={{ color: "#e0c981" }}
+                                        />
+                                        <div className="flex flex-col text-white">
+                                            <p className="font-semibold">
+                                                Information
+                                            </p>
+
+                                            <p
+                                                className="font-thin max-w-60 max-h-[300px] overflow-y-auto pr-2 containerscroll"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: markerDetails.otherAdvice,
+                                                }}
+                                            ></p>
+                                        </div>
+                                    </div>
+                                ) : null}
+                                {console.log(markerDetails)}
                             </>
                         ) : (
                             <>
@@ -976,7 +995,7 @@ function GoogleMapComp() {
 
                                     {/* Alpine Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        className="  mr-8 hidden flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
