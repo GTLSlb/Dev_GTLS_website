@@ -52,7 +52,7 @@ import {
     WhatsappIcon,
 } from "react-share";
 import Footer from "./Component/landingPage/Footer";
-import Navbars from "./Component/Navbars";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

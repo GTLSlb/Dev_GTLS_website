@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import Chatbot from "./Component/chatBot";
-import Navbars from "./Component/Navbars";
+
 import TruckDriver from "./Component/opportunities/TruckDriver";
 import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
