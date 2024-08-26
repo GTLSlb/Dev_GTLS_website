@@ -48,22 +48,66 @@ const australiaBounds = {
 function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
-
+    const [responseReceivedAt, setResponseReceivedAt] = useState();
     const getPositions = () => {
         axios.get("/get-positions").then((response) => {
+            const responseReceivedDate = new Date();
             setOriginalData(response.data);
             setMarkerPositions(response.data);
+            setResponseReceivedAt(responseReceivedDate);
+            // console.log("API response received at:", responseReceivedAt);
         });
     };
+
+    function getMinutesDifference(date1, date2) {
+        const diffInMilliseconds = Math.abs(date1 - date2);
+        const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+        return diffInMinutes;
+    }
+
+    function formatLastUpdated(minutes) {
+        if (minutes < 1) {
+            return "Last Updated just now";
+        } else if (minutes === 1) {
+            return "Last Updated 1 min ago";
+        } else {
+            return `Last Updated ${minutes} min ago`;
+        }
+    }
+    function LastUpdated({ lastUpdatedDate }) {
+        const [lastUpdatedText, setLastUpdatedText] = useState("");
+
+        useEffect(() => {
+            const updateLastUpdatedText = () => {
+                const now = new Date();
+                const lastUpdated = new Date(lastUpdatedDate);
+                const minutesDifference = getMinutesDifference(
+                    now,
+                    lastUpdated
+                );
+                setLastUpdatedText(formatLastUpdated(minutesDifference));
+            };
+
+            updateLastUpdatedText();
+
+            // Optional: Update the time difference every minute
+            const intervalId = setInterval(updateLastUpdatedText, 60000);
+
+            // Cleanup interval on component unmount
+            return () => clearInterval(intervalId);
+        }, [lastUpdatedDate]);
+
+        return <div>{lastUpdatedText}</div>;
+    }
 
     useEffect(() => {
         // Fetch positions initially
         getPositions();
 
-        // Set up an interval to fetch positions every 30 minutes
+        // Set up an interval to fetch positions every 30 minutesd
         const intervalId = setInterval(() => {
             getPositions();
-        }, 1800000); // 30 minutes in milliseconds
+        }, 3600000); // 30 minutes in milliseconds
 
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
@@ -212,7 +256,7 @@ function GoogleMapComp() {
 
             // Check if the state is enabled in the stateFilter
             const isStateSelected = stateFilter[eventState];
-            // const positionId = position.event_id == "111121";
+            // const positionId = position.event_id == "663859";
 
             return (
                 // positionId &&
@@ -238,7 +282,6 @@ function GoogleMapComp() {
                             eventType === "Crash")))
             );
         });
-        console.log(data);
         setMarkerPositions(data);
     }, [eventFilter, stateFilter, originalData]);
 
@@ -268,8 +311,13 @@ function GoogleMapComp() {
     return (
         <div className=" md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
             <div className="text-goldt text-4xl font-semibold">
-                Live Traffic
+                National Road events
             </div>
+            {responseReceivedAt && (
+                <p className="text-sm text-white">
+                    <LastUpdated lastUpdatedDate={responseReceivedAt} />
+                </p>
+            )}
             {/* <div className="text-smooth">Weather & Flood Notification</div> */}
             <div className="hidden h-full">
                 {/* Filter for mobile */}
@@ -634,7 +682,13 @@ function GoogleMapComp() {
                                             <p className="font-semibold">
                                                 Information
                                             </p>
-                                            <p className=" font-thin max-h-[300px] overflow-y-auto pr-2 containerscroll">
+                                            <p
+                                                className="font-thin max-w-60 max-h-[300px] overflow-hidden pr-2 containerscroll"
+                                                style={{
+                                                    wordBreak: "break-word",
+                                                    hyphens: "auto",
+                                                }}
+                                            >
                                                 {markerDetails.information}
                                             </p>
                                         </div>
@@ -650,7 +704,11 @@ function GoogleMapComp() {
                                             </p>
 
                                             <p
-                                                className="font-thin max-w-60 max-h-[300px] overflow-y-auto pr-2 containerscroll"
+                                                className="font-thin max-w-60 max-h-[300px] overflow-auto pr-2 containerscroll"
+                                                style={{
+                                                    wordBreak: "break-word",
+                                                    hyphens: "auto",
+                                                }}
                                                 dangerouslySetInnerHTML={{
                                                     __html: markerDetails.otherAdvice,
                                                 }}
