@@ -1128,7 +1128,7 @@ export default function NewsPage(props) {
                                                 <img
                                                     src={post.imageUrl}
                                                     alt={post.title}
-                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                                    className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full "
                                                 />
                                                 <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
