@@ -21,6 +21,7 @@ import greennews from "../../../assets/news/greennews.webp";
 import jost5news from "../../../assets/news/Jost5.webp";
 import BPWnews from "../../../assets/news/BPW.webp";
 import Conferencnews from "../../../assets/news/Conference.jpeg";
+import gearboxnews from "../../../assets/news/gearboxnews.jpeg";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -32,6 +33,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 21,
+        title: "GTLS: A Strategic Vision",
+        href: "#",
+        description: `At Gold Tiger Logistics Solutions (GTLS), we’re committed to more than just ticking boxes; we focus on building a strong, supportive team and sustaining robust processes for the long term.`,
+        imageUrl: gearboxnews,
+        date: "August 26, 2024",
+        datetime: "2024-8-26",
+        category: { title: "", href: "#" },
+    },
     {
         id: 20,
         title: "GTLS Shines at the 2024 Road Freight NSW Conference & Awards Day!",

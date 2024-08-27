@@ -26,7 +26,10 @@ import onSiteFueling from "@/assets/news/onSiteFueling.webp";
 import Efficiency from "../assets/news/Efficiency.webp";
 import JostCover from "../assets/news/Jost5Cover.jpeg";
 import BBWImage from "../assets/news/BPW.webp";
+import jost5news from "../assets/news/Jost5.webp";
+import BPWnews from "../assets/news/BPW.webp";
 import Conferencnews from "../assets/news/Conference.jpeg";
+import gearboxnews from "../assets/news/gearboxnews.jpeg";
 import Conferencnews2 from "../assets/news/Conference2.jpeg";
 import Conferencnews3 from "../assets/news/Conference3.jpeg";
 import Conferencnews4 from "../assets/news/Conference4.jpeg";
@@ -617,9 +620,71 @@ export default function NewsPage(props) {
                 Conferencnews11,
             ],
         },
+        {
+            id: 20,
+            title: "GTLS: A Strategic Vision",
+            content1: `At Gold Tiger Logistics Solutions (GTLS), we’re committed to more than just ticking boxes; we focus on building a strong, supportive team and sustaining robust processes for the long term. Which is why today we revisited the Gearbox training from 6 weeks ago, conducting an internal audit to ensure we stay at the forefront of maintenance excellence and continue to uphold our high DIFOT standards. This commitment is crucial to maintaining our position as a preferred supplier within the FMCG sector.`,
+           
+            content2: `By continuously auditing our internal processes and fostering a culture of continuous improvement, with a key focus on safety, we continue to seek ways to enhance our operations. This approach not only allows us to deliver cost savings but also reduces CO2 emissions.`,
+            imgUrl: gearboxnews,
+        },
     ];
 
     const posts = [
+        {
+            id: 21,
+            title: "GTLS: A Strategic Vision",
+            href: "#",
+            description: `At Gold Tiger Logistics Solutions (GTLS), we’re committed to more than just ticking boxes; we focus on building a strong, supportive team and sustaining robust processes for the long term.`,
+            imageUrl: gearboxnews,
+            date: "August 26, 2024",
+            datetime: "2024-8-26",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 20,
+            title: "GTLS Shines at the 2024 Road Freight NSW Conference & Awards Day!",
+            href: "#",
+            description: `Mr. Imad El Masri, director of GTLS, made a notable contribution at the 2024 Road Freight NSW Conference & Awards day. This event was a significant gathering for networking and discussing pivotal transformations reshaping the road freight industry in NSW.`,
+            imageUrl: Conferencnews,
+            date: "July 30, 2024",
+            datetime: "2024-5-11",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 19,
+            title: "GTLS Unleashes the Power of BPW: A Recap of Our Wheel Hubs and Bearings Training!",
+            href: "#",
+            description: `We had the privilege of learning from leading industry professionals who imparted their invaluable knowledge and techniques.
+    
+            Wondering why GTLS relies on BPW Wheel hubs?
+            
+            Here’s the inside scoop! 👇`,
+            imageUrl: BPWnews,
+            date: "July 23, 2024",
+            datetime: "2024-5-11",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 18,
+            title: "Training Session Recap: Mastering the Jost 5th Wheel",
+            href: "#",
+            description: `Gold Tiger Logistics Solutions (GTLS) participated in a comprehensive training session with Jost, focusing on the inner workings of the Jost 5th wheel.`,
+            imageUrl: jost5news,
+            date: "July 24, 2024",
+            datetime: "2024-5-11",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 17,
+            title: "Elevating Safety and Efficiency: The Gearbox Training Program at Gold Tiger Logistics Solutions.",
+            href: "#",
+            description: `At Gold Tiger Logistics Solutions (GTLS), safety and compliance are absolutely crucial. They're at the heart of our commitment to running efficiently and developing our team. A key part of this commitment is our "Gearbox" with the user software training program. It's tailored to enhance the technical skills of our maintenance crew.`,
+            imageUrl: Efficiency,
+            date: "June 18, 2024",
+            datetime: "2024-5-11",
+            category: { title: "", href: "#" },
+        },
         {
             id: 16,
             title: "Safety Week at GTLS: Join Us in Sharing the Road Safely!",
@@ -827,13 +892,13 @@ export default function NewsPage(props) {
                 {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 ? (
                     <div aria-hidden="true" className="relative">
                         <img
-                            src={contentJson[id].imgUrl[0]}
+                            src={contentJson[id].imgUrl}
                             alt="news"
                             className="h-[40rem] w-full object-cover  "
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
-                ) : id == 20 ? (
+                ) : id == 20 || id == 21 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -1047,7 +1112,7 @@ export default function NewsPage(props) {
                             </h2>
                         </div>
                         <Slider {...settings}>
-                            {posts.map((post) => (
+                            {posts.filter((post) => post.id != id).map((post) => (
                                 <div key={post.id} className="px-5 ">
                                     <Link
                                         href={route("news", {
