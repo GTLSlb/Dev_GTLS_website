@@ -48,56 +48,82 @@ const australiaBounds = {
 function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
-    const [responseReceivedAt, setResponseReceivedAt] = useState();
+    const [lastUpdatedAt, setLastUpdatedAt] = useState();
+
     const getPositions = () => {
         axios.get("/get-positions").then((response) => {
-            const responseReceivedDate = new Date();
             setOriginalData(response.data);
             setMarkerPositions(response.data);
-            setResponseReceivedAt(responseReceivedDate);
-            // console.log("API response received at:", responseReceivedAt);
+        });
+        axios.get("/lastUpdatedPositions").then((response) => {
+            setLastUpdatedAt(response.data);
         });
     };
 
-    function getMinutesDifference(date1, date2) {
-        const diffInMilliseconds = Math.abs(date1 - date2);
-        const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
-        return diffInMinutes;
-    }
-
-    function formatLastUpdated(minutes) {
-        if (minutes < 1) {
-            return "Last Updated just now";
-        } else if (minutes === 1) {
-            return "Last Updated 1 min ago";
-        } else {
-            return `Last Updated ${minutes} min ago`;
-        }
-    }
-    function LastUpdated({ lastUpdatedDate }) {
+    function LastUpdated({ lastUpdatedAt }) {
         const [lastUpdatedText, setLastUpdatedText] = useState("");
+        // Convert to the ISO format required for UTC
+
+
 
         useEffect(() => {
             const updateLastUpdatedText = () => {
-                const now = new Date();
-                const lastUpdated = new Date(lastUpdatedDate);
-                const minutesDifference = getMinutesDifference(
-                    now,
-                    lastUpdated
+                // Parse the last updated date as UTC
+                const isoDateString = lastUpdatedAt.replace(" ", "T") + "Z"; // "2024-08-29T09:59:25Z"
+
+                // Current UTC date and time
+                const currentUtcDate = new Date();
+                const utcString = currentUtcDate.toUTCString();
+        
+                // Convert the UTC string to a Date object
+                const utcDateFromString = new Date(utcString);
+        
+                // Specific UTC date to compare (ensure it's in a format that JavaScript can parse correctly)
+                const specificUtcDate = new Date(isoDateString); // Use 'T' and 'Z' to indicate UTC
+        
+                // Calculate the difference in milliseconds
+                const differenceInMilliseconds = Math.abs(
+                    utcDateFromString - specificUtcDate
                 );
-                setLastUpdatedText(formatLastUpdated(minutesDifference));
+        
+                // Convert milliseconds to minutes
+                const differenceInMinutes = Math.floor(
+                    differenceInMilliseconds / (1000 * 60)
+                );
+
+                setLastUpdatedText(formatLastUpdated(differenceInMinutes));
             };
 
             updateLastUpdatedText();
 
-            // Optional: Update the time difference every minute
+            // Update the time difference every minute
             const intervalId = setInterval(updateLastUpdatedText, 60000);
 
             // Cleanup interval on component unmount
             return () => clearInterval(intervalId);
-        }, [lastUpdatedDate]);
+        }, [lastUpdatedAt]);
 
-        return <div>{lastUpdatedText}</div>;
+        return lastUpdatedText ? <div>{lastUpdatedText}</div> : null;
+    }
+
+    // Utility function to calculate the difference in minutes between two dates
+    function getMinutesDifference(date1, date2) {
+        // Get the time difference in milliseconds
+        const differenceInMilliseconds = date2.getTime() - date1.getTime();
+
+        // Convert the time difference from milliseconds to minutes
+        return Math.floor(differenceInMilliseconds / (1000 * 60));
+    }
+
+    // Utility function to format the time difference (example implementation)
+    function formatLastUpdated(minutesDifference) {
+        if (minutesDifference < 1) {
+            return "Updated just now";
+        } else if (minutesDifference === 1) {
+            return "Updated 1 minute ago";
+        } else {
+            return `Updated ${minutesDifference} minutes ago`;
+        }
     }
 
     useEffect(() => {
@@ -107,7 +133,7 @@ function GoogleMapComp() {
         // Set up an interval to fetch positions every 30 minutesd
         const intervalId = setInterval(() => {
             getPositions();
-        }, 3600000); // 30 minutes in milliseconds
+        }, 3600000); // 60 minutes in milliseconds
 
         // Clean up the interval on component unmount
         return () => clearInterval(intervalId);
@@ -313,11 +339,9 @@ function GoogleMapComp() {
             <div className="text-goldt text-4xl font-semibold">
                 National Road events
             </div>
-            {responseReceivedAt && (
-                <p className="text-sm text-white">
-                    <LastUpdated lastUpdatedDate={responseReceivedAt} />
-                </p>
-            )}
+            <p className="text-sm text-white">
+                <LastUpdated lastUpdatedAt={lastUpdatedAt} />
+            </p>
             {/* <div className="text-smooth">Weather & Flood Notification</div> */}
             <div className="hidden h-full">
                 {/* Filter for mobile */}

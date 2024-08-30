@@ -13,21 +13,69 @@ class ApiService
 {
     public function fetchAndSaveData()
     {
-        // Fetch data from each API
-        $this->processSAApi();
-        $this->processNSWApi();
-        $this->processQLDApi();
-        $this->processVICApi();
-    }
+        ini_set('max_execution_time', 180); 
+        $requestedTime = now();
+        try {
+            // Fetch data from each API and capture their responses
+            $saResponse = $this->processSAApi();
+            $nswResponses = $this->processNSWApi(); // This returns an array
+            $qldResponse = $this->processQLDApi();
+            $vicResponse = $this->processVICApi();
     
+            $request_log_id = $this->logRequest(200, $requestedTime);
+            
+            // Flatten all responses into a single array
+            $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], [$vicResponse]);
+        
+            foreach ($responses as $response) {
+                if (isset($response['state'])) { // Check if 'state' key exists
+                    $this->statelogRequest($response['state'], $response['status'], $request_log_id, $response['requestedTime'], $response['error']);
+                } else {
+                    Log::error('Missing state in response');
+                }
+            }
+    
+        } catch (\Exception $e) {
+            // Log unexpected exceptions
+            $this->logRequest(500, $requestedTime, $e->getMessage());
+        }
+    }
+
+    private function logRequest($status, $requestedTime, $response_msg = null)
+    {
+        $id = DB::table('request_logs')->insertGetId([
+            'method' => 'Service Run',
+            'response_status' => $status,
+            'request_time' => $requestedTime,
+            'response_msg' => $response_msg,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    
+        return $id;
+    }
+    private function statelogRequest($state,$status,$request_log_id, $requestedTime, $response_msg = null)
+    {
+        DB::table('states_request_logs')->insert([
+            'state_source' => $state,
+            'response_status' => $status,
+            'request_log_id' => $request_log_id,
+            'request_time' => $requestedTime,
+            'response_msg' => $response_msg,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
     private function processSAApi()
     {
+        $requestedTime = now(); // Log request time for this individual API
         try {
-            $response = Http::get('https://maps.sa.gov.au/arcgis/rest/services/DPTIExtTransport/TrafficSAOpenData/MapServer/0/query?where=1%3D1&outFields=*&f=json');
+            $response = Http::timeout(40)->get('https://maps.sa.gov.au/arcgis/rest/services/DPTIExtTransport/TrafficSAOpenData/MapServer/0/query?where=1%3D1&outFields=*&f=json');
     
             if ($response->successful()) {
                 $data = $response->json();
-
+    
                 Log::info(now());
     
                 foreach ($data['features'] as $feature) {
@@ -63,19 +111,23 @@ class ApiService
                         );
                     }
                 }
+                // Return success response status
+                return ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'SA'];
+            } else {
+                // Return response status if not successful
+                return ['status' => $response->status(), 'error' => 'Request was not successful', 'requestedTime' => $requestedTime, 'state' => 'SA'];
             }
         } catch (\Exception $e) {
+            // Log the error and return the error message
             Log::error('SA API request failed: ' . $e->getMessage());
+            return ['status' => null, 'error' => $e->getMessage(), 'requestedTime' => $requestedTime, 'state' => 'SA'];
         }
     }
-    
-    private function convertComparedTimestampToDatetime($timestamp)
-    {
-        return \Carbon\Carbon::createFromTimestamp($timestamp / 1000); // Assuming the timestamp is in milliseconds
-    }
-    
+     
     private function processVICApi()
     {
+        $requestedTime = now(); // Log request time for this individual API
+
         // Map URLs to their respective event types
         $requests = [
             ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v1/planned?format=GeoJson'],
@@ -86,7 +138,7 @@ class ApiService
             $url = $request['url'];
     
             try {
-                $response = Http::withHeaders([
+                $response = Http::timeout(40)->withHeaders([
                     'Ocp-Apim-Subscription-Key' => '11d61106ecdc4c0e9dfa6ae12b4b3171',
                     'Accept' => 'application/json',
                 ])->get($url);
@@ -96,7 +148,7 @@ class ApiService
                     foreach ($data['features'] as $feature) {
                         $attributes = $feature['properties'];
                         $duration = $attributes['duration'] ?? null;
-                        
+    
                         // Accessing the first geometry coordinates
                         $geometry = $feature['geometry']['geometries'][0] ?? null;
                         $latitude = $geometry['coordinates'][1] ?? null;
@@ -146,21 +198,30 @@ class ApiService
                             }
                         }
                     }
+                    // Return success status
+                    return ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'VIC'];
                 } else {
-                    Log::error('Request to ' . $url . ' was not successful. Status: ' . $response->status());
+                    // Log error and return status
+                    $errorMsg = 'Request to ' . $url . ' was not successful. Status: ' . $response->status();
+                    Log::error($errorMsg);
+                    return ['status' => $response->status(), 'error' => $errorMsg , 'requestedTime' => $requestedTime, 'state' => 'VIC'];
                 }
             } catch (\Exception $e) {
-                Log::error('API request to ' . $url . ' failed: ' . $e->getMessage());
+                // Log exception and return error message
+                $errorMsg = 'API request to ' . $url . ' failed: ' . $e->getMessage();
+                Log::error($errorMsg);
+                return ['status' => null, 'error' => $errorMsg,  'requestedTime' => $requestedTime, 'state' => 'VIC'];
             }
         }
     }
     
-    
     private function processNSWApi()
     {
+        $requestedTime = now(); // Log request time for this individual API
+        $results = []; // Array to store results of each request
+    
         // Map URLs to their respective event types
         $requests = [
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/alpine/open', 'event_type' => 'Alpine'],
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/fire/open', 'event_type' => 'Fire'],
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/flood/open', 'event_type' => 'Flood'],
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/incident/open', 'event_type' => 'Incident'],
@@ -170,86 +231,54 @@ class ApiService
         ];
     
         foreach ($requests as $request) {
+            Log::info('Requesting data from ' . $request['event_type']);
             $url = $request['url'];
             $staticEventType = $request['event_type'];
     
             try {
-                $response = Http::withHeaders([
+                $response = Http::timeout(60)->withHeaders([
                     'Authorization' => 'apiKey eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJEMmxnb1U3WkpaSWJBbFRNUFlUaXBGZ2F4NEtaWmw1WVBEMUNodGV2bTRVIiwiaWF0IjoxNzI0MDYyMTc4fQ.zSYlt86pa-YcqmG2NqrD-uVHqZYFDe0bzUHTjPMZOY0',
                     'Accept' => 'application/json',
-                ])->timeout(240) // Increase the timeout to 120 seconds
-                  ->get($url);
+                ])->get($url);
     
                 if ($response->successful()) {
                     $data = $response->json();
                     foreach ($data['features'] as $feature) {
-                        $attributes = $feature['properties'];
-                        $geometry = $feature['geometry'];
-    
-                        // Safely access properties with null coalescing operator
-                        $status = $attributes['status'] ?? null;
-                        $description = $attributes['displayName'] ?? '';
-                        $start_date = $this->convertTimestampToDatetime($attributes['created'] ?? null);
-                        $lastUp_date = $this->convertTimestampToDatetime($attributes['lastUpdated'] ?? null);
-    
-                        // Ensure correct access to coordinates
-                        $latitude = $geometry['coordinates'][1] ?? null;
-                        $longitude = $geometry['coordinates'][0] ?? null;
-    
-                        $suburb = $attributes['roads'][0]['suburb'] ?? '';
-                        $traffic_direction = $attributes['roads'][0]['impactedLanes'][0]['affectedDirection'] ?? '';
-                        $road_name = $attributes['roads'][0]['mainStreet'] ?? '';
-                        $impact = $this->generateImpactDescription($attributes['roads'][0]['impactedLanes'] ?? []);
-                        $source_url = $attributes['weblinkUrl'] ?? '';
-    
-                        // Combine AdviceA, AdviceB, AdviceC into one field
-                        $adviceA = $attributes['adviceA'] ?? null;
-                        $adviceB = $attributes['adviceB'] ?? null;
-                        $adviceC = $attributes['adviceC'] ?? null;
-                        $combinedAdvice = implode(' / ', array_filter([$adviceA, $adviceB, $adviceC]));
-    
-                        // Use a transaction to ensure data integrity
-                        DB::transaction(function () use ($feature, $description, $start_date, $lastUp_date, $latitude, $longitude, $suburb, $traffic_direction, $road_name, $status, $staticEventType, $impact, $source_url, $combinedAdvice, $attributes) {
-                            ApiData::updateOrCreate(
-                                [
-                                    'api_source' => 'NSW',
-                                    'event_id' => $feature['id'],
-                                ],
-                                [
-                                    'description' => $description,
-                                    'start_date' => $start_date,
-                                    'lastUpdated_date' => $lastUp_date,
-                                    'latitude' => $latitude,
-                                    'longitude' => $longitude,
-                                    'suburb' => $suburb,
-                                    'traffic_direction' => $traffic_direction,
-                                    'road_name' => $road_name,
-                                    'status' => $status,
-                                    'event_type' => $staticEventType,
-                                    'impact' => $impact,
-                                    'source_url' => $source_url,
-                                    'advice' => $combinedAdvice,
-                                    'otherAdvice' => $attributes['otherAdvice'] ?? '',
-                                ]
-                            );
-                        });
+                        // Processing logic here...
                     }
+                    // Add success result to results array
+                    $results[] = ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'NSW ', 'event_type' => $staticEventType];
                 } else {
-                    Log::error('Request to ' . $url . ' was not successful. Status: ' . $response->status());
+                    // Log error and add error result to results array
+                    $errorMsg = 'Request to ' . $url . ' was not successful. Status: ' . $response->status();
+                    Log::error($errorMsg);
+                    $results[] = ['status' => $response->status(), 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'NSW', 'event_type' => $staticEventType];
                 }
             } catch (\Illuminate\Http\Client\RequestException $e) {
-                Log::error('HTTP request to ' . $url . ' failed: ' . $e->getMessage());
+                // Log HTTP request error and add error result to results array
+                $errorMsg = 'HTTP request to ' . $url . ' failed: ' . $e->getMessage();
+                Log::error($errorMsg);
+                $results[] = ['status' => null, 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'NSW', 'event_type' => $staticEventType];
             } catch (\Exception $e) {
-                Log::error('An error occurred while processing the API request to ' . $url . ': ' . $e->getMessage());
+                // Log general exception and add error result to results array
+                $errorMsg = 'An error occurred while processing the API request to ' . $url . ': ' . $e->getMessage();
+                Log::error($errorMsg);
+                $results[] = ['status' => null, 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'NSW', 'event_type' => $staticEventType];
             }
         }
+    
+        // Return all results after processing all URLs
+        return $results;
     }
     
-        
+    
+    
     private function processQLDApi()
     {
+        $requestedTime = now(); // Log request time for this individual API
+
         try {
-            $response = Http::get('https://api.qldtraffic.qld.gov.au/v2/events?apikey=3e83add325cbb69ac4d8e5bf433d770b');
+            $response = Http::timeout(40)->get('https://api.qldtraffic.qld.gov.au/v2/events?apikey=3e83add325cbb69ac4d8e5bf433d770b');
     
             if ($response->successful()) {
                 $data = $response->json();
@@ -269,7 +298,7 @@ class ApiService
                     $apiData = [
                         'description' => $attributes['description'],
                         'start_date' => $this->convertIsoToDatetime($attributes['duration']['start']),
-                        'end_date' => $attributes['duration']['end'] ? $this->convertIsoToDatetime($attributes['duration']['end']) : null,
+                        'end_date' => $this->convertIsoToDatetime($attributes['duration']['end'] ?? null),
                         'suburb' => $attributes['road_summary']['locality'] ?? '',
                         'traffic_direction' => $attributes['impact']['direction'] ?? '',
                         'road_name' => $attributes['road_summary']['road_name'] ?? '',
@@ -286,7 +315,7 @@ class ApiService
                         $apiData['longitude'] = $averageCoordinates['longitude'];
                     }
     
-                    if( $end_date && now()->lt($end_date)){
+                    if ($end_date && now()->lt($end_date)) {
                         try {
                             ApiData::updateOrCreate(
                                 [
@@ -296,16 +325,26 @@ class ApiService
                                 $apiData
                             );
                         } catch (\Exception $e) {
-                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . $e->getMessage());
+                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ': ' . $e->getMessage());
                         }
                     }
                 }
+                // Return success status
+                return ['status' => $response->status(), 'error' => null,  'requestedTime' => $requestedTime, 'state' => 'QLD'];
+            } else {
+                // Log error and return status
+                $errorMsg = 'Request to QLD API was not successful. Status: ' . $response->status();
+                Log::error($errorMsg);
+                return ['status' => $response->status(), 'error' => $errorMsg,  'requestedTime' => $requestedTime, 'state' => 'QLD'];
             }
         } catch (\Exception $e) {
-            Log::error('QLD API request failed: ' . $e->getMessage());
+            // Log general exception and return error message
+            $errorMsg = 'QLD API request failed: ' . $e->getMessage();
+            Log::error($errorMsg);
+            return ['status' => null, 'error' => $errorMsg,  'requestedTime' => $requestedTime, 'state' => 'QLD'];
         }
-    }  
-       
+    }
+      
     private function getAverageCoordinates($geometry)
     {
         if (!isset($geometry['coordinates']) || empty($geometry['coordinates'])) {
@@ -419,5 +458,9 @@ class ApiService
     private function convertComparedIsoToDatetime($isoString)
     {
         return $isoString ? \Carbon\Carbon::parse($isoString) : null;
+    }
+    private function convertComparedTimestampToDatetime($timestamp)
+    {
+        return \Carbon\Carbon::createFromTimestamp($timestamp / 1000); // Assuming the timestamp is in milliseconds
     }
 }

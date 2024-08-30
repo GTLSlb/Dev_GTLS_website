@@ -219,6 +219,7 @@ Route::fallback(function () {
 Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
 Route::get('/get-positions', [ApiController::class, 'index']);
 
+Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');

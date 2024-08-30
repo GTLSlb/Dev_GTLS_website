@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Services\ApiService;
+use DB;
 use Illuminate\Http\Request;
 use App\Models\ApiData;
+use App\Models\ApiRequestLogs;
 class ApiController extends Controller
 {
     protected $apiService;
@@ -14,10 +16,32 @@ class ApiController extends Controller
         $this->apiService = $apiService;
     }
 
+    private function logRequest($status, $requestedTime, $response_msg = null)
+    {
+        DB::table('request_logs')->insert([
+            'method' => 'API Run',
+            'response_status' => $status,
+            'request_time' => $requestedTime,
+            'response_msg' => $response_msg,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
     public function fetchData()
     {
-        $this->apiService->fetchAndSaveData();
-        return response()->json(['message' => 'Data fetched and saved successfully.']);
+        ini_set('max_execution_time', 300); 
+        // Log the request details
+        $requestedTime = now();
+        try {
+            // Fetch data from each API
+            $this->apiService->fetchAndSaveData();
+            $this->logRequest(200, $requestedTime);
+            return response()->json(['message' => 'Data fetched and saved successfully.']);
+        } catch (\Exception $e) {
+            $this->logRequest(500, $requestedTime, $e->getMessage());
+        }
+
     }
 
     public function index(Request $request)
@@ -72,5 +96,17 @@ class ApiController extends Controller
     
         // Return the transformed results as a JSON response
         return response()->json($transformedData);
+    }
+
+    public function getLastUpdatedAt(Request $request)
+    {
+        $lastLog = DB::table('request_logs')
+            ->where('method', 'Service Run')
+            ->where('response_status', 200)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    
+        // Return the last updated_at or a message if no record is found
+        return $lastLog ? $lastLog->updated_at : null;
     }
 }
