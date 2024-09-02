@@ -218,6 +218,7 @@ Route::fallback(function () {
 
 Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
 Route::get('/get-positions', [ApiController::class, 'index']);
+Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
 
 Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 Route::get('/forgot-password', function () {

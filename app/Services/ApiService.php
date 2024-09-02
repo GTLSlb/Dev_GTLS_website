@@ -66,7 +66,7 @@ class ApiService
             'updated_at' => now(),
         ]);
     }
-
+    
     private function processSAApi()
     {
         $requestedTime = now(); // Log request time for this individual API
@@ -85,6 +85,14 @@ class ApiService
                     // Convert end date to a DateTime object
                     $endDateTime = $this->convertComparedTimestampToDatetime($endDate);
     
+                    // Check if the event has ended
+                    if ($endDateTime && now()->gt($endDateTime)) {
+                        // If the event has ended, delete the record if it exists
+                        ApiData::where('api_source', 'SA')
+                                ->where('event_id', $attributes['ROADWORKS_AND_INCIDENTS_ID'])
+                                ->delete();
+                        continue; // Skip further processing for this feature
+                    }
                     // Check if the current time is before the end date
                     if (now()->lt($endDateTime)) {
                         ApiData::updateOrCreate(
@@ -123,7 +131,7 @@ class ApiService
             return ['status' => null, 'error' => $e->getMessage(), 'requestedTime' => $requestedTime, 'state' => 'SA'];
         }
     }
-     
+    
     private function processVICApi()
     {
         $requestedTime = now(); // Log request time for this individual API
@@ -169,33 +177,42 @@ class ApiService
                         $information = $attributes['information'] ?? '';
     
                         // Only proceed if the current time is before the end date
-                        if ($end_date && now()->lt($end_date)) {
-                            try {
-                                ApiData::updateOrCreate(
-                                    [
-                                        'api_source' => 'VIC',
-                                        'event_id' => $attributes['id'],
-                                    ],
-                                    [
-                                        'description' => $description,
-                                        'start_date' => $start_date,
-                                        'end_date' => $end_date,
-                                        'latitude' => $latitude,
-                                        'longitude' => $longitude,
-                                        'suburb' => $suburb,
-                                        'traffic_direction' => $traffic_direction,
-                                        'road_name' => $road_name,
-                                        'status' => $status,
-                                        'event_type' => $eventType,
-                                        'impact' => $impact,
-                                        'source_url' => $source_url,
-                                        'advice' => $advice,
-                                        'information' => $information,
-                                    ]
-                                );
-                            } catch (\Exception $e) {
-                                Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ' from URL ' . $url . ': ' . $e->getMessage());
-                            }
+
+                        // Check if the event has ended
+                        if ($end_date && now()->gt($end_date)) {
+                            // If the event has ended, delete the record if it exists
+                            ApiData::where('api_source', 'VIC')
+                                   ->where('event_id', $attributes['id'])
+                                   ->delete();
+                            continue; // Skip further processing for this feature
+                        }
+    
+                        // Only proceed if the event has not ended
+                        try {
+                            ApiData::updateOrCreate(
+                                [
+                                    'api_source' => 'VIC',
+                                    'event_id' => $attributes['id'],
+                                ],
+                                [
+                                    'description' => $description,
+                                    'start_date' => $start_date,
+                                    'end_date' => $end_date,
+                                    'latitude' => $latitude,
+                                    'longitude' => $longitude,
+                                    'suburb' => $suburb,
+                                    'traffic_direction' => $traffic_direction,
+                                    'road_name' => $road_name,
+                                    'status' => $status,
+                                    'event_type' => $eventType,
+                                    'impact' => $impact,
+                                    'source_url' => $source_url,
+                                    'advice' => $advice,
+                                    'information' => $information,
+                                ]
+                            );
+                        } catch (\Exception $e) {
+                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ' from URL ' . $url . ': ' . $e->getMessage());
                         }
                     }
                     // Return success status
@@ -214,12 +231,11 @@ class ApiService
             }
         }
     }
-    
+
     private function processNSWApi()
     {
         $requestedTime = now(); // Log request time for this individual API
         $results = []; // Array to store results of each request
-    
         // Map URLs to their respective event types
         $requests = [
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/fire/open', 'event_type' => 'Fire'],
@@ -236,17 +252,83 @@ class ApiService
             $staticEventType = $request['event_type'];
     
             try {
-                $response = Http::timeout(60)->withHeaders([
+                $response = Http::withHeaders([
                     'Authorization' => 'apiKey eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJEMmxnb1U3WkpaSWJBbFRNUFlUaXBGZ2F4NEtaWmw1WVBEMUNodGV2bTRVIiwiaWF0IjoxNzI0MDYyMTc4fQ.zSYlt86pa-YcqmG2NqrD-uVHqZYFDe0bzUHTjPMZOY0',
                     'Accept' => 'application/json',
-                ])->get($url);
+                ])->timeout(240)
+                  ->get($url);
     
                 if ($response->successful()) {
                     $data = $response->json();
                     foreach ($data['features'] as $feature) {
-                        // Processing logic here...
-                    }
-                    // Add success result to results array
+                        $attributes = $feature['properties'];
+                        $geometry = $feature['geometry'];
+    
+                        // Check if the event should be processed based on the "ended" and "isNewIncident" flags
+                        $ended = $attributes['ended'] ?? false;
+                        $isNewIncident = $attributes['isNewIncident'] ?? false;
+    
+                        if ($ended) {
+                            // If "ended" is true, delete the record if it exists
+                            ApiData::where('api_source', 'NSW')
+                                   ->where('event_id', $feature['id'])
+                                   ->delete();
+                            continue; // Skip further processing for this feature
+                        }
+    
+                        if (!$isNewIncident) {
+                            // Skip this feature if "isNewIncident" is not true
+                            continue;
+                        }
+    
+                        // Safely access properties with null coalescing operator
+                        $status = $attributes['status'] ?? null;
+                        $description = $attributes['displayName'] ?? '';
+                        $start_date = $this->convertTimestampToDatetime($attributes['created'] ?? null);
+                        $lastUp_date = $this->convertTimestampToDatetime($attributes['lastUpdated'] ?? null);
+    
+                        // Ensure correct access to coordinates
+                        $latitude = $geometry['coordinates'][1] ?? null;
+                        $longitude = $geometry['coordinates'][0] ?? null;
+    
+                        $suburb = $attributes['roads'][0]['suburb'] ?? '';
+                        $traffic_direction = $attributes['roads'][0]['impactedLanes'][0]['affectedDirection'] ?? '';
+                        $road_name = $attributes['roads'][0]['mainStreet'] ?? '';
+                        $impact = $this->generateImpactDescription($attributes['roads'][0]['impactedLanes'] ?? []);
+                        $source_url = $attributes['weblinkUrl'] ?? '';
+    
+                        // Combine AdviceA, AdviceB, AdviceC into one field
+                        $adviceA = $attributes['adviceA'] ?? null;
+                        $adviceB = $attributes['adviceB'] ?? null;
+                        $adviceC = $attributes['adviceC'] ?? null;
+                        $combinedAdvice = implode(' / ', array_filter([$adviceA, $adviceB, $adviceC]));
+    
+                        // Use a transaction to ensure data integrity
+                        DB::transaction(function () use ($feature, $description, $start_date, $lastUp_date, $latitude, $longitude, $suburb, $traffic_direction, $road_name, $status, $staticEventType, $impact, $source_url, $combinedAdvice, $attributes) {
+                            ApiData::updateOrCreate(
+                                [
+                                    'api_source' => 'NSW',
+                                    'event_id' => $feature['id'],
+                                ],
+                                [
+                                    'description' => $description,
+                                    'start_date' => $start_date,
+                                    'lastUpdated_date' => $lastUp_date,
+                                    'latitude' => $latitude,
+                                    'longitude' => $longitude,
+                                    'suburb' => $suburb,
+                                    'traffic_direction' => $traffic_direction,
+                                    'road_name' => $road_name,
+                                    'status' => $status,
+                                    'event_type' => $staticEventType,
+                                    'impact' => $impact,
+                                    'source_url' => $source_url,
+                                    'advice' => $combinedAdvice,
+                                    'otherAdvice' => $attributes['otherAdvice'] ?? '',
+                                ]
+                            );
+                        });
+                    }// Add success result to results array
                     $results[] = ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'NSW ', 'event_type' => $staticEventType];
                 } else {
                     // Log error and add error result to results array
@@ -270,13 +352,10 @@ class ApiService
         // Return all results after processing all URLs
         return $results;
     }
-    
-    
-    
+        
     private function processQLDApi()
     {
-        $requestedTime = now(); // Log request time for this individual API
-
+        $requestedTime = now();
         try {
             $response = Http::timeout(40)->get('https://api.qldtraffic.qld.gov.au/v2/events?apikey=3e83add325cbb69ac4d8e5bf433d770b');
     
@@ -315,6 +394,16 @@ class ApiService
                         $apiData['longitude'] = $averageCoordinates['longitude'];
                     }
     
+                    // Check if the event has ended
+                    if ($end_date && now()->gt($end_date)) {
+                        // If the event has ended, delete the record if it exists
+                        ApiData::where('api_source', 'QLD')
+                               ->where('event_id', $attributes['id'])
+                               ->delete();
+                        continue; // Skip further processing for this feature
+                    }
+    
+                    // Only proceed if the event has not ended
                     if ($end_date && now()->lt($end_date)) {
                         try {
                             ApiData::updateOrCreate(
@@ -325,10 +414,10 @@ class ApiService
                                 $apiData
                             );
                         } catch (\Exception $e) {
-                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ': ' . $e->getMessage());
+                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . $e->getMessage());
                         }
                     }
-                }
+                } 
                 // Return success status
                 return ['status' => $response->status(), 'error' => null,  'requestedTime' => $requestedTime, 'state' => 'QLD'];
             } else {
@@ -344,7 +433,12 @@ class ApiService
             return ['status' => null, 'error' => $errorMsg,  'requestedTime' => $requestedTime, 'state' => 'QLD'];
         }
     }
-      
+
+    private function convertComparedTimestampToDatetime($timestamp)
+    {
+        return \Carbon\Carbon::createFromTimestamp($timestamp / 1000); // Assuming the timestamp is in milliseconds
+    }
+    
     private function getAverageCoordinates($geometry)
     {
         if (!isset($geometry['coordinates']) || empty($geometry['coordinates'])) {
@@ -458,9 +552,5 @@ class ApiService
     private function convertComparedIsoToDatetime($isoString)
     {
         return $isoString ? \Carbon\Carbon::parse($isoString) : null;
-    }
-    private function convertComparedTimestampToDatetime($timestamp)
-    {
-        return \Carbon\Carbon::createFromTimestamp($timestamp / 1000); // Assuming the timestamp is in milliseconds
     }
 }
