@@ -46,6 +46,68 @@ class ApiController extends Controller
 
     }
 
+    public function fetchNSWData()
+    {
+        ini_set('max_execution_time', 300); 
+        // Log the request details
+        $requestedTime = now();
+        try {
+            // Fetch data from each API
+            $this->apiService->processNSWApi();
+            $this->logRequest(200, $requestedTime);
+            return response()->json(['message' => 'Data fetched and saved successfully.']);
+        } catch (\Exception $e) {
+            $this->logRequest(500, $requestedTime, $e->getMessage());
+        }
+    }
+
+    public function fetchQLDData()
+    {
+        ini_set('max_execution_time', 300); 
+        // Log the request details
+        $requestedTime = now();
+        try {
+            // Fetch data from each API
+            $this->apiService->processQLDApi();
+            $this->logRequest(200, $requestedTime);
+            return response()->json(['message' => 'Data fetched and saved successfully.']);
+        } catch (\Exception $e) {
+            $this->logRequest(500, $requestedTime, $e->getMessage());
+        }
+    }
+
+    public function fetchSAData()
+    {
+        ini_set('max_execution_time', 300); 
+        // Log the request details
+        $requestedTime = now();
+        try {
+            // Fetch data from each API
+            $this->apiService->processSAApi();
+            $this->logRequest(200, $requestedTime);
+            return response()->json(['message' => 'Data fetched and saved successfully.']);
+        } catch (\Exception $e) {
+            $this->logRequest(500, $requestedTime, $e->getMessage());
+        }
+    }
+    public function fetchVICData()
+    {
+        ini_set('max_execution_time', 300); 
+        // Log the request details
+        $requestedTime = now();
+        try {
+            // Fetch data from each API
+            $this->apiService->processVICPlannedApi();
+            $this->apiService->processVICUnPlannedApi();
+            $this->logRequest(200, $requestedTime);
+            return response()->json(['message' => 'Data fetched and saved successfully.']);
+        } catch (\Exception $e) {
+            $this->logRequest(500, $requestedTime, $e->getMessage());
+        }
+    }
+
+
+
     public function index(Request $request)
     {
         // Retrieve query parameters for filtering
@@ -63,11 +125,11 @@ class ApiController extends Controller
             $query->where('event_id', $eventId);
         }
     
-        // // Filter out records with end_date before the current date
-        $query->where(function($q) {
-            $q->whereNull('end_date')  // Include records with no end_date
-              ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
-        });
+        // // // Filter out records with end_date before the current date
+        // $query->where(function($q) {
+        //     $q->whereNull('end_date')  // Include records with no end_date
+        //       ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
+        // });
     
         // Get the filtered results
         $apiData = $query->get();

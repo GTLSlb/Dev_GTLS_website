@@ -14,6 +14,7 @@ import Hazard from "@/assets/icons/Hazard.png";
 import RegionalLGA from "@/assets/icons/RegionalLGA.png";
 import Incident from "@/assets/icons/Incident.png";
 import Major from "@/assets/icons/Major.png";
+import Other from "@/assets/icons/Other.png";
 
 import Crash from "../assets/pictures/Crash.png";
 import SpecialEvent from "../assets/pictures/SpecialEvents.png";
@@ -100,6 +101,24 @@ function formatLastUpdated(minutesDifference) {
     }
 }
 
+const eventTypeMapping = {
+    Roadworks: ["ROADWORKS", "24HR ROADWORKS", "Roadwork", "Roadworks"],
+    Alpine: ["Alpine"],
+    Flooding: ["Flooding"],
+    Congestion: ["Congestion"],
+    Hazard: ["Hazard", "Vehicle fire", "Fire", "Vehicle rollover", "Landslip"],
+    "Regional LGA Incident": ["Regional LGA Incident", "Emergency Incident"],
+    "Major Event": ["Major Event", "Special event", "Demonstration"],
+    Incident: [
+        "INCIDENT",
+        "COLLISION",
+        "Incident",
+        "Crash",
+        "Emergency Incident",
+    ],
+    Other: ["Equipment damage", "Equipment fault"],
+};
+
 function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
@@ -150,102 +169,39 @@ function GoogleMapComp() {
         });
     };
 
+    const iconMappings = {
+        Roadworks: Roadworks,
+        Alpine: Alpine,
+        Flooding: Flooding,
+        Congestion: Congestion,
+        Hazard: Hazard,
+        "Regional LGA Incident": RegionalLGA,
+        "Major Event": Major,
+        Incident: Incident,
+        Other: Other,
+    };
+
     const getIcon = (eventType) => {
-        switch (eventType) {
-            case "Roadworks":
-                return {
-                    url: Roadworks, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Roadwork":
-                return {
-                    url: Roadworks, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "ROADWORKS":
-                return {
-                    url: Roadworks, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "24HR ROADWORKS":
-                return {
-                    url: Roadworks, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Alpine":
-                return {
-                    url: Alpine, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Flooding":
-                return {
-                    url: Flooding, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Congestion":
-                return {
-                    url: Congestion, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Hazard":
-                return {
-                    url: Hazard, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Regional LGA Incident":
-                return {
-                    url: RegionalLGA, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Incident":
-                return {
-                    url: Incident, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "COLLISION":
-                return {
-                    url: Incident, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Special event":
-                return {
-                    url: Major, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            case "Major Event":
-                return {
-                    url: Major, // Use the local image as the URL
-                    scaledSize: new window.google.maps.Size(20, 20), // scaled size
-                    origin: new window.google.maps.Point(0, 0), // origin
-                    anchor: new window.google.maps.Point(16, 16), // anchor
-                };
-            default:
-                return "https://qldtraffic.qld.gov.au/images/roadevents/SpecialEvents.png";
+        if (!window.google || !window.google.maps) {
+            console.error("Google Maps JavaScript API is not loaded");
+            return null; // Return null or a default icon
         }
+
+        // Find the main category for the given eventType
+        const mainCategory = Object.keys(eventTypeMapping).find((category) =>
+            eventTypeMapping[category].includes(eventType)
+        );
+
+        const iconUrl =
+            iconMappings[mainCategory] ||
+            "https://qldtraffic.qld.gov.au/images/roadevents/SpecialEvents.png";
+
+        return {
+            url: iconUrl,
+            scaledSize: new window.google.maps.Size(20, 20), // scaled size
+            origin: new window.google.maps.Point(0, 0), // origin
+            anchor: new window.google.maps.Point(16, 16), // anchor
+        };
     };
 
     const [eventFilter, setEventFilter] = useState({
@@ -257,6 +213,7 @@ function GoogleMapComp() {
         Alpine: false,
         "Regional LGA Incident": false,
         Congestion: true,
+        Other: false,
     });
 
     const [stateFilter, setStateFilter] = useState({
@@ -268,39 +225,22 @@ function GoogleMapComp() {
 
     useEffect(() => {
         const data = originalData.filter((position) => {
-            const eventType = position.event_type; // Assuming each position has an `eventType` field
-            const eventState = position.api_source; // Assuming each position has an `api_source` field representing the state
+            const eventType = position.event_type;
+            const eventState = position.api_source;
 
             // Check if the state is enabled in the stateFilter
             const isStateSelected = stateFilter[eventState];
-            // const positionId = position.event_id == "663859";
 
-            return (
-                // positionId &&
-                // 1 == 1
-                // // &&
-                isStateSelected && // Only proceed if the state is selected
-                ((eventFilter.Roadworks &&
-                    (eventType === "ROADWORKS" ||
-                        eventType === "24HR ROADWORKS" ||
-                        eventType === "Roadwork" ||
-                        eventType === "Roadworks")) ||
-                    (eventFilter.Alpine && eventType === "Alpine") ||
-                    (eventFilter.Flooding && eventType === "Flooding") ||
-                    (eventFilter.Congestion && eventType === "Congestion") ||
-                    (eventFilter.Hazard && eventType === "Hazard") ||
-                    (eventFilter["Regional LGA Incident"] &&
-                        eventType === "Regional LGA Incident") ||
-                    (eventFilter["Major Event"] &&
-                        (eventType === "Major Event" ||
-                            eventType === "Special event")) ||
-                    (eventFilter.Incident &&
-                        (eventType === "INCIDENT" ||
-                            eventType === "COLLISION" ||
-                            eventType === "Incident" ||
-                            eventType === "Crash")))
+            // Check if the event type is selected in the eventFilter
+            const isEventSelected = Object.entries(eventTypeMapping).some(
+                ([filterKey, typeArray]) =>
+                    eventFilter[filterKey] && typeArray.includes(eventType)
             );
+
+            // const positionId = position.event_id == "Unplanned:RID:RUD-INC1004408_RUD-IMP1004410";
+            return isStateSelected && isEventSelected;
         });
+
         setMarkerPositions(data);
     }, [eventFilter, stateFilter, originalData]);
 
@@ -622,7 +562,6 @@ function GoogleMapComp() {
                     <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
-                                {console.log(markerDetails)}
                                 <div className="flex justify-between">
                                     <div className="flex gap-5 items-center">
                                         <img
@@ -1063,43 +1002,6 @@ function GoogleMapComp() {
                                         </p>
                                     </div>
 
-                                    {/* Alpine Filter */}
-                                    <div
-                                        className="  mr-8 hidden flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
-                                        onClick={(e) =>
-                                            setEventFilter((prev) => ({
-                                                ...prev,
-                                                Alpine: !prev.Alpine,
-                                            }))
-                                        }
-                                    >
-                                        <Checkbox
-                                            onChange={(e) =>
-                                                setEventFilter((prev) => ({
-                                                    ...prev,
-                                                    Alpine: e.target.checked,
-                                                }))
-                                            }
-                                            checked={eventFilter["Alpine"]}
-                                            sx={{
-                                                "& .MuiSvgIcon-root": {
-                                                    fontSize: 28,
-                                                },
-                                                color: "#e2b540",
-                                                "&.Mui-checked": {
-                                                    color: "#ebcb7a",
-                                                },
-                                            }}
-                                            defaultChecked
-                                        />
-                                        <img
-                                            src={Alpine}
-                                            width={28}
-                                            height={21}
-                                            alt=""
-                                        />
-                                        <p className="text-white ">Alpine</p>
-                                    </div>
                                     {/* Regional LGA Incident Filter */}
                                     <div
                                         className="  mr-2  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
@@ -1186,6 +1088,43 @@ function GoogleMapComp() {
                                         <p className="text-white ">
                                             Congestion
                                         </p>
+                                    </div>
+                                    {/* Other Filter */}
+                                    <div
+                                        className="  mr-8 flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        onClick={(e) =>
+                                            setEventFilter((prev) => ({
+                                                ...prev,
+                                                Other: !prev.Other,
+                                            }))
+                                        }
+                                    >
+                                        <Checkbox
+                                            onChange={(e) =>
+                                                setEventFilter((prev) => ({
+                                                    ...prev,
+                                                    Other: e.target.checked,
+                                                }))
+                                            }
+                                            checked={eventFilter["Other"]}
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    fontSize: 28,
+                                                },
+                                                color: "#e2b540",
+                                                "&.Mui-checked": {
+                                                    color: "#ebcb7a",
+                                                },
+                                            }}
+                                            defaultChecked
+                                        />
+                                        <img
+                                            src={Other}
+                                            width={28}
+                                            height={21}
+                                            alt=""
+                                        />
+                                        <p className="text-white ">Other</p>
                                     </div>
                                 </div>
                             </>

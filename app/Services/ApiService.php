@@ -17,16 +17,16 @@ class ApiService
         $requestedTime = now();
         try {
             // Fetch data from each API and capture their responses
-            // $saResponse = $this->processSAApi();
-            // $nswResponses = $this->processNSWApi(); // This returns an array
-            // $qldResponse = $this->processQLDApi();
+            $saResponse = $this->processSAApi();
+            $nswResponses = $this->processNSWApi(); // This returns an array
+            $qldResponse = $this->processQLDApi();
             $vicPlannedResponse = $this->processVICPlannedApi();
             $vicUnplannedResponse = $this->processVICUnPlannedApi();
             $request_log_id = $this->logRequest(200, $requestedTime);
             
             // Flatten all responses into a single array
-            // $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], $vicUnplannedResponse, $vicPlannedResponse);
-            $responses = array_merge($vicUnplannedResponse,$vicPlannedResponse);
+            $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], $vicUnplannedResponse, $vicPlannedResponse);
+            // $responses = array_merge($vicUnplannedResponse,$vicPlannedResponse);
 
             foreach ($responses as $response) {
                 if (isset($response['state'])) { // Check if 'state' key exists
@@ -179,13 +179,13 @@ class ApiService
                         $information = $attributes['information'] ?? '';
 
                         // Check if the event has ended
-                        if ($end_date && now()->gt($end_date)) {
-                            // If the event has ended, delete the record if it exists
-                            ApiData::where('api_source', 'VIC')
-                                ->where('event_id', $attributes['id'])
-                                ->delete();
-                            continue; // Skip further processing for this feature
-                        }
+                        // if ($end_date && now()->gt($end_date)) {
+                        //     // If the event has ended, delete the record if it exists
+                        //     ApiData::where('api_source', 'VIC')
+                        //         ->where('event_id', $attributes['id'])
+                        //         ->delete();
+                        //     continue; // Skip further processing for this feature
+                        // }
 
                         // Only proceed if the event has not ended
                         try {
@@ -287,7 +287,7 @@ class ApiService
                         $status = $attributes['status'] ?? null;
                         $description = $attributes['description'] ?? null;
                         $start_date = $this->convertIsoToDatetime($attributes['created'] ?? null);
-                        $end_date = $this->convertIsoToDatetime($attributes['lastActive'] ?? null);
+                        $end_date = null;
                         $suburb = $attributes['reference']['startIntersectionLocality'] ?? '';
                         $traffic_direction = $attributes['impact']['direction'] ?? null;
     
@@ -356,11 +356,6 @@ class ApiService
     
         return $results;
     }
-    
-    
-    
-    
-    
 
     private function processNSWApi()
     {
