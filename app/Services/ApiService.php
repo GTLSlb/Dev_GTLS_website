@@ -17,16 +17,17 @@ class ApiService
         $requestedTime = now();
         try {
             // Fetch data from each API and capture their responses
-            $saResponse = $this->processSAApi();
-            $nswResponses = $this->processNSWApi(); // This returns an array
-            $qldResponse = $this->processQLDApi();
-            $vicResponse = $this->processVICApi();
-    
+            // $saResponse = $this->processSAApi();
+            // $nswResponses = $this->processNSWApi(); // This returns an array
+            // $qldResponse = $this->processQLDApi();
+            $vicPlannedResponse = $this->processVICPlannedApi();
+            $vicUnplannedResponse = $this->processVICUnPlannedApi();
             $request_log_id = $this->logRequest(200, $requestedTime);
             
             // Flatten all responses into a single array
-            $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], [$vicResponse]);
-        
+            // $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], $vicUnplannedResponse, $vicPlannedResponse);
+            $responses = array_merge($vicUnplannedResponse,$vicPlannedResponse);
+
             foreach ($responses as $response) {
                 if (isset($response['state'])) { // Check if 'state' key exists
                     $this->statelogRequest($response['state'], $response['status'], $request_log_id, $response['requestedTime'], $response['error']);
@@ -132,36 +133,37 @@ class ApiService
         }
     }
     
-    private function processVICApi()
+    private function processVICPlannedApi()
     {
         $requestedTime = now(); // Log request time for this individual API
 
         // Map URLs to their respective event types
         $requests = [
             ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v1/planned?format=GeoJson'],
-            ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v2/unplanned?format=GeoJson'],
         ];
-    
+
+        $results = []; // Array to collect results for each request
+
         foreach ($requests as $request) {
             $url = $request['url'];
-    
+
             try {
                 $response = Http::timeout(40)->withHeaders([
                     'Ocp-Apim-Subscription-Key' => '11d61106ecdc4c0e9dfa6ae12b4b3171',
                     'Accept' => 'application/json',
                 ])->get($url);
-    
+
                 if ($response->successful()) {
                     $data = $response->json();
                     foreach ($data['features'] as $feature) {
                         $attributes = $feature['properties'];
                         $duration = $attributes['duration'] ?? null;
-    
+
                         // Accessing the first geometry coordinates
                         $geometry = $feature['geometry']['geometries'][0] ?? null;
                         $latitude = $geometry['coordinates'][1] ?? null;
                         $longitude = $geometry['coordinates'][0] ?? null;
-    
+
                         // Accessing other properties
                         $eventType = $attributes['eventType'] ?? null;
                         $status = $attributes['status'] ?? null;
@@ -175,18 +177,16 @@ class ApiService
                         $impact = $attributes['impact']['impactType'] ?? '';
                         $source_url = $attributes['source']['sourceName'] ?? '';
                         $information = $attributes['information'] ?? '';
-    
-                        // Only proceed if the current time is before the end date
 
                         // Check if the event has ended
                         if ($end_date && now()->gt($end_date)) {
                             // If the event has ended, delete the record if it exists
                             ApiData::where('api_source', 'VIC')
-                                   ->where('event_id', $attributes['id'])
-                                   ->delete();
+                                ->where('event_id', $attributes['id'])
+                                ->delete();
                             continue; // Skip further processing for this feature
                         }
-    
+
                         // Only proceed if the event has not ended
                         try {
                             ApiData::updateOrCreate(
@@ -215,22 +215,152 @@ class ApiService
                             Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ' from URL ' . $url . ': ' . $e->getMessage());
                         }
                     }
-                    // Return success status
-                    return ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'VIC'];
+
+                    // Store success status for this request
+                    $results[] = ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'VIC'];
                 } else {
-                    // Log error and return status
+                    // Log error and store status
                     $errorMsg = 'Request to ' . $url . ' was not successful. Status: ' . $response->status();
                     Log::error($errorMsg);
-                    return ['status' => $response->status(), 'error' => $errorMsg , 'requestedTime' => $requestedTime, 'state' => 'VIC'];
+                    $results[] = ['status' => $response->status(), 'error' => $errorMsg , 'requestedTime' => $requestedTime, 'state' => 'VIC'];
                 }
             } catch (\Exception $e) {
-                // Log exception and return error message
+                // Log exception and store error message
                 $errorMsg = 'API request to ' . $url . ' failed: ' . $e->getMessage();
                 Log::error($errorMsg);
-                return ['status' => null, 'error' => $errorMsg,  'requestedTime' => $requestedTime, 'state' => 'VIC'];
+                $results[] = ['status' => null, 'error' => $errorMsg,  'requestedTime' => $requestedTime, 'state' => 'VIC'];
             }
         }
+
+        // Return all results after processing all requests
+        return $results;
     }
+
+    private function processVICUnPlannedApi()
+    {
+        $requestedTime = now(); // Log request time for this individual API
+    
+        // Map URLs to their respective event types
+        $requests = [
+            ['url' => 'https://data-exchange-test-api.vicroads.vic.gov.au/opendata/disruptions/v2/unplanned?format=GeoJson'],
+        ];
+    
+        $results = []; // Array to collect results for each request
+    
+        foreach ($requests as $request) {
+            $url = $request['url'];
+    
+            try {
+                $response = Http::timeout(40)->withHeaders([
+                    'Ocp-Apim-Subscription-Key' => '11d61106ecdc4c0e9dfa6ae12b4b3171',
+                    'Accept' => 'application/json',
+                ])->get($url);
+    
+                if ($response->successful()) {
+                    $data = $response->json();
+                    foreach ($data['features'] as $feature) {
+                        $attributes = $feature['properties'];
+    
+                        // Accessing the geometry coordinates
+                        $geometry = $feature['geometry'] ?? null;
+                        $coordinates = $geometry['coordinates'] ?? null;
+    
+                        // Handle coordinates - check if it is a nested array or a single coordinate pair
+                        if (is_array($coordinates)) {
+                            if (is_array($coordinates[0])) {
+                                // If it's a nested array (multiple coordinate pairs), use the first pair
+                                $longitude = $coordinates[0][0] ?? null;
+                                $latitude = $coordinates[0][1] ?? null;
+                            } else {
+                                // If it's a single coordinate pair, use it directly
+                                $longitude = $coordinates[0] ?? null;
+                                $latitude = $coordinates[1] ?? null;
+                            }
+                        } else {
+                            // If no coordinates are provided, set to null
+                            $longitude = null;
+                            $latitude = null;
+                        }
+    
+                        // Accessing other properties
+                        $eventType = $attributes['eventType'] ?? null;
+                        $status = $attributes['status'] ?? null;
+                        $description = $attributes['description'] ?? null;
+                        $start_date = $this->convertIsoToDatetime($attributes['created'] ?? null);
+                        $end_date = $this->convertIsoToDatetime($attributes['lastActive'] ?? null);
+                        $suburb = $attributes['reference']['startIntersectionLocality'] ?? '';
+                        $traffic_direction = $attributes['impact']['direction'] ?? null;
+    
+                        // Check if 'socialMedia' key exists before accessing it
+                        $advice = isset($attributes['socialMedia']) ? (is_array($attributes['socialMedia']) ? json_encode($attributes['socialMedia']) : $attributes['socialMedia']) : null;
+    
+                        $road_name = $attributes['closedRoadName'] ?? '';
+                        $impact = $attributes['impact']['impactType'] ?? null;
+                        $source_url = $attributes['source']['sourceName'] ?? '';
+                        $information = $attributes['description'] ?? null;
+    
+                        // Prepare the data array for insertion
+                        $dataToInsert = [
+                            'api_source' => 'VIC',
+                            'event_id' => $attributes['id'],
+                            'description' => $description,
+                            'start_date' => $start_date,
+                            'end_date' => $end_date,
+                            'latitude' => $latitude,
+                            'longitude' => $longitude,
+                            'suburb' => $suburb,
+                            'traffic_direction' => $traffic_direction,
+                            'road_name' => $road_name,
+                            'status' => $status,
+                            'event_type' => $eventType,
+                            'impact' => $impact,
+                            'source_url' => $source_url,
+                            'advice' => $advice,
+                            'information' => is_array($information) ? json_encode($information) : $information,
+                        ];
+
+    
+                        // Ensure fields are strings before inserting
+                        try {
+                            ApiData::updateOrCreate(
+                                [
+                                    'api_source' => 'VIC',
+                                    'event_id' => $attributes['id'],
+                                ],
+                                $dataToInsert
+                            );
+                        } catch (\Exception $e) {
+                            Log::error('Error creating or updating record for event ID ' . $attributes['id'] . ' from URL ' . $url . ': ' . $e->getMessage());
+                            Log::error('Data causing the error: ', $dataToInsert); // Log the problematic data
+                        }
+                    }
+    
+                    $results[] = ['status' => $response->status(), 'error' => null, 'requestedTime' => $requestedTime, 'state' => 'VIC'];
+                } else {
+                    $errorMsg = 'Request to ' . $url . ' was not successful. Status: ' . $response->status();
+                    Log::error($errorMsg);    
+                    $results[] = ['status' => $response->status(), 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'VIC'];
+                }
+            } catch (\Exception $e) {
+                $errorMsg = 'API request to ' . $url . ' failed: ' . $e->getMessage();
+                Log::error($errorMsg);
+    
+                // Log the exception and any response body if available
+                if (isset($response)) {
+                    Log::error('Response body: ' . $response->body());
+                }
+    
+                $results[] = ['status' => null, 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'VIC'];
+            }
+        }
+    
+        return $results;
+    }
+    
+    
+    
+    
+    
 
     private function processNSWApi()
     {
@@ -238,12 +368,11 @@ class ApiService
         $results = []; // Array to store results of each request
         // Map URLs to their respective event types
         $requests = [
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/fire/open', 'event_type' => 'Fire'],
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/flood/open', 'event_type' => 'Flood'],
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/incident/open', 'event_type' => 'Incident'],
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/majorevent/open', 'event_type' => 'Major Event'],
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/roadwork/open', 'event_type' => 'Roadwork'],
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/regional-lga-incident/open', 'event_type' => 'Regional LGA Incident'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/flood/all', 'event_type' => 'Flood'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/incident/all', 'event_type' => 'Incident'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/majorevent/all', 'event_type' => 'Major Event'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/roadwork/all', 'event_type' => 'Roadwork'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/regional-lga-incident/all', 'event_type' => 'Regional LGA Incident'],
         ];
     
         foreach ($requests as $request) {
@@ -284,6 +413,7 @@ class ApiService
                         // Safely access properties with null coalescing operator
                         $status = $attributes['status'] ?? null;
                         $description = $attributes['displayName'] ?? '';
+                        $end_date = $this->convertTimestampToDatetime($attributes['end'] ?? null);
                         $start_date = $this->convertTimestampToDatetime($attributes['created'] ?? null);
                         $lastUp_date = $this->convertTimestampToDatetime($attributes['lastUpdated'] ?? null);
     
@@ -301,10 +431,15 @@ class ApiService
                         $adviceA = $attributes['adviceA'] ?? null;
                         $adviceB = $attributes['adviceB'] ?? null;
                         $adviceC = $attributes['adviceC'] ?? null;
-                        $combinedAdvice = implode(' / ', array_filter([$adviceA, $adviceB, $adviceC]));
+                        
+                        // Filter out null or empty values and then join them with ' / '
+                        $combinedAdvice = implode(' / ', array_filter([$adviceA, $adviceB, $adviceC], fn($value) => !is_null($value) && $value !== ''));
+                        
+                        // Now $combinedAdvice won't have a trailing '/' if any advice is empty or null
+                        
     
                         // Use a transaction to ensure data integrity
-                        DB::transaction(function () use ($feature, $description, $start_date, $lastUp_date, $latitude, $longitude, $suburb, $traffic_direction, $road_name, $status, $staticEventType, $impact, $source_url, $combinedAdvice, $attributes) {
+                        DB::transaction(function () use ($feature, $description, $start_date,$end_date, $lastUp_date, $latitude, $longitude, $suburb, $traffic_direction, $road_name, $status, $staticEventType, $impact, $source_url, $combinedAdvice, $attributes) {
                             ApiData::updateOrCreate(
                                 [
                                     'api_source' => 'NSW',
@@ -312,6 +447,7 @@ class ApiService
                                 ],
                                 [
                                     'description' => $description,
+                                    'end_date' => $end_date,
                                     'start_date' => $start_date,
                                     'lastUpdated_date' => $lastUp_date,
                                     'latitude' => $latitude,

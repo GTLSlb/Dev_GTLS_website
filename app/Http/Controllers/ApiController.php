@@ -63,7 +63,7 @@ class ApiController extends Controller
             $query->where('event_id', $eventId);
         }
     
-        // Filter out records with end_date before the current date
+        // // Filter out records with end_date before the current date
         $query->where(function($q) {
             $q->whereNull('end_date')  // Include records with no end_date
               ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future

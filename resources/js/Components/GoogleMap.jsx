@@ -136,6 +136,7 @@ function GoogleMapComp() {
     const handleMarkerClick = (position) => {
         setMarkerDetails({
             image: getIcon(position.event_type).url,
+            id: position.event_id,
             type: position.event_type,
             subsurb: position.suburb,
             roadName: position.road_name,
@@ -276,6 +277,8 @@ function GoogleMapComp() {
 
             return (
                 // positionId &&
+                // 1 == 1
+                // // &&
                 isStateSelected && // Only proceed if the state is selected
                 ((eventFilter.Roadworks &&
                     (eventType === "ROADWORKS" ||
@@ -579,6 +582,7 @@ function GoogleMapComp() {
                     </AccordionDetails>
                 </Accordion>
             </div>
+
             <div className="flex flex-col h-[800px] mt-10">
                 <div className="flex-grow flex flex-row-reverse">
                     {/* Google Map */}
@@ -618,6 +622,7 @@ function GoogleMapComp() {
                     <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
+                                {console.log(markerDetails)}
                                 <div className="flex justify-between">
                                     <div className="flex gap-5 items-center">
                                         <img
@@ -657,18 +662,11 @@ function GoogleMapComp() {
                                                 markerDetails.startDate
                                             )}
                                         </p>
-                                        {markerDetails.endDate ? (
+                                        {markerDetails.endDate && (
                                             <p className="font-thin">
                                                 Ends At{" "}
                                                 {formatDateTime(
                                                     markerDetails.endDate
-                                                )}
-                                            </p>
-                                        ) : (
-                                            <p className="font-thin">
-                                                Last checked at{" "}
-                                                {formatDateTime(
-                                                    markerDetails.lastUpdated
                                                 )}
                                             </p>
                                         )}
