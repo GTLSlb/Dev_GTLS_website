@@ -147,8 +147,6 @@ class LoginController extends Controller
             return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
         }
     }
-    
-}
 
 
     public function logout(Request $request)
