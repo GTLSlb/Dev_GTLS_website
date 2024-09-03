@@ -22,6 +22,7 @@ import jost5news from "../../../assets/news/Jost5.webp";
 import BPWnews from "../../../assets/news/BPW.webp";
 import Conferencnews from "../../../assets/news/Conference.jpeg";
 import gearboxnews from "../../../assets/news/gearboxnews.jpeg";
+import jaixtraining from "../../../assets/news/jaixtraining.jpeg";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -33,6 +34,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 22,
+        title: "Jaix Logistics Software Recap Training and information updates",
+        href: "#",
+        description: `This week the Jaix Logistics Support and Implementation Specialist was embedded at our Sydney head Office for some valuable recap training which involved all departments within Gold Tiger Logistics Solutions including Operations (Transport and Warehousing departments), Administration, Customer Service, IT and Sales.`,
+        imageUrl: jaixtraining,
+        date: "September 3, 2024",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 21,
         title: "GTLS: A Strategic Vision",

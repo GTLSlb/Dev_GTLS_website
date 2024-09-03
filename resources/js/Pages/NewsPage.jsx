@@ -40,6 +40,7 @@ import Conferencnews8 from "../assets/news/Conference8.jpeg";
 import Conferencnews9 from "../assets/news/Conference9.jpg";
 import Conferencnews10 from "../assets/news/Conference10.jpeg";
 import Conferencnews11 from "../assets/news/Conference11.jpeg";
+import jaixtraining from "../assets/news/jaixtraining.jpeg";
 
 import React from "react";
 import { usePage } from "@inertiajs/react";
@@ -621,16 +622,53 @@ export default function NewsPage(props) {
             ],
         },
         {
-            id: 20,
+            id: 21,
             title: "GTLS: A Strategic Vision",
             content1: `At Gold Tiger Logistics Solutions (GTLS), we’re committed to more than just ticking boxes; we focus on building a strong, supportive team and sustaining robust processes for the long term. Which is why today we revisited the Gearbox training from 6 weeks ago, conducting an internal audit to ensure we stay at the forefront of maintenance excellence and continue to uphold our high DIFOT standards. This commitment is crucial to maintaining our position as a preferred supplier within the FMCG sector.`,
            
             content2: `By continuously auditing our internal processes and fostering a culture of continuous improvement, with a key focus on safety, we continue to seek ways to enhance our operations. This approach not only allows us to deliver cost savings but also reduces CO2 emissions.`,
             imgUrl: gearboxnews,
         },
+        {
+            id: 22,
+            title: "Jaix Logistics Software Recap Training and information updates",
+            content1:
+                "This week the Jaix Logistics Support and Implementation Specialist was embedded at our Sydney head Office for some valuable recap training which involved all departments within Gold Tiger Logistics Solutions including Operations (Transport and Warehousing departments), Administration, Customer Service, IT and Sales. Jaix Logistics Software is a complete supply chain solution. Gold Tiger Logistics Solutions utilise Jaix for our supply needs including 3PL Warehouse Management, Transport Management from customer portal, pick up allocations, linehaul and timeslot delivery requirements. Our Jaix partner this week provided further recap training to the team which included:",
+            list: [
+                {
+                    id: 0,
+                    title: "Freight management (Despatch, fleet and pick up Allocation, Bookings management, Linehaul Allocation, manifesting and delivery timeslots)",
+                },
+                {
+                    id: 1,
+                    title: "Warehousing (3PL management)",
+                },
+                {
+                    id: 2,
+                    title: "Administration and Customer Service including (Tracking of consignments and other valuable information)",
+                },
+                {
+                    id: 3,
+                    title: "Sales (rating and zone options, quoting and reporting modules)",
+                },
+            ],
+            content2:
+                "A big thank you to our Support and Implementation Specialist at Jaix and we will see you again soon for more valuable recap training. The Gold Tiger Logistics team has gained some valuable insights and is an extension to our current knowledge base and Freight and Warehousing Management expertise within.",
+            imgUrl: jaixtraining,
+        },
     ];
 
     const posts = [
+        {
+            id: 22,
+            title: "Jaix Logistics Software Recap Training and information updates",
+            href: "#",
+            description: `This week the Jaix Logistics Support and Implementation Specialist was embedded at our Sydney head Office for some valuable recap training which involved all departments within Gold Tiger Logistics Solutions including Operations (Transport and Warehousing departments), Administration, Customer Service, IT and Sales.`,
+            imageUrl: jaixtraining,
+            date: "September 3, 2024",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 21,
             title: "GTLS: A Strategic Vision",
@@ -889,7 +927,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 ? (
+                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 || id == 22 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -1020,7 +1058,7 @@ export default function NewsPage(props) {
                                     ))}
                                 </ol>
                             ) : null}
-                            <div className="mt-10 text-lg  text-gray-200 text-justify">
+                            <div className="mt-3 text-lg  text-gray-200 text-justify">
                                 <p
                                     style={{ whiteSpace: "pre-line" }}
                                     className="w-full"
