@@ -23,13 +23,24 @@ import Navman from "../assets/news/Navman.webp";
 import weighbridgenews from "../assets/news/weighbridgenews.webp";
 import Navmannews from "../assets/news/Navmannews.webp";
 import onSiteFueling from "@/assets/news/onSiteFueling.webp";
+import Efficiency from "../assets/news/Efficiency.webp";
+import JostCover from "../assets/news/Jost5Cover.jpeg";
+import BBWImage from "../assets/news/BPW.webp";
+import Conferencnews from "../assets/news/Conference.jpeg";
+import Conferencnews2 from "../assets/news/Conference2.jpeg";
+import Conferencnews3 from "../assets/news/Conference3.jpeg";
+import Conferencnews4 from "../assets/news/Conference4.jpeg";
+import Conferencnews5 from "../assets/news/Conference5.jpeg";
+import Conferencnews6 from "../assets/news/Conference6.jpeg";
+import Conferencnews7 from "../assets/news/Conference7.jpeg";
+import Conferencnews8 from "../assets/news/Conference8.jpeg";
+import Conferencnews9 from "../assets/news/Conference9.jpg";
+import Conferencnews10 from "../assets/news/Conference10.jpeg";
+import Conferencnews11 from "../assets/news/Conference11.jpeg";
+
 import React from "react";
 import { usePage } from "@inertiajs/react";
-import {
-    Bars3Icon,
-    XMarkIcon,
-    ArrowLongLeftIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import {
     FacebookShareButton,
     FacebookIcon,
@@ -41,22 +52,14 @@ import {
     WhatsappIcon,
 } from "react-share";
 import Footer from "./Component/landingPage/Footer";
-import SecondaryFooter from "./Component/landingPage/SecondaryFooter";
-import Navbars from "./Component/Navbars";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/contact_us", ref: "contact" },
-];
-
-const handleClick = () => {
-    history.push("/", { scrollToElement: "news" });
-};
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -205,10 +208,6 @@ export default function NewsPage(props) {
 
                 <div className="bg-dark pb-10 px-6 lg:px-8">
                     <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
-                        {/* <p className="text-base font-semibold leading-7 text-indigo-600">
-                            Introducing
-                        </p> */}
-                        {/* {contentJson.map((post) => ( */}
                         <a
                             href="/news"
                             className="relative inline-flex items-center justify-center text-black "

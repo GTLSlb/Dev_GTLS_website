@@ -135,6 +135,49 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
+    // const [appsImgs, setAppsImgs] = useState([]);
+    // const [isFetchingImg, setIsFetchingImg] = useState(true);
+    // const fetchImageData = async (picName, app) => {
+    //     try {
+    //         const response = await axios({
+    //             method: "post",
+    //             url: "/getAppLogo",
+    //             responseType: "blob", // Set the expected response type as 'blob'
+    //             data: {
+    //                 filename: picName,
+    //             },
+    //         });
+    //         const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
+    //         setAppsImgs((prev) => ({
+    //             ...prev,
+    //             [app.AppId]: blobUrl,
+    //         }));
+    //     } catch (error) {
+    //         console.log(error);
+    //         setAppsImgs((prev) => ({
+    //             ...prev,
+    //             [app.AppId]: "/icons/NoPhoto.jpg",
+    //         }));
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     if (filteredApps?.length > 0) {
+    //         filteredApps?.forEach((app) => {
+    //             if (!appsImgs[app.AppId]) {
+    //                 // Check if the image URL is not already loaded
+    //                 fetchImageData(app?.AppPic, app);
+    //             }
+    //         });
+    //     }
+    // }, [filteredApps]);
+
+    // useEffect(() => {
+    //     const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
+    //     if (appsImgsArray?.length == filteredApps?.length) {
+    //         setIsFetchingImg(false);
+    //     }
+    // }, [appsImgs, filteredApps]);
 
     const [getfooter, setfooter] = useState([]);
 
@@ -285,7 +328,7 @@ export default function LandingPage({}) {
                             </div>
                             {/* border */}
 
-                            <div className=" flex flex-col w-full mx-auto max-w-7xl px-6 py-12 sm:py-10 lg:px-8">
+                            <div className=" flex flex-col w-full mx-auto max-w-7xl px-6 py-4 lg:px-8">
                                 <div className="text-white md:text-3xl  py-4 my-4 ">
                                     {" "}
                                     <span>{greeting} </span>
@@ -320,16 +363,16 @@ export default function LandingPage({}) {
                             </div>
 
                             {/* main content */}
-                            <div className="mx-auto max-w-7xl  px-6 py-16 sm:py-24 lg:px-8">
+                            <div className="flex flex-col w-full mx-auto max-w-7xl px-6 py-4 pb-10 lg:px-8">
                                 <p className="text-goldt text-3xl pb-10 font-bold ">
                                     Discover our Applications:
                                 </p>
-                                <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3  lg:px-8 gap-x-10 gap-y-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-8">
                                     {filteredApps?.length > 0
                                         ? filteredApps.map((app) => (
                                               <div
                                                   id={app.AppName}
-                                                  className={`bg-gradient-to-tr sm:w-96 border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
+                                                  className={`bg-gradient-to-tr sm:w-auto border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
                                                   onClick={() => {
                                                       GoAppPage(app);
                                                   }}

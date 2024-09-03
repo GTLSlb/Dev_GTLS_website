@@ -4,123 +4,159 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb4b1cb622e0528ec2471aeca1aa9123",
+    "content-hash": "5b7145068dcbf850761128273c19229e",
     "packages": [
         {
-            "name": "alexazartsev/heroicon",
-            "version": "v2.0.0",
+            "name": "aws/aws-crt-php",
+            "version": "v1.2.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/AlexAzartsev/heroicon.git",
-                "reference": "669bacdecf5597c29e2578428c9f5aa60c627b8c"
+                "url": "https://github.com/awslabs/aws-crt-php.git",
+                "reference": "a63485b65b6b3367039306496d49737cf1995408"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AlexAzartsev/heroicon/zipball/669bacdecf5597c29e2578428c9f5aa60c627b8c",
-                "reference": "669bacdecf5597c29e2578428c9f5aa60c627b8c",
+                "url": "https://api.github.com/repos/awslabs/aws-crt-php/zipball/a63485b65b6b3367039306496d49737cf1995408",
+                "reference": "a63485b65b6b3367039306496d49737cf1995408",
                 "shasum": ""
             },
             "require": {
-                "laravel/nova": "^4.0",
-                "php": ">=7.1.0"
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35||^5.6.3||^9.5",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "suggest": {
+                "ext-awscrt": "Make sure you install awscrt native extension to use any of the functionality."
             },
             "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "AlexAzartsev\\Heroicon\\FieldServiceProvider"
-                    ]
-                }
-            },
             "autoload": {
-                "psr-4": {
-                    "AlexAzartsev\\Heroicon\\": "src/"
-                }
+                "classmap": [
+                    "src/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "Apache-2.0"
             ],
             "authors": [
                 {
-                    "name": "Alex Azartsev",
-                    "email": "alex.azarsecond@gmail.com",
-                    "homepage": "https://github.com/AlexAzartsev/heroicon",
-                    "role": "Developer"
+                    "name": "AWS SDK Common Runtime Team",
+                    "email": "aws-sdk-common-runtime@amazon.com"
                 }
             ],
-            "description": "A Laravel Nova field for managing icons.",
+            "description": "AWS Common Runtime for PHP",
+            "homepage": "https://github.com/awslabs/aws-crt-php",
             "keywords": [
-                "Heroicons",
-                "laravel",
-                "nova",
-                "svg"
+                "amazon",
+                "aws",
+                "crt",
+                "sdk"
             ],
             "support": {
-                "issues": "https://github.com/AlexAzartsev/heroicon/issues",
-                "source": "https://github.com/AlexAzartsev/heroicon/tree/v2.0.0"
+                "issues": "https://github.com/awslabs/aws-crt-php/issues",
+                "source": "https://github.com/awslabs/aws-crt-php/tree/v1.2.6"
             },
-            "time": "2022-08-10T13:59:04+00:00"
+            "time": "2024-06-13T17:21:28+00:00"
         },
         {
-            "name": "ayvazyan10/nova-imagic",
-            "version": "v1.3.0",
+            "name": "aws/aws-sdk-php",
+            "version": "3.320.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ayvazyan10/nova-imagic.git",
-                "reference": "683849b004054e81d27a79e98b59ed55850fa67f"
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "dbae075b861316237d63418715f8bf4bfdd9d33d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ayvazyan10/nova-imagic/zipball/683849b004054e81d27a79e98b59ed55850fa67f",
-                "reference": "683849b004054e81d27a79e98b59ed55850fa67f",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/dbae075b861316237d63418715f8bf4bfdd9d33d",
+                "reference": "dbae075b861316237d63418715f8bf4bfdd9d33d",
                 "shasum": ""
             },
             "require": {
-                "intervention/image": "^2.7",
-                "laravel/nova": "^4.0",
-                "php": "^7.1|^8.0"
+                "aws/aws-crt-php": "^1.2.3",
+                "ext-json": "*",
+                "ext-pcre": "*",
+                "ext-simplexml": "*",
+                "guzzlehttp/guzzle": "^6.5.8 || ^7.4.5",
+                "guzzlehttp/promises": "^1.4.0 || ^2.0",
+                "guzzlehttp/psr7": "^1.9.1 || ^2.4.5",
+                "mtdowling/jmespath.php": "^2.6",
+                "php": ">=7.2.5",
+                "psr/http-message": "^1.0 || ^2.0"
+            },
+            "require-dev": {
+                "andrewsville/php-token-reflection": "^1.4",
+                "aws/aws-php-sns-message-validator": "~1.0",
+                "behat/behat": "~3.0",
+                "composer/composer": "^1.10.22",
+                "dms/phpunit-arraysubset-asserts": "^0.4.0",
+                "doctrine/cache": "~1.4",
+                "ext-dom": "*",
+                "ext-openssl": "*",
+                "ext-pcntl": "*",
+                "ext-sockets": "*",
+                "nette/neon": "^2.3",
+                "paragonie/random_compat": ">= 2",
+                "phpunit/phpunit": "^5.6.3 || ^8.5 || ^9.5",
+                "psr/cache": "^1.0",
+                "psr/simple-cache": "^1.0",
+                "sebastian/comparator": "^1.2.3 || ^4.0",
+                "yoast/phpunit-polyfills": "^1.0"
             },
             "suggest": {
-                "ext-exif": "Install the exif extension to orientate images automatically.",
-                "ext-gd": "Install the GD extension to process images using GD.",
-                "ext-imagick": "Install the Imagick extension to process image using ImageMagick."
+                "aws/aws-php-sns-message-validator": "To validate incoming SNS notifications",
+                "doctrine/cache": "To use the DoctrineCacheAdapter",
+                "ext-curl": "To send requests using cURL",
+                "ext-openssl": "Allows working with CloudFront private distributions and verifying received SNS messages",
+                "ext-sockets": "To use client-side monitoring"
             },
             "type": "library",
             "extra": {
-                "laravel": {
-                    "providers": [
-                        "Ayvazyan10\\Imagic\\FieldServiceProvider"
-                    ]
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
                 "psr-4": {
-                    "Ayvazyan10\\Imagic\\": "src/"
-                }
+                    "Aws\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "src/data/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "Apache-2.0"
             ],
-            "description": "Imagic is a Laravel Nova field package that allows for image manipulation capabilities, such as cropping, resizing, quality adjustment, and WebP conversion. It utilizes the powerful Intervention Image class for image manipulation.",
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP - Use Amazon Web Services in your PHP project",
+            "homepage": "http://aws.amazon.com/sdkforphp",
             "keywords": [
-                "crop",
-                "image",
-                "image crop",
-                "image resize",
-                "images",
-                "laravel",
-                "nova",
-                "nova4",
-                "resize",
-                "webp support"
+                "amazon",
+                "aws",
+                "cloud",
+                "dynamodb",
+                "ec2",
+                "glacier",
+                "s3",
+                "sdk"
             ],
             "support": {
-                "issues": "https://github.com/ayvazyan10/nova-imagic/issues",
-                "source": "https://github.com/ayvazyan10/nova-imagic/tree/v1.3.0"
+                "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
+                "issues": "https://github.com/aws/aws-sdk-php/issues",
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.320.2"
             },
-            "time": "2023-08-06T19:32:46+00:00"
+            "time": "2024-08-16T18:06:17+00:00"
         },
         {
             "name": "brick/math",
@@ -3053,7 +3089,72 @@
                 "issues": "https://github.com/thephpleague/flysystem/issues",
                 "source": "https://github.com/thephpleague/flysystem/tree/3.28.0"
             },
-            "time": "2024-05-22T10:09:12+00:00"
+            "funding": [
+                {
+                    "url": "https://ecologi.com/frankdejonge",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/frankdejonge",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-02-04T12:10:17+00:00"
+        },
+        {
+            "name": "league/flysystem-aws-s3-v3",
+            "version": "3.28.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
+                "reference": "22071ef1604bc776f5ff2468ac27a752514665c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/22071ef1604bc776f5ff2468ac27a752514665c8",
+                "reference": "22071ef1604bc776f5ff2468ac27a752514665c8",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.295.10",
+                "league/flysystem": "^3.10.0",
+                "league/mime-type-detection": "^1.0.0",
+                "php": "^8.0.2"
+            },
+            "conflict": {
+                "guzzlehttp/guzzle": "<7.0",
+                "guzzlehttp/ringphp": "<1.1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\AwsS3V3\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "AWS S3 filesystem adapter for Flysystem.",
+            "keywords": [
+                "Flysystem",
+                "aws",
+                "file",
+                "files",
+                "filesystem",
+                "s3",
+                "storage"
+            ],
+            "support": {
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.28.0"
+            },
+            "time": "2024-05-06T20:05:52+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -3405,55 +3506,45 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-12T21:02:21+00:00"
+            "time": "2023-10-27T15:32:31+00:00"
         },
         {
-            "name": "mostafaznv/larupload",
-            "version": "1.0.5",
+            "name": "mtdowling/jmespath.php",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mostafaznv/larupload.git",
-                "reference": "26cfa85c62e3bc59faeed1876294df585ead1cfc"
+                "url": "https://github.com/jmespath/jmespath.php.git",
+                "reference": "bbb69a935c2cbb0c03d7f481a238027430f6440b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mostafaznv/larupload/zipball/26cfa85c62e3bc59faeed1876294df585ead1cfc",
-                "reference": "26cfa85c62e3bc59faeed1876294df585ead1cfc",
+                "url": "https://api.github.com/repos/jmespath/jmespath.php/zipball/bbb69a935c2cbb0c03d7f481a238027430f6440b",
+                "reference": "bbb69a935c2cbb0c03d7f481a238027430f6440b",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "ext-pdo": "*",
-                "imagine/imagine": "^1.3",
-                "intervention/image": "^2.7",
-                "ksubileau/color-thief-php": "^2.0",
-                "laravel/framework": "^10.4.1",
-                "php": "^8.1",
-                "php-ffmpeg/php-ffmpeg": "^1.1",
-                "spatie/image-optimizer": "^1.6"
+                "php": "^7.2.5 || ^8.0",
+                "symfony/polyfill-mbstring": "^1.17"
             },
             "require-dev": {
-                "hashids/hashids": "^5.0",
-                "league/flysystem-aws-s3-v3": "^3.0",
-                "orchestra/testbench": "^8.0.11",
-                "pestphp/pest": "^2.2",
-                "pestphp/pest-plugin-laravel": "^2.0",
-                "spatie/pest-plugin-test-time": "^2.0"
+                "composer/xdebug-handler": "^3.0.3",
+                "phpunit/phpunit": "^8.5.33"
             },
+            "bin": [
+                "bin/jp.php"
+            ],
             "type": "library",
             "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mostafaznv\\Larupload\\LaruploadServiceProvider"
-                    ]
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
                 }
             },
             "autoload": {
                 "files": [
-                    "src/Helpers/Utils.php"
+                    "src/JmesPath.php"
                 ],
                 "psr-4": {
-                    "Mostafaznv\\Larupload\\": "src/"
+                    "JmesPath\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -3462,94 +3553,26 @@
             ],
             "authors": [
                 {
-                    "name": "mostafaznv",
-                    "email": "mostafa.zeinivand@gmail.com"
+                    "name": "Graham Campbell",
+                    "email": "hello@gjcampbell.co.uk",
+                    "homepage": "https://github.com/GrahamCampbell"
+                },
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "Larupload is a ORM based file uploader for laravel to upload image, video, audio and other known files.",
+            "description": "Declaratively specify how to extract elements from a JSON document",
             "keywords": [
-                "crop",
-                "ffmpeg",
-                "file",
-                "file manager",
-                "file system",
-                "hls",
-                "image",
-                "laravel",
-                "laravel 8",
-                "m3u8",
-                "media",
-                "mostafaznv",
-                "resize",
-                "s3",
-                "sftp",
-                "storage",
-                "stream",
-                "upload",
-                "video"
+                "json",
+                "jsonpath"
             ],
             "support": {
-                "docs": "https://github.com/mostafaznv/larupload/blob/master/README.md",
-                "issues": "https://github.com/mostafaznv/larupload/issues",
-                "source": "https://github.com/mostafaznv/larupload"
+                "issues": "https://github.com/jmespath/jmespath.php/issues",
+                "source": "https://github.com/jmespath/jmespath.php/tree/2.7.0"
             },
-            "time": "2023-10-21T15:28:45+00:00"
-        },
-        {
-            "name": "mostafaznv/nova-video",
-            "version": "6.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mostafaznv/nova-video.git",
-                "reference": "7942677ba90de2ccd3534d7775c6bd13a0be9049"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mostafaznv/nova-video/zipball/7942677ba90de2ccd3534d7775c6bd13a0be9049",
-                "reference": "7942677ba90de2ccd3534d7775c6bd13a0be9049",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "laravel/framework": "^10.4.1|^11.0",
-                "laravel/nova": "^4.0",
-                "mostafaznv/larupload": "^1.0.0|^2.0.0",
-                "php": "^8.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mostafaznv\\NovaVideo\\VideoFieldServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mostafaznv\\NovaVideo\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Video Field for Laravel Nova",
-            "keywords": [
-                "ffmpeg",
-                "hls",
-                "laravel",
-                "larupload",
-                "nova",
-                "stream",
-                "upload video",
-                "video",
-                "video field"
-            ],
-            "support": {
-                "issues": "https://github.com/mostafaznv/nova-video/issues",
-                "source": "https://github.com/mostafaznv/nova-video/tree/6.3.0"
-            },
-            "time": "2024-03-16T08:21:38+00:00"
+            "time": "2023-08-25T10:54:48+00:00"
         },
         {
             "name": "nesbot/carbon",

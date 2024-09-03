@@ -47,10 +47,10 @@ export default function ForgotPassword({ status }) {
 
         return () => clearTimeout(timer);
     }, [isDisabled, timeLeft]);
-    const handleClick = () => {
+    const handleClick = (e) => {
         setIsDisabled(true);
         // Add your submit logic here
-        submit();
+        submit(e);
     };
     const submit = (e) => {
         e.preventDefault();

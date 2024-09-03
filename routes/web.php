@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LayoutController;
@@ -118,6 +120,13 @@ Route::get('/contact_us', function () {
     return Inertia::render('ContactUsPage');
 })->name('contact_us');
 
+Route::get('/Unsubscribe/{id}', function ($id) {
+    return Inertia::render('Unsubscribe',['id'=> $id]);
+})->name('Unsubscribe');
+
+Route::get('/Subscribe/{id}', function ($id) {
+    return Inertia::render('Subscribe',['id'=> $id]);
+})->name('Subscribe');
 
 
 Route::resource('posts', BlogController::class);
@@ -196,6 +205,8 @@ Route::middleware('custom')->group(function () {
     Route::get('/findUserById/{user_id}', [RegisteredUserController::class, 'searchUserByName']);
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
+    Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
+    
 });
 
 Route::get('/session-data', function () {
@@ -257,6 +268,11 @@ Route::fallback(function () {
     ]);
 });
 
+Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
+Route::get('/get-positions', [ApiController::class, 'index']);
+Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
+
+Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
