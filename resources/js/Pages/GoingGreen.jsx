@@ -5,6 +5,7 @@ import Calc from "./Component/landingPage/Calc";
 import "../../css/gradient.css";
 import Green from "../assets/pictures/gogreen.webp";
 import { useState, useEffect } from "react";
+import Navbars from "./Component/Navbars";
 
 const content = [
     {

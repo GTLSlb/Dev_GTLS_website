@@ -174,7 +174,9 @@ class ApiController extends Controller
     
     public function getRecentRecords(Request $request)
     {
-        DB::enableQueryLog(); // Start query logging
+        // Start query logging for debugging purposes
+        DB::enableQueryLog();
+    
         // Retrieve the last successful service run log
         $lastLog = DB::table('request_logs')
             ->where('method', 'Service Run')
@@ -182,39 +184,45 @@ class ApiController extends Controller
             ->orderBy('created_at', 'desc')
             ->first();
     
-        // Check if there is a last log available
+        // Determine the updated time based on the last log
         $updated = $lastLog ? $lastLog->request_time : null;
     
-        // Retrieve event category IDs parameter
-        $eventCategoryIds = $request->query('event_category_ids'); // Accept an array of event category IDs
+        // Retrieve the event category IDs from the query parameters
+        $eventCategoryIds = $request->query('event_category_ids');
     
-        // Build the query
+        // Convert the event category IDs to an array if it's a single value or not already an array
+        if ($eventCategoryIds) {
+            $eventCategoryIds = is_array($eventCategoryIds) ? $eventCategoryIds : explode(',', str_replace(['[', ']'], '', $eventCategoryIds));
+        }
+    
+        // Initialize the query for ApiData
         $query = ApiData::query();
     
+        // Apply filters based on the last log's created_at time, if available
         if ($updated) {
-            // Apply the filter based on the last log's created_at if available
-            $query->where('created_at', '>=', $updated)
+            $query->where(function ($q) use ($updated) {
+                $q->where('created_at', '>=', $updated)
                   ->orWhere('updated_at', '>=', $updated);
+            });
         }
     
-        if ($eventCategoryIds) {
-            // Ensure $eventCategoryIds is an array before applying filter
-            $query->whereIn('event_category_id', (array) $eventCategoryIds);
+        // Apply filter for event category IDs if provided
+        if (!empty($eventCategoryIds)) {
+            $query->whereIn('event_category_id', $eventCategoryIds);
         }
-
-        // Your query and logic
+    
+        // Execute the query to get the filtered results
         $apiData = $query->get();
-
-        // Retrieve the query log
-        dd((array) $eventCategoryIds);
-
+    
+        // Optional: View the query log for debugging
+        // dd(DB::getQueryLog());
+    
         // Transform the data to rename fields and ensure lat/lng are numbers
         $transformedData = $this->transformData($apiData);
     
         // Return the transformed results as a JSON response
         return response()->json($transformedData);
     }
-    
     
     protected function transformData($apiData)
     {
@@ -226,6 +234,7 @@ class ApiController extends Controller
                 'id' => $item->id,
                 'api_source' => $item->api_source,
                 'event_id' => $item->event_id,
+                'event_category_id' => $item->event_category_id,
                 'description' => $item->description,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,

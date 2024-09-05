@@ -20,6 +20,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
+    // { id: 8, name: "Map", href: "/traffic", link: true },
 ];
 
 export default function ScrollNav({ getTrainNotification }) {

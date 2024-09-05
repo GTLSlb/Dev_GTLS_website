@@ -88,6 +88,11 @@ Route::get('/goinggreen', function () {
     return Inertia::render('GoingGreen');
 })->name('goinggreen');
 
+// Route::get('/traffic', function () {
+//     return Inertia::render('TrafficPage');
+// })->name('traffic');
+
+
 Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
