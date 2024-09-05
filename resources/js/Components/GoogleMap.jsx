@@ -237,8 +237,10 @@ function GoogleMapComp() {
                     eventFilter[filterKey] && typeArray.includes(eventType)
             );
 
-            const positionId = position.event_id == "206362";
-            return positionId;
+            // const positionId = position.event_id == "206362";
+            // return positionId;
+
+            return isStateSelected && isEventSelected;
         });
 
         setMarkerPositions(data);
