@@ -120,7 +120,6 @@ export default function Welcome(props) {
                 behavior: "smooth",
             });
         }
-        console.log("done");
     }
     useEffect(() => {
         const fetchData = async () => {

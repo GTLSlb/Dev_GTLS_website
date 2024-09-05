@@ -17,7 +17,6 @@ class ApiController extends Controller
         $this->apiService = $apiService;
     }
 
-
     private function logRequest($status, $requestedTime, $response_msg = null)
     {
         DB::table('request_logs')->insert([
@@ -90,6 +89,7 @@ class ApiController extends Controller
             $this->logRequest(500, $requestedTime, $e->getMessage());
         }
     }
+
     public function fetchVICData()
     {
         ini_set('max_execution_time', 300); 
@@ -106,14 +106,13 @@ class ApiController extends Controller
         }
     }
 
-
-
     public function index(Request $request)
     {
         // Retrieve query parameters for filtering
         $apiSource = $request->query('api_source');
         $eventId = $request->query('event_id');
-    
+        $eventCategoryIds = $request->query('event_category_ids'); // Accept an array of event category IDs
+        
         // Build the query
         $query = ApiData::query();
     
@@ -125,11 +124,16 @@ class ApiController extends Controller
             $query->where('event_id', $eventId);
         }
     
-        // // // Filter out records with end_date before the current date
-        // $query->where(function($q) {
-        //     $q->whereNull('end_date')  // Include records with no end_date
-        //       ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
-        // });
+        if ($eventCategoryIds) {
+            // Ensure $eventCategoryIds is an array before applying filter
+            $query->whereIn('event_category_id', (array) $eventCategoryIds);
+        }
+    
+        // Filter out records with end_date before the current date
+        $query->where(function($q) {
+            $q->whereNull('end_date')  // Include records with no end_date
+              ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
+        });
     
         // Get the filtered results
         $apiData = $query->get();
@@ -170,6 +174,7 @@ class ApiController extends Controller
     
     public function getRecentRecords(Request $request)
     {
+        DB::enableQueryLog(); // Start query logging
         // Retrieve the last successful service run log
         $lastLog = DB::table('request_logs')
             ->where('method', 'Service Run')
@@ -180,6 +185,9 @@ class ApiController extends Controller
         // Check if there is a last log available
         $updated = $lastLog ? $lastLog->request_time : null;
     
+        // Retrieve event category IDs parameter
+        $eventCategoryIds = $request->query('event_category_ids'); // Accept an array of event category IDs
+    
         // Build the query
         $query = ApiData::query();
     
@@ -189,25 +197,17 @@ class ApiController extends Controller
                   ->orWhere('updated_at', '>=', $updated);
         }
     
+        if ($eventCategoryIds) {
+            // Ensure $eventCategoryIds is an array before applying filter
+            $query->whereIn('event_category_id', (array) $eventCategoryIds);
+        }
 
-        
-        // // Get the current date and time
-
-        // $currentDateTime = now();
-    
-        // // Calculate the range for 3 hours before and after the current date and time
-        // $startRange = $currentDateTime->copy()->subHours(3)->utc();
-        // $formattedStartDate = Carbon::parse($startRange)->format('Y-m-d H:i:s');
-        // $endRange = $currentDateTime->copy()->addHours(3)->utc();
-        // $formattedEndDate = Carbon::parse($endRange)->format('Y-m-d H:i:s');
-
-        // // Apply the filter for end_date within the +/- 3 hours range
-        // $query->whereBetween('end_date', [$formattedStartDate, $formattedEndDate]);
-    
-        
-        // Get the filtered results
+        // Your query and logic
         $apiData = $query->get();
-    
+
+        // Retrieve the query log
+        dd((array) $eventCategoryIds);
+
         // Transform the data to rename fields and ensure lat/lng are numbers
         $transformedData = $this->transformData($apiData);
     
@@ -215,7 +215,7 @@ class ApiController extends Controller
         return response()->json($transformedData);
     }
     
-
+    
     protected function transformData($apiData)
     {
         return $apiData->filter(function ($item) {
@@ -247,7 +247,6 @@ class ApiController extends Controller
             ];
         })->values()->all();
     }
-
 
     public function getLastUpdatedAt(Request $request)
     {

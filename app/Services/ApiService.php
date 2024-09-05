@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ApiData;
+use App\Models\EventsCategory;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -11,22 +12,23 @@ use Illuminate\Support\Facades\Log;
 
 class ApiService
 {
+  
     public function fetchAndSaveData()
     {
         ini_set('max_execution_time', 180); 
         $requestedTime = now();
         try {
             // Fetch data from each API and capture their responses
-            $saResponse = $this->processSAApi();
+            // $saResponse = $this->processSAApi();
             $nswResponses = $this->processNSWApi(); // This returns an array
-            $qldResponse = $this->processQLDApi();
-            $vicPlannedResponse = $this->processVICPlannedApi();
-            $vicUnplannedResponse = $this->processVICUnPlannedApi();
+            // $qldResponse = $this->processQLDApi();
+            // $vicPlannedResponse = $this->processVICPlannedApi();
+            // $vicUnplannedResponse = $this->processVICUnPlannedApi();
             $request_log_id = $this->logRequest(200, $requestedTime);
             
             // Flatten all responses into a single array
-            $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], $vicUnplannedResponse, $vicPlannedResponse);
-            // $responses = array_merge($vicUnplannedResponse,$vicPlannedResponse);
+            // $responses = array_merge([$saResponse], $nswResponses, [$qldResponse], $vicUnplannedResponse, $vicPlannedResponse);
+            $responses = array_merge($nswResponses);
 
             foreach ($responses as $response) {
                 if (isset($response['state'])) { // Check if 'state' key exists
@@ -104,6 +106,7 @@ class ApiService
                             [
                                 'description' => $attributes['DESCRIPTION'],
                                 'start_date' => $this->convertTimestampToDatetime($attributes['START_DATE']),
+                                'event_category_id'=> $this->findEventCategoryId($attributes['REC_TYPE']),
                                 'end_date' => $endDateTime,
                                 'latitude' => $attributes['LATITUDE'],
                                 'longitude' => $attributes['LONGITUDE'],
@@ -202,6 +205,7 @@ class ApiService
                                     'longitude' => $longitude,
                                     'suburb' => $suburb,
                                     'traffic_direction' => $traffic_direction,
+                                    'event_category_id'=> $this->findEventCategoryId($attributes['eventType']),
                                     'road_name' => $road_name,
                                     'status' => $status,
                                     'event_type' => $eventType,
@@ -303,6 +307,7 @@ class ApiService
                         $dataToInsert = [
                             'api_source' => 'VIC',
                             'event_id' => $attributes['id'],
+                            'event_category_id'=> $this->findEventCategoryId($attributes['eventType']),
                             'description' => $description,
                             'start_date' => $start_date,
                             'end_date' => $end_date,
@@ -363,11 +368,11 @@ class ApiService
         $results = []; // Array to store results of each request
         // Map URLs to their respective event types
         $requests = [
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/flood/all', 'event_type' => 'Flood'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/regional-lga-incident/all', 'event_type' => 'Regional LGA Incident'],
+            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/flood/all', 'event_type' => 'Flood',],
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/incident/all', 'event_type' => 'Incident'],
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/majorevent/all', 'event_type' => 'Major Event'],
             ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/roadwork/all', 'event_type' => 'Roadwork'],
-            ['url' => 'https://api.transport.nsw.gov.au/v1/live/hazards/regional-lga-incident/all', 'event_type' => 'Regional LGA Incident'],
         ];
     
         foreach ($requests as $request) {
@@ -385,6 +390,14 @@ class ApiService
                 if ($response->successful()) {
                     $data = $response->json();
                     foreach ($data['features'] as $feature) {
+
+                        Log::info('here' . $feature['id']);
+                        if($feature['id'] == 206362){
+                            Log::info('here ' . $feature['id']);
+                        }
+
+
+
                         $attributes = $feature['properties'];
                         $geometry = $feature['geometry'];
     
@@ -400,11 +413,11 @@ class ApiService
                             continue; // Skip further processing for this feature
                         }
     
-                        if (!$isNewIncident) {
-                            // Skip this feature if "isNewIncident" is not true
-                            continue;
-                        }
-    
+                        // if (!$isNewIncident) {
+                        //     // Skip this feature if "isNewIncident" is not true
+                        //     continue;
+                        // }
+
                         // Safely access properties with null coalescing operator
                         $status = $attributes['status'] ?? null;
                         $description = $attributes['displayName'] ?? '';
@@ -443,6 +456,7 @@ class ApiService
                                 [
                                     'description' => $description,
                                     'end_date' => $end_date,
+                                    'event_category_id'=> $this->findEventCategoryId($staticEventType),
                                     'start_date' => $start_date,
                                     'lastUpdated_date' => $lastUp_date,
                                     'latitude' => $latitude,
@@ -479,7 +493,6 @@ class ApiService
                 $results[] = ['status' => null, 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'NSW', 'event_type' => $staticEventType];
             }
         }
-    
         // Return all results after processing all URLs
         return $results;
     }
@@ -503,7 +516,7 @@ class ApiService
     
                     $geometry = $feature['geometry'];
     
-                    $averageCoordinates = $this->getAverageCoordinates($geometry);
+                    $averageCoordinates = $this->getFirstCoordinate($geometry);
                     $end_date = $attributes['duration']['end'];
                     $apiData = [
                         'description' => $attributes['description'],
@@ -514,6 +527,7 @@ class ApiService
                         'road_name' => $attributes['road_summary']['road_name'] ?? '',
                         'status' => is_array($attributes['status']) ? implode(' / ', $attributes['status']) : $attributes['status'],
                         'event_type' => is_array($attributes['event_type']) ? implode(' / ', $attributes['event_type']) : $attributes['event_type'],
+                        'event_category_id'=> $this->findEventCategoryId($attributes['event_type']),
                         'impact' => $this->createQLDImpactSentence($attributes['impact']),
                         'source_url' => $attributes['url'],
                         'advice' => $attributes['advice'],
@@ -570,10 +584,9 @@ class ApiService
         return \Carbon\Carbon::createFromTimestamp($timestamp / 1000); // Assuming the timestamp is in milliseconds
     }
     
-    private function getAverageCoordinates($geometry)
+    private function getFirstCoordinate($geometry)
     {
         if (!isset($geometry['coordinates']) || empty($geometry['coordinates'])) {
-            // If coordinates don't exist or are empty, return null
             return [
                 'latitude' => null,
                 'longitude' => null,
@@ -584,7 +597,6 @@ class ApiService
         $coordinates = $geometry['coordinates'];
     
         if ($type === 'Point') {
-            // Return the single coordinate
             return [
                 'latitude' => $coordinates[1],
                 'longitude' => $coordinates[0],
@@ -592,39 +604,22 @@ class ApiService
         }
     
         if ($type === 'LineString' || $type === 'MultiPoint') {
-            // Calculate the average for a single line or multi-point array
-            return $this->calculateAverageCoordinates([$coordinates]);
+            return [
+                'latitude' => $coordinates[0][1],
+                'longitude' => $coordinates[0][0],
+            ];
         }
     
         if ($type === 'MultiLineString') {
-            // Calculate the average for multiple lines
-            return $this->calculateAverageCoordinates($coordinates);
+            return [
+                'latitude' => $coordinates[0][0][1],
+                'longitude' => $coordinates[0][0][0],
+            ];
         }
     
-        // Default return if an unexpected type is encountered
         return [
             'latitude' => null,
             'longitude' => null,
-        ];
-    }
-    
-    private function calculateAverageCoordinates($lines)
-    {
-        $totalLat = 0;
-        $totalLng = 0;
-        $count = 0;
-    
-        foreach ($lines as $line) {
-            foreach ($line as $point) {
-                $totalLng += $point[0];
-                $totalLat += $point[1];
-                $count++;
-            }
-        }
-    
-        return [
-            'latitude' => $totalLat / $count,
-            'longitude' => $totalLng / $count,
         ];
     }
     
@@ -684,4 +679,42 @@ class ApiService
     {
         return $isoString ? \Carbon\Carbon::parse($isoString) : null;
     }
+
+        
+    function findEventCategoryId($eventDescription)
+    {
+        $EVENT_TYPE_MAPPING = [
+            'Roadworks' => ['ROADWORKS', '24HR ROADWORKS', 'Roadwork', 'Roadworks'],
+            'Alpine' => ['Alpine'],
+            'Flooding' => ['Flooding'],
+            'Congestion' => ['Congestion'],
+            'Hazard' => ['Hazard', 'Vehicle fire', 'Fire', 'Vehicle rollover', 'Landslip'],
+            'Regional LGA Incident' => ['Regional LGA Incident', 'Emergency Incident'],
+            'Major Event' => ['Major Event', 'Special event', 'Demonstration'],
+            'Incident' => ['INCIDENT', 'COLLISION', 'Incident', 'Crash', 'Emergency Incident'],
+            'Other' => ['Equipment damage', 'Equipment fault']
+        ];
+    
+        // Loop through each category in the mapping
+        foreach ($EVENT_TYPE_MAPPING as $category => $descriptions) {
+            // Check if the event description matches any description in the array
+            if (in_array($eventDescription, $descriptions)) {
+                
+                // Find the event category record by event_category
+                $eventCategory = EventsCategory::where('event_category', $category)->first();
+               
+                // If a record is found, return its id
+                if ($eventCategory) {
+                    return $eventCategory->id;
+                }
+            }
+        }
+    
+        // Return null if no matching category was found
+        return null;
+    }
+    
+
+  
+
 }

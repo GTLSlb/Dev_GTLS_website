@@ -27,5 +27,6 @@ class ApiData extends Model
         'information',
         'lastUpdated_date',
         'otherAdvice',
+        'event_category_id',
     ];
 }

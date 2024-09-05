@@ -1,27 +1,12 @@
 import { Head } from "@inertiajs/react";
-import aboutimage from "../assets/pictures/goldtiger-imad-elmasri-2.webp";
-import jobs from "../assets/pictures/jobs.webp";
-import pallet from "../assets/pictures/pallet.webp";
 import Team from "../Pages/Component/landingPage/Team";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Footer from "./Component/landingPage/Footer";
-import Navbars from "./Component/navbars";
-import { JsonTypes } from "@azure/msal-common/dist/utils/Constants";
-import { parseJSON } from "date-fns";
-import { json } from "react-router-dom";
+import Navbars from "./Component/Navbars";
 import BounceLoader from "react-spinners/BounceLoader";
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/contact_us", ref: "contact" },
-];
 
-const handleClick = () => {
-    history.push("/", { scrollToElement: "news" });
-};
 
 export default function AboutUs(props) {
     // *********************************************************

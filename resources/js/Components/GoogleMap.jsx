@@ -237,8 +237,8 @@ function GoogleMapComp() {
                     eventFilter[filterKey] && typeArray.includes(eventType)
             );
 
-            // const positionId = position.event_id == "Unplanned:RID:RUD-INC1004408_RUD-IMP1004410";
-            return isStateSelected && isEventSelected;
+            const positionId = position.event_id == "206362";
+            return positionId;
         });
 
         setMarkerPositions(data);
