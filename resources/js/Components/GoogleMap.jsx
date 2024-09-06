@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import {
     GoogleMap,
     LoadScript,
-    Polyline,
     Marker,
+    Polyline,
 } from "@react-google-maps/api";
 
 import Roadworks from "@/assets/icons/RoadWork.png";
@@ -130,7 +130,6 @@ function GoogleMapComp() {
             setMarkerPositions(response.data);
         });
         axios.get("/lastUpdatedPositions").then((response) => {
-            console.log(response.data);
             setLastUpdatedAt(response.data);
         });
     };
@@ -183,7 +182,6 @@ function GoogleMapComp() {
 
     const getIcon = (eventType) => {
         if (!window.google || !window.google.maps) {
-            console.error("Google Maps JavaScript API is not loaded");
             return null; // Return null or a default icon
         }
 
@@ -268,6 +266,72 @@ function GoogleMapComp() {
     function handleClose() {
         setMarkerDetails(null);
     }
+
+    const renderGeometry = (geometry) => {
+        const { geometry_type, geometry_coordinates, event_type, event_id } = geometry;
+    
+        switch (geometry_type) {
+            case "Point":
+                return (
+                    <Marker
+                        key={event_id}
+                        position={{
+                            lat: geometry_coordinates[1],
+                            lng: geometry_coordinates[0],
+                        }}
+                        icon={getIcon(event_type)}
+                        onClick={() => handleMarkerClick(geometry)}
+                    />
+                );
+            case "MultiPoint":
+                return geometry_coordinates.map((point, index) => (
+                    <Marker
+                        key={`${event_id}-${index}`}
+                        position={{
+                            lat: point[1],
+                            lng: point[0],
+                        }}
+                        icon={getIcon(event_type)}
+                        onClick={() => handleMarkerClick(geometry)}
+                    />
+                ));
+            case "LineString":
+                return (
+                    <Polyline
+                        key={event_id}
+                        path={geometry_coordinates.map((coord) => ({
+                            lat: coord[1],
+                            lng: coord[0],
+                        }))}
+                        options={{
+                            strokeColor: "#FF0000",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                        }}
+                        onClick={() => handleMarkerClick(geometry)}
+                    />
+                );
+            case "MultiLineString":
+                return geometry_coordinates.map((line, index) => (
+                    <Polyline
+                        key={`${event_id}-${index}`}
+                        path={line.map(([lng, lat]) => ({
+                            lat,
+                            lng,
+                        }))}
+                        options={{
+                            strokeColor: "#FF0000",
+                            strokeOpacity: 0.8,
+                            strokeWeight: 2,
+                        }}
+                        onClick={() => handleMarkerClick(geometry)}
+                    />
+                ));
+            default:
+                return null;
+        }
+    };
+    
 
     return (
         <div className=" md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
@@ -546,16 +610,9 @@ function GoogleMapComp() {
                                     },
                                 }}
                             >
-                                {markerPositions.map((position, index) => (
-                                    <Marker
-                                        key={index}
-                                        position={position}
-                                        icon={getIcon(position.event_type)}
-                                        onClick={() =>
-                                            handleMarkerClick(position)
-                                        }
-                                    />
-                                ))}
+                                {markerPositions.map((geometry) =>
+                                    renderGeometry(geometry)
+                                )}
                             </GoogleMap>
                         </LoadScript>
                     </div>
@@ -669,7 +726,6 @@ function GoogleMapComp() {
                                         </div>
                                     </div>
                                 ) : null}
-                                {console.log(markerDetails)}
                             </>
                         ) : (
                             <>

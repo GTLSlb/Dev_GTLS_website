@@ -8,6 +8,10 @@ class ApiData extends Model
 {
     protected $table = 'api_data';
 
+    protected $casts = [
+        'geometry_coordinates' => 'array', // Cast to array or json
+    ];
+
     protected $fillable = [
         'api_source',
         'event_id',
@@ -28,5 +32,7 @@ class ApiData extends Model
         'lastUpdated_date',
         'otherAdvice',
         'event_category_id',
+        'geometry_type',
+        'geometry_coordinates',
     ];
 }

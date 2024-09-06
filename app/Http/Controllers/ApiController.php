@@ -139,15 +139,15 @@ class ApiController extends Controller
         $apiData = $query->get();
     
         // Transform the data to rename fields and ensure lat/lng are numbers
-        $transformedData = $apiData->filter(function ($item) {
-            // Ensure lat and lng are not null
-            return isset($item->latitude) && isset($item->longitude);
-        })->map(function ($item) {
+        $transformedData = $apiData->map(function ($item) {
             return [
                 'id' => $item->id,
                 'api_source' => $item->api_source,
                 'event_id' => $item->event_id,
                 'description' => $item->description,
+                'geometry_type'=> $item->geometry_type,
+                'geometry_coordinates' => json_decode($item->geometry_coordinates, true), 
+                'event_category_id' => $item->event_category_id,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
                 'last_updated' => $item->lastUpdated_date,
