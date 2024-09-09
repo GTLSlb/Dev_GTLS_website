@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LayoutController;
@@ -57,9 +59,6 @@ Route::match(['get', 'post'], '/landingPage', function () {
     return Inertia::render('LandingPage');
 })->middleware(['custom'])->name('landing.page');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['custom'])->name('dashboard');
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
@@ -88,6 +87,11 @@ Route::get('/opportunities', function () {
 Route::get('/goinggreen', function () {
     return Inertia::render('GoingGreen');
 })->name('goinggreen');
+
+// Route::get('/traffic', function () {
+//     return Inertia::render('TrafficPage');
+// })->name('traffic');
+
 
 Route::get('/terms', function () {
     return Inertia::render('Terms');
@@ -121,6 +125,26 @@ Route::get('/contact_us', function () {
     return Inertia::render('ContactUsPage');
 })->name('contact_us');
 
+Route::get('/Unsubscribe/{id}', function ($id) {
+    return Inertia::render('Unsubscribe',['id'=> $id]);
+})->name('Unsubscribe');
+
+Route::get('/Subscribe/{id}', function ($id) {
+    return Inertia::render('Subscribe',['id'=> $id]);
+})->name('Subscribe');
+
+
+Route::resource('posts', BlogController::class);
+// Route::resource('post', BlogController::class,'post');
+// Route::get('/news', function () {
+//     return Inertia::render('NewsPage');
+// })-> name('news');
+
+// Route::get('/news/{id}/{title?}', function ($id, $title = '') {
+//     return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
+// })->name('news');
+
+
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
 Route::post('/support', [SupportFormController::class, 'submitSupportForm'])->name('support.submit');
@@ -132,14 +156,6 @@ Route::get('/download-docx', function () {
     );
     return response()->download($pathToFile, '20230913-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf', $headers);
 });
-// Route::post('/auth/azure', function (Request $request) {
-//     $data = $request->json()->all();
-//     $email = $data['email'];
-//     $UserId = $data['UserId'];
-//     return Socialite::driver('azure')
-//     ->with(['login_hint' => $email]) // Pass the email address as a parameter to the Azure AD login page
-//     ->redirect();
-// });
 
 Route::get('/downloadGTLS-Pallets', function () {
     $pathToFile = public_path('docs/GTLS Pallet Trading Policy 14-12-23.pdf');
@@ -150,8 +166,6 @@ Route::get('/downloadGTLS-Pallets', function () {
 });
 
 Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
-
-// Route::post('/saveImg', [NewUserController::class, 'storePic']);
 
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
@@ -196,6 +210,8 @@ Route::middleware('custom')->group(function () {
     Route::get('/findUserById/{user_id}', [RegisteredUserController::class, 'searchUserByName']);
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
+    Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
+    
 });
 
 Route::get('/session-data', function () {
@@ -209,6 +225,7 @@ Route::resource('section',SectionController::class);
 Route::get('/getSec/{id}',[SectionController::class,'getSec']);
 Route::get('/getaboutus',[SectionController::class,'about']);
 Route::get('/getheader',[SectionController::class,'header']);
+Route::get('/getTrainNotification',[SectionController::class,'TrainNotification']);
 Route::get('/getGtrs',[SectionController::class,'gtrs']);
 Route::get('/getservices',[SectionController::class,'services']);
 Route::get('/getgoingGreen',[SectionController::class,'goingGreenSection']);
@@ -239,7 +256,8 @@ Route::get('/vister',[UserVisitController::class,'index']);
 Route::get('/posts',[BlogController::class,'index']);
 Route::get('/news/{slug}', function ($slug) {
     $post = Blog::where('slug', $slug)->firstOrFail();
-    return Inertia::render('NewsPage', ['post' => $post]);
+    // $post = 123;
+    return Inertia::render('NewsPage', ['postslug' => $post]);
 })->name('news');
 // ******************************************************************
 
@@ -255,6 +273,11 @@ Route::fallback(function () {
     ]);
 });
 
+Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
+Route::get('/get-positions', [ApiController::class, 'index']);
+Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
+
+Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');

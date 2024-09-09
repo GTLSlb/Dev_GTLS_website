@@ -16,18 +16,13 @@ import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
 
 import News from "./Component/landingPage/News";
+import Map from '../Components/map'
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
-import OpportuniotiesSection from "./Component/landingPage/OpportunitiesSection";
 import Technologies from "./Component/landingPage/Technologies";
-import WhyGoldTiger from "./Component/landingPage/whyGoldTiger";
 import ScrollNav from "./Component/scrollnavmain";
-import { Softwares } from "./Component/landingPage/Softwares";
 import ScrollToTopButton from "@/Components/ScrollUpButton";
-import Benefits from "./Component/landingPage/Benefits";
 import Process from "./Component/landingPage/Process";
-import Features from "./Component/landingPage/Features";
-import Safety from "./Component/landingPage/Safety";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import {
@@ -37,7 +32,14 @@ import {
 } from "@heroicons/react/20/solid";
 import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
+import Features from "./Component/landingPage/Features";
+import Safety from "./Component/landingPage/Safety";
+import Subscribe from "@/Components/Subscribe";
+import GoogleMap from "@/Components/GoogleMap";
+import GoogleMapComp from "@/Components/GoogleMap";
 import { BounceLoader } from "react-spinners";
+import TrainNotification from "@/Components/TrainNotification";
+import Navbars from "./Component/Navbars";
 
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
@@ -47,23 +49,21 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: true },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
+    // { id: 8, name: "Map", href: "/traffic", link: true },
 ];
 
-// function scrollToDiv (myDivRef)  {
-//     myDivRef.current.scrollIntoView({ behavior: 'smooth' });
-//   };
+const scrollToElement = (elementId) => {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+    }
+};
 
 export default function Welcome(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [nextPage, setNextPage] = useState(false);
     const [getSafety, setSafety] = useState([]);
-
-    const toggleElement = () => {
-        setNextPage(!nextPage);
-    };
-
-    const prevScrollPositionRef = useRef(0);
 
     useEffect(() => {
         function handleScroll() {
@@ -97,14 +97,12 @@ export default function Welcome(props) {
         };
     }, []);
 
-    const [showMoreLinks, setShowMoreLinks] = useState(false);
     // *********************************************************
     // ********************* All requests  *********************
     // *********************************************************
     const [getcertificates, setcertificates] = useState([]);
     const [getHeader, setGetHeader] = useState();
     const [getGtrs, setGtrs] = useState();
-
     const [getAbout, setGetAbout] = useState();
     const [getVistis, setVistis] = useState([]);
     const [getservices, setServices] = useState([]);
@@ -112,14 +110,24 @@ export default function Welcome(props) {
     const [getGreen, setGreen] = useState([]);
     const [gettechnologies, settechnologies] = useState([]);
     const [getfooter, setfooter] = useState([]);
-
+    const [getTrainNotification, setTrainNotification] = useState();
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
+    function handleScroll() {
+        const hash = window.location.hash;
 
+        if (hash && document.getElementById(hash.substring(1))) {
+            // Scroll to the element smoothly
+            document.getElementById(hash.substring(1)).scrollIntoView({
+                behavior: "smooth",
+            });
+        }
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const requests = [
                     axios.get("/getheader"),
+                    axios.get("/getTrainNotification"),
                     axios.get("/getGtrs"),
                     axios.get("/visitor"),
                     axios.get("/getaboutus"),
@@ -138,6 +146,7 @@ export default function Welcome(props) {
                 // Destructure responses array
                 const [
                     headerResponse,
+                    getTrainNotificationResponse,
                     GtrsResponse,
                     visitorResponse,
                     aboutResponse,
@@ -151,6 +160,7 @@ export default function Welcome(props) {
                 ] = responses;
                 // Set states with data
                 setGetHeader(headerResponse);
+                setTrainNotification(getTrainNotificationResponse.data);
                 setGtrs(GtrsResponse);
                 setVistis(visitorResponse.data);
                 setGetAbout(aboutResponse.data);
@@ -161,9 +171,9 @@ export default function Welcome(props) {
                 settechnologies(technologiesResponse.data);
                 setcertificates(certificatesResponse.data);
                 setfooter(footerResponse.data);
-
                 // Set loading to false when all requests are completed
                 setLoading(false);
+                // scroll to the correct div
             } catch (error) {
                 console.error("Error fetching data:", error);
                 // Optionally, handle error state here
@@ -173,11 +183,33 @@ export default function Welcome(props) {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        handleScroll();
+    }, []);
+
     // Now you can use the loading state to conditionally render loading indicators or content
 
     // *********************************************************
     // ********************* End requests  *********************
     // *********************************************************
+
+    useEffect(() => {
+        if (loading == false) {
+            if (window.location.hash === "#services") {
+                scrollToElement("services");
+            }
+            // Adding an event listener to handle hash changes while on the page
+            const handleHashChange = () => {
+                if (window.location.hash === "#services") {
+                    scrollToElement("services");
+                }
+            };
+            window.addEventListener("hashchange", handleHashChange);
+            // Cleanup the event listener on component unmount
+            return () =>
+                window.removeEventListener("hashchange", handleHashChange);
+        }
+    }, [loading]);
 
     return (
         <>
@@ -189,8 +221,11 @@ export default function Welcome(props) {
             ) : (
                 <>
                     <Head title="Welcome" />
-
+                    {/* <Navbars /> */}
                     <div className="relative isolate bg-dark">
+                        <TrainNotification
+                            getTrainNotification={getTrainNotification}
+                        />
                         <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                             <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
                                 <div className="hidden lg:flex gap-x-7 ">
@@ -344,27 +379,6 @@ export default function Welcome(props) {
                                     )}
                                 </div>
                                 <div className="hidden  lg:flex lg:flex-1 lg:justify-end">
-                                    {/* <a
-                            href="/login"
-                            className="rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white"
-                        >
-                            <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                <button className="font-bold  ">
-                                    Log In
-                                </button>
-                            </div>
-                        </a>
-                        <a
-                            target={"_blank"}
-                            href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                            className="mr-6 bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt "
-                        >
-                            <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                <button className=" rounded-3xl  font-bold  ">
-                                    Client Login
-                                </button>
-                            </div>
-                        </a> */}
                                     <FeedbackButton />
                                     <Popover className="relative object-right flex-item md:ml-auto ">
                                         <Popover.Button
@@ -503,29 +517,20 @@ export default function Welcome(props) {
                                                     </div>
                                                 ))}
                                             </div>
-                                            {/* <div className="py-6">
-                                    <a
-                                        href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                                        className="border-2 w-10 bg-goldt text-gray-600 hover:text-gray-900 dark:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                    >
-                                        <button className=" rounded bg-goldt text-white h-10 w-20 hover:bg-black">
-                                            Log In
-                                        </button>
-                                    </a>
-                                </div> */}
                                         </div>
                                     </div>
                                 </Dialog.Panel>
                             </Dialog>
-                            <ScrollNav />
+                            <ScrollNav
+                                getTrainNotification={getTrainNotification}
+                            />
                         </div>
-
-                        <VideoHeader getHeader={getHeader}/>
+                        <VideoHeader getHeader={getHeader} />
                         <AboutUs
                             getAbout={getAbout}
                             setGetAbout={setGetAbout}
                         />
-                        <div id="services"></div>
+                        <div id="services" className="lg:mb-32 hidden lg:block"></div>
                         <PrimaryServices
                             getservices={getservices}
                             setServices={setServices}
@@ -535,15 +540,13 @@ export default function Welcome(props) {
                             setGreen={setGreen}
                         />
 
-                        {/* <Benefits /> */}
-                        {/* <Process /> */}
-
                         <Features
                             getwhygtls={getwhygtls}
                             setwhygtls={setwhygtls}
                         />
-                        <GTRS getGtrs={getGtrs}/>
+                        <GTRS getGtrs={getGtrs} />
                         <Safety getSafety={getSafety} />
+                        <GoogleMapComp />
                         {/* <Video /> */}
 
                         <Technologies gettechnologies={gettechnologies} />
@@ -552,28 +555,23 @@ export default function Welcome(props) {
                         {/* <WhyGoldTiger /> */}
                         <Certifiactesw getcertificates={getcertificates} />
 
-                        {/* <News /> */}
-                        {/* <OpportuniotiesSection /> */}
-                        {/* <ContatcUs />
-            <Branches /> */}
-
                         {/* <Partners/> */}
                         <Footer getfooter={getfooter} />
                         <CookiePopup />
                         <ScrollToTopButton />
                         <style>{`
-        .max-w-8xl{
-            max-width: 85rem;
-        }
-            .bg-dots-darker {
-                background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
-            }
-            @media (prefers-color-scheme: dark) {
-                .dark\\:bg-dots-lighter {
-                    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-                }
-            }
-        `}</style>
+                            .max-w-8xl{
+                                max-width: 85rem;
+                            }
+                                .bg-dots-darker {
+                                    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
+                                }
+                                @media (prefers-color-scheme: dark) {
+                                    .dark\\:bg-dots-lighter {
+                                        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
+                                    }
+                                }
+                        `}</style>
                     </div>
                 </>
             )}

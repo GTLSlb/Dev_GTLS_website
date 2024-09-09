@@ -1,10 +1,11 @@
 import { Head } from "@inertiajs/react";
 import Footer from "./Component/landingPage/Footer";
 import Calc from "./Component/landingPage/Calc";
-import Navbars from "./Component/Navbars";
+
 import "../../css/gradient.css";
 import Green from "../assets/pictures/gogreen.webp";
 import { useState, useEffect } from "react";
+import Navbars from "./Component/Navbars";
 
 const content = [
     {

@@ -10,6 +10,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Link } from "@inertiajs/inertia-react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
+import TrainNotification from "@/Components/TrainNotification";
 
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
@@ -19,9 +20,10 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
+    // { id: 8, name: "Map", href: "/traffic", link: true },
 ];
 
-export default function ScrollNav() {
+export default function ScrollNav({ getTrainNotification }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [nextPage, setNextPage] = useState(false);
@@ -66,7 +68,11 @@ export default function ScrollNav() {
                     showNavbar ? "opacity-100" : "opacity-0 -translate-y-full"
                 }`}
             >
-
+                {/* Start Notification */}
+                <TrainNotification
+                    getTrainNotification={getTrainNotification}
+                />
+                {/* End Notification */}
 
                 <div className="bg-dark w-full">
                     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">

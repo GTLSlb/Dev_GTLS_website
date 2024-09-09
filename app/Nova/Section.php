@@ -7,8 +7,7 @@ use Illuminate\Foundation\Middleware\ValidatePostSize;
 
 use Laravel\Nova\Fields\Text;
 use Mostafaznv\NovaVideo\Video;
-use DigitalCreative\Filepond\Filepond;
-use Laravel\Nova\Fields\TextArea;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Fields\Image;
@@ -16,6 +15,7 @@ use Ayvazyan10\Imagic\Imagic;
 
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\BelongsTo;
+use Illuminate\Support\Facades\DB;
 
 use InteractionDesignFoundation\NovaHtmlCodeField\HtmlCode;
 use Laravel\Nova\Fields\ID;
@@ -24,6 +24,8 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Section extends Resource
 {
+
+   
     /**
      * The model the resource corresponds to.
      *
@@ -53,52 +55,145 @@ class Section extends Resource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
+    
     public function fields(NovaRequest $request)
     {
         return [
-            ID::make()->hideFromIndex(),
+            ID::make()->sortable(),
             Text::make('name')->sortable(),
             BelongsTo::make('Page', 'page', Page::class),
+            BelongsTo::make('SectionType','sectiontype',SectionsType::class),
             HasMany::make('Elements', 'elements', Element::class),
-            Trix::make('description')->alwaysShow(),
-            Image::make('Image','image')->rules("image", "max:10000"),
-            Video::make('video')->rules('max:150000'),
-            // Filepond::make('video', 'video')
-            //     // ->rules('required')
-            //     ->prunable()
-            //     ->disablePreview()
-            //     ->multiple() 
-            //     ->limit(4),
-            // Video::make(trans('video'), 'video', 'public')
-            //     // ->rules('file', 'max:20000000', 'mimes:mp4', 'mimetypes:video/mp4')
-            //     ->creationRules('required')
-            //     ->updateRules('nullable'),
-            // Image::make('Image','image')->disk('web')->path('sections')
-            // ->storeOriginalName('image')
-            // ->prunable()
-            // ->preview(function ($value, $disk) {
-            //     return url('/app/webimages/sections/' . $value);
-            // })
-            // ->thumbnail(function ($value, $disk) {
-            //     // Convert the image to WebP for thumbnail
-            //     $image = Image::class::make(storage_path("app/public/nova/posts/{$value}"));
-            //     $image->encode('webp');
-            //     return $image->encoded;
-            // })
+            Trix::make('description')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
             
-            Text::make('image_alt'),
-            // Text::make('video'),
-            // Video::make(trans('Video'), 'video','web')->rules('file', 'max:1900000', 'mimes:mp4', 'mimetypes:video/mp4')
-            // ->creationRules('required')
-            // ->updateRules('nullable'),
-            // Video::make('video'),
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
             
-            Image::make('Background','background')->rules("image", "max:10000"),
-            Text::make('file'),
-            URL::make('URL','url'),
+                    if ($sectionType && $sectionType->contain_description == 1) {
+                        $field->rules([
+                            'required',
+                        ]);
+                    } else {
+                        $field->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Image::make('Image','image')
+            ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                $sectionTypeId = (int) $formData->sectiontype;
+        
+                // Query the database to check the contain_description field
+                $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+        
+                if ($sectionType && $sectionType->contain_image == 1) {
+                    $field->deletable(false)
+                          ->prunable()
+                          ->creationRules('required');
+                } else {
+                    $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            })
+            ->rules("image", "max:10000"),
+            Video::make('video')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                $sectionTypeId = (int) $formData->sectiontype;
+        
+                // Query the database to check the contain_description field
+                $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+        
+                if ($sectionType && $sectionType->contain_video == 1) {
+                    $field->rules([
+                        'required','max:150000'
+                    ]);
+                } else {
+                    $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            }),
+            Text::make('image_alt')->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                $sectionTypeId = (int) $formData->sectiontype;
+        
+                // Query the database to check the contain_description field
+                $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+        
+                if ($sectionType && $sectionType->contain_image == 1) {
+                    $field->rules([
+                        'required'
+                    ])->help('Required For the Image');
+                } else {
+                    $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                }
+            }),           
+            Image::make('Background','background')->rules("image", "max:10000")
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
             
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_background == 1) {
+                        $field->deletable(false)
+                              ->prunable()
+                              ->creationRules('required');
+                    } else {
+                        $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Text::make('file')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
+            
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_file == 1) {
+                        $field->rules([
+                            'required'
+                        ]);
+                    } else {
+                        $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+            Text::make('URL','url')
+                ->dependsOn('sectiontype', function ($field, NovaRequest $request, $formData) {
+                    $sectionTypeId = (int) $formData->sectiontype;
+            
+                    // Query the database to check the contain_description field
+                    $sectionType = DB::table('sectionstype')->find($sectionTypeId);
+            
+                    if ($sectionType && $sectionType->contain_url == 1) {
+                        $field->rules([
+                            'required'
+                        ]);
+                    } else {
+                        $field->hide()->hideFromDetail()->hideFromIndex()->hideFromDetail()->hideWhenCreating()->hideWhenUpdating();
+                    }
+                }),
+
+            Select::make('Status')->options([
+                    '1' => 'Active',
+                    '2' => 'Inactive',
+                ])->displayUsingLabels()->canSee(function ($request) {
+                    $resourceID = $request->resourceId;
+                    // dd($resourceID);
+                    switch($resourceID){
+                        case 29:
+                            return true;
+                        default:
+                            return false;
+                    }
+                }),
         ];
     }
+
+
+    public static function availableForNavigation(Request $request)
+    {
+        $user = $request->user();
+        // Check if the user has an admin role
+        return $user && $user->role_id == 1;
+    }
+
 
     /**
      * Get the cards available for the request.
@@ -106,6 +201,7 @@ class Section extends Resource
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return array
      */
+
     public function cards(NovaRequest $request)
     {
         return [];

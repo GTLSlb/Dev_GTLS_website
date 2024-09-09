@@ -23,7 +23,7 @@ class ElementPolicy
     public function view(User $user, Element $element): bool
     {
         //
-        return $user->role_id != null;
+        return $user->role_id == 1;
     }
 
     /**
@@ -32,7 +32,7 @@ class ElementPolicy
     public function create(User $user): bool
     {
         //
-        return $user->role_id != null;
+        return $user->role_id == 1;
     }
 
     /**
@@ -41,7 +41,7 @@ class ElementPolicy
     public function update(User $user, Element $element): bool
     {
         //
-        return $user->role_id != null;
+        return $user->role_id == null;
     }
 
     /**
