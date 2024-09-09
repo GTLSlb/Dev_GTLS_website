@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b7145068dcbf850761128273c19229e",
+    "content-hash": "5b470bc30514a5765d6f399ec896c7bb",
     "packages": [
+        {
+            "name": "alexazartsev/heroicon",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AlexAzartsev/heroicon.git",
+                "reference": "669bacdecf5597c29e2578428c9f5aa60c627b8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AlexAzartsev/heroicon/zipball/669bacdecf5597c29e2578428c9f5aa60c627b8c",
+                "reference": "669bacdecf5597c29e2578428c9f5aa60c627b8c",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "AlexAzartsev\\Heroicon\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AlexAzartsev\\Heroicon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Azartsev",
+                    "email": "alex.azarsecond@gmail.com",
+                    "homepage": "https://github.com/AlexAzartsev/heroicon",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel Nova field for managing icons.",
+            "keywords": [
+                "Heroicons",
+                "laravel",
+                "nova",
+                "svg"
+            ],
+            "support": {
+                "issues": "https://github.com/AlexAzartsev/heroicon/issues",
+                "source": "https://github.com/AlexAzartsev/heroicon/tree/v2.0.0"
+            },
+            "time": "2022-08-10T13:59:04+00:00"
+        },
         {
             "name": "aws/aws-crt-php",
             "version": "v1.2.6",
@@ -157,6 +213,66 @@
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.320.2"
             },
             "time": "2024-08-16T18:06:17+00:00"
+        },
+        {
+            "name": "ayvazyan10/nova-imagic",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ayvazyan10/nova-imagic.git",
+                "reference": "683849b004054e81d27a79e98b59ed55850fa67f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ayvazyan10/nova-imagic/zipball/683849b004054e81d27a79e98b59ed55850fa67f",
+                "reference": "683849b004054e81d27a79e98b59ed55850fa67f",
+                "shasum": ""
+            },
+            "require": {
+                "intervention/image": "^2.7",
+                "laravel/nova": "^4.0",
+                "php": "^7.1|^8.0"
+            },
+            "suggest": {
+                "ext-exif": "Install the exif extension to orientate images automatically.",
+                "ext-gd": "Install the GD extension to process images using GD.",
+                "ext-imagick": "Install the Imagick extension to process image using ImageMagick."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Ayvazyan10\\Imagic\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ayvazyan10\\Imagic\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Imagic is a Laravel Nova field package that allows for image manipulation capabilities, such as cropping, resizing, quality adjustment, and WebP conversion. It utilizes the powerful Intervention Image class for image manipulation.",
+            "keywords": [
+                "crop",
+                "image",
+                "image crop",
+                "image resize",
+                "images",
+                "laravel",
+                "nova",
+                "nova4",
+                "resize",
+                "webp support"
+            ],
+            "support": {
+                "issues": "https://github.com/ayvazyan10/nova-imagic/issues",
+                "source": "https://github.com/ayvazyan10/nova-imagic/tree/v1.3.0"
+            },
+            "time": "2023-08-06T19:32:46+00:00"
         },
         {
             "name": "brick/math",
@@ -3507,6 +3623,150 @@
                 }
             ],
             "time": "2023-10-27T15:32:31+00:00"
+        },
+        {
+            "name": "mostafaznv/larupload",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mostafaznv/larupload.git",
+                "reference": "26cfa85c62e3bc59faeed1876294df585ead1cfc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mostafaznv/larupload/zipball/26cfa85c62e3bc59faeed1876294df585ead1cfc",
+                "reference": "26cfa85c62e3bc59faeed1876294df585ead1cfc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pdo": "*",
+                "imagine/imagine": "^1.3",
+                "intervention/image": "^2.7",
+                "ksubileau/color-thief-php": "^2.0",
+                "laravel/framework": "^10.4.1",
+                "php": "^8.1",
+                "php-ffmpeg/php-ffmpeg": "^1.1",
+                "spatie/image-optimizer": "^1.6"
+            },
+            "require-dev": {
+                "hashids/hashids": "^5.0",
+                "league/flysystem-aws-s3-v3": "^3.0",
+                "orchestra/testbench": "^8.0.11",
+                "pestphp/pest": "^2.2",
+                "pestphp/pest-plugin-laravel": "^2.0",
+                "spatie/pest-plugin-test-time": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mostafaznv\\Larupload\\LaruploadServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Helpers/Utils.php"
+                ],
+                "psr-4": {
+                    "Mostafaznv\\Larupload\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mostafaznv",
+                    "email": "mostafa.zeinivand@gmail.com"
+                }
+            ],
+            "description": "Larupload is a ORM based file uploader for laravel to upload image, video, audio and other known files.",
+            "keywords": [
+                "crop",
+                "ffmpeg",
+                "file",
+                "file manager",
+                "file system",
+                "hls",
+                "image",
+                "laravel",
+                "laravel 8",
+                "m3u8",
+                "media",
+                "mostafaznv",
+                "resize",
+                "s3",
+                "sftp",
+                "storage",
+                "stream",
+                "upload",
+                "video"
+            ],
+            "support": {
+                "docs": "https://github.com/mostafaznv/larupload/blob/master/README.md",
+                "issues": "https://github.com/mostafaznv/larupload/issues",
+                "source": "https://github.com/mostafaznv/larupload"
+            },
+            "time": "2023-10-21T15:28:45+00:00"
+        },
+        {
+            "name": "mostafaznv/nova-video",
+            "version": "6.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mostafaznv/nova-video.git",
+                "reference": "7942677ba90de2ccd3534d7775c6bd13a0be9049"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mostafaznv/nova-video/zipball/7942677ba90de2ccd3534d7775c6bd13a0be9049",
+                "reference": "7942677ba90de2ccd3534d7775c6bd13a0be9049",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^10.4.1|^11.0",
+                "laravel/nova": "^4.0",
+                "mostafaznv/larupload": "^1.0.0|^2.0.0",
+                "php": "^8.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mostafaznv\\NovaVideo\\VideoFieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Mostafaznv\\NovaVideo\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Video Field for Laravel Nova",
+            "keywords": [
+                "ffmpeg",
+                "hls",
+                "laravel",
+                "larupload",
+                "nova",
+                "stream",
+                "upload video",
+                "video",
+                "video field"
+            ],
+            "support": {
+                "issues": "https://github.com/mostafaznv/nova-video/issues",
+                "source": "https://github.com/mostafaznv/nova-video/tree/6.3.0"
+            },
+            "time": "2024-03-16T08:21:38+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",

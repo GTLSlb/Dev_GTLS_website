@@ -55,7 +55,7 @@ Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
-    
+
     return Inertia::render('LandingPage');
 })->middleware(['custom'])->name('landing.page');
 
@@ -190,18 +190,16 @@ Route::get('/downloadGTLS-docx', function () {
 });
 
 Route::get('/checkAuth', [AuthenticatedSessionController::class, 'checkAuth']);
-Route::get('/auth/azure', function () {
-    return Socialite::driver('azure')->redirect();
-});
-
-Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback']);
-Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
-
 
 Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
+    Route::post('/auth/azure', function () {
+        return Socialite::driver('azure')->redirect();
+    })->name('azure.login');
+    Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'])->name('azure.callback');
+    Route::post('/microsoftToken', [AzureAuthController::class, 'sendToken'])->name('azure.token');
     Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/gtms');
     Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/gtms');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -211,7 +209,7 @@ Route::middleware('custom')->group(function () {
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
     Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
-    
+
 });
 
 Route::get('/session-data', function () {
