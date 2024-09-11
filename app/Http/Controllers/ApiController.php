@@ -172,6 +172,8 @@ class ApiController extends Controller
         return response()->json($transformedData);
     }
     
+    
+    
     public function getRecentRecords(Request $request)
     {
         // Start query logging for debugging purposes

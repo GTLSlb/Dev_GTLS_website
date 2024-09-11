@@ -10,6 +10,7 @@
         "ayvazyan10/nova-imagic": "^1.3",
         "digital-creative/nova-filepond": "^1.0",
         "guzzlehttp/guzzle": "^7.2",
+        "illuminate/support": "*",
         "inertiajs/inertia-laravel": "^0.6.3",
         "interaction-design-foundation/nova-html-code-field": "^2.0",
         "intervention/image": "^2.7",
