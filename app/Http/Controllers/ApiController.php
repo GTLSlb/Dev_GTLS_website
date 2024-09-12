@@ -112,10 +112,17 @@ class ApiController extends Controller
         $apiSource = $request->query('api_source');
         $eventId = $request->query('event_id');
         $eventCategoryIds = $request->query('event_category_ids'); // Accept an array of event category IDs
-        
+    
+        // Retrieve pagination and sorting parameters
+        $skip = $request->query('skip', 0); // Number of items to skip (default 0)
+        $limit = $request->query('limit'); // Number of items per page (default 10)
+        $sortInfo = $request->query('sortInfo'); // Sort information
+        $filterBy = $request->query('filterBy'); // Filter information
+    
         // Build the query
         $query = ApiData::query();
     
+        // Apply filters based on query parameters
         if ($apiSource) {
             $query->where('api_source', $apiSource);
         }
@@ -129,24 +136,152 @@ class ApiController extends Controller
             $query->whereIn('event_category_id', (array) $eventCategoryIds);
         }
     
+        // Apply dynamic filters from filterBy JSON parameter
+        if ($filterBy) {
+            $filterByArray = json_decode($filterBy, true); // Decode JSON filter info
+            foreach ($filterByArray as $filter) {
+                if (isset($filter['name'], $filter['type'], $filter['operator'], $filter['value'])) {
+                    $column = $filter['name'];
+                    $value = $filter['value'];
+                    $emptyValue = isset($filter['emptyValue']) ? $filter['emptyValue'] : null; // Get empty value if provided
+
+                    
+                    if ($filter['type'] === 'date') {
+                        // Only apply date filters if the value is not equal to the emptyValue
+                        if ($value !== $emptyValue) {
+                            switch ($filter['operator']) {
+                                case 'after':
+                                    $query->whereDate($column, '>', $value);
+                                    break;
+                                case 'afterOrOn':
+                                    $query->whereDate($column, '>=', $value);
+                                    break;
+                                case 'before':
+                                    $query->whereDate($column, '<', $value);
+                                    break;
+                                case 'beforeOrOn':
+                                    $query->whereDate($column, '<=', $value);
+                                    break;
+                                case 'eq':
+                                    $query->whereDate($column, '=', $value);
+                                    break;
+                                case 'neq':
+                                    $query->whereDate($column, '!=', $value);
+                                    break;
+                                    case 'inrange':
+                                        if (is_array($value) && count($value) === 2) {
+                                            $start = $value["start"];
+                                            $end = $value["end"];
+                                    
+                                            if ($start !== $emptyValue && $end !== $emptyValue) {
+                                                // Both start and end are provided, use whereBetween
+                                                $query->whereBetween($column, [$start, $end]);
+                                            } elseif ($start !== $emptyValue) {
+                                                // Only start is provided, filter everything after the start
+                                                $query->whereDate($column, '>=', $start);
+                                            } elseif ($end !== $emptyValue) {
+                                                // Only end is provided, filter everything before the end
+                                                $query->whereDate($column, '<=', $end);
+                                            }
+                                        }
+                                        break;
+                                    
+                                    case 'notinrange':
+                                        if (is_array($value) && count($value) === 2) {
+                                            $start = $value["start"];
+                                            $end = $value["end"];
+                                    
+                                            if ($start !== $emptyValue && $end !== $emptyValue) {
+                                                // Both start and end are provided, use whereNotBetween
+                                                $query->whereNotBetween($column, [$start, $end]);
+                                            } elseif ($start !== $emptyValue) {
+                                                // Only start is provided, filter everything not before the start
+                                                $query->whereDate($column, '<', $start);
+                                            } elseif ($end !== $emptyValue) {
+                                                // Only end is provided, filter everything not after the end
+                                                $query->whereDate($column, '>', $end);
+                                            }
+                                        }
+                                        break;
+                                    
+                                    
+                            }
+                        }
+                    } elseif ($filter['type'] === 'string') {
+                        // Apply string filters
+                        switch ($filter['operator']) {
+                            case 'contains':
+                                $query->where($column, 'LIKE', '%' . $value . '%');
+                                break;
+                            case 'notContains':
+                                $query->where($column, 'NOT LIKE', '%' . $value . '%');
+                                break;
+                            case 'eq':
+                                $query->where($column, '=', $value);
+                                break;
+                            case 'neq':
+                                $query->where($column, '!=', $value);
+                                break;
+                            case 'empty':
+                                $query->where(function ($q) use ($column) {
+                                    $q->whereNull($column)->orWhere($column, '=', '');
+                                });
+                                break;
+                            case 'notEmpty':
+                                $query->where(function ($q) use ($column) {
+                                    $q->whereNotNull($column)->where($column, '!=', '');
+                                });
+                                break;
+                            case 'startsWith':
+                                $query->where($column, 'LIKE', $value . '%');
+                                break;
+                            case 'endsWith':
+                                $query->where($column, 'LIKE', '%' . $value);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    
         // Filter out records with end_date before the current date
-        $query->where(function($q) {
+        $query->where(function ($q) {
             $q->whereNull('end_date')  // Include records with no end_date
-              ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
+                ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
         });
     
-        // Get the filtered results
-        $apiData = $query->get();
+        // Apply sorting to the entire dataset if sortInfo is provided
+        if ($sortInfo) {
+            $sortInfoArray = json_decode($sortInfo, true); // Decode JSON sort info
+            if (is_array($sortInfoArray) && isset($sortInfoArray['columnName']) && isset($sortInfoArray['dir'])) {
+                $sortDirection = $sortInfoArray['dir'] == 1 ? 'asc' : 'desc';
     
-        // Transform the data to rename fields and ensure lat/lng are numbers
-        $transformedData = $apiData->map(function ($item) {
+                // Apply sorting with NULL or empty values last
+                $query->orderByRaw("ISNULL({$sortInfoArray['columnName']}), {$sortInfoArray['columnName']} = '', {$sortInfoArray['columnName']} {$sortDirection}");
+            }
+        }
+    
+        // Get the total count of records with filters applied
+        $totalRecords = $query->count();
+    
+        // Apply pagination (skip and limit) after sorting the entire dataset
+       // Apply pagination (skip and limit) after sorting the entire dataset
+        if ($limit) {
+            $results = $query->skip($skip)->take($limit)->get();
+        } else {
+            // If no limit is provided, retrieve all results
+            $results = $query->get();
+        }
+    
+        // Transform the data
+        $transformedData = $results->map(function ($item) {
             return [
                 'id' => $item->id,
                 'api_source' => $item->api_source,
                 'event_id' => $item->event_id,
                 'description' => $item->description,
-                'geometry_type'=> $item->geometry_type,
-                'geometry_coordinates' => json_decode($item->geometry_coordinates, true), 
+                'geometry_type' => $item->geometry_type,
+                'geometry_coordinates' => json_decode($item->geometry_coordinates, true),
                 'event_category_id' => $item->event_category_id,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
@@ -166,10 +301,14 @@ class ApiController extends Controller
                 'created_at' => $item->created_at,
                 'updated_at' => $item->updated_at,
             ];
-        })->values()->all();  // Use values() to reindex the array and all() to ensure it's an array
+        })->values()->all();
     
-        // Return the transformed results as a JSON response
-        return response()->json($transformedData);
+        // Return the transformed results as a JSON response with total count
+        return response()->json($transformedData)
+            ->withHeaders([
+                'X-Total-Count' => $totalRecords,
+                'Access-Control-Expose-Headers' => 'X-Total-Count'
+            ]);
     }
     
     
