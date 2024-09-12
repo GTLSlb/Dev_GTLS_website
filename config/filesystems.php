@@ -34,7 +34,7 @@ return [
             'root' => public_path('webimages'),
             'url' => env('APP_URL').'/webimages',
             'visibility' => 'public',
- 
+
         ],
 
         'local' => [

@@ -45,11 +45,15 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
+
 Route::get('/visitor',[UserVisitController::class, 'index']);
 
 Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
 
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
+Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
@@ -57,28 +61,28 @@ Route::match(['get', 'post'], '/landingPage', function () {
     }
 
     return Inertia::render('LandingPage');
-})->middleware(['custom'])->name('landing.page');
+})->middleware(['custom.auth'])->name('landing.page');
 
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['custom'])->name('gtms');
+})->middleware(['custom.auth'])->name('gtms');
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['custom'])->name('gtam');
+})->middleware(['custom.auth'])->name('gtam');
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['custom'])->name('gtrs');
+})->middleware(['custom.auth'])->name('gtrs');
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['custom'])->name('gtw');
+})->middleware(['custom.auth'])->name('gtw');
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
-// })->middleware(['custom'])->name('layout');
+// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -191,17 +195,18 @@ Route::get('/downloadGTLS-docx', function () {
 
 Route::get('/checkAuth', [AuthenticatedSessionController::class, 'checkAuth']);
 
-Route::middleware('custom')->group(function () {
+Route::middleware('custom.auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/users');
     Route::post('/auth/azure', function () {
         return Socialite::driver('azure')->redirect();
     })->name('azure.login');
     Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'])->name('azure.callback');
     Route::post('/microsoftToken', [AzureAuthController::class, 'sendToken'])->name('azure.token');
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/gtms');
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/gtms');
+    Route::get('/azure/logout', [LoginController::class, 'azureLogout'])->name('azure.logout');
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/childrens');
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/childrensList');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
@@ -256,7 +261,7 @@ Route::get('/news/{slug}', function ($slug) {
     $post = Blog::where('slug', $slug)->firstOrFail();
     // $post = 123;
     return Inertia::render('NewsPage', ['postslug' => $post]);
-})->name('news');
+})->name('newsPage');
 // ******************************************************************
 
 

@@ -18,13 +18,14 @@ import axios from "axios";
 import CryptoJS from 'crypto-js';
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import MicrosoftLogo from "@/assets/icons/microsoft-logo.png";
 
 const msalConfig = {
     auth: {
         clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
         authority:
             "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
-        redirectUri: "http://localhost:8000/auth/azure/callback",
+        redirectUri: window.Laravel.azureCallback,
     },
     cache: {
         cacheLocation: "sessionStorage",
@@ -120,7 +121,7 @@ export default function Login({ status, canResetPassword }) {
                 //Cookies.set('gtam_access_token', res.data.access_token)
                 console.log("Access Token:", res.data.access_token);
                 setLoading(false);
-                window.location.href = '/main';
+                window.location.href = '/landingPage';
             })
             .catch((error) => {
                 console.log(error);
@@ -156,7 +157,7 @@ export default function Login({ status, canResetPassword }) {
                 .then((response)=>{
                     if(response.status == 200) {
                         console.log(response.data);
-                       window.location.href = '/main';
+                       window.location.href = '/landingPage';
                     }
                 })
                 .catch((error) => {
@@ -293,10 +294,17 @@ export default function Login({ status, canResetPassword }) {
                                         className="mt-2"
                                     />
                                 </div>
-                                <button className="text-white" onClick={(e)=>{
-                                    handleLoginAzure(e)
-                                }}>
-                                    Login with Microsoft Azure
+                                <button
+                                    className="bg-[#ECECEC] py-2 w-full rounded text-dark font-bold my-3 flex items-center justify-center gap-x-4 hover:bg-[#ECECEC]/95"
+                                    onClick={(e) => {
+                                        handleLoginAzure(e);
+                                    }}
+                                >
+                                    <img
+                                        src={MicrosoftLogo}
+                                        className="w-5 h-5"
+                                    />
+                                    Sign in with Microsoft
                                 </button>
                             </div>
                             <div className="flex items-center justify-between">

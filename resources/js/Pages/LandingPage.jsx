@@ -11,6 +11,8 @@ import {
     MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
+import { PublicClientApplication } from "@azure/msal-browser";
+
 export default function LandingPage({}) {
     const [apps, setApps] = useState();
     const [currentUser, setcurrentUser] = useState(null);
@@ -122,62 +124,83 @@ export default function LandingPage({}) {
             .catch((error) => console.log(error));
     }, []);
 
-    const handleLogout = () => {
+    const msalConfig = {
+        auth: {
+            clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
+            authority:
+                "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
+            redirectUri: window.Laravel.azureCallback,
+        },
+        cache: {
+            cacheLocation: "sessionStorage",
+            storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
+        },
+    };
+    const pca = new PublicClientApplication(msalConfig);
+    const handleLogout = async () => {
         const isLoggingOut = true;
         axios
             .post("/logoutAPI", isLoggingOut)
-            .then((response) => {
+            .then(async (response) => {
                 if (response.status == 200) {
-                    window.location.href = "/login";
+                    setToken(null);
+                    setCurrentUser(null);
+                    const allAccounts = await pca.getAllAccounts();
+                    if (allAccounts.length > 0) {
+                        await pca.logoutRedirect({ scopes: ["user.read"] });
+                    }else{
+                        window.location.href = "/login";
+                    }
                 }
             })
             .catch((error) => {
                 console.log(error);
             });
     };
-    // const [appsImgs, setAppsImgs] = useState([]);
-    // const [isFetchingImg, setIsFetchingImg] = useState(true);
-    // const fetchImageData = async (picName, app) => {
-    //     try {
-    //         const response = await axios({
-    //             method: "post",
-    //             url: "/getAppLogo",
-    //             responseType: "blob", // Set the expected response type as 'blob'
-    //             data: {
-    //                 filename: picName,
-    //             },
-    //         });
-    //         const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
-    //         setAppsImgs((prev) => ({
-    //             ...prev,
-    //             [app.AppId]: blobUrl,
-    //         }));
-    //     } catch (error) {
-    //         console.log(error);
-    //         setAppsImgs((prev) => ({
-    //             ...prev,
-    //             [app.AppId]: "/icons/NoPhoto.jpg",
-    //         }));
-    //     }
-    // };
+    const [appsImgs, setAppsImgs] = useState([]);
+    const [isFetchingImg, setIsFetchingImg] = useState(true);
+    const fetchImageData = async (picName, app) => {
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/getAppLogo",
+                responseType: "blob", // Set the expected response type as 'blob'
+                data: {
+                    filename: picName,
+                },
+            });
+            const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: blobUrl,
+            }));
+        } catch (error) {
+            console.log(error);
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: "/icons/NoPhoto.jpg",
+            }));
+        }
+    };
 
-    // useEffect(() => {
-    //     if (filteredApps?.length > 0) {
-    //         filteredApps?.forEach((app) => {
-    //             if (!appsImgs[app.AppId]) {
-    //                 // Check if the image URL is not already loaded
-    //                 fetchImageData(app?.AppPic, app);
-    //             }
-    //         });
-    //     }
-    // }, [filteredApps]);
+    useEffect(() => {
+        if (filteredApps?.length > 0) {
+            filteredApps?.forEach((app) => {
+                if (!appsImgs[app.AppId]) {
+                    // Check if the image URL is not already loaded
+                    fetchImageData(app?.AppIcon, app);
+                }
+            });
+        }
+    }, [filteredApps]);
+console.log(filteredApps);
 
-    // useEffect(() => {
-    //     const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
-    //     if (appsImgsArray?.length == filteredApps?.length) {
-    //         setIsFetchingImg(false);
-    //     }
-    // }, [appsImgs, filteredApps]);
+    useEffect(() => {
+        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
+        if (appsImgsArray?.length == filteredApps?.length) {
+            setIsFetchingImg(false);
+        }
+    }, [appsImgs, filteredApps]);
 
     const [getfooter, setfooter] = useState([]);
 
@@ -233,7 +256,7 @@ export default function LandingPage({}) {
                                                 currentUser.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser.FirstName.substring(
+                                                            {currentUser?.FirstName?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -242,7 +265,7 @@ export default function LandingPage({}) {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser.Username.substring(
+                                                            {currentUser?.Username?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -251,11 +274,11 @@ export default function LandingPage({}) {
                                                 )}
                                             </>
                                             <>
-                                                {currentUser.FirstName &&
-                                                currentUser.LastName ? (
+                                                {currentUser?.FirstName &&
+                                                currentUser?.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser.FirstName.substring(
+                                                            {currentUser?.LastName?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -264,9 +287,9 @@ export default function LandingPage({}) {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser.Username.substring(
-                                                                0,
-                                                                1
+                                                            {currentUser?.Username?.substring(
+                                                                1,
+                                                                2
                                                             ).toUpperCase()}
                                                         </p>
                                                     </>
@@ -274,14 +297,14 @@ export default function LandingPage({}) {
                                             </>
                                         </div>
                                         <p className="text-sm text-white w-71 hidden sm:block">
-                                            {currentUser.FirstName &&
-                                            currentUser.LastName ? (
+                                            {currentUser?.FirstName &&
+                                            currentUser?.LastName ? (
                                                 <>
-                                                    {currentUser.FirstName}{" "}
-                                                    {currentUser.LastName}
+                                                    {currentUser?.FirstName}{" "}
+                                                    {currentUser?.LastName}
                                                 </>
                                             ) : (
-                                                <>{currentUser.Username}</>
+                                                <>{currentUser?.Username}</>
                                             )}
                                         </p>
                                     </div>
@@ -382,7 +405,8 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`${app.AppPic}`}
+                                                              src={appsImgs[app?.AppId]}
+                                                              //{`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />
