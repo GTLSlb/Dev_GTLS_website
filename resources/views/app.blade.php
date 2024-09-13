@@ -29,6 +29,7 @@
         window.Laravel = {
             gtamUrl: "{{ env('GTAM_API_URL') }}",
             azureCallback: "{{ env('AZURE_CALLBACK_URL') }}",
+            appDomain: "{{ env('SESSION_DOMAIN') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->
