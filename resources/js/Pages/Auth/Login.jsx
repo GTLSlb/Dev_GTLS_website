@@ -108,26 +108,64 @@ export default function Login({ status, canResetPassword }) {
     const loginRequest = {
         scopes: ["openid", "profile", "User.Read"]
     };
-    const handleLoginAzure= async (e) =>{
+    const handleLoginAzure = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        const loginResponse = await pca.loginPopup(loginRequest);
-        // console.log("loginResponse", loginResponse);
-        const accessToken = loginResponse.accessToken; // Use this if returned in response
-            axios.post("/microsoftToken", {
-                socialiteUser: loginResponse
-            }).then((res) => {
-                //Cookies.set('gtam_access_token', res.data.access_token)
-                console.log("Access Token:", res.data.access_token);
-                setLoading(false);
-                window.location.href = '/landingPage';
+        await pca.initialize();
+        // Set active account on page load
+        const accounts = pca.getAllAccounts();
+        if (accounts.length > 0) {
+            pca.setActiveAccount(accounts[0]);
+        }
+
+        pca.addEventCallback(
+            (event) => {
+                // set active account after redirect
+                if (
+                    event.eventType === EventType.LOGIN_SUCCESS &&
+                    event.payload.account
+                ) {
+                    const account = event.payload.account;
+                    pca.setActiveAccount(account);
+                }
+            },
+            (error) => {
+                console.log("error", error);
+            }
+        );
+
+        // handle auth redirect /do all initial setup for msal
+        pca.handleRedirectPromise()
+            .then(async (authResult) => {
+                // Check if user signed in
+                const account = pca.getActiveAccount();
+                if (!account) {
+                    // redirect anonymous user to login page
+                    const loginResponse = await pca.loginPopup(loginRequest);
+                    const accessToken = await loginResponse.accessToken; // Use this if returned in response
+                    axios
+                        .post("/microsoftToken", {
+                            socialiteUser: loginResponse,
+                        })
+                        .then((res) => {
+                            //Cookies.set('gtam_access_token', res.data.access_token)
+                            // console.log("Access Token:", res.data.access_token);
+                            setLoading(false);
+                            window.location.href = "/main";
+                        })
+                        .catch((error) => {
+                            setLoading(false);
+                            console.log(error);
+                        });
+                }
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                // TODO: Handle errors
+                setLoading(false);
+                console.log(err);
             });
-        //pca.loginPopup({ scopes: ["user.read"] });
-    }
+    };
 
     const submit = (e) => {
         setLoading(true);
