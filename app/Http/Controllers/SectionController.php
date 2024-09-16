@@ -133,7 +133,10 @@ class SectionController extends Controller
         $data= Section::with('elements')->find('28');
         return response()->json($data);
     }
-    
+    public function TrainNotification(){
+        $data = Section::with('elements')->where('status', 1)->find('29');
+        return response()->json($data);
+    }
 
     /**
      * Show the form for creating a new resource.

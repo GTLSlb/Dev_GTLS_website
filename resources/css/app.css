@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 
+.textarea:focus {
+  border: 1px solid #6b7280 !important;
+}
+
 .ellipse-right{
   border-radius: 39% 61% 0% 100% / 0% 100% 0% 100% ;
 }

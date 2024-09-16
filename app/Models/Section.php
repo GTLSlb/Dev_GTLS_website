@@ -13,6 +13,10 @@ class Section extends Model
     {
         return $this->belongsTo(Page::class);
     }
+    public function sectiontype()
+    {
+        return $this->belongsTo(SectionsType::class);
+    }
 
     public function elements()
     {

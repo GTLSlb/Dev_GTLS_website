@@ -9,7 +9,6 @@ import Gtrs from "../../../assets/videos/GTRS-Demo.mp4"
 
 export default function ResponsiveStyledPlayer(props) {
     const getGtrs = props.getGtrs.data;
-    console.log(getGtrs);
     const Player = ({ className }) => (
         <ReactPlayer
             url={getGtrs ? "/app/webimages/"+getGtrs.video:null}

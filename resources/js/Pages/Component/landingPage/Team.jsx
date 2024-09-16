@@ -18,51 +18,46 @@ import image5 from "../../../assets/teams/Richelle.png";
 import image16 from "../../../assets/teams/Tracey.png";
 import image12 from "../../../assets/teams/Veronica.png";
 
-
-
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
- import {
-    ArrowSmallRightIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from 'react';
+import React from "react";
 
-
-const teams =[
+const teams = [
     {
-        id:1,
-        image:image1,
-        name:"imad_el_masri",
+        id: 1,
+        image: image1,
+        name: "imad_el_masri",
     },
     {
-        id:2,
-        image:image2,
-        name:"Theodoros",
+        id: 2,
+        image: image2,
+        name: "Theodoros",
     },
     {
-        id:3,
-        image:image3,
-        name:"Aref_Al_Nehmani",
+        id: 3,
+        image: image3,
+        name: "Aref_Al_Nehmani",
     },
     {
-        id:4,
-        image:image4,
-        name:"stan",
+        id: 4,
+        image: image4,
+        name: "stan",
     },
     {
-        id:5,
-        image:image5,
-        name:"Richelle",
+        id: 5,
+        image: image5,
+        name: "Richelle",
     },
     {
-        id:6,
-        image:image6,
-        name:"Leslie_Haines",
+        id: 6,
+        image: image6,
+        name: "Leslie_Haines",
     },
     // {
     //     id:7,
@@ -70,34 +65,34 @@ const teams =[
     //     name:"josh",
     // },
     {
-        id:8,
-        image:image8,
-        name:"Antoine",
+        id: 8,
+        image: image8,
+        name: "Antoine",
     },
     {
-        id:9,
-        image:image9,
-        name:"Danialaa",
+        id: 9,
+        image: image9,
+        name: "Danialaa",
     },
     {
-        id:10,
-        image:image10,
-        name:"Megan",
+        id: 10,
+        image: image10,
+        name: "Megan",
     },
     {
-        id:11,
-        image:image11,
-        name:"jay",
+        id: 11,
+        image: image11,
+        name: "jay",
     },
     {
-        id:12,
-        image:image12,
-        name:"Veronica",
+        id: 12,
+        image: image12,
+        name: "Veronica",
     },
     {
-        id:13,
-        image:image13,
-        name:"Debora",
+        id: 13,
+        image: image13,
+        name: "Debora",
     },
     // {
     //     id:14,
@@ -110,9 +105,9 @@ const teams =[
     //     name:"Ruby",
     // },
     {
-        id:16,
-        image:image16,
-        name:"Tracey",
+        id: 16,
+        image: image16,
+        name: "Tracey",
     },
 ]
 
@@ -120,24 +115,24 @@ const teams =[
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block"}}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block" }}
+            onClick={onClick}
+        />
     );
-  }
-  
-  function SamplePrevArrow(props) {
+}
+
+function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "" }}
-        onClick={onClick}
-      >
-        <ArrowSmallRightIcon/>
-      </div>
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "" }}
+            onClick={onClick}
+        >
+            <ArrowSmallRightIcon />
+        </div>
     );
   }
 
@@ -146,25 +141,23 @@ export default function News(props) {
     const getTeam = props.getTeam;
     const sliderRef = useRef(null);
 
-    
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
-          if (sliderRef.current) {
-            sliderRef.current.slickNext();
-          }
+            if (sliderRef.current) {
+                sliderRef.current.slickNext();
+            }
         }, delay);
-      };
+    };
 
-
-      useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
-          sliderRef.current.slickNext();
+            sliderRef.current.slickNext();
         }, 5000);
-    
+
         return () => {
-          clearInterval(interval);
+            clearInterval(interval);
         };
-      }, []);
+    }, []);
 
     const settings = {
         dots: false,
@@ -173,24 +166,24 @@ export default function News(props) {
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
             },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
             },
-          },
         ],
         nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
-      };
+        prevArrow: <SamplePrevArrow />,
+    };
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
@@ -244,15 +237,13 @@ export default function News(props) {
     const [postss, setPost] = useState([]);
     useEffect(() => {
         axios.get(baseURL).then((response) => {
-          setPost(response.data);
+            setPost(response.data);
         });
-      }, []);
+    }, []);
 
     return (
         <div>
-            
             <div className="bg-dark">
-                
                 <div className="py-2 sm:py-32 px-1 sm:pb-1">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">

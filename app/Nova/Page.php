@@ -49,6 +49,8 @@ class Page extends Resource
         ];
     }
 
+
+    
     /**
      * Get the cards available for the request.
      *

@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Resource as NovaResource;
+use Illuminate\Http\Request;
 
 abstract class Resource extends NovaResource
 {
@@ -56,4 +57,11 @@ abstract class Resource extends NovaResource
     {
         return parent::relatableQuery($request, $query);
     }
+
+    public function authorizedToReplicate(Request $request)
+    {
+        return false;
+    }
+
+    
 }

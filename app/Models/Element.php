@@ -9,8 +9,16 @@ class Element extends Model
 {
     use HasFactory;
     
+    protected $casts = [
+        'date' => 'date'
+    ];
+    
     public function Section()
     {
         return $this->belongsTo(Section::class);
+    }
+    public function elementtype()
+    {
+        return $this->belongsTo(ElementTypes::class);
     }
 }

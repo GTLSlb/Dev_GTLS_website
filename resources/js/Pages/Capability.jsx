@@ -7,7 +7,7 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import pdf from "../../../public/docs/Goldtiger-catalogue.pdf"
-import Navbars from "./Component/Navbars";
+
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -405,8 +405,8 @@ export default function Capability(props) {
                                             industrial and FMCG. Prominent
                                             clients include Unilever, Freedom
                                             Food, Sigma Healthcare, CIA
-                                            Logistics, Triangle Logistics, TMA
-                                            Group and Austral Bricks.
+                                            Logistics, Triangle Logistics and TMA
+                                            Group
                                         </span>
                                     </li>
                                 </ul>

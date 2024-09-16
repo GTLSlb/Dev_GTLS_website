@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 
-use Laravel\Nova\User;
+use App\Nova\User;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Menu\Menu;
@@ -33,7 +33,6 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 @endenv
             ');
         });
-
         // Nova::report(function ($exception) {
         //     if (app()->bound('sentry')) {
         //         app('sentry')->captureException($exception);
