@@ -2,8 +2,8 @@ import { Head } from "@inertiajs/react";
 import Footer from "./Component/landingPage/Footer";
 import "../../css/gradient.css";
 import { useState, useEffect } from "react";
-import Navbars from "./Component/Navbars";
 import GoogleMapComp from "@/Components/GoogleMap";
+import Navbars from "@/Components/";
 
 export default function TrafficPage() {
     const [getfooter, setfooter] = useState([]);
