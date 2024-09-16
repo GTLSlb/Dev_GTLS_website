@@ -39,7 +39,6 @@ import GoogleMap from "@/Components/GoogleMap";
 import GoogleMapComp from "@/Components/GoogleMap";
 import { BounceLoader } from "react-spinners";
 import TrainNotification from "@/Components/TrainNotification";
-import Navbars from "./Component/Navbars";
 
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },

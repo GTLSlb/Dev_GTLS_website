@@ -497,27 +497,11 @@ class ApiController extends Controller
         return $lastLog ? $lastLog->created_at : null;
     }
 
-    // public function geocode(Request $request)
-    // {
-    //     $address = $request->input('address');
-    //     $apiKey = env('GOOGLE_MAPS_API_KEY'); // Store your API key in .env file
-
-    //     $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
-    //         'address' => $address,
-    //         'key' => $apiKey,
-    //     ]);
-
-    //     if ($response->successful()) {
-    //         return response()->json($response->json());
-    //     } else {
-    //         return response()->json(['error' => 'Failed to fetch geocode data'], 500);
-    //     }
-    // }
     public function geocode(Request $request)
     {
         $lat = $request->input('lat');
         $lng = $request->input('lng');
-        $apiKey = env('GOOGLE_MAPS_API_KEY'); // Ensure your API key is set in the .env file
+        $apiKey = "AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go"; // Ensure your API key is set in the .env file
     
         // Make sure that both latitude and longitude are provided
         if (!$lat || !$lng) {
@@ -543,7 +527,7 @@ class ApiController extends Controller
     {
         $origin = $request->input('origin');
         $destination = $request->input('destination');
-        $apiKey = env('GOOGLE_MAPS_API_KEY');
+        $apiKey = "AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go";
 
         $response = Http::get('https://maps.googleapis.com/maps/api/directions/json', [
             'origin' => $origin,
@@ -558,22 +542,4 @@ class ApiController extends Controller
         }
 
     }
-
-    // public function geocode(Request $request)
-    // {
-    //     $address = $request->input('address');
-    //     $apiKey = env('GOOGLE_MAPS_API_KEY'); // Store your API key in .env file
-
-    //     $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
-    //         'address' => $address,
-    //         'key' => $apiKey,
-    //     ]);
-
-    //     if ($response->successful()) {
-    //         return response()->json($response->json());
-    //     } else {
-    //         return response()->json(['error' => 'Failed to fetch geocode data'], 500);
-    //     }
-    // }
-
 }
