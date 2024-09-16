@@ -17,7 +17,9 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Middleware\CustomAuth;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 class LoginController extends Controller
 {
     /**
@@ -28,6 +30,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        
         $email = $request->input('Email');
         $password = $request->input('Password');
 

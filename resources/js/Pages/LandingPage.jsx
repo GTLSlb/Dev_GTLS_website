@@ -25,6 +25,11 @@ export default function LandingPage({}) {
     }
 
     useEffect(() => {
+        document.cookie =
+            "previous_page=" + encodeURIComponent(window.location.href);
+    }, []);
+
+    useEffect(() => {
         axios
             .get("/users")
             .then((res) => {
@@ -99,13 +104,6 @@ export default function LandingPage({}) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [activePage, setactivePage] = useState(null);
     const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [activeCon, setactiveCon] = useState(0);
-    const [loadingGtrs, setLoadingGtrs] = useState(false);
-    const [activeIndexGTRS, setActiveIndexGTRS] = useState(0);
-    const [activeHeader, setactiveHeader] = useState("null");
-    const [currentComponent, setcurrentComponent] = useState([]);
-    const [activeIndexInv, setActiveIndexInv] = useState(1);
-    const [invoiceDetails, setInvoiceDetails] = useState();
     const [PODetails, setPODetails] = useState();
 
     useEffect(() => {
@@ -137,49 +135,70 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
-    const [appsImgs, setAppsImgs] = useState([]);
-    const [isFetchingImg, setIsFetchingImg] = useState(true);
-    const fetchImageData = async (picName, app) => {
-        try {
-            const response = await axios({
-                method: "post",
-                url: "/getAppLogo",
-                responseType: "blob", // Set the expected response type as 'blob'
-                data: {
-                    filename: picName,
-                },
-            });
-            const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
-            setAppsImgs((prev) => ({
-                ...prev,
-                [app.AppId]: blobUrl,
-            }));
-        } catch (error) {
-            console.log(error);
-            setAppsImgs((prev) => ({
-                ...prev,
-                [app.AppId]: "/icons/NoPhoto.jpg",
-            }));
-        }
-    };
+    // const [appsImgs, setAppsImgs] = useState([]);
+    // const [isFetchingImg, setIsFetchingImg] = useState(true);
+    // const fetchImageData = async (picName, app) => {
+    //     try {
+    //         const response = await axios({
+    //             method: "post",
+    //             url: "/getAppLogo",
+    //             responseType: "blob", // Set the expected response type as 'blob'
+    //             data: {
+    //                 filename: picName,
+    //             },
+    //         });
+    //         const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
+    //         setAppsImgs((prev) => ({
+    //             ...prev,
+    //             [app.AppId]: blobUrl,
+    //         }));
+    //     } catch (error) {
+    //         console.log(error);
+    //         setAppsImgs((prev) => ({
+    //             ...prev,
+    //             [app.AppId]: "/icons/NoPhoto.jpg",
+    //         }));
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     if (filteredApps?.length > 0) {
+    //         filteredApps?.forEach((app) => {
+    //             if (!appsImgs[app.AppId]) {
+    //                 // Check if the image URL is not already loaded
+    //                 fetchImageData(app?.AppPic, app);
+    //             }
+    //         });
+    //     }
+    // }, [filteredApps]);
+
+    // useEffect(() => {
+    //     const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
+    //     if (appsImgsArray?.length == filteredApps?.length) {
+    //         setIsFetchingImg(false);
+    //     }
+    // }, [appsImgs, filteredApps]);
+
+    const [getfooter, setfooter] = useState([]);
+
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     useEffect(() => {
-        if (filteredApps?.length > 0) {
-            filteredApps?.forEach((app) => {
-                if (!appsImgs[app.AppId]) {
-                    // Check if the image URL is not already loaded
-                    fetchImageData(app?.AppPic, app);
-                }
+        axios
+            .get("/footer")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setfooter(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
             });
-        }
-    }, [filteredApps]);
-
-    useEffect(() => {
-        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
-        if (appsImgsArray?.length == filteredApps?.length) {
-            setIsFetchingImg(false);
-        }
-    }, [appsImgs, filteredApps]);
+    }, []);
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
 
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
@@ -209,6 +228,28 @@ export default function LandingPage({}) {
                                         <div
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
+                                            <>
+                                                {currentUser.FirstName &&
+                                                currentUser.LastName ? (
+                                                    <>
+                                                        <p>
+                                                            {currentUser.FirstName.substring(
+                                                                0,
+                                                                1
+                                                            ).toUpperCase()}
+                                                        </p>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p>
+                                                            {currentUser.Username.substring(
+                                                                0,
+                                                                1
+                                                            ).toUpperCase()}
+                                                        </p>
+                                                    </>
+                                                )}
+                                            </>
                                             <>
                                                 {currentUser.FirstName &&
                                                 currentUser.LastName ? (
@@ -341,7 +382,7 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={appsImgs[app.AppId]}
+                                                              src={`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />
@@ -409,7 +450,7 @@ export default function LandingPage({}) {
                 </div>
             )}
             <div className="">
-                <Footer />
+                <Footer getfooter={getfooter} />
             </div>
         </div>
     );

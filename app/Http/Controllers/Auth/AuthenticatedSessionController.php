@@ -11,18 +11,29 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Routing\RouteCollection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create(): Response
+    public function create(Request $request)
     {
-        return Inertia::render('Auth/Login', [
-            'canResetPassword' => Route::has('password.request'),
-            'status' => session('status'),
-        ]);
+
+        if ($request->session()->has('user')) {
+            // If the user is logged in, you can redirect them to a default page or dashboard.
+            return redirect('/landingPage');
+        } else {
+            // If no user is logged in, render the login page.
+            return Inertia::render('Auth/Login', [
+                'canResetPassword' => Route::has('password.request'),
+                'status' => session('status'),
+            ]);
+        }
+        
     }
 
     /**
@@ -43,7 +54,7 @@ class AuthenticatedSessionController extends Controller
             return response()->json([
                 'error' => 'User is found',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'error' => 'User NOT found',
             ]);

@@ -9,7 +9,7 @@ import ContatcUs from "./Component/landingPage/ContactUs";
 
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
-import Navbars from "./Component/Navbars";
+
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -47,6 +47,55 @@ export default function Capability(props) {
         };
     }, []);
 
+    const [getfooter, setfooter] = useState([]);
+    const [getContsct, setContsct] = useState([]);
+    const [getBranch, setBranch] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+    
+    // Contact us
+    useEffect(() => {
+        axios.get('/ContactPage')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setContsct(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+
+    // Branches
+    useEffect(() => {
+        axios.get('/ContactPageBranches')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setBranch(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+    
+    
+    // Footer
+
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []);
+      // ********************************************************* 
+      // ********************* End requests  ********************* 
+      // ********************************************************* 
+
     return (
         <>
             <Head title="Contact Us" />
@@ -63,9 +112,29 @@ export default function Capability(props) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
-                <ContatcUs />
-                <Branches />
-                <Footer />
+                <ContatcUs getContsct={getContsct}/>
+                <Branches getBranch={getBranch}/>
+                
+
+                {/* <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
+                    <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
+                        <h2 className="text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
+                            About Gold<span className="text-white">Tiger</span>
+                        </h2>
+                    </div>
+                </div> */}
+                {/* <div className="relative isolate overflow-hidden  py-16 sm:py-16 mb-10">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                        <div className="relative lg:order-last lg:col-span-5">
+                            
+                            
+                        </div>
+
+
+                    </div>
+                </div> */}
+
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );

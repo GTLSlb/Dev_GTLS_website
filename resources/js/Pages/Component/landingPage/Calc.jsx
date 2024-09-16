@@ -108,11 +108,11 @@ function Map() {
             handleVenueSearch(endVenue, setEndVenue, setEndVenueCoordinates, setEndVenueSuggestions, false),
     };
 
-    const getDistance = () => {
-        console.log(startVenueCoordinates)
-        console.log(endVenueCoordinates)
-        console.log(distance)
-    }
+    // const getDistance = () => {
+    //     console.log(startVenueCoordinates)
+    //     console.log(endVenueCoordinates)
+    //     console.log(distance)
+    // }
 
     const getDrivingDistance = async () => {
         const startLocation = `${startVenueCoordinates[1]},${startVenueCoordinates[0]}`;

@@ -16,8 +16,6 @@ function Feedback() {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(emoji)
-        console.log(additionalFeedback)
         setSubmitted(true);
     }
     return (

@@ -7,7 +7,7 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import pdf from "../../../public/docs/Goldtiger-catalogue.pdf"
-import Navbars from "./Component/Navbars";
+
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -42,6 +42,27 @@ const handleClick = () => {
 };
 
 export default function Capability(props) {
+
+
+    const [getfooter, setfooter] = useState([]);
+
+    // ********************************************************* 
+    // ********************* All requests  ********************* 
+    // ********************************************************* 
+
+    useEffect(() => {
+        axios.get('/footer')
+          .then(response => {
+              // console.log('fetching data:',response.data);
+              setfooter(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+    }, []);
+    // ********************************************************* 
+    // ********************* End requests  ********************* 
+    // ********************************************************* 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -385,7 +406,7 @@ export default function Capability(props) {
                                             clients include Unilever, Freedom
                                             Food, Sigma Healthcare, CIA
                                             Logistics, Triangle Logistics and TMA
-                                            Group.
+                                            Group
                                         </span>
                                     </li>
                                 </ul>
@@ -485,7 +506,7 @@ export default function Capability(props) {
                     </div>
                 </div>
 
-                <Footer />
+                <Footer getfooter={getfooter}/>
             </div>
         </>
     );

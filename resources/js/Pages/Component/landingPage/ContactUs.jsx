@@ -21,7 +21,9 @@ import {
 } from "@heroicons/react/24/outline";
 import ContactUsForm from "./ContatcUsForm";
 
-export default function ContatcUs() {
+export default function ContatcUs(props) {
+
+    const getContsct=props.getContsct;
     return (
         <div className="bg-dark mt-12">
 <div className="relative " id="contact">
@@ -33,13 +35,36 @@ export default function ContatcUs() {
                             
                         </div>
                         <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
-                            Contact us
+                            {getContsct?.name}
+                            {/* Contact us */}
                         </h2>
                         <dl className="pl-5 mt-10 space-y-4 text-base leading-7 text-gray-300">
                             {/* <h2 className="text-xl font-bold tracking-tight text-gray-200">
                                 Get in touch
                             </h2> */}
-                            <div className="flex gap-x-6">
+                            {getContsct?.elements?.map((item) => (
+                                <div key={item.id} className="flex gap-x-6">
+                                <dt className="flex-none">
+                                    <span className="sr-only">Telephone</span>
+                                    <div className="h-7 w-6 text-goldt" dangerouslySetInnerHTML={{ __html: item.icon}}>
+                                    </div>
+                                </dt>
+                                <dd>
+                                    <a
+                                        className="hover:text-goldt text-lg"
+                                        href={item.url}
+                                    >
+                                        {item.name}
+                                        <br />
+                                        <div  dangerouslySetInnerHTML={{ __html: item.content}}></div>
+                                    </a>
+                                </dd>
+                            </div>
+                                
+                                    
+                                
+                            ))}
+                            {/* <div className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <PhoneIcon
@@ -55,8 +80,8 @@ export default function ContatcUs() {
                                         1800 04 03 06
                                     </a>
                                 </dd>
-                            </div>
-                            <div className="flex gap-x-6">
+                            </div> */}
+                            {/* <div className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <PrinterIcon
@@ -86,8 +111,8 @@ export default function ContatcUs() {
                                         Box 167, Hoxton Park, NSW 2171
                                     </a>
                                 </dd>
-                            </div>
-                            <div className="flex gap-x-6">
+                            </div> */}
+                            {/* <div className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <EnvelopeIcon
@@ -103,8 +128,8 @@ export default function ContatcUs() {
                                         enquiries@gtls.com.au
                                     </a>
                                 </dd>
-                            </div>
-                            <div className="flex gap-x-6">
+                            </div> */}
+                            {/* <div className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <BuildingOffice2Icon
@@ -117,9 +142,9 @@ export default function ContatcUs() {
                                     <br />
                                     3B Inglis Road, Ingleburn, NSW 2565
                                 </dd>
-                            </div>
+                            </div> */}
 
-                            <div className="flex gap-x-6">
+                            {/* <div className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <BuildingOffice2Icon
@@ -132,9 +157,9 @@ export default function ContatcUs() {
                                     <br />
                                     60-70 Monash Drive, Dandenong South, VIC 3175
                                 </dd>
-                            </div>
+                            </div> */}
 
-                            <div className="flex gap-x-6">
+                            {/* <div className="flex gap-x-6">
                                 <dt className="flex-none">
                                     <span className="sr-only">Telephone</span>
                                     <BuildingOffice2Icon
@@ -147,7 +172,7 @@ export default function ContatcUs() {
                                     <br />
                                     341 Freeman Road, Richlands, QLD 4077
                                 </dd>
-                            </div>
+                            </div> */}
                         </dl>
                     </div>
                 </div>
