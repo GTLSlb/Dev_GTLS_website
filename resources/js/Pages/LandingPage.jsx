@@ -143,8 +143,8 @@ export default function LandingPage({}) {
             .post("/logoutAPI", isLoggingOut)
             .then(async (response) => {
                 if (response.status == 200) {
-                    setToken(null);
-                    setCurrentUser(null);
+                    // setToken(null);
+                    setcurrentUser(null);
                     const allAccounts = await pca.getAllAccounts();
                     if (allAccounts.length > 0) {
                         await pca.logoutRedirect({ scopes: ["user.read"] });

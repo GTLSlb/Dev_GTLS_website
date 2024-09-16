@@ -193,6 +193,55 @@ class LoginController extends Controller
         }
     }
 
+    public function logoutWithoutRequest(Request $request)
+    {
+        // Retrieve the 'access_token' cookie
+        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : null;
+
+        // Create an instance of the RegisteredUserController and get the current user
+        $userController = new RegisteredUserController();
+        $user = $userController->getCurrentUserName($request);
+        $userMsg = json_decode($user->content(), true);
+        //dd(gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string");
+        if(gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string") {
+        if ($userMsg['message'] == 'User not found') {
+
+                $request->session()->invalidate();
+                $request->session()->flush();
+                // Set the expiration time for the cookies to 24 hours before the current time
+                $expiration = time() - (60 * 60 * 24);
+                $cookies = $_COOKIE;
+
+                // Loop through each cookie and set it to expire
+                foreach ($cookies as $name => $value) {
+                    setcookie($name, '', $expiration);
+                }
+                $request->session()->regenerateToken();
+                // return redirect('/login');
+        }} else {
+                // Invalidate and flush the session
+                $request->session()->forget('user');
+                $request->session()->invalidate();
+                $request->session()->flush();
+                // Set the expiration time for the cookies to 24 hours before the current time
+                $expiration = time() - (60 * 60 * 24);
+
+                // Get an array of all the cookies
+                $cookies = $_COOKIE;
+
+                // Loop through each cookie and set it to expire
+                foreach ($cookies as $name => $value) {
+                    setcookie($name, '', $expiration);
+                }
+
+                // Regenerate the session token
+                $request->session()->regenerateToken();
+
+                // Redirect to the login page
+                // return redirect('/login');
+        }
+    }
+
     public function azureLogout()
     {
         // Microsoft Azure AD Logout URL

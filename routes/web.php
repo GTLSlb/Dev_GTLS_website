@@ -55,6 +55,8 @@ Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
 
 Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
 
+Route::post('/logoutWithoutRequest', [LoginController::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('logoutWithoutRequest');
+
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
