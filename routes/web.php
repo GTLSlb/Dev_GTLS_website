@@ -261,12 +261,6 @@ Route::get('/news/{slug}', function ($slug) {
 })->name('news');
 // ******************************************************************
 
-
-
-
-
-
-
 Route::fallback(function () {
     return Inertia::render('NotFoundPage', [
         // Add any data you want to pass to the React component
@@ -275,7 +269,11 @@ Route::fallback(function () {
 
 Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
 Route::get('/get-positions', [ApiController::class, 'index']);
+Route::get('/get-eventsCategories', [ApiController::class, 'getEventsCategories']);
+
 Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
+
+Route::get('/get-positions/{id}', [ApiController::class, 'getById']);
 
 Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 Route::get('/forgot-password', function () {

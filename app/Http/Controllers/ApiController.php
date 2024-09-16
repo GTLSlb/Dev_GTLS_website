@@ -136,6 +136,12 @@ class ApiController extends Controller
             $query->whereIn('event_category_id', (array) $eventCategoryIds);
         }
     
+        $query->where(function ($q) {
+            $q->whereNull('end_date')  
+              ->orWhere('end_date', '>=', now()) 
+              ->where('end_date', '<', '2025-12-30');
+        });
+
         // Apply dynamic filters from filterBy JSON parameter
         if ($filterBy) {
             $filterByArray = json_decode($filterBy, true); // Decode JSON filter info
@@ -244,37 +250,20 @@ class ApiController extends Controller
             }
         }
     
-        // Filter out records with end_date before the current date
-        $query->where(function ($q) {
-            $q->whereNull('end_date')  // Include records with no end_date
-                ->orWhere('end_date', '>=', now());  // Include records where end_date is today or in the future
-        });
-    
-        // Apply sorting to the entire dataset if sortInfo is provided
-        if ($sortInfo) {
-            $sortInfoArray = json_decode($sortInfo, true); // Decode JSON sort info
-            if (is_array($sortInfoArray) && isset($sortInfoArray['columnName']) && isset($sortInfoArray['dir'])) {
-                $sortDirection = $sortInfoArray['dir'] == 1 ? 'asc' : 'desc';
-    
-                // Apply sorting with NULL or empty values last
-                $query->orderByRaw("ISNULL({$sortInfoArray['columnName']}), {$sortInfoArray['columnName']} = '', {$sortInfoArray['columnName']} {$sortDirection}");
-            }
-        }
-    
         // Get the total count of records with filters applied
         $totalRecords = $query->count();
     
-        // Apply pagination (skip and limit) after sorting the entire dataset
-       // Apply pagination (skip and limit) after sorting the entire dataset
-        if ($limit) {
-            $results = $query->skip($skip)->take($limit)->get();
-        } else {
-            // If no limit is provided, retrieve all results
-            $results = $query->get();
-        }
+        // Retrieve all results before pagination to allow sorting on calculated fields
+        $results = $query->get();
     
         // Transform the data
         $transformedData = $results->map(function ($item) {
+            $startDate = Carbon::parse($item->start_date);
+            $endDate = Carbon::parse($item->end_date);
+    
+            // Calculate difference in hours, handling possible null values
+            $hoursDifference = ($startDate && $endDate) ? $startDate->diffInHours($endDate) : null;
+    
             return [
                 'id' => $item->id,
                 'api_source' => $item->api_source,
@@ -285,6 +274,7 @@ class ApiController extends Controller
                 'event_category_id' => $item->event_category_id,
                 'start_date' => $item->start_date,
                 'end_date' => $item->end_date,
+                'hours_difference' => $hoursDifference, // New field for hours difference
                 'last_updated' => $item->lastUpdated_date,
                 'lat' => (float) $item->latitude,
                 'lng' => (float) $item->longitude,
@@ -301,7 +291,58 @@ class ApiController extends Controller
                 'created_at' => $item->created_at,
                 'updated_at' => $item->updated_at,
             ];
-        })->values()->all();
+        })->values();
+    
+        // Sort the entire transformed dataset by the specified column
+        if ($sortInfo) {
+            $sortInfoArray = json_decode($sortInfo, true); // Decode JSON sort info
+            if (is_array($sortInfoArray) && isset($sortInfoArray['columnName']) && isset($sortInfoArray['dir'])) {
+                $sortColumn = $sortInfoArray['columnName'];
+                $sortDirection = $sortInfoArray['dir'] == 1 ? 'asc' : 'desc';
+
+                // Handle sorting of nullable or empty date columns
+                $transformedData = $transformedData->sort(function ($a, $b) use ($sortColumn, $sortDirection) {
+                    $valueA = $a[$sortColumn];
+                    $valueB = $b[$sortColumn];
+
+                    // Check if valueA or valueB is null or empty
+                    $isValueANullOrEmpty = $valueA === null || $valueA === '';
+                    $isValueBNullOrEmpty = $valueB === null || $valueB === '';
+
+                    if ($isValueANullOrEmpty && !$isValueBNullOrEmpty) {
+                        // Value A is null or empty, and Value B is not; Value A should be at the end
+                        return 1;
+                    }
+
+                    if (!$isValueANullOrEmpty && $isValueBNullOrEmpty) {
+                        // Value B is null or empty, and Value A is not; Value B should be at the end
+                        return -1;
+                    }
+
+                    // Both are null or empty, or neither are null or empty; use regular comparison
+                    if ($isValueANullOrEmpty && $isValueBNullOrEmpty) {
+                        // Both values are null or empty, they are considered equal
+                        return 0;
+                    }
+
+                    // Regular comparison based on sort direction
+                    if ($sortDirection === 'asc') {
+                        return $valueA <=> $valueB;
+                    } else {
+                        return $valueB <=> $valueA;
+                    }
+                })->values(); // Ensure reindexing after sorting
+            }
+        }
+
+    
+        // Reindex the sorted data to apply pagination
+        $transformedData = $transformedData->values();
+    
+        // Apply pagination to the transformed and sorted data
+        if ($limit) {
+            $transformedData = $transformedData->slice($skip, $limit)->values();
+        }
     
         // Return the transformed results as a JSON response with total count
         return response()->json($transformedData)
@@ -311,8 +352,49 @@ class ApiController extends Controller
             ]);
     }
     
-    
-    
+    public function getById(Request $request, $id)
+    {
+        // Retrieve the specific record by ID
+        $item = ApiData::find($id);
+
+        // Check if the record exists
+        if (!$item) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+
+        // Transform the data
+        $transformedData = [
+            'id' => $item->id,
+            'api_source' => $item->api_source,
+            'event_id' => $item->event_id,
+            'description' => $item->description,
+            'geometry_type' => $item->geometry_type,
+            'geometry_coordinates' => json_decode($item->geometry_coordinates, true),
+            'event_category_id' => $item->event_category_id,
+            'start_date' => $item->start_date,
+            'end_date' => $item->end_date,
+            'hours_difference' => $item->start_date && $item->end_date ? Carbon::parse($item->start_date)->diffInHours(Carbon::parse($item->end_date)) : null,
+            'last_updated' => $item->lastUpdated_date,
+            'lat' => (float) $item->latitude,
+            'lng' => (float) $item->longitude,
+            'suburb' => $item->suburb,
+            'traffic_direction' => $item->traffic_direction,
+            'road_name' => $item->road_name,
+            'status' => $item->status,
+            'event_type' => $item->event_type,
+            'impact' => $item->impact,
+            'advice' => $item->advice,
+            'otherAdvice' => $item->otherAdvice,
+            'information' => $item->information,
+            'source_url' => $item->source_url,
+            'created_at' => $item->created_at,
+            'updated_at' => $item->updated_at,
+        ];
+
+        // Return the transformed result as a JSON response
+        return response()->json($transformedData);
+    }
+
     public function getRecentRecords(Request $request)
     {
         // Start query logging for debugging purposes
@@ -365,6 +447,10 @@ class ApiController extends Controller
         return response()->json($transformedData);
     }
     
+    public function getEventsCategories(Request $request){
+        $allEvents = DB::table('events_category')->get();
+        return response()->json($allEvents);
+    }
     protected function transformData($apiData)
     {
         return $apiData->filter(function ($item) {
