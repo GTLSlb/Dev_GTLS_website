@@ -6,7 +6,7 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
 import Branches from "./Component/landingPage/branches";
 import ContatcUs from "./Component/landingPage/ContactUs";
-
+import Navbars from "./Component/Navbars";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 
@@ -51,10 +51,10 @@ export default function Capability(props) {
     const [getContsct, setContsct] = useState([]);
     const [getBranch, setBranch] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
-    
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
+
     // Contact us
     useEffect(() => {
         axios.get('/ContactPage')
@@ -78,8 +78,8 @@ export default function Capability(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-    
-    
+
+
     // Footer
 
     useEffect(() => {
@@ -92,9 +92,9 @@ export default function Capability(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
 
     return (
         <>
@@ -103,7 +103,7 @@ export default function Capability(props) {
                 {/* <Chatbot /> */}
                 <Navbars />
                 {/* <HeroSection/> */}
-                
+
                 <div aria-hidden="true" className="relative">
                     <img
                         src={jobs}
@@ -114,7 +114,7 @@ export default function Capability(props) {
                 </div>
                 <ContatcUs getContsct={getContsct}/>
                 <Branches getBranch={getBranch}/>
-                
+
 
                 {/* <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center lg:max-w-4xl">
@@ -126,8 +126,8 @@ export default function Capability(props) {
                 {/* <div className="relative isolate overflow-hidden  py-16 sm:py-16 mb-10">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className="relative lg:order-last lg:col-span-5">
-                            
-                            
+
+
                         </div>
 
 

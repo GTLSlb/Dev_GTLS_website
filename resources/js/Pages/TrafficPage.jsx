@@ -3,8 +3,9 @@ import Footer from "./Component/landingPage/Footer";
 import "../../css/gradient.css";
 import { useState, useEffect } from "react";
 import Navbars from "./Component/Navbars";
+import GoogleMapComp from "@/Components/GoogleMap";
 
-export default function GoingGreen() {
+export default function TrafficPage() {
     const [getfooter, setfooter] = useState([]);
 
     // *********************************************************
@@ -30,7 +31,7 @@ export default function GoingGreen() {
             <Head title="Traffic Notification" />
             <div className="relative isolate min-h-screen bg-dark">
                 <Navbars />
-            
+                <GoogleMapComp />
             </div>
             <Footer getfooter={getfooter} />
         </>

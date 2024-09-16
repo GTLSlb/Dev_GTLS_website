@@ -149,6 +149,24 @@ const GoogleMapComp = () => {
             console.error("Error fetching data", error);
         }
     };
+    function formatDateTime(dateString) {
+        const date = new Date(dateString);
+
+        const day = date.getDate(); // Get the day of the month
+        const month = date.toLocaleString("default", { month: "long" }); // Get the month name
+        const year = date.getFullYear(); // Get the full year
+
+        let hours = date.getHours(); // Get the hours
+        const minutes = date.getMinutes(); // Get the minutes
+        const ampm = hours >= 12 ? "pm" : "am"; // Determine AM or PM
+
+        hours = hours % 12; // Convert to 12-hour format
+        hours = hours ? hours : 12; // The hour '0' should be '12'
+
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Add leading zero to minutes if needed
+
+        return `${day} ${month} ${year} ${hours}:${formattedMinutes}${ampm}`;
+    }
 
     useEffect(() => {
         fetchPositions();
@@ -235,7 +253,7 @@ const GoogleMapComp = () => {
     }, [markerPositions, renderMarkers]);
 
     return (
-        <div className="md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
+        <div className="md:py-[8rem] mx-auto h-full rounded-lg">
             <div className="text-goldt text-4xl font-semibold">
                 National Road events
             </div>
@@ -245,14 +263,14 @@ const GoogleMapComp = () => {
             <div className="flex flex-col h-[800px] mt-10">
                 <div className="flex-grow flex flex-row-reverse">
                     {/* Google Map */}
-                    <div className="flex-grow rounded-3xl">
+                    <div className="flex-grow">
                         <LoadScript googleMapsApiKey="AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go">
                             <GoogleMap
                                 mapContainerStyle={{
                                     width: "100%",
                                     height: "100%",
-                                    borderTopRightRadius: "1rem",
-                                    borderBottomRightRadius: "1rem",
+                                    borderTopRightRadius: "0rem",
+                                    borderBottomRightRadius: "0rem",
                                 }}
                                 center={center}
                                 zoom={5}
@@ -262,12 +280,13 @@ const GoogleMapComp = () => {
                                         strictBounds: true,
                                     },
                                 }}
+                                onClick={handleMarkerClick}
                                 onLoad={initializeClusterer}
                             />
                         </LoadScript>
                     </div>
                     {/* Sidebar */}
-                    <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
+                    <div className="h-full w-80 bg-[#2A3034] p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
                                 {/* Details Section */}
@@ -370,7 +389,7 @@ const GoogleMapComp = () => {
                                 <div className="grid grid-cols-2">
                                     {/* QLD State Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
+                                        className="  mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer pb-3 "
                                         onClick={(e) =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
@@ -432,7 +451,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* SA State Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
+                                        className="  mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer pb-3 "
                                         onClick={(e) =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
@@ -463,7 +482,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* VIC State Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
+                                        className="  mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer pb-3 "
                                         onClick={(e) =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
@@ -541,7 +560,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* Incident Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer   "
+                                        className="  mr-8  flex flex-row rounded-lg  space-x-5 items-center cursor-pointer   "
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
@@ -616,7 +635,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* Hazard Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer   "
+                                        className="  mr-8  flex flex-row rounded-lg  space-x-5 items-center  cursor-pointer   "
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
@@ -653,7 +672,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* Major Event Filter */}
                                     <div
-                                        className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        className="  mr-8  flex flex-row rounded-lg  space-x-5 items-center  cursor-pointer"
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
@@ -695,7 +714,7 @@ const GoogleMapComp = () => {
 
                                     {/* Regional LGA Incident Filter */}
                                     <div
-                                        className="  mr-2  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        className="  mr-2  flex flex-row rounded-lg  space-x-5 items-center  cursor-pointer"
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
@@ -742,7 +761,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* Congestion LGA Incident Filter */}
                                     <div
-                                        className="  mr-2  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        className="  mr-2  flex flex-row rounded-lg  space-x-5 items-center  cursor-pointer"
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
@@ -782,7 +801,7 @@ const GoogleMapComp = () => {
                                     </div>
                                     {/* Other Filter */}
                                     <div
-                                        className="  mr-8 flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        className="  mr-8 flex flex-row rounded-lg  space-x-5 items-center  cursor-pointer"
                                         onClick={(e) =>
                                             setEventFilter((prev) => ({
                                                 ...prev,

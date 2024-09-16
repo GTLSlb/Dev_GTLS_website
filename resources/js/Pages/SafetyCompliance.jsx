@@ -3,7 +3,7 @@ import jobs from "../assets/pictures/jobs.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import { useState, useEffect } from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-
+import Navbars from "./Component/Navbars";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 
@@ -21,9 +21,9 @@ const handleClick = () => {
 export default function AboutUs(props) {
     const [getfooter, setfooter] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     useEffect(() => {
         axios.get('/footer')
@@ -35,10 +35,10 @@ export default function AboutUs(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
-      
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -126,7 +126,6 @@ export default function AboutUs(props) {
                             <p className="mt-3 text-smooth">
                                 We have an outstanding health and safety record (no injuries) and our drivers have accident-free driving records. All drivers have the relevant driving licences and tickets they need to complete their work safely and use any required equipment. Our drivers are professionals with excellent driving skills and are trained in topics such as fatigue management, mass management and dangerous goods.
                             </p>
-                            
 
 
 
@@ -135,7 +134,8 @@ export default function AboutUs(props) {
 
 
 
-                           
+
+
 
                         </div>
 

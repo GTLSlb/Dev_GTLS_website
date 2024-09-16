@@ -55,7 +55,7 @@ Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
-    
+
     return Inertia::render('LandingPage');
 })->middleware(['custom'])->name('landing.page');
 
@@ -88,9 +88,9 @@ Route::get('/goinggreen', function () {
     return Inertia::render('GoingGreen');
 })->name('goinggreen');
 
-// Route::get('/traffic', function () {
-//     return Inertia::render('TrafficPage');
-// })->name('traffic');
+Route::get('/traffic', function () {
+    return Inertia::render('TrafficPage');
+})->name('traffic');
 
 
 Route::get('/terms', function () {
@@ -211,7 +211,7 @@ Route::middleware('custom')->group(function () {
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
     Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
-    
+
 });
 
 Route::get('/session-data', function () {

@@ -10,7 +10,7 @@ import TruckDriver from "./Component/opportunities/TruckDriver";
 import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
 import BusinessExecutive from "./Component/opportunities/BusinessExecutive";
-
+import Navbars from "./Component/Navbars";
 export default function Opportunities(props) {
 
 
@@ -20,11 +20,11 @@ export default function Opportunities(props) {
     const [getCareerSkills, setCareerSkills] = useState([]);
     const [getCareerJobs, setCareerJobs] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
-    //CareerHead 
+    //CareerHead
     useEffect(() => {
         axios.get('/CareerHead')
           .then(response => {
@@ -36,7 +36,7 @@ export default function Opportunities(props) {
           });
       }, []);
 
-    //Attractive 
+    //Attractive
     useEffect(() => {
         axios.get('/CareerAttractive')
           .then(response => {
@@ -48,7 +48,7 @@ export default function Opportunities(props) {
           });
       }, []);
 
-    //skills 
+    //skills
     useEffect(() => {
         axios.get('/CareerSkills')
           .then(response => {
@@ -60,7 +60,7 @@ export default function Opportunities(props) {
           });
       }, []);
 
-    //Jobs 
+    //Jobs
     useEffect(() => {
         axios.get('/CareerJobs')
           .then(response => {
@@ -74,7 +74,7 @@ export default function Opportunities(props) {
           });
       }, []);
 
-    //footer 
+    //footer
     useEffect(() => {
         axios.get('/footer')
           .then(response => {
@@ -85,15 +85,15 @@ export default function Opportunities(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
     const [resumePreview, setResumePreview] = useState(null);
     const [jobsarray, setJobsarray] = useState([]);
-    
+
     const [activeJob, setActiveJob] = useState(66);
 
     function changeActiveJob(index) {
@@ -114,7 +114,7 @@ export default function Opportunities(props) {
     };
 
     useEffect(() => {
-        
+
         let prevScrollPosition = window.pageYOffset;
 
         function handleScroll() {
@@ -129,11 +129,11 @@ export default function Opportunities(props) {
         };
     }, []);
 
-  
+
 
     return (
         <>
-        
+
             <Head title="Opportunities" />
             <div className="relative isolate bg-dark">
                 {/* <Chatbot /> */}
@@ -300,12 +300,12 @@ export default function Opportunities(props) {
                                         key={feature.name}
                                         href={feature.url}
                                     >
-                                        
+
                                         <div className="text-goldt font-bold" dangerouslySetInnerHTML={{ __html: feature.content }}></div>
-                                            
+
                                     </a>
                                     ))}
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -337,13 +337,13 @@ export default function Opportunities(props) {
                                 <div className="">
                                     {jobsarray?.map((job, index) => (
                                         Boolean(job.image_alt) === true
-                                        
+
                                         ?
                                         <div key={job.image_alt} className="mt-5 text-smooth" dangerouslySetInnerHTML={{ __html: job.content }}></div>
                                         :null
-                                        
+
                                     ))}
-                                    
+
                                 </div>
                             </div>
                         </div>

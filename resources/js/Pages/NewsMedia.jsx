@@ -6,7 +6,7 @@ import News from "./Component/landingPage/News";
 import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
-
+import Navbars from "./Component/Navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -24,11 +24,11 @@ export default function Newss(props) {
     const [getPageDesc, setPageDesc] = useState([]);
     const [getPosts, setPosts] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
-    // Page desc 
+    // Page desc
     useEffect(() => {
         axios.get('/NewsPage')
           .then(response => {
@@ -40,7 +40,7 @@ export default function Newss(props) {
           });
       }, []);
 
-    // Posts 
+    // Posts
     useEffect(() => {
         axios.get('/posts')
           .then(response => {
@@ -63,9 +63,9 @@ export default function Newss(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -107,7 +107,7 @@ export default function Newss(props) {
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
                 <News getPageDesc={getPageDesc} getPosts={getPosts}/>
-            
+
                 <Footer getfooter={getfooter}/>
             </div>
         </>

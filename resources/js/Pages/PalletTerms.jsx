@@ -1,7 +1,7 @@
 import { Head } from "@inertiajs/react";
 import jobs from "../assets/pictures/jobs.webp";
 import { useState, useEffect } from "react";
-
+import Navbars from "./Component/Navbars";
 import Footer from "./Component/landingPage/Footer";
 
 const navigation = [
@@ -41,9 +41,9 @@ export default function PalletTerms(props) {
 
     const [getfooter, setfooter] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     useEffect(() => {
         axios.get('/footer')
@@ -55,9 +55,9 @@ export default function PalletTerms(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
 
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

@@ -3,7 +3,7 @@ import jobs from "../assets/backgrounds/Goldtiger-Tech.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import { useState, useEffect } from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-
+import Navbars from "./Component/Navbars";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 
@@ -25,12 +25,12 @@ export default function Technology(props) {
     const [getTechnology, setTechnology] = useState([]);
     const [getTechnologyIT, setTechnologyIT] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     // Header
-    
+
     useEffect(() => {
         axios.get('/technologiesPage')
           .then(response => {
@@ -43,7 +43,7 @@ export default function Technology(props) {
       }, []);
 
     // IT services
-    
+
     useEffect(() => {
         axios.get('/technologiesPageIT')
           .then(response => {
@@ -54,7 +54,7 @@ export default function Technology(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-    
+
     // Footer
     useEffect(() => {
         axios.get('/footer')
@@ -66,11 +66,11 @@ export default function Technology(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
 
-      
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -137,7 +137,7 @@ export default function Technology(props) {
                             Technology plays an important role in Gold Tiger’s commitment to continuous improvement. It enables us to deliver transparent and responsive services and keeps us accountable for the commitments we make to our clients.
                             </p>
                             <p className="mt-3 text-smooth">
-                            We are <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a> partners, and our <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a> truck fleet uses innovative solutions such as <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a>’s fuel-saving I-Save technology.                   
+                            We are <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a> partners, and our <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a> truck fleet uses innovative solutions such as <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a>’s fuel-saving I-Save technology.
                             </p>
                             <p className="mt-3 text-smooth">
                             <a className="underline underline-offset-1" href="https://www.volvotrucks.com.au/en-au/">Volvo</a>’s dynamic steering offers perfect stability, total control at low speeds and reduced strain on our drivers. It also helps to avoid skidding and unintentional lane changes and lets drivers set steering wheel preferences.
@@ -148,7 +148,7 @@ export default function Technology(props) {
                             <p className="mt-3 text-smooth">
                             Much of the data, with automatically generated reports, is available through the customer portal accessed via our website. It contains the important basics – where is my freight, when will it arrive, proof of delivery – through to more advanced information for forecasting, budgeting and reporting purposes. Anything not available in the portal can usually be provided by your Account Manager or Customer Service representative through one of our reporting systems.
                             </p> */}
-                            
+
 
                             <figure className="mb-10">
                                 <h1 className="mt-10 mb-4 text-3xl font-bold tracking-tight text-goldt sm:text-3xl">
@@ -159,7 +159,7 @@ export default function Technology(props) {
 
                             <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getTechnologyIT?.description }}></div>
                             {/* <p className="mt-3 text-smooth">
-                            Gold Tiger is developing a new IT infrastructure that will provide enhanced security measures for our systems and customer information.                            
+                            Gold Tiger is developing a new IT infrastructure that will provide enhanced security measures for our systems and customer information.
                             </p>
                             <p className="mt-3 text-smooth">
                             The new infrastructure will include cybersecurity tools and protocols to protect against digital attacks, data breaches and other security threats. We are also implementing enhanced data privacy and compliance measures to ensure that sensitive customer information is always protected.

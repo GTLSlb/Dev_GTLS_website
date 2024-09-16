@@ -7,7 +7,7 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import pdf from "../../../public/docs/Goldtiger-catalogue.pdf"
-
+import Navbars from "./Component/Navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
     { name: "About", href: "/#about", ref: "about" },
@@ -46,9 +46,9 @@ export default function Capability(props) {
 
     const [getfooter, setfooter] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     useEffect(() => {
         axios.get('/footer')
@@ -60,9 +60,9 @@ export default function Capability(props) {
             console.error('Error fetching data:', error);
           });
     }, []);
-    // ********************************************************* 
-    // ********************* End requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -112,7 +112,7 @@ export default function Capability(props) {
                         </h2>
                         <a
                             // href="/downloadGTLS-docx"
-                            
+
                             className="w-auto inline-block "
                         >
                             <button className=" flex items-center gap-x-2 mt-5 rounded-3xl   px-10 py-2.5 text-center text-md font-bold text-white hover:text-goldt shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goldt">
@@ -486,8 +486,8 @@ export default function Capability(props) {
                                             Phone:{" "}
                                         </span>{" "}
                                         1800- 040-306 {" "}
-                                        
-                                    </p> 
+
+                                    </p>
                                     <p className="text-smooth flex sm:justify-left">
                                     <span className="text-goldt font-bold">
                                             Email:{" "}

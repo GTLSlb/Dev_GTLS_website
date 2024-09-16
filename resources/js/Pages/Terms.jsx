@@ -3,7 +3,7 @@ import jobs from "../assets/pictures/jobs.webp";
 import pallet from "../assets/pictures/pallet.webp";
 import { useState, useEffect } from "react";
 import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-
+import Navbars from "./Component/Navbars";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import Chatbot from "./Component/chatBot";
@@ -45,9 +45,9 @@ export default function Terms(props) {
 
     const [getfooter, setfooter] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     useEffect(() => {
         axios.get('/footer')
@@ -58,9 +58,9 @@ export default function Terms(props) {
             console.error('Error fetching data:', error);
           });
       }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+      // *********************************************************
+      // ********************* End requests  *********************
+      // *********************************************************
 
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
@@ -1259,46 +1259,46 @@ export default function Terms(props) {
                                 </h1>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
-                                        The Customer will be and shall remain responsible to Gold Tiger Group of Companies for all its proper 
-                                        charges incurred for any reason. A charge may be made by Gold Tiger Group of Companies in respect of 
-                                        any delay in excess of thirty (30) minutes in loading or unloading occurring other than from the default of Gold 
-                                        Tiger Group of Companies. Such permissible delay period shall commence upon Gold Tiger Group of 
-                                        Companies reporting for loading or unloading at the gate (as opposed to the dock), ready to load or unload. 
-                                        Labour to load or unload the vehicle shall be the responsibility and expense of the Customer or Consignee. 
-                                        Unless otherwise agreed in writing between the parties, demurrage shall be payable by the Customer to Gold 
+                                        The Customer will be and shall remain responsible to Gold Tiger Group of Companies for all its proper
+                                        charges incurred for any reason. A charge may be made by Gold Tiger Group of Companies in respect of
+                                        any delay in excess of thirty (30) minutes in loading or unloading occurring other than from the default of Gold
+                                        Tiger Group of Companies. Such permissible delay period shall commence upon Gold Tiger Group of
+                                        Companies reporting for loading or unloading at the gate (as opposed to the dock), ready to load or unload.
+                                        Labour to load or unload the vehicle shall be the responsibility and expense of the Customer or Consignee.
+                                        Unless otherwise agreed in writing between the parties, demurrage shall be payable by the Customer to Gold
                                         Tiger Group of Companies at the rate stated below:
 
                                         <table className="min-w-full divide-y divide-gray-700">
-                   
+
                                             <tbody className="divide-y divide-gray-800">
-                                            
+
                                                 <tr>
                                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
                                                 Rigid - Demurrage - After 30 Minutes or Part Thereof pick and delivery
                                                 </td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$1.41</td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Vehicle Waiting allowance 30 minutes > Time thereafter charged per minute</td>
-                                                
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Vehicle Waiting allowance 30 minutes {">"} Time thereafter charged per minute</td>
+
                                                 </tr>
                                                 <tr>
                                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
                                                 Semi - Demurrage - After 60 Minutes or Part Thereof
                                                 </td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2.08</td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 60 minutes > Time 
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 60 minutes {">"} Time
 thereafter charged per minute</td>
-                                                
+
                                                 </tr>
                                                 <tr>
                                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
                                                 B-Double - Demurrage - After 90 Minutes or Part Thereof
                                                 </td>
                                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2.91</td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 90 minutes > Time 
+                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 90 minutes {">"} Time
 thereafter charged per minute</td>
-                                                
+
                                                 </tr>
-                                            
+
                                             </tbody>
                                         </table>
                                     </p>
