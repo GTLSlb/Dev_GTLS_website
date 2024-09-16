@@ -223,3 +223,9 @@ Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
 require __DIR__ . '/auth.php';
+
+
+Route::get('/api/geocode', [ApiController::class, 'geocode']);
+Route::get('/api/directions', [ApiController::class, 'directions']);
+//Route::post('/api/directions', [ApiController::class, 'directions']);
+

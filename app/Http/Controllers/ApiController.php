@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ApiService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Models\ApiData;
 class ApiController extends Controller
 {
@@ -72,5 +73,67 @@ class ApiController extends Controller
     
         // Return the transformed results as a JSON response
         return response()->json($transformedData);
+    }
+
+    // public function geocode(Request $request)
+    // {
+    //     $address = $request->input('address');
+    //     $apiKey = env('GOOGLE_MAPS_API_KEY'); // Store your API key in .env file
+
+    //     $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+    //         'address' => $address,
+    //         'key' => $apiKey,
+    //     ]);
+
+    //     if ($response->successful()) {
+    //         return response()->json($response->json());
+    //     } else {
+    //         return response()->json(['error' => 'Failed to fetch geocode data'], 500);
+    //     }
+    // }
+    public function geocode(Request $request)
+    {
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+        $apiKey = env('GOOGLE_MAPS_API_KEY'); // Ensure your API key is set in the .env file
+    
+        // Make sure that both latitude and longitude are provided
+        if (!$lat || !$lng) {
+            return response()->json(['error' => 'Latitude and Longitude are required'], 400);
+        }
+    
+        // Make the HTTP request to the Google Geocoding API
+        $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'latlng' => "{$lat},{$lng}",
+            'key' => $apiKey,
+        ]);
+    
+        // Check if the request was successful
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            return response()->json(['error' => 'Failed to fetch geocode data'], 500);
+        }
+    }
+    
+    // Add the directions method
+    public function directions(Request $request)
+    {
+        $origin = $request->input('origin');
+        $destination = $request->input('destination');
+        $apiKey = env('GOOGLE_MAPS_API_KEY');
+
+        $response = Http::get('https://maps.googleapis.com/maps/api/directions/json', [
+            'origin' => $origin,
+            'destination' => $destination,
+            'key' => $apiKey,
+        ]);
+
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            return response()->json(['error' => 'Failed to fetch directions data'], 500);
+        }
+
     }
 }
