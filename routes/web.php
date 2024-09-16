@@ -282,6 +282,7 @@ Route::get('/forgot-password', function () {
 require __DIR__ . '/auth.php';
 
 
-// Route::middleware(['logUserVisit'])->get('/', function () {
-//     // Route logic...
-// });
+Route::get('/api/geocode', [ApiController::class, 'geocode']);
+Route::get('/api/directions', [ApiController::class, 'directions']);
+//Route::post('/api/directions', [ApiController::class, 'directions']);
+

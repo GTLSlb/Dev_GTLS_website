@@ -6,6 +6,7 @@ use App\Services\ApiService;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use App\Models\ApiData;
 use App\Models\ApiRequestLogs;
 class ApiController extends Controller
@@ -494,5 +495,51 @@ class ApiController extends Controller
     
         // Return the last updated_at or a message if no record is found
         return $lastLog ? $lastLog->created_at : null;
+    }
+
+    public function geocode(Request $request)
+    {
+        $lat = $request->input('lat');
+        $lng = $request->input('lng');
+        $apiKey = "AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go"; // Ensure your API key is set in the .env file
+    
+        // Make sure that both latitude and longitude are provided
+        if (!$lat || !$lng) {
+            return response()->json(['error' => 'Latitude and Longitude are required'], 400);
+        }
+    
+        // Make the HTTP request to the Google Geocoding API
+        $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'latlng' => "{$lat},{$lng}",
+            'key' => $apiKey,
+        ]);
+    
+        // Check if the request was successful
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            return response()->json(['error' => 'Failed to fetch geocode data'], 500);
+        }
+    }
+    
+    // Add the directions method
+    public function directions(Request $request)
+    {
+        $origin = $request->input('origin');
+        $destination = $request->input('destination');
+        $apiKey = "AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go";
+
+        $response = Http::get('https://maps.googleapis.com/maps/api/directions/json', [
+            'origin' => $origin,
+            'destination' => $destination,
+            'key' => $apiKey,
+        ]);
+
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            return response()->json(['error' => 'Failed to fetch directions data'], 500);
+        }
+
     }
 }
