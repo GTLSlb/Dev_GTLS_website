@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ConsTrackingController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
@@ -62,19 +63,19 @@ Route::match(['get', 'post'], '/landingPage', function () {
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['custom'])->name('gtms');
+})->middleware(['custom']);
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['custom'])->name('gtam');
+})->middleware(['custom']);
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['custom'])->name('gtrs');
+})->middleware(['custom']);
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['custom'])->name('gtw');
+})->middleware(['custom']);
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
@@ -115,7 +116,7 @@ Route::get('/safetycompliance', function () {
 
 Route::get('/news', function () {
     return Inertia::render('NewsMedia');
-})->name('news');
+});
 
 Route::get('/technologies', function () {
     return Inertia::render('Technologies');
@@ -201,9 +202,9 @@ Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/gtms');
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/gtms');
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName']);
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens']);
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList']);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
@@ -267,15 +268,23 @@ Route::fallback(function () {
     ]);
 });
 
+
+// ******************************************************************
+// Positions API Request
 Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
 Route::get('/get-positions', [ApiController::class, 'index']);
 Route::get('/get-eventsCategories', [ApiController::class, 'getEventsCategories']);
-
 Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
-
 Route::get('/get-positions/{id}', [ApiController::class, 'getById']);
-
 Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
+// ******************************************************************
+
+
+// ******************************************************************
+// Consignment Tracking API 
+Route::get('/fetch-consignment-data', [ConsTrackingController::class, 'fetchData']);
+// ******************************************************************
+
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
