@@ -399,7 +399,7 @@ export default function LandingPage({}) {
                                                                   <span className="">
                                                                       {app.AppAbv.substring(
                                                                           1,
-                                                                          4
+                                                                          app.AppAbv.length
                                                                       ).toUpperCase()}
                                                                   </span>
                                                               </h1>{" "}
