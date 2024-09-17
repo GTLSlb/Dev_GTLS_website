@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
 class LoginController extends Controller
 {
     /**
@@ -65,27 +66,26 @@ class LoginController extends Controller
                     // Redirect to the intended page with the obtained user
                     $user = null;
                     $TokenHeaders = [
-                        'UserId'=> $responseData[0]['UserId'],
-                        'OwnerId'=> $responseData[0]['OwnerId'],
+                        'UserId' => $responseData[0]['UserId'],
+                        'OwnerId' => $responseData[0]['OwnerId'],
                         // 'AppId'=> $appID,
-                        'Content-Type'=> "application/x-www-form-urlencoded",
+                        'Content-Type' => "application/x-www-form-urlencoded",
                     ];
                     $TokenBody = [
                         'grant_type' => "password",
                     ];
                     $tokenURL = $_ENV['GTAM_API_URL'];
                     $tokenRes = Http::withHeaders($TokenHeaders)
-                    ->asForm()
-                    ->post("$tokenURL" . "Token", $TokenBody);
+                        ->asForm()
+                        ->post("$tokenURL" . "Token", $TokenBody);
 
-                    if($responseData[0]['TypeId'] == 1) // the user is a customer
+                    if ($responseData[0]['TypeId'] == 1) // the user is a customer
                     {
                         $user = new Customer($responseData[0]);
-                    }else if($responseData[0]['TypeId'] == 2) // the user is an employee
+                    } else if ($responseData[0]['TypeId'] == 2) // the user is an employee
                     {
                         $user = new Employee($responseData[0]);
-                    }
-                    else{ // the user is a driver
+                    } else { // the user is a driver
                         $user = new Driver($responseData[0]);
                     }
 
@@ -125,16 +125,14 @@ class LoginController extends Controller
                         ]);
                         //dd($request->session()->get('user')->UserId);
                         $request->session()->save();
-                            if ($request->session()->get('newRoute') && $request->session()->get('user')) {
-                                return response($request, 200);
-                            }
-                        }else{
-                            $errorMessage = 'Something went wrong, try again later';
-                            $statusCode = 500;
-                            return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
+                        if ($request->session()->get('newRoute') && $request->session()->get('user')) {
+                            return response($request, 200);
                         }
-
-
+                    } else {
+                        $errorMessage = 'Something went wrong, try again later';
+                        $statusCode = 500;
+                        return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
+                    }
                 } else {
                     $errorMessage = 'Invalid Credentials';
                     $statusCode = 500;
@@ -150,50 +148,6 @@ class LoginController extends Controller
 
 
     public function logout(Request $request)
-    {
-        // Retrieve the 'access_token' cookie
-        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : null;
-        // Create an instance of the RegisteredUserController and get the current user
-        $userController = new RegisteredUserController();
-        $user = $userController->getCurrentUserName($request);
-        // Extract the UserId from the response
-        $UserId = $user->original['UserId'];
-        // Set up headers for the logout request
-
-        $headers = [
-            'UserId' => $UserId,
-            'Authorization' => "Bearer " . "$token",
-        ];
-        // Define the URL for the logout request
-        $url = env('GTAM_API_URL') . "Logout";
-        // Send the logout request to the external API
-        $response = Http::withHeaders($headers)->get($url);
-        // Check if the logout request was successful
-        //  dd($response);
-        if ($response->successful()) {
-            // Invalidate and flush the session
-            $request->session()->invalidate();
-            $request->session()->flush();
-            // Set the expiration time for the cookies to 24 hours before the current time
-            $expiration = time() - (60 * 60 * 24);
-            // Get an array of all the cookies
-            $cookies = $_COOKIE;
-            // Loop through each cookie and set it to expire
-            foreach ($cookies as $name => $value) {
-                setcookie($name, '', $expiration);
-            }
-            // Regenerate the session token
-            $request->session()->regenerateToken();
-            // Redirect to the login page
-            //return redirect('/login');
-        } else {
-            // Handle the case where the logout request fails
-            // You can log an error or return a specific response
-            return redirect()->back()->withErrors(['error' => 'Logout failed. Please try again.']);
-        }
-    }
-
-    public function logoutWithoutRequest(Request $request)
     {
         // Retrieve the 'access_token' cookie
         $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : null;
@@ -219,6 +173,23 @@ class LoginController extends Controller
                 $request->session()->regenerateToken();
                 // return redirect('/login');
         }} else {
+            // Extract the UserId from the response
+            $UserId = $user->original['UserId'];
+
+            // Set up headers for the logout request
+            $headers = [
+                'UserId' => $UserId,
+                'Authorization' => "Bearer " . "$token",
+            ];
+
+            // Define the URL for the logout request
+            $url = env('GTAM_API_URL') . "Logout";
+
+            // Send the logout request to the external API
+            $response = Http::withHeaders($headers)->get($url);
+
+            // Check if the logout request was successful
+            if ($response->successful()) {
                 // Invalidate and flush the session
                 $request->session()->forget('user');
                 $request->session()->invalidate();
@@ -236,9 +207,61 @@ class LoginController extends Controller
 
                 // Regenerate the session token
                 $request->session()->regenerateToken();
+            } else {
+                // Handle the case where the logout request fails
+                // You can log an error or return a specific response
+                return redirect()->back()->withErrors(['error' => 'Logout failed. Please try again.']);
+            }
+        }
+    }
 
-                // Redirect to the login page
+    public function logoutWithoutRequest(Request $request)
+    {
+        // Retrieve the 'access_token' cookie
+        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : null;
+
+        // Create an instance of the RegisteredUserController and get the current user
+        $userController = new RegisteredUserController();
+        $user = $userController->getCurrentUserName($request);
+        $userMsg = json_decode($user->content(), true);
+
+        if (gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string") {
+            if ($userMsg['message'] == 'User not found') {
+
+                $request->session()->invalidate();
+                $request->session()->flush();
+                // Set the expiration time for the cookies to 24 hours before the current time
+                $expiration = time() - (60 * 60 * 24);
+                $cookies = $_COOKIE;
+
+                // Loop through each cookie and set it to expire
+                foreach ($cookies as $name => $value) {
+                    setcookie($name, '', $expiration);
+                }
+                $request->session()->regenerateToken();
                 // return redirect('/login');
+            }
+        } else {
+            // Invalidate and flush the session
+            $request->session()->forget('user');
+            $request->session()->invalidate();
+            $request->session()->flush();
+            // Set the expiration time for the cookies to 24 hours before the current time
+            $expiration = time() - (60 * 60 * 24);
+
+            // Get an array of all the cookies
+            $cookies = $_COOKIE;
+
+            // Loop through each cookie and set it to expire
+            foreach ($cookies as $name => $value) {
+                setcookie($name, '', $expiration);
+            }
+
+            // Regenerate the session token
+            $request->session()->regenerateToken();
+
+            // Redirect to the login page
+            // return redirect('/login');
         }
     }
 
@@ -249,10 +272,9 @@ class LoginController extends Controller
 
         // The URL to redirect back to after logout (your application's home or login page)
         $postLogoutRedirectUri = urlencode(route('home')); // Replace 'home' with your route name
-        dd($azureLogoutUrl . '?post_logout_redirect_uri=' . $postLogoutRedirectUri);
+
         // Redirect to Microsoft Azure logout endpoint with post-logout redirect URL
         //return redirect()->away($azureLogoutUrl . '?post_logout_redirect_uri=' . $postLogoutRedirectUri);
         // return redirect('/login');
     }
 }
-?>

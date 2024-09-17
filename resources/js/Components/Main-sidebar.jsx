@@ -365,11 +365,10 @@ export default function MainSidebar({
             .post("/logoutAPI", isLoggingOut)
             .then(async (response) => {
                 if (response.status == 200) {
-                    setToken(null);
-                    setCurrentUser(null);
                     const allAccounts = await pca.getAllAccounts();
                     if (allAccounts.length > 0) {
                         await pca.logoutRedirect({ scopes: ["user.read"] });
+                        window.location.href = "/login";
                     }else{
                         window.location.href = "/login";
                     }

@@ -100,7 +100,6 @@ class AzureAuthController extends Controller
 
         // Send the logout request to the external API
         $response = Http::withHeaders($headers)->post($url);
-
         if ($response->successful()) {
             // $responseBody = $response->body();
             $responseJson = $response->json();

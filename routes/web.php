@@ -61,7 +61,6 @@ Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
-
     return Inertia::render('LandingPage');
 })->middleware(['custom.auth'])->name('landing.page');
 

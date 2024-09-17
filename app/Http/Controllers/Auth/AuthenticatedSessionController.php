@@ -22,18 +22,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(Request $request)
     {
-
-        if ($request->session()->has('user')) {
-            // If the user is logged in, you can redirect them to a default page or dashboard.
-            return redirect('/landingPage');
-        } else {
-            // If no user is logged in, render the login page.
-            return Inertia::render('Auth/Login', [
-                'canResetPassword' => Route::has('password.request'),
-                'status' => session('status'),
-            ]);
-        }
-        
+        return Inertia::render('Auth/Login', [
+            'canResetPassword' => Route::has('password.request'),
+            'status' => session('status'),
+        ]);
     }
 
     /**

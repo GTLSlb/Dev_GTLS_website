@@ -14,12 +14,12 @@ import Footer from "./Component/landingPage/Footer";
 import { PublicClientApplication } from "@azure/msal-browser";
 
 export default function LandingPage({}) {
-    const [apps, setApps] = useState();
+    const [apps, setApps] = useState([]);
     const [currentUser, setcurrentUser] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
-    const [filteredApps, setFilteredApps] = useState();
+    const [filteredApps, setFilteredApps] = useState([]);
     const [appsApi, setAppsApi] = useState();
     const gtamUrl = window.Laravel.gtamUrl;
     function classNames(...classes) {
@@ -35,10 +35,44 @@ export default function LandingPage({}) {
         axios
             .get("/users")
             .then((res) => {
-                setcurrentUser(res.data);
+                if(typeof res.data == "object"){
+                    setcurrentUser(res.data);
+                }
             })
             .catch((error) => console.log(error));
     }, []);
+
+    // useEffect(() => {
+    //     if (currentUser) {
+    //         axios
+    //             .get(`${gtamUrl}User/Permissions`, {
+    //                 headers: {
+    //                     UserId: currentUser.UserId,
+    //                 },
+    //             })
+    //             .then((res) => {
+    //                 const x = JSON.stringify(res.data);
+    //                 const parsedDataPromise = new Promise((resolve, reject) => {
+    //                     try {
+    //                         const parsedData = JSON.parse(x);
+    //                         resolve(parsedData || []); // Use an empty array if parsedData is null
+    //                     } catch (error) {
+    //                         reject(error);
+    //                     }
+    //                 });
+    //                 parsedDataPromise.then((parsedData) => {
+    //                     console.log('dataaaaaaaaaa',currentUser);
+
+    //                     setFilteredApps(parsedData);
+    //                     setApps(parsedData);
+    //                     setAppsApi(true);
+    //                 });
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //             });
+    //     }
+    // }, [currentUser]);
 
     useEffect(() => {
         if (currentUser) {
@@ -46,6 +80,7 @@ export default function LandingPage({}) {
                 .get(`${gtamUrl}User/Permissions`, {
                     headers: {
                         UserId: currentUser.UserId,
+                        //Authorization: `Bearer ${Token}`,
                     },
                 })
                 .then((res) => {
@@ -65,7 +100,11 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                    console.log(err);
+                        // Handle other errors
+                        console.log(err);
+                        setFilteredApps([]);
+                        setApps([]);
+                        setAppsApi(true);
                 });
         }
     }, [currentUser]);
@@ -139,15 +178,15 @@ export default function LandingPage({}) {
     const pca = new PublicClientApplication(msalConfig);
     const handleLogout = async () => {
         const isLoggingOut = true;
+        await pca.initialize();
         axios
             .post("/logoutAPI", isLoggingOut)
             .then(async (response) => {
                 if (response.status == 200) {
-                    // setToken(null);
                     setcurrentUser(null);
                     const allAccounts = await pca.getAllAccounts();
                     if (allAccounts.length > 0) {
-                        await pca.logoutRedirect({ scopes: ["user.read"] });
+                        await pca.logoutRedirect({ scopes: ["user.read"], postLogoutRedirectUri: "/login" });
                     }else{
                         window.location.href = "/login";
                     }
@@ -193,7 +232,6 @@ export default function LandingPage({}) {
             });
         }
     }, [filteredApps]);
-console.log(filteredApps);
 
     useEffect(() => {
         const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
@@ -392,8 +430,9 @@ console.log(filteredApps);
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-8">
                                     {filteredApps?.length > 0
-                                        ? filteredApps.map((app) => (
+                                        ? filteredApps?.map((app) => (
                                               <div
+                                                  key={app.AppId}
                                                   id={app.AppName}
                                                   className={`bg-gradient-to-tr sm:w-auto border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
                                                   onClick={() => {
