@@ -8,7 +8,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import PasswordInput from "@/Components/PasswordInput";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication, EventType  } from "@azure/msal-browser";
 import ReCAPTCHA from "react-google-recaptcha";
 import { InertiaApp } from "@inertiajs/inertia-react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
