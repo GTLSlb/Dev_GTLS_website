@@ -20,7 +20,7 @@
         "laravel/tinker": "^2.8",
         "league/flysystem-aws-s3-v3": "^3.28",
         "league/oauth2-client": "^2.7",
-        "mostafaznv/nova-video": "^6.1",
+        "mostafaznv/nova-video": "^6.3",
         "socialiteproviders/microsoft-azure": "^5.1",
         "tightenco/ziggy": "^1.0"
     },

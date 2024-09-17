@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b95af0591c737cba94d32e46be34df52",
+    "content-hash": "1b9b21f22a0382a77364814ecbf6d31a",
     "packages": [
         {
             "name": "alexazartsev/heroicon",
@@ -11258,5 +11258,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
