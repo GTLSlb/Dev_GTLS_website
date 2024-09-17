@@ -283,13 +283,15 @@ function GoogleMapComp() {
                 fitMapToBounds(route);
 
                 // Filter events on the route
-                const events = markerPositions.filter((marker) => {
-                    return route.some((point) => {
-                        const distance = getDistanceBetweenPoints(
+                const eventsOnRoad = markerPositions.filter((marker) => {
+                    return route.some((point, index) => {
+                        if (index === route.length - 1) return false; // No segment after the last point
+                        const distance = getPerpendicularDistanceToSegment(
+                            marker,
                             point,
-                            marker
+                            route[index + 1]
                         );
-                        return distance <= 1000;
+                        return distance <= 10; // Adjust the tolerance value (in meters) as needed
                     });
                 });
 
@@ -314,24 +316,48 @@ function GoogleMapComp() {
             mapRef.current.fitBounds(bounds);
         }
     };
-
-    const getDistanceBetweenPoints = (point1, point2) => {
-        const rad = (x) => (x * Math.PI) / 180;
-        const R = 6378137;
-
-        const dLat = rad(point2.lat - point1.lat);
-        const dLong = rad(point2.lng - point1.lng);
-
-        const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(rad(point1.lat)) *
-                Math.cos(rad(point2.lat)) *
-                Math.sin(dLong / 2) *
-                Math.sin(dLong / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-        return R * c;
+    const getPerpendicularDistanceToSegment = (point, lineStart, lineEnd) => {
+        const { lat: x1, lng: y1 } = lineStart;
+        const { lat: x2, lng: y2 } = lineEnd;
+        const { lat: px, lng: py } = point;
+    
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const magnitude = dx * dx + dy * dy;
+        let u = ((px - x1) * dx + (py - y1) * dy) / magnitude;
+    
+        if (u < 0) u = 0;
+        else if (u > 1) u = 1;
+    
+        const closestX = x1 + u * dx;
+        const closestY = y1 + u * dy;
+    
+        const dist = Math.sqrt(
+            Math.pow(closestX - px, 2) + Math.pow(closestY - py, 2)
+        );
+        
+        // Convert distance from degrees to meters (using a rough estimate)
+        const metersPerDegreeLat = 111320;
+        const metersPerDegreeLng = 111320 * Math.cos((x1 * Math.PI) / 180);
+        return dist * Math.sqrt(metersPerDegreeLat * metersPerDegreeLng);
     };
+    // const getDistanceBetweenPoints = (point1, point2) => {
+    //     const rad = (x) => (x * Math.PI) / 180;
+    //     const R = 6378137;
+
+    //     const dLat = rad(point2.lat - point1.lat);
+    //     const dLong = rad(point2.lng - point1.lng);
+
+    //     const a =
+    //         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    //         Math.cos(rad(point1.lat)) *
+    //             Math.cos(rad(point2.lat)) *
+    //             Math.sin(dLong / 2) *
+    //             Math.sin(dLong / 2);
+    //     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    //     return R * c;
+    // };
 
     const handleMarkerClick = (position) => {
         setMarkerDetails({

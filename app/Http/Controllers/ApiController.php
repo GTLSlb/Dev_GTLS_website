@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Services\ApiService;
 use Carbon\Carbon;
-use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\ApiData;
 use App\Models\ApiRequestLogs;
+use Illuminate\Support\Facades\DB;
+
 class ApiController extends Controller
 {
     protected $apiService;
