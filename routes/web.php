@@ -60,21 +60,6 @@ Route::match(['get', 'post'], '/landingPage', function () {
 })->middleware(['custom'])->name('landing.page');
 
 
-Route::get('/gtms', function () {
-    return Inertia::render('GTMS');
-})->middleware(['custom'])->name('gtms');
-
-Route::get('/gtam', function () {
-    return Inertia::render('GTAM');
-})->middleware(['custom'])->name('gtam');
-
-Route::get('/gtrs', function () {
-    return Inertia::render('GTRS');
-})->middleware(['custom'])->name('gtrs');
-
-Route::get('/gtw', function () {
-    return Inertia::render('GTW');
-})->middleware(['custom'])->name('gtw');
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
@@ -89,9 +74,8 @@ Route::get('/goinggreen', function () {
 })->name('goinggreen');
 
 Route::get('/traffic', function () {
-    return Inertia::render('TrafficPage');
+    return Inertia::render('TrafficComp');
 })->name('traffic');
-
 
 Route::get('/terms', function () {
     return Inertia::render('Terms');
@@ -113,9 +97,7 @@ Route::get('/safetycompliance', function () {
     return Inertia::render('SafetyCompliance');
 })->name('safetycompliance');
 
-Route::get('/news', function () {
-    return Inertia::render('NewsMedia');
-})->name('news');
+
 
 Route::get('/technologies', function () {
     return Inertia::render('Technologies');
@@ -135,15 +117,6 @@ Route::get('/Subscribe/{id}', function ($id) {
 
 
 Route::resource('posts', BlogController::class);
-// Route::resource('post', BlogController::class,'post');
-// Route::get('/news', function () {
-//     return Inertia::render('NewsPage');
-// })-> name('news');
-
-// Route::get('/news/{id}/{title?}', function ($id, $title = '') {
-//     return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
-// })->name('news');
-
 
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
@@ -201,9 +174,9 @@ Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/gtms');
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/gtms');
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName']);
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens']);
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList']);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
