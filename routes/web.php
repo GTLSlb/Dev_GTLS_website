@@ -283,6 +283,11 @@ Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 // ******************************************************************
 // Consignment Tracking API 
 Route::get('/fetch-consignment-data', [ConsTrackingController::class, 'fetchData']);
+Route::get('/getConsRoutes', [ConsTrackingController::class, 'getConsRoute']);
+Route::get('/consroutegetall', [ConsTrackingController::class, 'getAllConsRoutes']); 
+Route::get('/conswithevents', [ConsTrackingController::class, 'getAllConsDataWithEvents']); 
+Route::get('/conswithevents/{id}', [ConsTrackingController::class, 'getConsEventsById']);
+
 // ******************************************************************
 
 Route::get('/forgot-password', function () {

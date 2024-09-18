@@ -141,23 +141,6 @@ function GoogleMapComp() {
     const mapRef = useRef(null);
     const clustererRef = useRef(null);
 
-    const getPositions = () => {
-        axios.get("/get-positions").then((response) => {
-            setOriginalData(response.data);
-            setMarkerPositions(response.data);
-        });
-    };
-
-    useEffect(() => {
-        getPositions();
-
-        const intervalId = setInterval(() => {
-            getPositions();
-        }, 1800000);
-
-        return () => clearInterval(intervalId);
-    }, []);
-
     const fetchPositions = async () => {
         try {
             const [positionsResponse, lastUpdatedResponse] = await Promise.all([
@@ -199,7 +182,7 @@ function GoogleMapComp() {
         }
     };
 
-    const getRouteUsingRoutesAPI = async () => {
+    const getRouteUsingRoutesAPI = async () => { // Call the Routes API to get the route between two coordinates
         const startLatNum = parseFloat(startLat);
         const startLngNum = parseFloat(startLng);
         const endLatNum = parseFloat(endLat);
