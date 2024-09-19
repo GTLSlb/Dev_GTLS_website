@@ -272,10 +272,10 @@ Route::fallback(function () {
 // ******************************************************************
 // Positions API Request
 Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
-Route::get('/get-positions', [ApiController::class, 'index']);
+Route::get('/get-positions', [ApiController::class, 'index']); 
 Route::get('/get-eventsCategories', [ApiController::class, 'getEventsCategories']);
-Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
-Route::get('/get-positions/{id}', [ApiController::class, 'getById']);
+Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']); // todo: check inside to do 
+Route::get('/get-positions/{id}', [ApiController::class, 'getById']); // todo: check inside to do 
 Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 // ******************************************************************
 
@@ -284,7 +284,7 @@ Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 // Consignment Tracking API 
 Route::get('/fetch-consignment-data', [ConsTrackingController::class, 'fetchData']);
 Route::get('/getConsRoutes', [ConsTrackingController::class, 'getConsRoute']);
-Route::get('/consroutegetall', [ConsTrackingController::class, 'getAllConsRoutes']); 
+Route::get('/consroutegetall', [ConsTrackingController::class, 'getAllConsRoutes']); // the request that do all the calculations
 Route::get('/conswithevents', [ConsTrackingController::class, 'getAllConsDataWithEvents']); 
 Route::get('/conswithevents/{id}', [ConsTrackingController::class, 'getConsEventsById']);
 

@@ -10,5 +10,6 @@ class ConsignmentEvents extends Model
     protected $fillable = [
         'event_id',
         'consignment_id',
+        'state',
     ];
 }

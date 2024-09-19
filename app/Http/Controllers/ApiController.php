@@ -121,142 +121,141 @@ class ApiController extends Controller
         $sortInfo = $request->query('sortInfo'); // Sort information
         $filterBy = $request->query('filterBy'); // Filter information
     
-        // Build the query
-        $query = ApiData::query();
+        // Define models for state-based traffic data tables
+        $models = [
+            \App\Models\TrafficDataNSW::query(),
+            \App\Models\TrafficDataVIC::query(),
+            \App\Models\TrafficDataQLD::query(),
+            \App\Models\TrafficDataSA::query(),
+        ];
     
         // Apply filters based on query parameters
-        if ($apiSource) {
-            $query->where('api_source', $apiSource);
-        }
+        foreach ($models as &$query) {
+            if ($apiSource) {
+                $query->where('api_source', $apiSource);
+            }
     
-        if ($eventId) {
-            $query->where('event_id', $eventId);
-        }
+            if ($eventId) {
+                $query->where('event_id', $eventId);
+            }
     
-        if ($eventCategoryIds) {
-            // Ensure $eventCategoryIds is an array before applying filter
-            $query->whereIn('event_category_id', (array) $eventCategoryIds);
-        }
+            if ($eventCategoryIds) {
+                // Ensure $eventCategoryIds is an array before applying filter
+                $query->whereIn('event_category_id', (array) $eventCategoryIds);
+            }
     
-        $query->where(function ($q) {
-            $q->whereNull('end_date')  
-              ->orWhere('end_date', '>=', now()) 
-              ->where('end_date', '<', '2025-12-30');
-        });
-
-        // Apply dynamic filters from filterBy JSON parameter
-        if ($filterBy) {
-            $filterByArray = json_decode($filterBy, true); // Decode JSON filter info
-            foreach ($filterByArray as $filter) {
-                if (isset($filter['name'], $filter['type'], $filter['operator'], $filter['value'])) {
-                    $column = $filter['name'];
-                    $value = $filter['value'];
-                    $emptyValue = isset($filter['emptyValue']) ? $filter['emptyValue'] : null; // Get empty value if provided
-
-                    
-                    if ($filter['type'] === 'date') {
-                        // Only apply date filters if the value is not equal to the emptyValue
-                        if ($value !== $emptyValue) {
-                            switch ($filter['operator']) {
-                                case 'after':
-                                    $query->whereDate($column, '>', $value);
-                                    break;
-                                case 'afterOrOn':
-                                    $query->whereDate($column, '>=', $value);
-                                    break;
-                                case 'before':
-                                    $query->whereDate($column, '<', $value);
-                                    break;
-                                case 'beforeOrOn':
-                                    $query->whereDate($column, '<=', $value);
-                                    break;
-                                case 'eq':
-                                    $query->whereDate($column, '=', $value);
-                                    break;
-                                case 'neq':
-                                    $query->whereDate($column, '!=', $value);
-                                    break;
+            $query->where(function ($q) {
+                $q->whereNull('end_date')
+                    ->orWhere('end_date', '>=', now())
+                    ->where('end_date', '<', '2025-12-30');
+            });
+    
+            // Apply dynamic filters from filterBy JSON parameter
+            if ($filterBy) {
+                $filterByArray = json_decode($filterBy, true); // Decode JSON filter info
+                foreach ($filterByArray as $filter) {
+                    if (isset($filter['name'], $filter['type'], $filter['operator'], $filter['value'])) {
+                        $column = $filter['name'];
+                        $value = $filter['value'];
+                        $emptyValue = isset($filter['emptyValue']) ? $filter['emptyValue'] : null; // Get empty value if provided
+    
+                        if ($filter['type'] === 'date') {
+                            if ($value !== $emptyValue) {
+                                switch ($filter['operator']) {
+                                    case 'after':
+                                        $query->whereDate($column, '>', $value);
+                                        break;
+                                    case 'afterOrOn':
+                                        $query->whereDate($column, '>=', $value);
+                                        break;
+                                    case 'before':
+                                        $query->whereDate($column, '<', $value);
+                                        break;
+                                    case 'beforeOrOn':
+                                        $query->whereDate($column, '<=', $value);
+                                        break;
+                                    case 'eq':
+                                        $query->whereDate($column, '=', $value);
+                                        break;
+                                    case 'neq':
+                                        $query->whereDate($column, '!=', $value);
+                                        break;
                                     case 'inrange':
                                         if (is_array($value) && count($value) === 2) {
                                             $start = $value["start"];
                                             $end = $value["end"];
-                                    
                                             if ($start !== $emptyValue && $end !== $emptyValue) {
-                                                // Both start and end are provided, use whereBetween
                                                 $query->whereBetween($column, [$start, $end]);
                                             } elseif ($start !== $emptyValue) {
-                                                // Only start is provided, filter everything after the start
                                                 $query->whereDate($column, '>=', $start);
                                             } elseif ($end !== $emptyValue) {
-                                                // Only end is provided, filter everything before the end
                                                 $query->whereDate($column, '<=', $end);
                                             }
                                         }
                                         break;
-                                    
                                     case 'notinrange':
                                         if (is_array($value) && count($value) === 2) {
                                             $start = $value["start"];
                                             $end = $value["end"];
-                                    
                                             if ($start !== $emptyValue && $end !== $emptyValue) {
-                                                // Both start and end are provided, use whereNotBetween
                                                 $query->whereNotBetween($column, [$start, $end]);
                                             } elseif ($start !== $emptyValue) {
-                                                // Only start is provided, filter everything not before the start
                                                 $query->whereDate($column, '<', $start);
                                             } elseif ($end !== $emptyValue) {
-                                                // Only end is provided, filter everything not after the end
                                                 $query->whereDate($column, '>', $end);
                                             }
                                         }
                                         break;
-                                    
-                                    
+                                }
                             }
-                        }
-                    } elseif ($filter['type'] === 'string') {
-                        // Apply string filters
-                        switch ($filter['operator']) {
-                            case 'contains':
-                                $query->where($column, 'LIKE', '%' . $value . '%');
-                                break;
-                            case 'notContains':
-                                $query->where($column, 'NOT LIKE', '%' . $value . '%');
-                                break;
-                            case 'eq':
-                                $query->where($column, '=', $value);
-                                break;
-                            case 'neq':
-                                $query->where($column, '!=', $value);
-                                break;
-                            case 'empty':
-                                $query->where(function ($q) use ($column) {
-                                    $q->whereNull($column)->orWhere($column, '=', '');
-                                });
-                                break;
-                            case 'notEmpty':
-                                $query->where(function ($q) use ($column) {
-                                    $q->whereNotNull($column)->where($column, '!=', '');
-                                });
-                                break;
-                            case 'startsWith':
-                                $query->where($column, 'LIKE', $value . '%');
-                                break;
-                            case 'endsWith':
-                                $query->where($column, 'LIKE', '%' . $value);
-                                break;
+                        } elseif ($filter['type'] === 'string') {
+                            switch ($filter['operator']) {
+                                case 'contains':
+                                    $query->where($column, 'LIKE', '%' . $value . '%');
+                                    break;
+                                case 'notContains':
+                                    $query->where($column, 'NOT LIKE', '%' . $value . '%');
+                                    break;
+                                case 'eq':
+                                    $query->where($column, '=', $value);
+                                    break;
+                                case 'neq':
+                                    $query->where($column, '!=', $value);
+                                    break;
+                                case 'empty':
+                                    $query->where(function ($q) use ($column) {
+                                        $q->whereNull($column)->orWhere($column, '=', '');
+                                    });
+                                    break;
+                                case 'notEmpty':
+                                    $query->where(function ($q) use ($column) {
+                                        $q->whereNotNull($column)->where($column, '!=', '');
+                                    });
+                                    break;
+                                case 'startsWith':
+                                    $query->where($column, 'LIKE', $value . '%');
+                                    break;
+                                case 'endsWith':
+                                    $query->where($column, 'LIKE', '%' . $value);
+                                    break;
+                            }
                         }
                     }
                 }
             }
         }
     
+        // Merge the queries from all state tables using unionAll
+        $mergedQuery = $models[0];
+        for ($i = 1; $i < count($models); $i++) {
+            $mergedQuery = $mergedQuery->unionAll($models[$i]);
+        }
+    
         // Get the total count of records with filters applied
-        $totalRecords = $query->count();
+        $totalRecords = $mergedQuery->count();
     
         // Retrieve all results before pagination to allow sorting on calculated fields
-        $results = $query->get();
+        $results = $mergedQuery->get();
     
         // Transform the data
         $transformedData = $results->map(function ($item) {
@@ -301,45 +300,12 @@ class ApiController extends Controller
             if (is_array($sortInfoArray) && isset($sortInfoArray['columnName']) && isset($sortInfoArray['dir'])) {
                 $sortColumn = $sortInfoArray['columnName'];
                 $sortDirection = $sortInfoArray['dir'] == 1 ? 'asc' : 'desc';
-
-                // Handle sorting of nullable or empty date columns
-                $transformedData = $transformedData->sort(function ($a, $b) use ($sortColumn, $sortDirection) {
-                    $valueA = $a[$sortColumn];
-                    $valueB = $b[$sortColumn];
-
-                    // Check if valueA or valueB is null or empty
-                    $isValueANullOrEmpty = $valueA === null || $valueA === '';
-                    $isValueBNullOrEmpty = $valueB === null || $valueB === '';
-
-                    if ($isValueANullOrEmpty && !$isValueBNullOrEmpty) {
-                        // Value A is null or empty, and Value B is not; Value A should be at the end
-                        return 1;
-                    }
-
-                    if (!$isValueANullOrEmpty && $isValueBNullOrEmpty) {
-                        // Value B is null or empty, and Value A is not; Value B should be at the end
-                        return -1;
-                    }
-
-                    // Both are null or empty, or neither are null or empty; use regular comparison
-                    if ($isValueANullOrEmpty && $isValueBNullOrEmpty) {
-                        // Both values are null or empty, they are considered equal
-                        return 0;
-                    }
-
-                    // Regular comparison based on sort direction
-                    if ($sortDirection === 'asc') {
-                        return $valueA <=> $valueB;
-                    } else {
-                        return $valueB <=> $valueA;
-                    }
-                })->values(); // Ensure reindexing after sorting
+    
+                $transformedData = $transformedData->sortBy(function ($item) use ($sortColumn) {
+                    return $item[$sortColumn] ?? null;
+                }, SORT_REGULAR, $sortDirection == 'desc')->values();
             }
         }
-
-    
-        // Reindex the sorted data to apply pagination
-        $transformedData = $transformedData->values();
     
         // Apply pagination to the transformed and sorted data
         if ($limit) {
@@ -354,9 +320,11 @@ class ApiController extends Controller
             ]);
     }
     
+    
     public function getById(Request $request, $id)
     {
         // Retrieve the specific record by ID
+        // todo: change it to be event_id and make sure to check the 4 tables or create one for each table
         $item = ApiData::find($id);
 
         // Check if the record exists
@@ -420,24 +388,36 @@ class ApiController extends Controller
             $eventCategoryIds = is_array($eventCategoryIds) ? $eventCategoryIds : explode(',', str_replace(['[', ']'], '', $eventCategoryIds));
         }
     
-        // Initialize the query for ApiData
-        $query = ApiData::query();
+        // Initialize queries for each state-specific model
+        $models = [
+            \App\Models\TrafficDataNSW::query(),
+            \App\Models\TrafficDataVIC::query(),
+            \App\Models\TrafficDataQLD::query(),
+            \App\Models\TrafficDataSA::query(),
+        ];
     
-        // Apply filters based on the last log's created_at time, if available
-        if ($updated) {
-            $query->where(function ($q) use ($updated) {
-                $q->where('created_at', '>=', $updated)
-                  ->orWhere('updated_at', '>=', $updated);
-            });
+        // Apply filters based on the last log's updated time and event category IDs
+        foreach ($models as &$query) {
+            if ($updated) {
+                $query->where(function ($q) use ($updated) {
+                    $q->where('created_at', '>=', $updated)
+                      ->orWhere('updated_at', '>=', $updated);
+                });
+            }
+    
+            if (!empty($eventCategoryIds)) {
+                $query->whereIn('event_category_id', $eventCategoryIds);
+            }
         }
     
-        // Apply filter for event category IDs if provided
-        if (!empty($eventCategoryIds)) {
-            $query->whereIn('event_category_id', $eventCategoryIds);
+        // Merge the queries from all state tables using unionAll
+        $mergedQuery = $models[0];
+        for ($i = 1; $i < count($models); $i++) {
+            $mergedQuery = $mergedQuery->unionAll($models[$i]);
         }
     
         // Execute the query to get the filtered results
-        $apiData = $query->get();
+        $apiData = $mergedQuery->get();
     
         // Optional: View the query log for debugging
         // dd(DB::getQueryLog());
@@ -448,6 +428,7 @@ class ApiController extends Controller
         // Return the transformed results as a JSON response
         return response()->json($transformedData);
     }
+    
     
     public function getEventsCategories(Request $request){
         $allEvents = DB::table('events_category')->get();

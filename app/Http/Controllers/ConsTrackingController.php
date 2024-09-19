@@ -6,6 +6,10 @@ use App\Models\ApiData;
 use App\Models\ConsData;
 use App\Models\ConsignmentEvents;
 use App\Models\ConsTracking;
+use App\Models\TrafficDataNSW;
+use App\Models\TrafficDataQLD;
+use App\Models\TrafficDataSA;
+use App\Models\TrafficDataVIC;
 use App\Services\ConsServices;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
@@ -59,19 +63,55 @@ class ConsTrackingController extends Controller
     }
     
     
-    function getAllConsDataWithEvents(){
+    public function getAllConsDataWithEvents()
+    {
         // Fetch all consignments
         $consignments = ConsData::all();
-
-        // Loop through each consignment and add eventCounter
+    
+        // Loop through each consignment and add events and event counter
         foreach ($consignments as $cons) {
-            // Count the number of events for the current consignment
-            $eventCount = ConsignmentEvents::where('consignment_id', $cons->id)->count();
-            // Add the eventCounter to the consignment object
-            $cons->EventCounter = $eventCount;
+            // Fetch the related consignment events
+            $consevents = ConsignmentEvents::where('consignment_id', $cons->id)->get();
+    
+            // Initialize an array to store the full event data
+            $allEvents = [];
+    
+            // Loop through each consignment event to get the corresponding event from TrafficData
+            foreach ($consevents as $consevent) {
+                $state = $consevent->state; // Assuming `state` is a field in ConsignmentEvents
+    
+                // Check the state and query the respective TrafficData table
+                switch ($state) {
+                    case 'NSW':
+                        $event = TrafficDataNSW::where('event_id', $consevent->event_id)->first();
+                        break;
+                    case 'VIC':
+                        $event = TrafficDataVIC::where('event_id', $consevent->event_id)->first();
+                        break;
+                    case 'QLD':
+                        $event = TrafficDataQLD::where('event_id', $consevent->event_id)->first();
+                        break;
+                    case 'SA':
+                        $event = TrafficDataSA::where('event_id', $consevent->event_id)->first();
+                        break;
+                    default:
+                        $event = null; // Handle the case where state does not match any known states
+                }
+    
+                if ($event) {
+                    // Add the event data to the allEvents array
+                    $allEvents[] = $event;
+                }
+            }
+    
+            // Add the full event data and event counter to the consignment object
+            $cons->events = $allEvents;
+            $cons->EventCount = $consevents->count();
         }
+    
         return $consignments;
     }
+    
     
     public function getConsEventsById($consignmentId)
     {
@@ -88,11 +128,28 @@ class ConsTrackingController extends Controller
         // Initialize an array to store the full event data
         $allEvents = [];
     
-        // Loop through each consignment event to get the corresponding ApiData events
+        // Loop through each consignment event to get the corresponding TrafficData event based on the state
         foreach ($consevents as $consevent) {
-            // Fetch the related ApiData event using the event_id
-            $event = ApiData::where('event_id', $consevent->event_id)->first();
-            
+            $state = $consevent->state; // Assuming `state` is a field in ConsignmentEvents
+    
+            // Check the state and query the respective TrafficData table
+            switch ($state) {
+                case 'NSW':
+                    $event = TrafficDataNSW::where('event_id', $consevent->event_id)->first();
+                    break;
+                case 'VIC':
+                    $event = TrafficDataVIC::where('event_id', $consevent->event_id)->first();
+                    break;
+                case 'QLD':
+                    $event = TrafficDataQLD::where('event_id', $consevent->event_id)->first();
+                    break;
+                case 'SA':
+                    $event = TrafficDataSA::where('event_id', $consevent->event_id)->first();
+                    break;
+                default:
+                    $event = null; // Handle case where state does not match any known states
+            }
+    
             if ($event) {
                 // Add the event data to the allEvents array
                 $allEvents[] = $event;
@@ -101,9 +158,10 @@ class ConsTrackingController extends Controller
     
         // Add the full event data and event counter to the consignment object
         $consignment->events = $allEvents;
-        $consignment->EventCounter = $consevents->count();
+        $consignment->EventCount = $consevents->count();
     
         return $consignment;
     }
+    
     
 }

@@ -105,7 +105,11 @@ function formatLastUpdated(minutesDifference) {
     }
 }
 
-function GoogleMapComp() {
+function GoogleMapComp() { 
+
+    // todo: Add loading spinner for the map to load and the marker clusterer to load
+    // todo: Fix the the onClick event for the marker clusterer
+    // todo: Check why the QLD Events are not showing ( the googlemap is still showing the marker based on the lat and lng so it need to be fixed to be on geometry coordinates)
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
     const [routePolyline, setRoutePolyline] = useState(null);
@@ -182,7 +186,8 @@ function GoogleMapComp() {
         }
     };
 
-    const getRouteUsingRoutesAPI = async () => { // Call the Routes API to get the route between two coordinates
+    const getRouteUsingRoutesAPI = async () => {
+        // Call the Routes API to get the route between two coordinates
         const startLatNum = parseFloat(startLat);
         const startLngNum = parseFloat(startLng);
         const endLatNum = parseFloat(endLat);
@@ -303,22 +308,22 @@ function GoogleMapComp() {
         const { lat: x1, lng: y1 } = lineStart;
         const { lat: x2, lng: y2 } = lineEnd;
         const { lat: px, lng: py } = point;
-    
+
         const dx = x2 - x1;
         const dy = y2 - y1;
         const magnitude = dx * dx + dy * dy;
         let u = ((px - x1) * dx + (py - y1) * dy) / magnitude;
-    
+
         if (u < 0) u = 0;
         else if (u > 1) u = 1;
-    
+
         const closestX = x1 + u * dx;
         const closestY = y1 + u * dy;
-    
+
         const dist = Math.sqrt(
             Math.pow(closestX - px, 2) + Math.pow(closestY - py, 2)
         );
-        
+
         // Convert distance from degrees to meters (using a rough estimate)
         const metersPerDegreeLat = 111320;
         const metersPerDegreeLng = 111320 * Math.cos((x1 * Math.PI) / 180);
@@ -372,6 +377,10 @@ function GoogleMapComp() {
     const renderMarkers = () => {};
 
     const getIcon = (eventType) => {
+        if (!window.google || !window.google.maps) {
+            return null;
+        }
+
         const mainCategory = Object.keys(eventTypeMapping).find((category) =>
             eventTypeMapping[category].includes(eventType)
         );
@@ -395,7 +404,7 @@ function GoogleMapComp() {
                         eventFilter[filterKey] &&
                         typeArray.includes(position.event_type)
                 );
-                return isStateSelected && isEventSelected;
+                return 1 == 1;
             });
             setMarkerPositions(filteredData);
         }
@@ -1073,7 +1082,6 @@ function GoogleMapComp() {
                                         </div>
                                     </div>
                                 ) : null}
-                                {console.log(markerDetails)}
                             </>
                         ) : (
                             <>

@@ -4,6 +4,10 @@ namespace App\Services;
 
 use App\Models\ApiData;
 use App\Models\EventsCategory;
+use App\Models\TrafficDataNSW;
+use App\Models\TrafficDataQLD;
+use App\Models\TrafficDataSA;
+use App\Models\TrafficDataVIC;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +47,6 @@ class ApiService
             $this->logRequest(500, $requestedTime, $e->getMessage());
         }
     }
-
     private function logRequest($status, $requestedTime, $response_msg = null)
     {
         $id = DB::table('request_logs')->insertGetId([
@@ -69,7 +72,6 @@ class ApiService
             'updated_at' => now(),
         ]);
     }
-    
     private function processSAApi()
     {
         $requestedTime = now(); // Log request time for this individual API
@@ -89,7 +91,8 @@ class ApiService
     
                     // Check if x and y coordinates exist for the Point geometry
                     if ($geometry && isset($geometry['x']) && isset($geometry['y'])) {
-                        $geometryCoordinates = json_encode([$attributes['LONGITUDE'], $attributes['LATITUDE']]);
+                        $latitude = $attributes['LATITUDE'];
+                        $longitude = $attributes['LONGITUDE'];
                     }
     
                     // Convert end date to a DateTime object
@@ -97,14 +100,14 @@ class ApiService
     
                     // Check if the event has ended
                     if ($endDateTime && now()->gt($endDateTime)) {
-                        ApiData::where('api_source', 'SA')
+                        TrafficDataSA::where('api_source', 'SA')
                             ->where('event_id', $attributes['ROADWORKS_AND_INCIDENTS_ID'])
                             ->delete();
                         continue; // Skip further processing for this feature
                     }
     
                     // Store both point and geometry data
-                    ApiData::updateOrCreate(
+                    TrafficDataSA::updateOrCreate(
                         [
                             'api_source' => 'SA',
                             'event_id' => $attributes['ROADWORKS_AND_INCIDENTS_ID'],
@@ -114,8 +117,9 @@ class ApiService
                             'start_date' => $this->convertTimestampToDatetime($attributes['START_DATE']),
                             'event_category_id' => $this->findEventCategoryId($attributes['REC_TYPE']),
                             'end_date' => $endDateTime,
-                            'latitude' => $attributes['LATITUDE'],
-                            'longitude' => $attributes['LONGITUDE'],
+                            'latitude' => $latitude,
+                            'longitude' => $longitude,
+                            'location' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)"), // Insert as spatial point
                             'geometry_type' => $geometryType, // Set geometry type to 'Point'
                             'geometry_coordinates' => $geometryCoordinates, // Store the x and y as JSON
                             'suburb' => $attributes['SUBURB'],
@@ -140,7 +144,6 @@ class ApiService
             return ['status' => null, 'error' => $e->getMessage(), 'requestedTime' => $requestedTime, 'state' => 'SA'];
         }
     }
-    
     private function processVICPlannedApi()
     {
         $requestedTime = now(); // Log request time for this individual API
@@ -232,6 +235,7 @@ class ApiService
                             'end_date' => $end_date,
                             'latitude' => $latitude,
                             'longitude' => $longitude,
+                            'location' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)"),
                             'geometry_type' => $geometryType,
                             'geometry_coordinates' => is_array($geometryCoordinates) ? json_encode($geometryCoordinates) : $geometryCoordinates,
                             'suburb' => $suburb,
@@ -247,7 +251,7 @@ class ApiService
     
                         // Insert or update the record in the database
                         try {
-                            ApiData::updateOrCreate(
+                            TrafficDataVIC::updateOrCreate(
                                 [
                                     'api_source' => 'VIC',
                                     'event_id' => $attributes['id'],
@@ -278,7 +282,6 @@ class ApiService
         // Return all results after processing all requests
         return $results;
     }
-
     private function processVICUnPlannedApi()
     {
         $requestedTime = now(); // Log request time for this individual API
@@ -359,6 +362,7 @@ class ApiService
                             'end_date' => $end_date,
                             'latitude' => $latitude,
                             'longitude' => $longitude,
+                            'location' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)"),
                             'geometry_type' => $geometryType,
                             'geometry_coordinates' => is_array($geometryCoordinates) ? json_encode($geometryCoordinates) : $geometryCoordinates,
                             'suburb' => $suburb,
@@ -374,7 +378,7 @@ class ApiService
     
                         // Insert or update the record in the database
                         try {
-                            ApiData::updateOrCreate(
+                            TrafficDataVIC::updateOrCreate(
                                 [
                                     'api_source' => 'VIC',
                                     'event_id' => $attributes['id'],
@@ -446,7 +450,7 @@ class ApiService
     
                         if ($ended) {
                             // If "ended" is true, delete the record if it exists
-                            ApiData::where('api_source', 'NSW')
+                            TrafficDataNSW::where('api_source', 'NSW')
                                    ->where('event_id', $feature['id'])
                                    ->delete();
                             continue; // Skip further processing for this feature
@@ -491,7 +495,7 @@ class ApiService
     
                         // Use a transaction to ensure data integrity
                         DB::transaction(function () use ($feature, $description, $start_date, $end_date, $lastUp_date, $latitude, $longitude, $suburb, $traffic_direction, $road_name, $status, $staticEventType, $impact, $source_url, $combinedAdvice, $attributes, $geometryType, $geometryCoordinates) {
-                            ApiData::updateOrCreate(
+                            TrafficDataNSW::updateOrCreate(
                                 [
                                     'api_source' => 'NSW',
                                     'event_id' => $feature['id'],
@@ -504,6 +508,7 @@ class ApiService
                                     'lastUpdated_date' => $lastUp_date,
                                     'latitude' => $latitude,
                                     'longitude' => $longitude,
+                                    'location' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)"),
                                     'geometry_type' => $geometryType,
                                     'geometry_coordinates' => is_array($geometryCoordinates) ? json_encode($geometryCoordinates) : $geometryCoordinates,
                                     'suburb' => $suburb,
@@ -542,8 +547,7 @@ class ApiService
     
         // Return all results after processing all URLs
         return $results;
-    }
-        
+    }    
     private function processQLDApi()
     {
         $requestedTime = now();
@@ -601,16 +605,17 @@ class ApiService
                         }
                     }
     
+                    $averageCoordinates = $this->getAverageCoordinates($geometry);
                     // Convert date fields to strings to avoid Carbon object issues
                     $start_date = $this->convertIsoToDatetime($attributes['duration']['start'] ?? null);
                     $end_date = $this->convertIsoToDatetime($attributes['duration']['end'] ?? null);
     
+                    
+                    
                     $apiData = [
                         'description' => $attributes['description'],
                         'start_date' => $start_date,
                         'end_date' => $end_date,
-                        'latitude' => $latitude,
-                        'longitude' => $longitude,
                         'geometry_type' => $geometryType,
                         'geometry_coordinates' => is_array($geometryCoordinates) ? json_encode($geometryCoordinates) : $geometryCoordinates,
                         'suburb' => $attributes['road_summary']['locality'] ?? '',
@@ -625,9 +630,17 @@ class ApiService
                         'information' => $attributes['information'],
                     ];
     
+                    if (!is_null($averageCoordinates['latitude']) && !is_null($averageCoordinates['longitude'])) {
+                        $apiData['latitude'] = $averageCoordinates['latitude'];
+                        $apiData['longitude'] = $averageCoordinates['longitude'];
+                        $longitude =  $averageCoordinates['longitude'];
+                        $latitude = $averageCoordinates['latitude'];
+                        $apiData['location'] = DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)");
+                    }
+
                     // Check if the event has ended
                     if ($end_date && now()->gt($end_date)) {
-                        ApiData::where('api_source', 'QLD')
+                        TrafficDataQLD::where('api_source', 'QLD')
                                ->where('event_id', $attributes['id'])
                                ->delete();
                         continue;
@@ -635,7 +648,7 @@ class ApiService
     
                     if ($end_date && now()->lt($end_date)) {
                         try {
-                            ApiData::updateOrCreate(
+                            TrafficDataQLD::updateOrCreate(
                                 [
                                     'api_source' => 'QLD',
                                     'event_id' => $attributes['id'],
@@ -658,8 +671,7 @@ class ApiService
             Log::error($errorMsg);
             return ['status' => null, 'error' => $errorMsg, 'requestedTime' => $requestedTime, 'state' => 'QLD'];
         }
-    }
-    
+    } 
     
     private function convertComparedTimestampToDatetime($timestamp)
     {
@@ -796,7 +808,62 @@ class ApiService
         return null;
     }
     
-
+    private function getAverageCoordinates($geometry)
+    {
+        if (!isset($geometry['coordinates']) || empty($geometry['coordinates'])) {
+            // If coordinates don't exist or are empty, return null
+            return [
+                'latitude' => null,
+                'longitude' => null,
+            ];
+        }
+    
+        $type = $geometry['type'];
+        $coordinates = $geometry['coordinates'];
+    
+        if ($type === 'Point') {
+            // Return the single coordinate
+            return [
+                'latitude' => $coordinates[1],
+                'longitude' => $coordinates[0],
+            ];
+        }
+    
+        if ($type === 'LineString' || $type === 'MultiPoint') {
+            // Calculate the average for a single line or multi-point array
+            return $this->calculateAverageCoordinates([$coordinates]);
+        }
+    
+        if ($type === 'MultiLineString') {
+            // Calculate the average for multiple lines
+            return $this->calculateAverageCoordinates($coordinates);
+        }
+    
+        // Default return if an unexpected type is encountered
+        return [
+            'latitude' => null,
+            'longitude' => null,
+        ];
+    }
+    private function calculateAverageCoordinates($lines)
+    {
+        $totalLat = 0;
+        $totalLng = 0;
+        $count = 0;
+    
+        foreach ($lines as $line) {
+            foreach ($line as $point) {
+                $totalLng += $point[0];
+                $totalLat += $point[1];
+                $count++;
+            }
+        }
+    
+        return [
+            'latitude' => $totalLat / $count,
+            'longitude' => $totalLng / $count,
+        ];
+    }
   
 
 }
