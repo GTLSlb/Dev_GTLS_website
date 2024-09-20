@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 import Footer from "./Component/landingPage/Footer";
 import "../../css/gradient.css";
 import { useState, useEffect } from "react";
-import Navbars from "./Component/Navbars";
+import Navbars from "@/Components/Navbars";
 
 export default function GoingGreen() {
     const [getfooter, setfooter] = useState([]);
