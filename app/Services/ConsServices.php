@@ -34,7 +34,7 @@ class ConsServices
                 ->withHeaders([
                     'UserId' => '1',
                 ])
-                ->get("https://gtlsnsws12-vm.gtls.com.au:9123/api/v2/GTRS/Traffic/Consignments");
+                ->get("https://gtlslebs06-vm.gtls.com.au:8084/api/v2/GTRS/Traffic/Consignments");
     
             if ($response->successful()) {
                 Log::info('Successfully fetched consignments from API.');
@@ -95,59 +95,21 @@ class ConsServices
     private function resetConsignmentsTable()
     {
         Log::info('Resetting consignments_tracking table.');
-
-        // Drop the table if it exists
-        if (Schema::hasTable('consignments_tracking')) {
-            Schema::drop('consignments_tracking');
-            Log::info('Dropped existing consignments_tracking table.');
-        }
-
-        // Recreate the table
-        Schema::create('consignments_tracking', function (Blueprint $table) {
-            $table->id();
-            $table->integer('ConsignmentId');
-            $table->string('ConsignmentNo', 255);
-            $table->integer('DebtorId');
-            $table->string('DebtorName', 255);
-            $table->string('SenderName', 255);
-            $table->string('SenderState', 255);
-            $table->string('SenderSuburb', 255);
-            $table->string('SenderPostcode', 255);
-            $table->string('SenderAddressName', 255);
-            $table->string('ReceiverName', 255);
-            $table->string('ReceiverState', 255);
-            $table->string('ReceiverSuburb', 255);
-            $table->string('ReceiverPostcode', 255);
-            $table->string('ReceiverAddressName', 255);
-            $table->boolean('is_processing')->nullable();
-            $table->timestamp('DespatchDate')->nullable();
-            $table->timestamp('RDD')->nullable();
-            $table->json('Coordinates');
-            $table->timestamps();
-        });
-        Log::info('Recreated consignments_tracking table.');
+    
+        // Truncate the table instead of dropping and recreating it
+        DB::table('consignments_tracking')->truncate();
+        Log::info('Truncated consignments_tracking table.');
     }
-
+    
     private function resetConsingmentEventsTable()
     {
         Log::info('Resetting consignment_events table.');
-
-        // Drop the table if it exists
-        if (Schema::hasTable('consignment_events')) {
-            Schema::drop('consignment_events');
-            Log::info('Dropped existing consignment_events table.');
-        }
-
-        // Recreate the table
-        Schema::create('consignment_events', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('consignment_id');
-            $table->string('event_id', 255);
-            $table->string('state', 255);
-            $table->timestamps();
-        });
-        Log::info('Recreated consignment_events table.');
+    
+        // Truncate the table instead of dropping and recreating it
+        DB::table('consignment_events')->truncate();
+        Log::info('Truncated consignment_events table.');
     }
+    
 
     private function getRouteUsingRoutesAPI($startLat, $startLng, $endLat, $endLng)
     {
@@ -162,12 +124,10 @@ class ConsServices
                 ->where('end_lng', $endLng)
                 ->first();
     
-            // If the route is cached, use the cached route
             if ($cachedRoute) {
                 Log::info('Using cached route.');
                 $route = json_decode($cachedRoute->route, true);
     
-                // Handle JSON decoding issues
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     Log::error('Failed to decode cached route. JSON error: ' . json_last_error_msg());
                     return [];
@@ -175,7 +135,6 @@ class ConsServices
             } else {
                 Log::info('Route not cached. Calling Google Routes API asynchronously.');
     
-                // Prepare the payload for the API call
                 $payload = [
                     'origin' => [
                         'location' => [
@@ -197,12 +156,11 @@ class ConsServices
                     'polylineQuality' => "HIGH_QUALITY",
                 ];
     
-                // Make the asynchronous API call to get the route
                 $response = Http::async()->timeout(30)
                     ->withHeaders([
                         'Content-Type' => 'application/json',
                         'X-Goog-Api-Key' => $this->googleApiKey,
-                        'X-Goog-FieldMask' => 'routes.polyline,legs.steps', // Only request needed fields
+                        'X-Goog-FieldMask' => 'routes', 
                     ])
                     ->post('https://routes.googleapis.com/directions/v2:computeRoutes', $payload)
                     ->then(function ($response) use ($startLat, $startLng, $endLat, $endLng) {
@@ -212,7 +170,6 @@ class ConsServices
                                 $polylinePoints = $data['routes'][0]['polyline']['encodedPolyline'];
                                 $route = $this->decodePolyline($polylinePoints);
     
-                                // Store the route in the database cache for future use
                                 DB::table('cached_routes')->insert([
                                     'start_lat' => $startLat,
                                     'start_lng' => $startLng,
@@ -224,31 +181,30 @@ class ConsServices
                                 ]);
     
                                 Log::info('Route cached successfully.');
-                                return $route; // Return the route after caching
+                                return $route;
                             } else {
                                 Log::warning("No valid routes found in the API response.");
                                 return [];
                             }
                         } else {
-                            Log::error("Google Routes API request failed with status: " . $response->status());
+                            Log::error("Google Routes API request failed with status: " . $response->status() . ", message: " . $response->body());
                             return [];
                         }
                     });
     
                 // Ensure asynchronous promise is resolved
-                $route = $response->wait(); // Wait for the async response
+                $route = $response->wait();
             }
     
             // Proceed to filter events on the route
-            $eventsOnRoad = $this->filterEventsOnRoute($route);
-    
-            return $eventsOnRoad;
+            return $this->filterEventsOnRoute($route);
     
         } catch (\Exception $e) {
             Log::error("Error in getRouteUsingRoutesAPI: " . $e->getMessage());
             return [];
         }
     }
+    
     
     
     
@@ -411,16 +367,16 @@ class ConsServices
             Log::info('Started fetching routes for all ConsData records.');
     
             // Limit the number of concurrent threads (set to 5 for example)
-            $pool = Pool::create()->concurrency(5);
+            $pool = Pool::create()->concurrency(10);
     
             // Process consignments in larger chunks
-            ConsData::chunk(100, function ($consDataBatch) use ($pool) {
+            ConsData::chunk(25, function ($consDataBatch) use ($pool) {
                 foreach ($consDataBatch as $cons) {
                     try {
                         // Log the start of thread processing for the consignment
                         $pool->add(function () use ($cons) {
                             Log::debug("Processing ConsData record with ID: {$cons->id} in thread " . getmypid());
-    
+                        
                             $eventsToInsert = [];
                             $coordinates = $cons->Coordinates;
     
@@ -484,6 +440,7 @@ class ConsServices
             Log::error('Error in getRoutesForAllConsData: ' . $e->getMessage());
         }
     }
+    
     
     
 }

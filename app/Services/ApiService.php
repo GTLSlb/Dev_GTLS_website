@@ -95,6 +95,7 @@ class ApiService
                         $longitude = $attributes['LONGITUDE'];
                     }
     
+
                     // Convert end date to a DateTime object
                     $endDateTime = $this->convertComparedTimestampToDatetime($attributes['END_DATE']);
     
@@ -119,7 +120,7 @@ class ApiService
                             'end_date' => $endDateTime,
                             'latitude' => $latitude,
                             'longitude' => $longitude,
-                            'location' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)"), // Insert as spatial point
+                            'location' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)', 4326)"),
                             'geometry_type' => $geometryType, // Set geometry type to 'Point'
                             'geometry_coordinates' => $geometryCoordinates, // Store the x and y as JSON
                             'suburb' => $attributes['SUBURB'],
