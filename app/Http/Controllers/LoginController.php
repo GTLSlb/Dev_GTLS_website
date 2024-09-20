@@ -170,7 +170,7 @@ class LoginController extends Controller
                 foreach ($cookies as $name => $value) {
                     setcookie($name, '', $expiration);
                 }
-                // $request->session()->regenerateToken();
+                $request->session()->regenerateToken();
                 // return redirect('/login');
         }} else {
             // Extract the UserId from the response
@@ -206,7 +206,7 @@ class LoginController extends Controller
                 }
 
                 // Regenerate the session token
-                // $request->session()->regenerateToken();
+                $request->session()->regenerateToken();
             } else {
                 // Handle the case where the logout request fails
                 // You can log an error or return a specific response
