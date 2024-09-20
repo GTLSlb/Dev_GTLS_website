@@ -40,12 +40,12 @@ class LoginController extends Controller
             'Password' => $password,
         ];
         $url = $_ENV['GTAM_API_URL'];
-        $expiration = time() - (60 * 60 * 24);
+
         // Get an array of all the cookies
         $cookies = $_COOKIE;
         // Loop through each cookie and set it to expire
         foreach ($cookies as $name => $value) {
-            setcookie($name, '', $expiration);
+            setcookie($name, '', 1, '/', $_ENV['SESSION_DOMAIN'], true);
         }
         $response = Http::withHeaders($headers)->get("$url" . "Login");
         if ($response->successful()) {
@@ -94,13 +94,15 @@ class LoginController extends Controller
                         $token = $tokenRes->json();
                         $cookieName = 'access_token';
                         $cookieValue = $token['access_token'];
-                        // $expiry = $token['expires_in'];
-                        $expiry = 60 * 60 * 24; //24h
-                        //$expiry = 60;
-                        $expirationTime = time() + $expiry;
+                        $expiry = 60 * 60 * 24 * 2; //48h
 
-                        setcookie($cookieName, $cookieValue, $expirationTime, '/', $_ENV['SESSION_DOMAIN'], true, false);
-                        setcookie('refresh_token', $token['refresh_token'], $expirationTime, '/', $_ENV['SESSION_DOMAIN'], true, false);
+                        setcookie('previous_page', $_ENV['APP_URL'] . "/gtam/employees", time() + $expiry, '/', '', true);
+
+                        $cookieName = 'access_token';
+                        $cookieValue = $token['access_token'];
+
+                        setcookie($cookieName, $cookieValue, time() + $expiry, '/', $_ENV['SESSION_DOMAIN'], true);
+                        setcookie('refresh_token', $token['refresh_token'], time() + $expiry, '/', '', true);
 
                         $userId = $user['UserId'];
                         $request->session()->regenerate();
@@ -146,7 +148,6 @@ class LoginController extends Controller
         }
     }
 
-
     public function logout(Request $request)
     {
         // Retrieve the 'access_token' cookie
@@ -156,19 +157,19 @@ class LoginController extends Controller
         $userController = new RegisteredUserController();
         $user = $userController->getCurrentUserName($request);
         $userMsg = json_decode($user->content(), true);
-        //dd(gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string");
+
         if(gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string") {
         if ($userMsg['message'] == 'User not found') {
 
                 $request->session()->invalidate();
                 $request->session()->flush();
-                // Set the expiration time for the cookies to 24 hours before the current time
-                $expiration = time() - (60 * 60 * 24);
+                // Set the expiration time for the cookies to 1/1/1970
+                $expiration = 1;
                 $cookies = $_COOKIE;
 
                 // Loop through each cookie and set it to expire
                 foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration);
+                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
                 }
                 $request->session()->regenerateToken();
                 // return redirect('/login');
@@ -194,22 +195,21 @@ class LoginController extends Controller
                 $request->session()->forget('user');
                 $request->session()->invalidate();
                 $request->session()->flush();
-                // Set the expiration time for the cookies to 24 hours before the current time
-                $expiration = time() - (60 * 60 * 24);
+                // Set the expiration time for the cookies to 1/1/1970
+                $expiration = 1;
 
                 // Get an array of all the cookies
                 $cookies = $_COOKIE;
 
                 // Loop through each cookie and set it to expire
                 foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration);
+                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
                 }
 
                 // Regenerate the session token
                 $request->session()->regenerateToken();
             } else {
                 // Handle the case where the logout request fails
-                // You can log an error or return a specific response
                 return redirect()->back()->withErrors(['error' => 'Logout failed. Please try again.']);
             }
         }
@@ -225,43 +225,40 @@ class LoginController extends Controller
         $user = $userController->getCurrentUserName($request);
         $userMsg = json_decode($user->content(), true);
 
-        if (gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string") {
-            if ($userMsg['message'] == 'User not found') {
+        //check if user is not found
+        if(gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string") {
+        if ($userMsg['message'] == 'User not found') {
 
                 $request->session()->invalidate();
                 $request->session()->flush();
-                // Set the expiration time for the cookies to 24 hours before the current time
-                $expiration = time() - (60 * 60 * 24);
+                // Set the expiration time for the cookies to 1/1/1970
+                $expiration = 1;
                 $cookies = $_COOKIE;
 
                 // Loop through each cookie and set it to expire
                 foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration);
+                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
                 }
                 $request->session()->regenerateToken();
                 // return redirect('/login');
-            }
-        } else {
-            // Invalidate and flush the session
-            $request->session()->forget('user');
-            $request->session()->invalidate();
-            $request->session()->flush();
-            // Set the expiration time for the cookies to 24 hours before the current time
-            $expiration = time() - (60 * 60 * 24);
+        }} else {
+                // Invalidate and flush the session
+                $request->session()->forget('user');
+                $request->session()->invalidate();
+                $request->session()->flush();
+                // Set the expiration time for the cookies to 1/1/1970
+                $expiration = 1;
 
-            // Get an array of all the cookies
-            $cookies = $_COOKIE;
+                // Get an array of all the cookies
+                $cookies = $_COOKIE;
 
-            // Loop through each cookie and set it to expire
-            foreach ($cookies as $name => $value) {
-                setcookie($name, '', $expiration);
-            }
+                // Loop through each cookie and set it to expire
+                foreach ($cookies as $name => $value) {
+                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
+                }
 
-            // Regenerate the session token
-            $request->session()->regenerateToken();
-
-            // Redirect to the login page
-            // return redirect('/login');
+                // Regenerate the session token
+                $request->session()->regenerateToken();
         }
     }
 
@@ -274,7 +271,7 @@ class LoginController extends Controller
         $postLogoutRedirectUri = urlencode(route('home')); // Replace 'home' with your route name
 
         // Redirect to Microsoft Azure logout endpoint with post-logout redirect URL
-        //return redirect()->away($azureLogoutUrl . '?post_logout_redirect_uri=' . $postLogoutRedirectUri);
+        return redirect()->away($azureLogoutUrl . '?post_logout_redirect_uri=' . $postLogoutRedirectUri);
         // return redirect('/login');
     }
 }
