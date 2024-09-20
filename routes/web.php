@@ -43,7 +43,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('emptyRoute');
 
 Route::get('/login', function () {
     return Inertia::render('Auth/Login');
@@ -287,7 +287,3 @@ Route::get('/forgot-password', function () {
 })->name('forgot.password');
 require __DIR__ . '/auth.php';
 
-
-// Route::middleware(['logUserVisit'])->get('/', function () {
-//     // Route logic...
-// });

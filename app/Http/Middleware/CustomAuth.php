@@ -51,8 +51,12 @@ class CustomAuth extends Middleware
         $hasSession = $request->hasSession();
         if ($hasSession) {
             $path = $request->path();
+
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
             // Allow access to the login route
+            if($request->getBasePath() == ""){
+                return $next($request);
+            }
             if ($path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken') {
                 return $next($request);
             }
