@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { PhoneIcon } from "@heroicons/react/20/solid";
-import goldTigerLogo from "../../assets/pictures/goldTigerLogo.webp";
 import LogoWhite from "../../assets/pictures/LogoWhite.webp";
 import { Link } from "@inertiajs/inertia-react";
 import { Popover, Transition } from "@headlessui/react";
