@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Services;
-
-use App\Http\Controllers\ApiController;
+use Spatie\Async\Pool;
+use Illuminate\Support\Facades\Log;
 use App\Models\ConsData;
 use App\Models\ConsignmentEvents;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -25,25 +25,25 @@ class ConsServices
     {
         try {
             Log::info('Starting to fetch consignments.');
-
-            // Reset tables
+    
+            // Reset only the consignment events table, not the consignments
             $this->resetConsingmentEventsTable();
             $this->resetConsignmentsTable();
-
             // Fetch data from the API
             $response = Http::timeout(40)
                 ->withHeaders([
                     'UserId' => '1',
                 ])
                 ->get("https://gtlsnsws12-vm.gtls.com.au:9123/api/v2/GTRS/Traffic/Consignments");
-
+    
             if ($response->successful()) {
                 Log::info('Successfully fetched consignments from API.');
                 $data = $response->json();
-
+    
                 $consDataToInsert = [];
                 foreach ($data as $consignment) {
                     try {
+                        // Insert new consignments and mark them as unprocessed
                         $consDataToInsert[] = [
                             'ConsignmentId' => $consignment['ConsignmentId'],
                             'ConsignmentNo' => $consignment['ConsignmentNo'],
@@ -59,9 +59,10 @@ class ConsServices
                             'ReceiverSuburb' => $consignment['ReceiverSuburb'],
                             'ReceiverPostcode' => $consignment['ReceiverPostcode'],
                             'ReceiverAddressName' => $consignment['ReceiverAddressName'],
-                            'DespatchDate' => isset($consignment['DespatchDate']) ? $consignment['DespatchDate'] : null,
-                            'RDD' => isset($consignment['RDD']) ? $consignment['RDD'] : null,
+                            'DespatchDate' => $consignment['DespatchDate'] ?? null,
+                            'RDD' => $consignment['RDD'] ?? null,
                             'Coordinates' => json_encode($consignment['Coordinates']),
+                            'is_processing' => false,  // Mark as not processed
                             'created_at' => now(),
                             'updated_at' => now(),
                         ];
@@ -69,16 +70,16 @@ class ConsServices
                         Log::error('Error Preparing Consignments Data: ' . $e->getMessage());
                     }
                 }
-
-                // Bulk insert consignments
+    
+                // Bulk insert consignments if there are any new ones
                 if (!empty($consDataToInsert)) {
                     ConsData::insert($consDataToInsert);
                     Log::info('Bulk inserted consignments data.');
                 }
-
+    
                 // Process routes and events
                 $this->getRoutesForAllConsData();
-
+    
                 return $data;
             } else {
                 Log::warning('Failed to fetch consignments from API: ' . $response->status());
@@ -89,6 +90,7 @@ class ConsServices
             return null;
         }
     }
+    
 
     private function resetConsignmentsTable()
     {
@@ -117,6 +119,7 @@ class ConsServices
             $table->string('ReceiverSuburb', 255);
             $table->string('ReceiverPostcode', 255);
             $table->string('ReceiverAddressName', 255);
+            $table->boolean('is_processing')->nullable();
             $table->timestamp('DespatchDate')->nullable();
             $table->timestamp('RDD')->nullable();
             $table->json('Coordinates');
@@ -170,8 +173,8 @@ class ConsServices
                     return [];
                 }
             } else {
-                Log::info('Route not cached. Calling Google Routes API.');
-                
+                Log::info('Route not cached. Calling Google Routes API asynchronously.');
+    
                 // Prepare the payload for the API call
                 $payload = [
                     'origin' => [
@@ -194,41 +197,46 @@ class ConsServices
                     'polylineQuality' => "HIGH_QUALITY",
                 ];
     
-                // Make the API call to get the route
-                $response = Http::timeout(30)
+                // Make the asynchronous API call to get the route
+                $response = Http::async()->timeout(30)
                     ->withHeaders([
                         'Content-Type' => 'application/json',
                         'X-Goog-Api-Key' => $this->googleApiKey,
-                        'X-Goog-FieldMask' => 'routes',
+                        'X-Goog-FieldMask' => 'routes.polyline,legs.steps', // Only request needed fields
                     ])
-                    ->post('https://routes.googleapis.com/directions/v2:computeRoutes', $payload);
+                    ->post('https://routes.googleapis.com/directions/v2:computeRoutes', $payload)
+                    ->then(function ($response) use ($startLat, $startLng, $endLat, $endLng) {
+                        if ($response->successful()) {
+                            $data = $response->json();
+                            if (isset($data['routes']) && count($data['routes']) > 0) {
+                                $polylinePoints = $data['routes'][0]['polyline']['encodedPolyline'];
+                                $route = $this->decodePolyline($polylinePoints);
     
-                if ($response->successful()) {
-                    $data = $response->json();
-                    if (isset($data['routes']) && count($data['routes']) > 0) {
-                        $polylinePoints = $data['routes'][0]['polyline']['encodedPolyline'];
-                        $route = $this->decodePolyline($polylinePoints);
+                                // Store the route in the database cache for future use
+                                DB::table('cached_routes')->insert([
+                                    'start_lat' => $startLat,
+                                    'start_lng' => $startLng,
+                                    'end_lat' => $endLat,
+                                    'end_lng' => $endLng,
+                                    'route' => json_encode($route),
+                                    'created_at' => now(),
+                                    'updated_at' => now(),
+                                ]);
     
-                        // Store the route in the database cache for future use
-                        DB::table('cached_routes')->insert([
-                            'start_lat' => $startLat,
-                            'start_lng' => $startLng,
-                            'end_lat' => $endLat,
-                            'end_lng' => $endLng,
-                            'route' => json_encode($route),
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ]);
+                                Log::info('Route cached successfully.');
+                                return $route; // Return the route after caching
+                            } else {
+                                Log::warning("No valid routes found in the API response.");
+                                return [];
+                            }
+                        } else {
+                            Log::error("Google Routes API request failed with status: " . $response->status());
+                            return [];
+                        }
+                    });
     
-                        Log::info('Route cached successfully.');
-                    } else {
-                        Log::warning("No valid routes found in the API response.");
-                        return [];
-                    }
-                } else {
-                    Log::error("Google Routes API request failed with status: " . $response->status());
-                    return [];
-                }
+                // Ensure asynchronous promise is resolved
+                $route = $response->wait(); // Wait for the async response
             }
     
             // Proceed to filter events on the route
@@ -241,6 +249,7 @@ class ConsServices
             return [];
         }
     }
+    
     
     
     private function haversineDistance($lat1, $lon1, $lat2, $lon2)
@@ -368,84 +377,113 @@ class ConsServices
     private function getStateTablesFromRoute(array $route)
     {
         $states = [];
+    
         foreach ($route as $point) {
-            // This is a simplified placeholder logic for determining which state a point belongs to.
-            // You should replace it with proper logic based on the coordinates.
-            if ($point['lat'] >= -38 && $point['lat'] <= -37) {
+            // Get the latitude and longitude from the current point
+            $lat = $point['lat'];
+            $lng = $point['lng'];
+    
+            // Use latitude and longitude ranges to determine which state the point is in
+            if ($lat >= -38 && $lat <= -37) {
+                // Victoria (VIC)
                 $states[] = 'traffic_data_vic';
-            } else if ($point['lat'] < -38 && $point['lat'] > -39) {
+            } else if ($lat < -37 && $lat > -39) {
+                // New South Wales (NSW)
                 $states[] = 'traffic_data_nsw';
-            }
+            } else if ($lat < -27 && $lat >= -29) {
+                // Queensland (QLD)
+                $states[] = 'traffic_data_qld';
+            } else if ($lat >= -35 && $lat <= -34) {
+                // South Australia (SA)
+                $states[] = 'traffic_data_sa';
+            } 
         }
-
-        // Ensure unique state tables are returned
+    
+        // Ensure unique state tables are returned (to avoid querying the same table multiple times)
         return array_unique($states);
     }
-
+    
+    
     public function getRoutesForAllConsData()
     {
         try {
             ini_set('max_execution_time', 600000); // Extend execution time for larger datasets
             Log::info('Started fetching routes for all ConsData records.');
     
+            // Limit the number of concurrent threads (set to 5 for example)
+            $pool = Pool::create()->concurrency(5);
+    
             // Process consignments in larger chunks
-            ConsData::chunk(200, function ($consDataBatch) {
-                $eventsToInsert = [];
-    
+            ConsData::chunk(100, function ($consDataBatch) use ($pool) {
                 foreach ($consDataBatch as $cons) {
-                    Log::debug("Processing ConsData record with ID: {$cons->id}.");
+                    try {
+                        // Log the start of thread processing for the consignment
+                        $pool->add(function () use ($cons) {
+                            Log::debug("Processing ConsData record with ID: {$cons->id} in thread " . getmypid());
     
-                    // Your existing logic for processing each consignment
-                    $coordinates = $cons->Coordinates;
+                            $eventsToInsert = [];
+                            $coordinates = $cons->Coordinates;
     
-                    if (is_array($coordinates)) {
-                        foreach ($coordinates as $coordinateIndex => $coordinate) {
-                            $startLat = $coordinate['SenderLatitude'] ?? null;
-                            $startLng = $coordinate['SenderLongitude'] ?? null;
-                            $endLat = $coordinate['ReceiverLatitude'] ?? null;
-                            $endLng = $coordinate['ReceiverLongitude'] ?? null;
+                            if (is_array($coordinates)) {
+                                foreach ($coordinates as $coordinateIndex => $coordinate) {
+                                    $startLat = $coordinate['SenderLatitude'] ?? null;
+                                    $startLng = $coordinate['SenderLongitude'] ?? null;
+                                    $endLat = $coordinate['ReceiverLatitude'] ?? null;
+                                    $endLng = $coordinate['ReceiverLongitude'] ?? null;
     
-                            if (!$startLat || !$startLng || !$endLat || !$endLng) {
-                                Log::warning("Incomplete coordinates for ConsData ID: {$cons->id}, Coordinate set #{$coordinateIndex}.");
-                                continue;
-                            }
+                                    if (!$startLat || !$startLng || !$endLat || !$endLng) {
+                                        Log::warning("Incomplete coordinates for ConsData ID: {$cons->id}, Coordinate set #{$coordinateIndex}.");
+                                        continue;
+                                    }
     
-                            // Fetch route-related events
-                            $eventsByCoordinate = $this->getRouteUsingRoutesAPI($startLat, $startLng, $endLat, $endLng);
+                                    // Fetch route-related events asynchronously
+                                    $eventsByCoordinate = $this->getRouteUsingRoutesAPI($startLat, $startLng, $endLat, $endLng);
     
-                            if (!empty($eventsByCoordinate)) {
-                                foreach ($eventsByCoordinate as $event) {
-                                    $eventId = $event->event_id ?? null;
-                                    $state = $event->api_source;
+                                    if (!empty($eventsByCoordinate)) {
+                                        foreach ($eventsByCoordinate as $event) {
+                                            $eventId = $event->event_id ?? null;
+                                            $state = $event->api_source;
     
-                                    if ($eventId) {
-                                        $eventsToInsert[] = [
-                                            'consignment_id' => $cons->id,
-                                            'event_id' => $eventId,
-                                            'state' => $state,
-                                            'created_at' => now(),
-                                            'updated_at' => now(),
-                                        ];
+                                            if ($eventId) {
+                                                $eventsToInsert[] = [
+                                                    'consignment_id' => $cons->id,
+                                                    'event_id' => $eventId,
+                                                    'state' => $state,
+                                                    'created_at' => now(),
+                                                    'updated_at' => now(),
+                                                ];
+                                            }
+                                        }
                                     }
                                 }
+                            } else {
+                                Log::warning("Invalid coordinate data format for ConsData ID: {$cons->id}.");
                             }
-                        }
-                    } else {
-                        Log::warning("Invalid coordinate data format for ConsData ID: {$cons->id}.");
+    
+                            // Bulk insert consignment events in chunks for efficiency
+                            if (!empty($eventsToInsert)) {
+                                ConsignmentEvents::insert($eventsToInsert);
+                                Log::info('Bulk inserted consignment events for ConsData ID: ' . $cons->id);
+                            }
+                        })->catch(function (\Exception $e) use ($cons) {
+                            Log::error("Thread " . getmypid() . " - Error processing ConsData ID: " . $cons->id . ' - ' . $e->getMessage());
+                        });
+    
+                    } catch (\Exception $e) {
+                        // Log any errors for individual consignment processing
+                        Log::error("Thread " . getmypid() . " - Error processing ConsData ID: " . $cons->id . ' - ' . $e->getMessage());
                     }
                 }
-    
-                // Bulk insert consignment events in chunks for efficiency
-                if (!empty($eventsToInsert)) {
-                    ConsignmentEvents::insert($eventsToInsert);
-                    Log::info('Bulk inserted consignment events.');
-                }
             });
+    
+            // Only call wait after all tasks are added to the pool
+            $pool->wait();
     
             Log::info('Finished fetching routes for all ConsData records.');
         } catch (\Exception $e) {
             Log::error('Error in getRoutesForAllConsData: ' . $e->getMessage());
         }
     }
+    
     
 }

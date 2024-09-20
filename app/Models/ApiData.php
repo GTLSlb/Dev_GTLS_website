@@ -32,6 +32,7 @@ class ApiData extends Model
         'lastUpdated_date',
         'otherAdvice',
         'event_category_id',
+        'is_processing',
         'geometry_type',
         'geometry_coordinates',
     ];
