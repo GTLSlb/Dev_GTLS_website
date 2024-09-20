@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Footer from "./Component/landingPage/Footer";
 import BounceLoader from "react-spinners/BounceLoader";
+import Navbars from "@/Components/Navbars";
 
 
 export default function AboutUs(props) {
@@ -99,6 +100,7 @@ export default function AboutUs(props) {
                     <Head title="About Gold Tiger" />
                     <div className="relative isolate bg-dark">
                         {/* <Chatbot /> */}
+                        <Navbars />
                         {/* <HeroSection/> */}
 
                         <div
