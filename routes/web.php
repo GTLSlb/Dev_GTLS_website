@@ -287,6 +287,7 @@ Route::get('/getConsRoutes', [ConsTrackingController::class, 'getConsRoute']);
 Route::get('/consroutegetall', [ConsTrackingController::class, 'getAllConsRoutes']); // the request that do all the calculations
 Route::get('/conswithevents', [ConsTrackingController::class, 'getAllConsDataWithEvents']); 
 Route::get('/conswithevents/{id}', [ConsTrackingController::class, 'getConsEventsById']);
+Route::get('/getConsignmentRoute', [ConsTrackingController::class, 'getConsignmentRoute']);
 
 // ******************************************************************
 

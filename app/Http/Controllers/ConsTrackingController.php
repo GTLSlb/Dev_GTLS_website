@@ -13,16 +13,23 @@ use App\Models\TrafficDataVIC;
 use App\Services\ConsServices;
 use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Log;
 
 class ConsTrackingController extends Controller
 
 {
     protected $conService;
+    protected $navmanApiKey;
 
     public function __construct(ConsServices $conService)
     {
         $this->conService = $conService;
+        $this->navmanApiKey = env('NAVMAN_API_KEY');
+
+        if(is_null($this->navmanApiKey)){
+            dd("navman api key cannot be null ");
+        }
     }
 
     public function fetchData(){
@@ -48,7 +55,6 @@ class ConsTrackingController extends Controller
         return response()->json($result);
     }
 
-
     public function getAllConsRoutes(Request $request): string
     {
         ini_set('max_execution_time', 600); //10 minutes
@@ -61,7 +67,6 @@ class ConsTrackingController extends Controller
             return "Error occurred: " . $e->getMessage();
         }
     }
-    
     
     public function getAllConsDataWithEvents()
     {
@@ -111,7 +116,6 @@ class ConsTrackingController extends Controller
     
         return $consignments;
     }
-    
     
     public function getConsEventsById($consignmentId)
     {
@@ -163,5 +167,78 @@ class ConsTrackingController extends Controller
         return $consignment;
     }
     
+    public function getConsignmentRoute(Request $request)
+    {
+        // Define the required parameters
+        $requiredParams = [
+            'consignmentNo',
+            'typeId',
+            'fromDate',
+            'toDate'
+        ];
+    
+        // Collect missing parameters
+        $missingParams = [];
+        foreach ($requiredParams as $param) {
+            if (!$request->input($param)) {
+                $missingParams[] = $param;
+            }
+        }
+    
+        // Return the missing parameters if any are missing
+        if (!empty($missingParams)) {
+            return response()->json([
+                'message' => 'Missing required parameters',
+                'missing' => $missingParams
+            ], 400);
+        }
+        $consignmentNo = $request->input('consignmentNo');
+        $typeId = $request->input('typeId');
+        $fromDate = $request->input('fromDate');
+        $toDate = $request->input('toDate');
+
+        // If all parameters are present
+        $vehicleNo = $this->getVehicleNo( $consignmentNo,$typeId);
+        $vehicleId = $this->getVehicleId($vehicleNo);
+        return response()->json(['message' => 'All Data exist', 'vehicleNo' =>  $vehicleNo, 'vehicleId' => $vehicleId ], 200);
+    }
+    
+    function getVehicleNo($consignmentNo, $typeId){
+        // Start by retrieving the vehicle number from the consignment number
+        try{
+            $response = Http::timeout(40)->withHeaders([
+                'ConsignmentNo' => $consignmentNo,
+                'TypeId' => $typeId,
+            ])->get('https://gtlsnsws12-vm.gtls.com.au:9123/api/v2/GTRS/VehicleNumber');
+
+            return $response->body();
+        } catch (\Exception $e) {
+            Log::error('Error Fetching Vehicle Number: ' . $e->getMessage());
+            return "Error occurred: " . $e->getMessage();
+        }
+    }
+
+    function getVehicleId($vehicleNo)
+    {
+        try {
+            $params = [
+                'partialName' => $vehicleNo,
+                'status' => 'ALL',
+                'statusList' => 'E',
+                'pruning' => 'B2B',
+                'key' => $this->navmanApiKey,
+            ];
+            $result = Http::timeout(40)->get('https://api-au.telematics.com/v1/vehicles', $params);
+            $data = $result->json();
+    
+            if (!empty($data) && isset($data[0]['id'])) {
+                return $data[0]['id'];
+            }
+            return null;
+        } catch (\Exception $e) {
+            
+            Log::error('Error retreiving the vehicle ID : ' . $e->getMessage());
+        }
+    }
     
 }
