@@ -23,7 +23,7 @@ import BPWnews from "../../../assets/news/BPW.webp";
 import Conferencnews from "../../../assets/news/Conference.jpeg";
 import gearboxnews from "../../../assets/news/gearboxnews.jpeg";
 import jaixtraining from "../../../assets/news/jaixtraining.jpeg";
-import fireWardinImage from "@/assets/news/FireWarden.jpeg";
+import fireWardinImage from "@/assets/news/FireWardenBlog.jpg";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

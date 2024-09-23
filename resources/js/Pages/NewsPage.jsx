@@ -42,6 +42,8 @@ import Conferencnews10 from "../assets/news/Conference10.jpeg";
 import Conferencnews11 from "../assets/news/Conference11.jpeg";
 import jaixtraining from "../assets/news/jaixtraining.jpeg";
 import fireWardinImage from "@/assets/news/FireWarden.jpeg";
+import fireWardinCoverImage from "@/assets/news/FireWardingCover.jpg";
+import fireWardinBlogImage from "@/assets/news/FireWardenBlog.jpg";
 import fireWardin2Image from "@/assets/news/FireWarden2.jpeg";
 import fireWardin3Image from "@/assets/news/FireWarden3.jpeg";
 
@@ -711,7 +713,7 @@ export default function NewsPage(props) {
             content2: `Thank you to our Expert trainer for attending Gold Tiger Logistics Solutions facility and providing important skills and knowledge to the designated Fire Wardens within GTLS.
 
             `,
-            imgUrl: fireWardinImage,
+            imgUrl: fireWardinCoverImage,
             imgSliders: [
                 fireWardinImage,
                 fireWardin2Image,
@@ -726,7 +728,7 @@ export default function NewsPage(props) {
             title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",
             href: "#",
             description: `We welcomed an expert trainer in the field of fire safety in the workplace to Gold Tiger Logistics Solutions. The training provided has given our Chief Fire Warden and his fellow Fire Wardens the skills and knowledge to manage fire emergencies and other threats in the workplace.`,
-            imageUrl: fireWardinImage,
+            imageUrl: fireWardinBlogImage,
             date: "September 20, 2024",
             datetime: "2024-9-3",
             category: { title: "", href: "#" },
@@ -999,7 +1001,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 || id == 22 ? (
+                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 || id == 22 || id == 23 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -1008,7 +1010,7 @@ export default function NewsPage(props) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
-                ) : id == 20 || id == 21 ? (
+                ) : id == 20 || id == 21  ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
