@@ -23,6 +23,7 @@ import BPWnews from "../../../assets/news/BPW.webp";
 import Conferencnews from "../../../assets/news/Conference.jpeg";
 import gearboxnews from "../../../assets/news/gearboxnews.jpeg";
 import jaixtraining from "../../../assets/news/jaixtraining.jpeg";
+import fireWardinImage from "@/assets/news/FireWarden.jpeg";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -34,6 +35,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 23,
+        title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",
+        href: "#",
+        description: `We welcomed an expert trainer in the field of fire safety in the workplace to Gold Tiger Logistics Solutions. The training provided has given our Chief Fire Warden and his fellow Fire Wardens the skills and knowledge to manage fire emergencies and other threats in the workplace.`,
+        imageUrl: fireWardinImage,
+        date: "September 20, 2024",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 22,
         title: "Jaix Logistics Software Recap Training and information updates",

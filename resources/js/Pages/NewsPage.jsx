@@ -41,6 +41,9 @@ import Conferencnews9 from "../assets/news/Conference9.jpg";
 import Conferencnews10 from "../assets/news/Conference10.jpeg";
 import Conferencnews11 from "../assets/news/Conference11.jpeg";
 import jaixtraining from "../assets/news/jaixtraining.jpeg";
+import fireWardinImage from "@/assets/news/FireWarden.jpeg";
+import fireWardin2Image from "@/assets/news/FireWarden2.jpeg";
+import fireWardin3Image from "@/assets/news/FireWarden3.jpeg";
 
 import React from "react";
 import { usePage } from "@inertiajs/react";
@@ -656,9 +659,78 @@ export default function NewsPage(props) {
                 "A big thank you to our Support and Implementation Specialist at Jaix and we will see you again soon for more valuable recap training. The Gold Tiger Logistics team has gained some valuable insights and is an extension to our current knowledge base and Freight and Warehousing Management expertise within.",
             imgUrl: jaixtraining,
         },
+        {
+            id: 23,
+            title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",
+            content1: `we welcomed an expert trainer in the field of fire safety in the workplace to Gold Tiger Logistics Solutions. The training provided has given our Chief Fire Warden and his fellow Fire Wardens the skills and knowledge to manage fire emergencies and other threats in the workplace.
+           
+            The training included:
+            `,
+            list: [
+                {
+                    id: 0,
+                    title: "A presentation from the trainer to our Chief Warden & Fire Wardens.",
+                },
+                {
+                    id: 1,
+                    title: "Evacuation procedures",
+                },
+                {
+                    id: 2,
+                    title: "Fire extinguisher use",
+                },
+                {
+                    id: 3,
+                    title: "Live fire situations",
+                },
+                {
+                    id: 4,
+                    title: "Simulated live fire practical training including the use of extinguisher & fire blankets",
+                },
+                {
+                    id: 5,
+                    title: "Building structures / warning and detection systems",
+                },
+                {
+                    id: 6,
+                    title: "Warden structures, their roles and responsibilities",
+                },
+                {
+                    id: 7,
+                    title: "Alarm, conditions, evacuation procedures, searching & reporting",
+                },
+                {
+                    id: 8,
+                    title: "Bomb threat procedures",
+                },
+                {
+                    id: 9,
+                    title: "Documented evacuation drill & reporting requirements",
+                }
+            ],
+            content2: `Thank you to our Expert trainer for attending Gold Tiger Logistics Solutions facility and providing important skills and knowledge to the designated Fire Wardens within GTLS.
+
+            `,
+            imgUrl: fireWardinImage,
+            imgSliders: [
+                fireWardinImage,
+                fireWardin2Image,
+                fireWardin3Image
+            ],
+        },
     ];
 
     const posts = [
+        {
+            id: 23,
+            title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",
+            href: "#",
+            description: `We welcomed an expert trainer in the field of fire safety in the workplace to Gold Tiger Logistics Solutions. The training provided has given our Chief Fire Warden and his fellow Fire Wardens the skills and knowledge to manage fire emergencies and other threats in the workplace.`,
+            imageUrl: fireWardinImage,
+            date: "September 20, 2024",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 22,
             title: "Jaix Logistics Software Recap Training and information updates",

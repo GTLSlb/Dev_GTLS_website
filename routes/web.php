@@ -105,7 +105,7 @@ Route::get('/safetycompliance', function () {
 
 Route::get('/news', function () {
     return Inertia::render('NewsMedia');
-})->name('news');
+});
 
 Route::get('/technologies', function () {
     return Inertia::render('Technologies');
