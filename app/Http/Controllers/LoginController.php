@@ -162,7 +162,6 @@ class LoginController extends Controller
             $request->session()->regenerateToken();
     
             // Respond with success (Azure AD logout will be handled on the frontend)
-            dd( ' If user data indicates User not found');
             return response()->json(['status' => 'success', 'message' => 'Logged out locally. Handle Azure AD logout on frontend.']);
         } else {
             // If user is found, proceed with API logout
@@ -191,7 +190,6 @@ class LoginController extends Controller
                 // Regenerate the session token for security purposes
                 $request->session()->regenerateToken();
     
-                dd( ' If user is found');
                 // Respond with success (Azure AD logout will be handled on the frontend)
                 return response()->json(['status' => 'success', 'message' => 'Logged out locally. Handle Azure AD logout on frontend.']);
             } else {
