@@ -664,7 +664,7 @@ export default function NewsPage(props) {
         {
             id: 23,
             title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",
-            content1: `we welcomed an expert trainer in the field of fire safety in the workplace to Gold Tiger Logistics Solutions. The training provided has given our Chief Fire Warden and his fellow Fire Wardens the skills and knowledge to manage fire emergencies and other threats in the workplace.
+            content1: `We welcomed an expert trainer in the field of fire safety in the workplace to Gold Tiger Logistics Solutions. The training provided has given our Chief Fire Warden and his fellow Fire Wardens the skills and knowledge to manage fire emergencies and other threats in the workplace.
            
             The training included:
             `,
