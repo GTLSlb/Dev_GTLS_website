@@ -12,8 +12,12 @@ import {
 } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
 import { PublicClientApplication } from "@azure/msal-browser";
+import Cookies from "js-cookie";
+import { clearMSALLocalStorage } from "@/CommonFunctions";
 
 export default function LandingPage({}) {
+    const appUrl = window.Laravel.appUrl;
+
     const [apps, setApps] = useState([]);
     const [currentUser, setcurrentUser] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
@@ -171,30 +175,32 @@ export default function LandingPage({}) {
             redirectUri: window.Laravel.azureCallback,
         },
         cache: {
-            cacheLocation: "sessionStorage",
+            cacheLocation: "localStorage",
             storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
         },
     };
     const pca = new PublicClientApplication(msalConfig);
+
     const handleLogout = async () => {
-        const isLoggingOut = true;
-        await pca.initialize();
-        axios
-            .post("/logoutAPI", isLoggingOut)
-            .then(async (response) => {
-                if (response.status == 200) {
-                    setcurrentUser(null);
-                    const allAccounts = await pca.getAllAccounts();
-                    if (allAccounts.length > 0) {
-                        await pca.logoutRedirect({ scopes: ["user.read"], postLogoutRedirectUri: "/login" });
-                    }else{
-                        window.location.href = "/login";
-                    }
+        try {
+            const response = await axios.post("/logoutAPI");
+            console.log("Logout response:", response);
+            if (response.status === 200) {
+                setcurrentUser(null);
+
+                const isMicrosoftLogin = Cookies.get('msal.isMicrosoftLogin');
+                console.log("isMicrosoftLogin:", isMicrosoftLogin);
+                clearMSALLocalStorage();
+    
+                if (isMicrosoftLogin === 'true') {
+                    window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${appUrl}/login`;
+                } else {
+                    window.location.href = `${appUrl}/login`;
                 }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+            }
+        } catch (error) {
+            console.log("Logout error:", error);
+        }
     };
     const [appsImgs, setAppsImgs] = useState([]);
     const [isFetchingImg, setIsFetchingImg] = useState(true);

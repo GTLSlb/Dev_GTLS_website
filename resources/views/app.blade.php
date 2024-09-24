@@ -30,6 +30,7 @@
             gtamUrl: "{{ env('GTAM_API_URL') }}",
             azureCallback: "{{ env('AZURE_CALLBACK_URL') }}",
             appDomain: "{{ env('SESSION_DOMAIN') }}",
+            appUrl: "{{ env('APP_URL') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->

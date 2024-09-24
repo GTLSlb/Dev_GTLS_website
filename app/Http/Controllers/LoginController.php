@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Middleware\ApiAuth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\Driver;
 use App\Models\Employee;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -16,11 +16,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Middleware\CustomAuth;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
+use App\Http\Controllers\Auth\RegisteredUserController;
+use Dotenv\Dotenv;
 class LoginController extends Controller
 {
     /**
@@ -31,7 +28,6 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-
         $email = $request->input('Email');
         $password = $request->input('Password');
 
@@ -39,10 +35,12 @@ class LoginController extends Controller
             'Email' => $email,
             'Password' => $password,
         ];
+
         $url = $_ENV['GTAM_API_URL'];
 
         // Get an array of all the cookies
         $cookies = $_COOKIE;
+
         // Loop through each cookie and set it to expire
         foreach ($cookies as $name => $value) {
             setcookie($name, '', 1, '/', $_ENV['SESSION_DOMAIN'], true);
@@ -66,44 +64,35 @@ class LoginController extends Controller
                     // Redirect to the intended page with the obtained user
                     $user = null;
                     $TokenHeaders = [
-                        'UserId' => $responseData[0]['UserId'],
-                        'OwnerId' => $responseData[0]['OwnerId'],
+                        'UserId'=> $responseData[0]['UserId'],
+                        'OwnerId'=> $responseData[0]['OwnerId'],
                         // 'AppId'=> $appID,
-                        'Content-Type' => "application/x-www-form-urlencoded",
+                        'Content-Type'=> "application/x-www-form-urlencoded",
                     ];
                     $TokenBody = [
                         'grant_type' => "password",
                     ];
+
                     $tokenURL = $_ENV['GTAM_API_URL'];
                     $tokenRes = Http::withHeaders($TokenHeaders)
-                        ->asForm()
-                        ->post("$tokenURL" . "Token", $TokenBody);
+                    ->asForm()
+                    ->post("$tokenURL" . "Token", $TokenBody);
 
-                    if ($responseData[0]['TypeId'] == 1) // the user is a customer
+                    if($responseData[0]['TypeId'] == 1) // the user is a customer
                     {
                         $user = new Customer($responseData[0]);
-                    } else if ($responseData[0]['TypeId'] == 2) // the user is an employee
+                    }else if($responseData[0]['TypeId'] == 2) // the user is an employee
                     {
                         $user = new Employee($responseData[0]);
-                    } else { // the user is a driver
+                    }
+                    else{ // the user is a driver
                         $user = new Driver($responseData[0]);
                     }
-
                     if ($tokenRes->successful()) {
-
                         $token = $tokenRes->json();
                         $cookieName = 'access_token';
                         $cookieValue = $token['access_token'];
-                        $expiry = 60 * 60 * 24 * 2; //48h
-
-                        setcookie('previous_page', $_ENV['APP_URL'] . "/gtam/employees", time() + $expiry, '/', '', true);
-
-                        $cookieName = 'access_token';
-                        $cookieValue = $token['access_token'];
-
-                        setcookie($cookieName, $cookieValue, time() + $expiry, '/', $_ENV['SESSION_DOMAIN'], true);
-                        setcookie('refresh_token', $token['refresh_token'], time() + $expiry, '/', '', true);
-
+                        setcookie($name, '', 1, '/', $_ENV['SESSION_DOMAIN'], true);
                         $userId = $user['UserId'];
                         $request->session()->regenerate();
                         $request->session()->put('user', $user);
@@ -125,16 +114,18 @@ class LoginController extends Controller
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);
-                        //dd($request->session()->get('user')->UserId);
+
                         $request->session()->save();
                         if ($request->session()->get('newRoute') && $request->session()->get('user')) {
                             return response($request, 200);
                         }
-                    } else {
-                        $errorMessage = 'Something went wrong, try again later';
-                        $statusCode = 500;
-                        return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
-                    }
+                        }else{
+                            $errorMessage = 'Something went wrong, try again later';
+                            $statusCode = 500;
+                            return response(['error' => $response, 'Message' => $errorMessage], $statusCode);
+                        }
+
+
                 } else {
                     $errorMessage = 'Invalid Credentials';
                     $statusCode = 500;
@@ -150,71 +141,85 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        // Retrieve the 'access_token' cookie
-        $token = isset($_COOKIE['access_token']) ? $_COOKIE['access_token'] : null;
-
+        // Retrieve the 'access_token' cookie if available
+        $token = $_COOKIE['access_token'] ?? null;
+    
         // Create an instance of the RegisteredUserController and get the current user
         $userController = new RegisteredUserController();
         $user = $userController->getCurrentUserName($request);
         $userMsg = json_decode($user->content(), true);
-
-        if(gettype($userMsg) != "array" && gettype($userMsg) != "object" && gettype($userMsg) == "string") {
-        if ($userMsg['message'] == 'User not found') {
-
-                $request->session()->invalidate();
-                $request->session()->flush();
-                // Set the expiration time for the cookies to 1/1/1970
-                $expiration = 1;
-                $cookies = $_COOKIE;
-
-                // Loop through each cookie and set it to expire
-                foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
-                }
-                $request->session()->regenerateToken();
-                // return redirect('/login');
-        }} else {
-            // Extract the UserId from the response
+    
+        // If user data indicates 'User not found'
+        if (isset($userMsg['message']) && $userMsg['message'] === 'User not found') {
+            // Invalidate and flush session data
+            $request->session()->invalidate();
+            $request->session()->flush();
+    
+            // Clear cookies to log the user out fully
+            $this->clearAllCookies();
+    
+            // Regenerate the session token for security purposes
+            $request->session()->regenerateToken();
+    
+            // Respond with success (Azure AD logout will be handled on the frontend)
+            dd( ' If user data indicates User not found');
+            return response()->json(['status' => 'success', 'message' => 'Logged out locally. Handle Azure AD logout on frontend.']);
+        } else {
+            // If user is found, proceed with API logout
             $UserId = $user->original['UserId'];
-
-            // Set up headers for the logout request
+    
+            // Set up headers for the API request
             $headers = [
                 'UserId' => $UserId,
-                'Authorization' => "Bearer " . "$token",
+                'Authorization' => "Bearer " . $token,
             ];
-
-            // Define the URL for the logout request
-            $url = env('GTAM_API_URL') . "Logout";
-
+    
             // Send the logout request to the external API
+            $url = env('GTAM_API_URL') . "Logout";
             $response = Http::withHeaders($headers)->get($url);
-
+    
             // Check if the logout request was successful
             if ($response->successful()) {
-                // Invalidate and flush the session
+                // Invalidate and flush session data
                 $request->session()->forget('user');
                 $request->session()->invalidate();
                 $request->session()->flush();
-                // Set the expiration time for the cookies to 1/1/1970
-                $expiration = 1;
-
-                // Get an array of all the cookies
-                $cookies = $_COOKIE;
-
-                // Loop through each cookie and set it to expire
-                foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
-                }
-
-                // Regenerate the session token
+    
+                // Clear cookies to log the user out fully
+                $this->clearAllCookies();
+    
+                // Regenerate the session token for security purposes
                 $request->session()->regenerateToken();
+    
+                dd( ' If user is found');
+                // Respond with success (Azure AD logout will be handled on the frontend)
+                return response()->json(['status' => 'success', 'message' => 'Logged out locally. Handle Azure AD logout on frontend.']);
             } else {
-                // Handle the case where the logout request fails
+                // Handle failure in the external API call
                 return redirect()->back()->withErrors(['error' => 'Logout failed. Please try again.']);
             }
         }
     }
-
+    
+    /**
+     * Helper function to clear all cookies.
+     */
+    private function clearAllCookies()
+    {
+        // Set the expiration time for the cookies to a past date (January 1, 1970)
+        $expiration = time() - 3600;
+    
+        // Set domain and flags for cookie clearing
+        $domain = $_ENV['SESSION_DOMAIN'] ?? '';
+        $secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+    
+        // Loop through each cookie and set it to expire
+        foreach ($_COOKIE as $name => $value) {
+            // Clear the cookie for all paths and domains
+            setcookie($name, '', $expiration, '/', $domain, $secure, true); // Secure and HttpOnly flags
+        }
+    }
+    
     public function logoutWithoutRequest(Request $request)
     {
         // Retrieve the 'access_token' cookie
@@ -235,12 +240,12 @@ class LoginController extends Controller
                 $expiration = 1;
                 $cookies = $_COOKIE;
 
-                // Loop through each cookie and set it to expire
-                foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
-                }
+                $this->clearAllCookies();
+
                 $request->session()->regenerateToken();
                 // return redirect('/login');
+                return response()->json(['status' => 'success', 'message' => 'Logged out locally. Handle Azure AD logout on frontend.']);
+
         }} else {
                 // Invalidate and flush the session
                 $request->session()->forget('user');
@@ -253,25 +258,15 @@ class LoginController extends Controller
                 $cookies = $_COOKIE;
 
                 // Loop through each cookie and set it to expire
-                foreach ($cookies as $name => $value) {
-                    setcookie($name, '', $expiration, '/', $_ENV['SESSION_DOMAIN'], true);
-                }
+                $this->clearAllCookies();
 
                 // Regenerate the session token
                 $request->session()->regenerateToken();
+
+                return response()->json(['status' => 'success', 'message' => 'Logged out locally. Handle Azure AD logout on frontend.']);
+              
         }
     }
 
-    public function azureLogout()
-    {
-        // Microsoft Azure AD Logout URL
-        $azureLogoutUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
-
-        // The URL to redirect back to after logout (your application's home or login page)
-        $postLogoutRedirectUri = urlencode(route('home')); // Replace 'home' with your route name
-
-        // Redirect to Microsoft Azure logout endpoint with post-logout redirect URL
-        return redirect()->away($azureLogoutUrl . '?post_logout_redirect_uri=' . $postLogoutRedirectUri);
-        // return redirect('/login');
-    }
 }
+?>
