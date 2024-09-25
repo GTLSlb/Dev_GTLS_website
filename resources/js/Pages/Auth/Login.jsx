@@ -8,21 +8,29 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import PasswordInput from "@/Components/PasswordInput";
 import { Head, Link, useForm } from "@inertiajs/react";
-import { PublicClientApplication } from "@azure/msal-browser";
+import { PublicClientApplication, EventType  } from "@azure/msal-browser";
 import ReCAPTCHA from "react-google-recaptcha";
 import { InertiaApp } from "@inertiajs/inertia-react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import "../../../css/scroll.css";
-import axios from "axios";
-import CryptoJS from "crypto-js";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import axios from "axios";
+import CryptoJS from 'crypto-js';
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import MicrosoftLogo from "@/assets/icons/microsoft-logo.png";
+import { clearMSALLocalStorage } from "@/CommonFunctions";
 
 const msalConfig = {
     auth: {
         clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
         authority:
             "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
-        redirectUri: "http://localhost:8000/Main", // replace with your own redirect URI
+        redirectUri: window.Laravel.azureCallback,
+    },
+    cache: {
+        cacheLocation: "localStorage",
+        storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
     },
 };
 
@@ -38,6 +46,8 @@ export default function Login({ status, canResetPassword }) {
     const [passwordType, setPasswordType] = useState("password");
     const [errorMessage, setErrorMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const gtamURl = window.Laravel.gtamUrl;
+    const appDomain = window.Laravel.appDomain;
     const togglePassword = () => {
         if (passwordType === "password") {
             setPasswordType("text");
@@ -62,11 +72,7 @@ export default function Login({ status, canResetPassword }) {
         // e.preventDefault();
         setShowPassword(false);
     };
-    useEffect(() => {
-        pca.handleRedirectPromise().then(() => {
-            // handle redirect response if any
-        });
-    }, []);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -90,7 +96,7 @@ export default function Login({ status, canResetPassword }) {
     };
 
     const handleOnChangePassword = (event) => {
-        
+
         setData(
             event.target.name,
             event.target.type === "checkbox"
@@ -100,14 +106,85 @@ export default function Login({ status, canResetPassword }) {
     setPassword(event.target.value);
     }
 
-    const gtamUrl = window.Laravel.gtamUrl;
+    const loginRequest = {
+        scopes: ["openid", "profile", "User.Read"]
+    };
+    const handleLoginAzure = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        await pca.initialize();
+        // Set active account on page load
+        const accounts = pca.getAllAccounts();
+        if (accounts.length > 0) {
+            pca.setActiveAccount(accounts[0]);
+        }
+
+        pca.addEventCallback(
+            (event) => {
+                // set active account after redirect
+                if (
+                    event.eventType === EventType.LOGIN_SUCCESS &&
+                    event.payload.account
+                ) {
+                    const account = event.payload.account;
+                    pca.setActiveAccount(account);
+                }
+            },
+            (error) => {
+                console.log("error", error);
+            }
+        );
+
+        // handle auth redirect /do all initial setup for msal
+        pca.handleRedirectPromise()
+            .then(async (authResult) => {
+                // Check if user signed in
+                const account = pca.getActiveAccount();
+                if (!account) {
+                    // redirect anonymous user to login page
+                    const loginResponse = await pca.loginPopup(loginRequest);
+                    const accessToken = await loginResponse.accessToken; // Use this if returned in response
+                    axios
+                        .post("/microsoftToken", {
+                            socialiteUser: loginResponse,
+                        })
+                        .then((res) => {
+                            //Cookies.set('access_token', res.data.access_token)
+                            // console.log("Access Token:", res.data.access_token);
+                            setLoading(false);
+                            Cookies.set(
+                                "msal.isMicrosoftLogin",
+                                "true",
+                                {
+                                    domain: appDomain,
+                                    path: "/",
+                                    secure: true, // Use this if your site is served over HTTPS
+                                    sameSite: "Lax", // Optional, depending on your needs
+                                }
+                            );
+                            window.location.href = "/landingPage";
+                        })
+                        .catch((error) => {
+                            setLoading(false);
+                            console.log(error);
+                        });
+                }
+            })
+            .catch((err) => {
+                // TODO: Handle errors
+                setLoading(false);
+                console.log(err);
+            });
+    };
+
     const submit = (e) => {
         setLoading(true);
         e.preventDefault();
         setErrorMessage("")
         const hashedPassword = CryptoJS.SHA256(password).toString();
         axios
-            .get(`${gtamUrl}Login`, {
+            .get(`${gtamURl}Login`, {
                 headers: {
                     Email: email,
                     Password: hashedPassword,
@@ -119,7 +196,7 @@ export default function Login({ status, canResetPassword }) {
                     const parsedData = JSON.parse(x);
                     resolve(parsedData);
                 });
-                
+
                 const credentials = {
                     Email: email,
                     Password: hashedPassword,
@@ -128,21 +205,22 @@ export default function Login({ status, canResetPassword }) {
                 .post("/loginapi", credentials)
                 .then((response)=>{
                     if(response.status == 200) {
+                        console.log(response.data);
                        window.location.href = '/landingPage';
-                    }else{
-                        //window.location.href = '/login';
                     }
                 })
                 .catch((error) => {
-                    setLoading(false);
                     console.log(error);
+                    setLoading(false);
+                    setErrorMessage(error.response.data.Message)
                 });
             })
             .catch((err) => {
+                console.log(err);
                 setLoading(false);
-                setErrorMessage(err.response.data.Message)
+                setErrorMessage(err.response?.data?.Message)
             });
-            
+
     };
     const handleKeyPress = (event) => {
         if (event.key === "Enter") {
@@ -151,13 +229,17 @@ export default function Login({ status, canResetPassword }) {
         }
     };
 
+    useEffect(() => {
+        clearMSALLocalStorage();
+    }, []);
+
     return (
         <div className="bg-black">
             <GuestLayout>
                 <Head title="Sign in" />
                 <div className="flex  flex-col justify-center items-center ">
                     <div className=" w-full shadow-md rounded px-8 pt-6 pb-8 mb-4 relative">
-                        <form onSubmit={submit} className="space-y-4">
+                        <div className="space-y-4">
                             <div className="mt-1">
                                 <a
                                     href="/"
@@ -247,7 +329,7 @@ export default function Login({ status, canResetPassword }) {
                                         {canResetPassword && (
                                             <Link
                                                 onClick={()=>window.location.href = '/forgot-password'}
-                                                className="underline text-sm text-goldd dark:text-smooth hover:text-gray-900 dark:hover:text-goldd rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                                                className="underline text-sm text-goldd dark:text-smooth hover:text-goldd/80 dark:hover:text-goldd rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                                             >
                                                 Forgot your password?
                                             </Link>
@@ -265,9 +347,18 @@ export default function Login({ status, canResetPassword }) {
                                         className="mt-2"
                                     />
                                 </div>
-                                {/* <a className="text-white" href="/auth/azure">
-                                    Login with Microsoft Azure
-                                </a> */}
+                                <button
+                                    className="bg-[#ECECEC] py-2 w-full rounded text-dark font-bold my-3 flex items-center justify-center gap-x-4 hover:bg-[#ECECEC]/95"
+                                    onClick={(e) => {
+                                        handleLoginAzure(e);
+                                    }}
+                                >
+                                    <img
+                                        src={MicrosoftLogo}
+                                        className="w-5 h-5"
+                                    />
+                                    Sign in with Microsoft
+                                </button>
                             </div>
                             <div className="flex items-center justify-between">
                                 <button
@@ -277,16 +368,17 @@ export default function Login({ status, canResetPassword }) {
                                             : "bg-goldd hover:bg-goldt text-dark"
                                     } font-bold rounded-md border border-transparent bg-goldd py-2 px-4 text-sm font-medium  shadow-sm  focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}
                                     disabled={loading || !recaptchaValue}
-                                    type="submit"
+                                    type="button"
+                                    onClick={(e)=>submit(e)}
                                 >
                                     {loading ? (
-                                        <AiOutlineLoading3Quarters className="animate-spin w-5 h-5" />
+                                        <AiOutlineLoading3Quarters className="animate-spin" />
                                     ) : (
                                         "Sign In"
                                     )}
                                 </button>
                             </div>
-                        </form>
+                        </div>
                         <ReCAPTCHA
                             sitekey="6Lf30MEmAAAAAA4_iPf9gTM1VMNO9iSFKyaAC1P0"
                             onChange={handleRecaptchaChange}
@@ -299,7 +391,7 @@ export default function Login({ status, canResetPassword }) {
                         />
                     </div>
                 </div>
-               
+
             </GuestLayout>
         </div>
     );

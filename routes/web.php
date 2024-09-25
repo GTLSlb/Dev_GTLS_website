@@ -44,21 +44,26 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('emptyRoute');
+
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
 
 Route::get('/visitor',[UserVisitController::class, 'index']);
 
 Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
 
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
+Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
+
+Route::post('/logoutWithoutRequest', [LoginController::class, 'logoutWithoutRequest'])->name('logoutWithoutRequest');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
-    
     return Inertia::render('LandingPage');
-})->middleware(['custom'])->name('landing.page');
+})->middleware(['custom.auth'])->name('landing.page');
 
 
 Route::get('/gtms', function () {
@@ -79,7 +84,7 @@ Route::get('/gtw', function () {
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
-// })->middleware(['custom'])->name('layout');
+// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -191,20 +196,19 @@ Route::get('/downloadGTLS-docx', function () {
 });
 
 Route::get('/checkAuth', [AuthenticatedSessionController::class, 'checkAuth']);
-Route::get('/auth/azure', function () {
-    return Socialite::driver('azure')->redirect();
-});
 
-Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback']);
-Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
-
-
-Route::middleware('custom')->group(function () {
+Route::middleware('custom.auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName']);
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens']);
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList']);
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/users');
+    Route::post('/auth/azure', function () {
+        return Socialite::driver('azure')->redirect();
+    })->name('azure.login');
+    Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'])->name('azure.callback');
+    Route::post('/microsoftToken', [AzureAuthController::class, 'sendToken'])->name('azure.token');
+    Route::get('/azure/logout', [LoginController::class, 'azureLogout'])->name('azure.logout');
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/childrens');
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/childrensList');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
@@ -212,7 +216,7 @@ Route::middleware('custom')->group(function () {
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
     Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
-    
+
 });
 
 Route::get('/session-data', function () {
@@ -259,7 +263,7 @@ Route::get('/news/{slug}', function ($slug) {
     $post = Blog::where('slug', $slug)->firstOrFail();
     // $post = 123;
     return Inertia::render('NewsPage', ['postslug' => $post]);
-})->name('news');
+})->name('newsPage');
 // ******************************************************************
 
 Route::fallback(function () {
