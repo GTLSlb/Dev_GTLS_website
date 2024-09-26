@@ -197,7 +197,7 @@ function GoogleMapComp() {
                         eventFilter[filterKey] &&
                         typeArray.includes(position.event_type)
                 );
-                return isStateSelected && isEventSelected;
+                return position.id == 217;
             });
             setMarkerPositions(filteredData);
         }
@@ -216,7 +216,6 @@ function GoogleMapComp() {
                 },
             })
             .then((response) => {
-                console.log(response);
                 setLoading(false);
                 setPolyline(response.data.vehicleRoad);
             })
@@ -309,7 +308,7 @@ function GoogleMapComp() {
                                 }}
                                 // onLoad={initializeClusterer}
                             >
-                                {/* <TrafficLayer /> */}
+                                <TrafficLayer />
 
                                 {/* Render Polyline */}
                                 {polyline && (

@@ -203,15 +203,17 @@ class ConsTrackingController extends Controller
         $vehiclePositions = $this->getVehiclePositions($vehicleId, $fromDate, $toDate);
         $vehicleRoad = $this->getVehicleRoad($vehiclePositions);
         $snappedRoad = $this->conService->snapToRoads($vehicleRoad);
-        $routeWithEvents = $this->conService->filterEventsOnRoute($vehicleRoad);
-        
+        $eventsOnRoute = $this->conService->checkEventsOnRoute($vehicleRoad);
+        foreach ($eventsOnRoute as $event) {
+            echo $event->description . "\n";
+        }
         return response()->json([
             // 'message' => 'All Data exist', 
             // 'vehicleNo' =>  $vehicleNo, 
             // 'vehicleId' => $vehicleId, 
             // 'vehiclePositions' => $vehiclePositions, 
             'vehicleRoad' => $snappedRoad ,
-            'routeWithEvents' => $routeWithEvents
+            'routeWithEvents' => $eventsOnRoute
         ], 
             200);
     }

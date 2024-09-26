@@ -35,4 +35,8 @@ class TrafficData extends Model
         'advice',
         'information',
     ];
+
+    protected $casts = [
+        'location' => 'string',
+    ];
 }

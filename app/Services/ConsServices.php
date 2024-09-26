@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Services;
+use App\Models\TrafficDataNSW;
 use Spatie\Async\Pool;
 use Illuminate\Support\Facades\Log;
 use App\Models\ConsData;
@@ -288,9 +289,7 @@ class ConsServices
         }
     
         return $eventsOnRoad;
-    }
-    
-    
+    } 
 
     private function getPerpendicularDistanceToSegment($point, $lineStart, $lineEnd)
     {
@@ -440,38 +439,112 @@ class ConsServices
     public function snapToRoads(array $coordinates)
     {
         try {
-            // Build the path parameter by concatenating lat/lng pairs
-            $path = implode('|', array_map(function ($coordinate) {
-                return $coordinate['lat'] . ',' . $coordinate['lng'];
-            }, $coordinates));
-
-            // Send a request to the Google Roads API
-            $response = Http::get("https://roads.googleapis.com/v1/snapToRoads", [
-                'path' => $path,
-                'key' => $this->googleApiKey,
-                'interpolate' => true  // Optional: returns interpolated points along the road
-            ]);
-            if ($response->successful()) {
-                $data = $response->json();
-                $snappedPoints = [];
-
-                // Extract snapped points from the API response
-                foreach ($data['snappedPoints'] as $point) {
-                    $snappedPoints[] = [
-                        'lat' => $point['location']['latitude'],
-                        'lng' => $point['location']['longitude'],
+            $interpolatedCoordinates = [];
+    
+            // Function to interpolate between two coordinates
+            $interpolatePoints = function ($point1, $point2, $numPoints = 5) {
+                $points = [];
+                $latDiff = ($point2['lat'] - $point1['lat']) / ($numPoints + 1);
+                $lngDiff = ($point2['lng'] - $point1['lng']) / ($numPoints + 1);
+    
+                for ($i = 1; $i <= $numPoints; $i++) {
+                    $points[] = [
+                        'lat' => $point1['lat'] + $latDiff * $i,
+                        'lng' => $point1['lng'] + $lngDiff * $i
                     ];
                 }
-
-                return $snappedPoints;  // Return the snapped coordinates
-            } else {
-                Log::error("Failed to snap coordinates to roads: " . $response->body());
-                return [];
+    
+                return $points;
+            };
+    
+            // Loop through the provided coordinates and add interpolated points
+            for ($i = 0; $i < count($coordinates) - 1; $i++) {
+                // Add the current coordinate
+                $interpolatedCoordinates[] = $coordinates[$i];
+    
+                // Add interpolated points between this coordinate and the next
+                $interpolatedCoordinates = array_merge(
+                    $interpolatedCoordinates,
+                    $interpolatePoints($coordinates[$i], $coordinates[$i + 1])
+                );
             }
+    
+            // Add the last coordinate
+            $interpolatedCoordinates[] = $coordinates[count($coordinates) - 1];
+    
+            // Split interpolated coordinates into batches of 100 or fewer
+            $batches = array_chunk($interpolatedCoordinates, 100);
+    
+            $snappedPoints = [];
+    
+            foreach ($batches as $batch) {
+                // Build the path parameter by concatenating lat/lng pairs
+                $path = implode('|', array_map(function ($coordinate) {
+                    return $coordinate['lat'] . ',' . $coordinate['lng'];
+                }, $batch));
+    
+                // Send a request to the Google Roads API
+                $response = Http::get("https://roads.googleapis.com/v1/snapToRoads", [
+                    'path' => $path,
+                    'key' => $this->googleApiKey,
+                    'interpolate' => true  // Optional: returns interpolated points along the road
+                ]);
+    
+                if ($response->successful()) {
+                    $data = $response->json();
+    
+                    // Extract snapped points from the API response
+                    foreach ($data['snappedPoints'] as $point) {
+                        $snappedPoints[] = [
+                            'lat' => $point['location']['latitude'],
+                            'lng' => $point['location']['longitude'],
+                        ];
+                    }
+                } else {
+                    Log::error("Failed to snap coordinates to roads: " . $response->body());
+                    return [];
+                }
+            }
+    
+            return $snappedPoints;  // Return the snapped coordinates
+    
         } catch (\Exception $e) {
             Log::error("Error in snapToRoads: " . $e->getMessage());
             return [];
         }
     }
-
+    
+    public function checkEventsOnRoute(array $routeCoordinates)
+    {
+        // Convert route coordinates to WKT LineString
+        $lineStringWKT = $this->convertCoordinatesToLineStringWKT($routeCoordinates);
+    
+        // Distance threshold in meters (e.g., 1000 meters)
+        $distanceThresholdMeters = 20;
+    
+        // Convert distance from meters to degrees (approximate)
+        $bufferDistanceDegrees = $distanceThresholdMeters / 111320; // Meters per degree at the equator
+    
+        // Query events using raw SQL
+        $events = TrafficDataNSW::selectRaw("id, ST_AsText(location) as location_wkt")
+        ->whereRaw(
+            "ST_Intersects(
+                location,
+                ST_Buffer(ST_GeomFromText(?, 4326), ?)
+            )",
+            [$lineStringWKT, $bufferDistanceDegrees]
+        )->get();
+    
+    
+        return $events;
+    }
+    
+    private function convertCoordinatesToLineStringWKT(array $coordinates)
+    {
+        $points = array_map(function ($coordinate) {
+            return "{$coordinate['lng']} {$coordinate['lat']}";
+        }, $coordinates);
+    
+        return 'LINESTRING(' . implode(',', $points) . ')';
+    }
 }

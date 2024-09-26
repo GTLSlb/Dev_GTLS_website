@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "aa975542b5cc2cd63d10c5c2869da183",
+    "content-hash": "fbf05cb3ac27427abf783ca15e6ede54",
     "packages": [
         {
             "name": "alexazartsev/heroicon",
@@ -5913,6 +5913,67 @@
                 }
             ],
             "time": "2023-12-25T11:46:58+00:00"
+        },
+        {
+            "name": "staudenmeir/laravel-cte",
+            "version": "v1.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staudenmeir/laravel-cte.git",
+                "reference": "cc1d3cff4eabb94a07afecf13306eb3f2a1d68e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staudenmeir/laravel-cte/zipball/cc1d3cff4eabb94a07afecf13306eb3f2a1d68e0",
+                "reference": "cc1d3cff4eabb94a07afecf13306eb3f2a1d68e0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "harrygulliford/laravel-firebird": "^3.2",
+                "orchestra/testbench": "^8.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.1",
+                "singlestoredb/singlestoredb-laravel": "^1.5.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Staudenmeir\\LaravelCte\\DatabaseServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Staudenmeir\\LaravelCte\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonas Staudenmeir",
+                    "email": "mail@jonas-staudenmeir.de"
+                }
+            ],
+            "description": "Laravel queries with common table expressions",
+            "support": {
+                "issues": "https://github.com/staudenmeir/laravel-cte/issues",
+                "source": "https://github.com/staudenmeir/laravel-cte/tree/v1.10.1"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/JonasStaudenmeir",
+                    "type": "custom"
+                }
+            ],
+            "time": "2024-07-11T09:04:40+00:00"
         },
         {
             "name": "symfony/cache",
