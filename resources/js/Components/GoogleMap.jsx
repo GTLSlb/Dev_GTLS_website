@@ -10,13 +10,12 @@ import { Spinner } from "flowbite-react";
 import axios from "axios";
 import {
     Checkbox,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Typography,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
+import LocationOn from "@mui/icons-material/LocationOn";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import List from "@mui/icons-material/List";
+import HelpCenterRounded from "@mui/icons-material/HelpCenterRounded";
 import Roadworks from "@/assets/icons/RoadWork.png";
 import Alpine from "@/assets/icons/Alpine.png";
 import Flooding from "@/assets/icons/Flooding.png";
@@ -27,7 +26,6 @@ import Major from "@/assets/icons/Major.png";
 import RegionalLGA from "@/assets/icons/RegionalLGA.png";
 import Other from "@/assets/icons/Other.png";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-
 
 const center = { lat: -25.2744, lng: 133.7751 };
 const australiaBounds = { north: -5.0, south: -55.0, east: 165.0, west: 105.0 };
@@ -92,7 +90,6 @@ function formatLastUpdated(minutesDifference) {
         return `Updated ${minutesDifference} minutes ago`;
     }
 }
-
 
 function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
@@ -162,7 +159,10 @@ function GoogleMapComp() {
         });
     };
 
-    
+    const handleClose = () => {
+        setMarkerDetails(null);
+    };
+
     const initializeClusterer = useCallback((map) => {
         mapRef.current = map;
 
@@ -197,7 +197,7 @@ function GoogleMapComp() {
                         eventFilter[filterKey] &&
                         typeArray.includes(position.event_type)
                 );
-                return position.id == 217;
+                return isEventSelected && isStateSelected;
             });
             setMarkerPositions(filteredData);
         }
@@ -218,6 +218,11 @@ function GoogleMapComp() {
             .then((response) => {
                 setLoading(false);
                 setPolyline(response.data.vehicleRoad);
+
+                // Zoom to fit the polyline if map is ready
+                if (mapRef.current && response.data.vehicleRoad) {
+                    zoomToPolyline(response.data.vehicleRoad);
+                }
             })
             .catch((error) => {
                 setLoading(false);
@@ -225,12 +230,42 @@ function GoogleMapComp() {
             });
     };
 
+    // Ensure mapRef.current is ready before zooming to polyline
+    useEffect(() => {
+        if (polyline && mapRef.current) {
+            zoomToPolyline(polyline);
+        }
+    }, [polyline]);
+
+    const zoomToPolyline = (path) => {
+        if (!mapRef.current || !path || path.length === 0) return;
+    
+        const bounds = new window.google.maps.LatLngBounds();
+    
+        // Extend bounds for each point in the polyline
+        path.forEach((point) => {
+            bounds.extend(new window.google.maps.LatLng(point.lat, point.lng));
+        });
+    
+        // Fit the map to the bounds of the polyline with animation options
+        mapRef.current.fitBounds(bounds, {
+            padding: 50, // Optional: Adds padding around the polyline
+            duration: 1000, // Duration in milliseconds
+            easing: 'easeInOut', // Easing function
+        });
+    };
+    
+
     const polylineOptions = {
         strokeColor: "#FF0000", // Red color
         strokeOpacity: 1.0,     // Full opacity
         strokeWeight: 5,        // Thicker line
     };
-    
+
+    const formatDateTime = (dateTimeString) => {
+        const dateObj = new Date(dateTimeString);
+        return dateObj.toLocaleString();
+    };
 
     return (
         <div className="md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
@@ -306,7 +341,7 @@ function GoogleMapComp() {
                                         strictBounds: true,
                                     },
                                 }}
-                                // onLoad={initializeClusterer}
+                                onLoad={initializeClusterer}
                             >
                                 <TrafficLayer />
 
@@ -323,21 +358,21 @@ function GoogleMapComp() {
                                         onClick={() =>
                                             handleMarkerClick(position)
                                         }
-                                        // onLoad={(marker) => {
-                                        //     // Add marker to clusterer
-                                        //     if (clustererRef.current) {
-                                        //         clustererRef.current.addMarker(
-                                        //             marker
-                                        //         );
-                                        //     }
-                                        // }}
+                                        onLoad={(marker) => {
+                                            // Add marker to clusterer
+                                            if (clustererRef.current) {
+                                                clustererRef.current.addMarker(
+                                                    marker
+                                                );
+                                            }
+                                        }}
                                     />
                                 ))}
-                                {/* Marker rendering logic can be here if needed */}
                             </GoogleMap>
                         </LoadScript>
                     </div>
 
+                    {/* Sidebar */}
                     <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
@@ -622,8 +657,8 @@ function GoogleMapComp() {
                                             Roadworks
                                         </p>
                                     </div>
-                                    {/* Incident Filter */}
-                                    <div
+                                      {/* Incident Filter */}
+                                      <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer   "
                                         onClick={() =>
                                             setEventFilter((prev) => ({
@@ -911,4 +946,3 @@ function GoogleMapComp() {
 }
 
 export default GoogleMapComp;
-
