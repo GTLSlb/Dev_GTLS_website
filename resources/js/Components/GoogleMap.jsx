@@ -1,45 +1,38 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
     GoogleMap,
     LoadScript,
     Polyline,
     Marker,
+    TrafficLayer,
 } from "@react-google-maps/api";
-
+import { Spinner } from "flowbite-react";
+import axios from "axios";
+import {
+    Checkbox,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
+    Typography,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CloseIcon from "@mui/icons-material/Close";
 import Roadworks from "@/assets/icons/RoadWork.png";
 import Alpine from "@/assets/icons/Alpine.png";
 import Flooding from "@/assets/icons/Flooding.png";
 import Congestion from "@/assets/icons/Congestion.png";
 import Hazard from "@/assets/icons/Hazard.png";
-import RegionalLGA from "@/assets/icons/RegionalLGA.png";
 import Incident from "@/assets/icons/Incident.png";
 import Major from "@/assets/icons/Major.png";
+import RegionalLGA from "@/assets/icons/RegionalLGA.png";
 import Other from "@/assets/icons/Other.png";
-import TrafficLayer from "./TrafficLayer";
-import Crash from "../assets/pictures/Crash.png";
-import SpecialEvent from "../assets/pictures/SpecialEvents.png";
-import { Checkbox } from "@mui/material";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import axios from "axios";
 
-import {
-    HelpCenterOutlined,
-    HelpCenterRounded,
-    List,
-    LocationOn,
-} from "@mui/icons-material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import CloseIcon from "@mui/icons-material/Close";
-import "../../css/scroll.css";
-import { useCallback } from "react";
+
 const center = { lat: -25.2744, lng: 133.7751 };
 const australiaBounds = { north: -5.0, south: -55.0, east: 165.0, west: 105.0 };
 
+// Mapping event types to icon categories
 const eventTypeMapping = {
     Roadworks: ["ROADWORKS", "24HR ROADWORKS", "Roadwork", "Roadworks"],
     Alpine: ["Alpine"],
@@ -48,16 +41,11 @@ const eventTypeMapping = {
     Hazard: ["Hazard", "Vehicle fire", "Fire", "Vehicle rollover", "Landslip"],
     "Regional LGA Incident": ["Regional LGA Incident", "Emergency Incident"],
     "Major Event": ["Major Event", "Special event", "Demonstration"],
-    Incident: [
-        "INCIDENT",
-        "COLLISION",
-        "Incident",
-        "Crash",
-        "Emergency Incident",
-    ],
+    Incident: ["INCIDENT", "COLLISION", "Incident", "Crash", "Emergency Incident"],
     Other: ["Equipment damage", "Equipment fault"],
 };
 
+// Mapping icons to categories
 const iconMappings = {
     Roadworks,
     Alpine,
@@ -105,25 +93,17 @@ function formatLastUpdated(minutesDifference) {
     }
 }
 
-function GoogleMapComp() { 
 
-    // todo: Add loading spinner for the map to load and the marker clusterer to load
-    // todo: Fix the the onClick event for the marker clusterer
-    // todo: Check why the QLD Events are not showing ( the googlemap is still showing the marker based on the lat and lng so it need to be fixed to be on geometry coordinates)
+function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
-    const [routePolyline, setRoutePolyline] = useState(null);
-    const [isRouteClear, setIsRouteClear] = useState(null);
-    const [startLat, setStartLat] = useState("");
-    const [startLng, setStartLng] = useState("");
-    const [endLat, setEndLat] = useState("");
-    const [endLng, setEndLng] = useState("");
-    const [eventsOnRoute, setEventsOnRoute] = useState([]);
-    const [startCoords, setStartCoords] = useState(null);
-    const [endCoords, setEndCoords] = useState(null);
-    const [startAddress, setStartAddress] = useState(null);
-    const [endAddress, setEndAddress] = useState(null);
+    const [consignmentNb, setConsignmentNb] = useState("");
+    const [typeId, setTypeId] = useState("");
+    const [fromdate, setFromdate] = useState("");
+    const [todate, setTodate] = useState("");
     const [lastUpdatedAt, setLastUpdatedAt] = useState();
+    const [loading, setLoading] = useState(false);
+    const [polyline, setPolyline] = useState(null);
     const [eventFilter, setEventFilter] = useState({
         Roadworks: true,
         Incident: true,
@@ -161,191 +141,9 @@ function GoogleMapComp() {
 
     useEffect(() => {
         fetchPositions();
-        const intervalId = setInterval(fetchPositions, 3600000); // Fetch data every 60 minutes
+        const intervalId = setInterval(fetchPositions, 3600000); // Fetch every 60 minutes
         return () => clearInterval(intervalId);
     }, []);
-
-    const reverseGeocode = async (lat, lng) => {
-        try {
-            const response = await axios.get("/api/geocode", {
-                params: { lat, lng },
-            });
-
-            if (response.data.status === "OK") {
-                return response.data.results[0].formatted_address;
-            } else {
-                console.error(
-                    "Geocoding error:",
-                    response.data.error || response.data.status
-                );
-                return null;
-            }
-        } catch (error) {
-            console.error("Error fetching address data:", error);
-            return null;
-        }
-    };
-
-    const getRouteUsingRoutesAPI = async () => {
-        // Call the Routes API to get the route between two coordinates
-        const startLatNum = parseFloat(startLat);
-        const startLngNum = parseFloat(startLng);
-        const endLatNum = parseFloat(endLat);
-        const endLngNum = parseFloat(endLng);
-
-        if (
-            isNaN(startLatNum) ||
-            isNaN(startLngNum) ||
-            isNaN(endLatNum) ||
-            isNaN(endLngNum)
-        ) {
-            console.error("Invalid coordinates provided.");
-            return;
-        }
-
-        const fetchedStartAddress = await reverseGeocode(
-            startLatNum,
-            startLngNum
-        );
-        const fetchedEndAddress = await reverseGeocode(endLatNum, endLngNum);
-
-        if (!fetchedStartAddress || !fetchedEndAddress) {
-            console.error("Failed to retrieve one or both locations.");
-            return;
-        }
-
-        const startCoords = { lat: startLatNum, lng: startLngNum };
-        const endCoords = { lat: endLatNum, lng: endLngNum };
-
-        setStartCoords(startCoords);
-        setEndCoords(endCoords);
-        setStartAddress(fetchedStartAddress);
-        setEndAddress(fetchedEndAddress);
-
-        try {
-            const response = await axios.post(
-                `https://routes.googleapis.com/directions/v2:computeRoutes`,
-                {
-                    origin: {
-                        location: {
-                            latLng: {
-                                latitude: startLatNum,
-                                longitude: startLngNum,
-                            },
-                        },
-                    },
-                    destination: {
-                        location: {
-                            latLng: {
-                                latitude: endLatNum,
-                                longitude: endLngNum,
-                            },
-                        },
-                    },
-                    travelMode: "DRIVE",
-                    polylineQuality: "HIGH_QUALITY",
-                },
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Goog-Api-Key":
-                            "AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go",
-                        "X-Goog-FieldMask": "routes",
-                    },
-                }
-            );
-
-            if (response.data.routes && response.data.routes.length > 0) {
-                const polylinePoints =
-                    response.data.routes[0].polyline.encodedPolyline;
-                const decodedPath =
-                    window.google.maps.geometry.encoding.decodePath(
-                        polylinePoints
-                    );
-                const route = decodedPath.map((point) => ({
-                    lat: point.lat(),
-                    lng: point.lng(),
-                }));
-
-                setRoutePolyline(route);
-                fitMapToBounds(route);
-
-                // Filter events on the route
-                const eventsOnRoad = markerPositions.filter((marker) => {
-                    return route.some((point, index) => {
-                        if (index === route.length - 1) return false; // No segment after the last point
-                        const distance = getPerpendicularDistanceToSegment(
-                            marker,
-                            point,
-                            route[index + 1]
-                        );
-                        return distance <= 10; // Adjust the tolerance value (in meters) as needed
-                    });
-                });
-
-                setEventsOnRoute(events);
-                setIsRouteClear(events.length === 0);
-            } else {
-                console.error("No valid routes found.");
-            }
-        } catch (error) {
-            console.error("Error fetching routes data:", error);
-        }
-    };
-
-    const fitMapToBounds = (route) => {
-        if (mapRef.current && route.length > 0) {
-            const bounds = new window.google.maps.LatLngBounds();
-            route.forEach((point) => {
-                bounds.extend(
-                    new window.google.maps.LatLng(point.lat, point.lng)
-                );
-            });
-            mapRef.current.fitBounds(bounds);
-        }
-    };
-    const getPerpendicularDistanceToSegment = (point, lineStart, lineEnd) => {
-        const { lat: x1, lng: y1 } = lineStart;
-        const { lat: x2, lng: y2 } = lineEnd;
-        const { lat: px, lng: py } = point;
-
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-        const magnitude = dx * dx + dy * dy;
-        let u = ((px - x1) * dx + (py - y1) * dy) / magnitude;
-
-        if (u < 0) u = 0;
-        else if (u > 1) u = 1;
-
-        const closestX = x1 + u * dx;
-        const closestY = y1 + u * dy;
-
-        const dist = Math.sqrt(
-            Math.pow(closestX - px, 2) + Math.pow(closestY - py, 2)
-        );
-
-        // Convert distance from degrees to meters (using a rough estimate)
-        const metersPerDegreeLat = 111320;
-        const metersPerDegreeLng = 111320 * Math.cos((x1 * Math.PI) / 180);
-        return dist * Math.sqrt(metersPerDegreeLat * metersPerDegreeLng);
-    };
-    // const getDistanceBetweenPoints = (point1, point2) => {
-    //     const rad = (x) => (x * Math.PI) / 180;
-    //     const R = 6378137;
-
-    //     const dLat = rad(point2.lat - point1.lat);
-    //     const dLong = rad(point2.lng - point1.lng);
-
-    //     const a =
-    //         Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    //         Math.cos(rad(point1.lat)) *
-    //             Math.cos(rad(point2.lat)) *
-    //             Math.sin(dLong / 2) *
-    //             Math.sin(dLong / 2);
-    //     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    //     return R * c;
-    // };
 
     const handleMarkerClick = (position) => {
         setMarkerDetails({
@@ -364,23 +162,18 @@ function GoogleMapComp() {
         });
     };
 
+    
     const initializeClusterer = useCallback((map) => {
         mapRef.current = map;
 
-        // Initialize MarkerClusterer with new keyword
+        // Create the MarkerClusterer instance
         clustererRef.current = new MarkerClusterer({
             map,
-            markers: [],
+            markers: [], // Add any markers to this array later
         });
     }, []);
 
-    const renderMarkers = () => {};
-
     const getIcon = (eventType) => {
-        if (!window.google || !window.google.maps) {
-            return null;
-        }
-
         const mainCategory = Object.keys(eventTypeMapping).find((category) =>
             eventTypeMapping[category].includes(eventType)
         );
@@ -404,480 +197,96 @@ function GoogleMapComp() {
                         eventFilter[filterKey] &&
                         typeArray.includes(position.event_type)
                 );
-                const isSpecificEvent = position.event_id == "Unplanned:RID:RUD-INC1005652_RUD-IMP1005653";
-                // return isSpecificEvent;
                 return isStateSelected && isEventSelected;
             });
             setMarkerPositions(filteredData);
         }
     }, [eventFilter, stateFilter, originalData]);
 
-    function formatDateTime(dateString) {
-        const date = new Date(dateString);
+    const getConsignmentRoute = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        axios
+            .get("/getConsignmentRoute", {
+                params: {
+                    consignmentNo: consignmentNb,
+                    typeId: typeId,
+                    fromDate: fromdate,
+                    toDate: todate,
+                },
+            })
+            .then((response) => {
+                console.log(response);
+                setLoading(false);
+                setPolyline(response.data.vehicleRoad);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+            });
+    };
 
-        const day = date.getDate(); // Get the day of the month
-        const month = date.toLocaleString("default", { month: "long" }); // Get the month name
-        const year = date.getFullYear(); // Get the full year
-
-        let hours = date.getHours(); // Get the hours
-        const minutes = date.getMinutes(); // Get the minutes
-        const ampm = hours >= 12 ? "pm" : "am"; // Determine AM or PM
-
-        hours = hours % 12; // Convert to 12-hour format
-        hours = hours ? hours : 12; // The hour '0' should be '12'
-
-        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes; // Add leading zero to minutes if needed
-
-        return `${day} ${month} ${year} ${hours}:${formattedMinutes}${ampm}`;
-    }
-
-    function handleClose() {
-        setMarkerDetails(null);
-    }
+    const polylineOptions = {
+        strokeColor: "#FF0000", // Red color
+        strokeOpacity: 1.0,     // Full opacity
+        strokeWeight: 5,        // Thicker line
+    };
+    
 
     return (
         <div className="md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
             <div className="text-goldt text-4xl font-semibold">
-                National Road events
+                National Road Events
             </div>
             <p className="text-sm text-white">
                 {lastUpdatedAt && <LastUpdated lastUpdatedAt={lastUpdatedAt} />}
             </p>
 
-            <div className="flex mt-4 mb-4">
+            <div className="mt-4 mb-4 flex">
                 <input
                     type="text"
-                    placeholder="Start Latitude"
-                    value={startLat}
-                    onChange={(e) => setStartLat(e.target.value)}
-                    className="border p-2 mr-2 w-full"
-                />
-
-                <input
-                    type="text"
-                    placeholder="Start Longitude"
-                    value={startLng}
-                    onChange={(e) => setStartLng(e.target.value)}
+                    placeholder="Consignment Number"
+                    value={consignmentNb}
+                    onChange={(e) => setConsignmentNb(e.target.value)}
                     className="border p-2 mr-2 w-full"
                 />
                 <input
-                    type="text"
-                    placeholder="End Latitude"
-                    value={endLat}
-                    onChange={(e) => setEndLat(e.target.value)}
+                    type="number"
+                    placeholder="Consignment Type"
+                    value={typeId}
+                    onChange={(e) => setTypeId(e.target.value)}
                     className="border p-2 mr-2 w-full"
                 />
                 <input
-                    type="text"
-                    placeholder="End Longitude"
-                    value={endLng}
-                    onChange={(e) => setEndLng(e.target.value)}
+                    type="datetime-local"
+                    placeholder="From Date"
+                    value={fromdate}
+                    onChange={(e) => setFromdate(e.target.value)}
+                    className="border p-2 mr-2 w-full"
+                />
+                <input
+                    type="datetime-local"
+                    placeholder="To Date"
+                    value={todate}
+                    onChange={(e) => setTodate(e.target.value)}
                     className="border p-2 mr-2 w-full"
                 />
                 <button
-                    onClick={getRouteUsingRoutesAPI}
+                    onClick={(e) => getConsignmentRoute(e)}
                     className="bg-blue-500 text-white p-2"
                 >
                     Check
                 </button>
             </div>
 
-            <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
-                {markerDetails ? (
-                    <>
-                        {/* Details Section */}
-                        <div className="flex justify-between">
-                            <div className="flex gap-5 items-center">
-                                <img
-                                    src={markerDetails.image}
-                                    alt=""
-                                    width={30}
-                                    height={30}
-                                />
-                                <div>
-                                    <p className="font-bold text-lg text-white">
-                                        {markerDetails.type}
-                                    </p>
-                                </div>
-                            </div>
-                            <button onClick={() => setMarkerDetails(null)}>
-                                <CloseIcon sx={{ color: "#e0c981" }} />
-                            </button>
-                        </div>
-                        <div className="mt-8 flex gap-7 items-start">
-                            <LocationOn sx={{ color: "#e0c981" }} />
-                            <div className="flex flex-col text-white">
-                                <p className="font-semibold">
-                                    {markerDetails.subsurb}
-                                </p>
-                                <p className=" font-thin">
-                                    {markerDetails.roadName}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="mt-8 flex gap-7 items-start">
-                            <AccessTimeIcon sx={{ color: "#e0c981" }} />
-                            <div className="flex flex-col text-white">
-                                <p className="font-thin">
-                                    Started At{" "}
-                                    {formatDateTime(markerDetails.startDate)}
-                                </p>
-                                {markerDetails.endDate && (
-                                    <p className="font-thin">
-                                        Ends At{" "}
-                                        {formatDateTime(markerDetails.endDate)}
-                                    </p>
-                                )}
-                            </div>
-                        </div>
-                        {markerDetails.advice && (
-                            <div className="mt-8 flex gap-7 items-start">
-                                <List sx={{ color: "#e0c981" }} />
-                                <div className="flex flex-col text-white">
-                                    <p className="font-semibold">Advice</p>
-                                    <p className=" font-thin">
-                                        {markerDetails.advice}
-                                    </p>
-                                </div>
-                            </div>
-                        )}
-                        {markerDetails.information ||
-                        markerDetails.otherAdvice ? (
-                            <div className="mt-8 flex gap-7 items-start">
-                                <HelpCenterRounded sx={{ color: "#e0c981" }} />
-                                <div className="flex flex-col text-white">
-                                    <p className="font-semibold">Information</p>
-                                    <p
-                                        className="font-thin max-w-60 max-h-[300px] overflow-auto pr-2 containerscroll"
-                                        style={{
-                                            wordBreak: "break-word",
-                                            hyphens: "auto",
-                                        }}
-                                        dangerouslySetInnerHTML={{
-                                            __html:
-                                                markerDetails.information ||
-                                                markerDetails.otherAdvice,
-                                        }}
-                                    ></p>
-                                </div>
-                            </div>
-                        ) : null}
-                    </>
-                ) : (
-                    <>
-                        <p className="text-3xl text-goldt mt-1">
-                            Events on Route
-                        </p>
-                        {/* Display the route check result */}
-                        {isRouteClear !== null && (
-                            <div className="mt-4">
-                                {isRouteClear ? (
-                                    <p className="text-green-500">
-                                        This road is empty of eventes.
-                                    </p>
-                                ) : (
-                                    <p className="text-red-500">
-                                        This road is blocked.
-                                    </p>
-                                )}
-                            </div>
-                        )}
-                        {eventsOnRoute.length > 0 ? (
-                            <ul>
-                                {eventsOnRoute.map((event, index) => (
-                                    <li key={index} className="mt-4">
-                                        <div className="flex gap-4 items-center">
-                                            <img
-                                                src={
-                                                    getIcon(event.event_type)
-                                                        .url
-                                                }
-                                                alt=""
-                                                width={20}
-                                                height={20}
-                                            />
-                                            <div>
-                                                <p className="text-white font-semibold">
-                                                    {event.event_type}
-                                                </p>
-                                                <p className="text-white text-sm">
-                                                    {event.road_name},{" "}
-                                                    {event.suburb}
-                                                </p>
-                                                <p className="text-white text-xs">
-                                                    {formatDateTime(
-                                                        event.start_date
-                                                    )}{" "}
-                                                    -{" "}
-                                                    {event.end_date
-                                                        ? formatDateTime(
-                                                              event.end_date
-                                                          )
-                                                        : "Ongoing"}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p className="text-green-500">
-                                No events on this route.
-                            </p>
-                        )}
-                    </>
-                )}
-            </div>
-
-            <div className="hidden h-full">
-                {/* Filter for mobile */}
-                <Accordion
-                    className="block md:hidden"
-                    sx={{
-                        backgroundColor: "#2a3034",
-                        height: "4rem",
-                        position: "absolute",
-                        zIndex: 10,
-                        width: "100%",
-                    }}
-                >
-                    <AccordionSummary
-                        expandIcon={
-                            <ExpandMoreIcon sx={{ color: "#e0c981" }} />
-                        }
-                        sx={{ backgroundColor: "#2a3034" }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{ color: "#e0c981", fontWeight: "bold" }}
-                        >
-                            Weather & Flood Map
-                        </Typography>
-                    </AccordionSummary>
-                    <AccordionDetails
-                        sx={{
-                            backgroundColor: "#2a3034",
-                            paddingTop: "2rem",
-                            position: "absolute",
-                            width: "100%",
-                            zIndex: 10,
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                color: "#e0c981",
-                                marginBottom: "1rem",
-                                marginLeft: "2rem",
-                                marginTop: "1rem",
-                                fontWeight: "bold",
-                            }}
-                        >
-                            Event Type
-                        </Typography>
-                        <div className="flex gap-3 flex-col select-none">
-                            <div
-                                onClick={() =>
-                                    setEventFilter((prev) => ({
-                                        ...prev,
-                                        Roadworks: !prev["Roadworks"],
-                                    }))
-                                }
-                                className="ml-12 mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer "
-                            >
-                                <Checkbox
-                                    onChange={(e) =>
-                                        setEventFilter((prev) => ({
-                                            ...prev,
-                                            Roadworks: e.target.checked,
-                                        }))
-                                    }
-                                    checked={eventFilter["Roadworks"]}
-                                    sx={{
-                                        color: "#e2b540",
-                                        "&.Mui-checked": {
-                                            color: "#ebcb7a",
-                                        },
-                                    }}
-                                    defaultChecked
-                                />
-                                <img
-                                    src={Roadworks}
-                                    width={28}
-                                    height={21}
-                                    alt=""
-                                />
-                                <Typography
-                                    variant="body1"
-                                    sx={{ color: "white" }}
-                                >
-                                    Roadworks
-                                </Typography>
-                            </div>
-
-                            <div
-                                onClick={() =>
-                                    setEventFilter((prev) => ({
-                                        ...prev,
-                                        "Special event": !prev["Special event"],
-                                    }))
-                                }
-                                className="ml-12 mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer "
-                            >
-                                <Checkbox
-                                    onChange={(e) =>
-                                        setEventFilter((prev) => ({
-                                            ...prev,
-                                            "Special event": e.target.checked,
-                                        }))
-                                    }
-                                    checked={eventFilter["Special event"]}
-                                    sx={{
-                                        color: "#e2b540",
-                                        "&.Mui-checked": {
-                                            color: "#ebcb7a",
-                                        },
-                                    }}
-                                    defaultChecked
-                                />
-                                <img
-                                    src={SpecialEvent}
-                                    width={28}
-                                    height={21}
-                                    alt=""
-                                />
-                                <Typography
-                                    variant="body1"
-                                    sx={{ color: "white" }}
-                                >
-                                    Special Event
-                                </Typography>
-                            </div>
-
-                            <div
-                                onClick={() =>
-                                    setEventFilter((prev) => ({
-                                        ...prev,
-                                        Crash: !prev["Crash"],
-                                    }))
-                                }
-                                className="ml-12 mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer "
-                            >
-                                <Checkbox
-                                    onChange={(e) =>
-                                        setEventFilter((prev) => ({
-                                            ...prev,
-                                            Crash: e.target.checked,
-                                        }))
-                                    }
-                                    checked={eventFilter["Crash"]}
-                                    sx={{
-                                        color: "#e2b540",
-                                        "&.Mui-checked": {
-                                            color: "#ebcb7a",
-                                        },
-                                    }}
-                                    defaultChecked
-                                />
-                                <img
-                                    src={Crash}
-                                    width={28}
-                                    height={21}
-                                    alt=""
-                                />
-                                <Typography
-                                    variant="body1"
-                                    sx={{ color: "white" }}
-                                >
-                                    Crash
-                                </Typography>
-                            </div>
-
-                            <div
-                                onClick={() =>
-                                    setEventFilter((prev) => ({
-                                        ...prev,
-                                        Hazard: !prev["Hazard"],
-                                    }))
-                                }
-                                className="ml-12 mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer "
-                            >
-                                <Checkbox
-                                    onChange={(e) =>
-                                        setEventFilter((prev) => ({
-                                            ...prev,
-                                            Hazard: e.target.checked,
-                                        }))
-                                    }
-                                    checked={eventFilter["Hazard"]}
-                                    sx={{
-                                        color: "#e2b540",
-                                        "&.Mui-checked": {
-                                            color: "#ebcb7a",
-                                        },
-                                    }}
-                                    defaultChecked
-                                />
-                                <img
-                                    src={Hazard}
-                                    width={28}
-                                    height={21}
-                                    alt=""
-                                />
-                                <Typography
-                                    variant="body1"
-                                    sx={{ color: "white" }}
-                                >
-                                    Hazard
-                                </Typography>
-                            </div>
-
-                            <div
-                                onClick={() =>
-                                    setEventFilter((prev) => ({
-                                        ...prev,
-                                        Flooding: !prev["Flooding"],
-                                    }))
-                                }
-                                className="ml-12 mr-8  flex flex-row rounded-lg space-x-5 items-center cursor-pointer "
-                            >
-                                <Checkbox
-                                    onChange={(e) =>
-                                        setEventFilter((prev) => ({
-                                            ...prev,
-                                            Flooding: e.target.checked,
-                                        }))
-                                    }
-                                    checked={eventFilter["Flooding"]}
-                                    sx={{
-                                        color: "#e2b540",
-                                        "&.Mui-checked": {
-                                            color: "#ebcb7a",
-                                        },
-                                    }}
-                                    defaultChecked
-                                />
-                                <img
-                                    src={Flooding}
-                                    width={28}
-                                    height={21}
-                                    alt=""
-                                />
-                                <Typography
-                                    variant="body1"
-                                    sx={{ color: "white" }}
-                                >
-                                    Flooding
-                                </Typography>
-                            </div>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-            </div>
+            {loading && (
+                <div className="flex justify-center items-center h-full">
+                    <Spinner color="#e0c981" aria-label="Warning spinner example" />
+                </div>
+            )}
 
             <div className="flex flex-col h-[800px] mt-10">
                 <div className="flex-grow flex flex-row-reverse">
-                    {/* Google Map */}
                     <div className="flex-grow rounded-3xl">
                         <LoadScript
                             googleMapsApiKey="AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go"
@@ -898,9 +307,15 @@ function GoogleMapComp() {
                                         strictBounds: true,
                                     },
                                 }}
-                                onLoad={initializeClusterer} // Use your initializeClusterer callback
+                                // onLoad={initializeClusterer}
                             >
-                                <TrafficLayer />
+                                {/* <TrafficLayer /> */}
+
+                                {/* Render Polyline */}
+                                {polyline && (
+                                    <Polyline path={polyline} options={polylineOptions} />
+                                )}
+
                                 {markerPositions.map((position, index) => (
                                     <Marker
                                         key={index}
@@ -909,77 +324,21 @@ function GoogleMapComp() {
                                         onClick={() =>
                                             handleMarkerClick(position)
                                         }
-                                        onLoad={(marker) => {
-                                            // Add marker to clusterer
-                                            if (clustererRef.current) {
-                                                clustererRef.current.addMarker(
-                                                    marker
-                                                );
-                                            }
-                                        }}
+                                        // onLoad={(marker) => {
+                                        //     // Add marker to clusterer
+                                        //     if (clustererRef.current) {
+                                        //         clustererRef.current.addMarker(
+                                        //             marker
+                                        //         );
+                                        //     }
+                                        // }}
                                     />
                                 ))}
-                                {routePolyline && (
-                                    <Polyline
-                                        path={routePolyline}
-                                        options={{
-                                            strokeColor: isRouteClear
-                                                ? "#008000"
-                                                : "#FF0000",
-                                            strokeOpacity: 0.8,
-                                            strokeWeight: 4,
-                                        }}
-                                    />
-                                )}
-                                {startCoords && startAddress && (
-                                    <Marker
-                                        position={startCoords}
-                                        label={{
-                                            text: startAddress,
-                                            color: "black",
-                                            fontWeight: "bold",
-                                            fontSize: "20px",
-                                        }}
-                                        icon={{
-                                            url: "http://maps.google.com/mapfiles/ms/icons/green-dot.png",
-                                        }}
-                                        onLoad={(marker) => {
-                                            // Add marker to clusterer
-                                            if (clustererRef.current) {
-                                                clustererRef.current.addMarker(
-                                                    marker
-                                                );
-                                            }
-                                        }}
-                                    />
-                                )}
-                                {endCoords && endAddress && (
-                                    <Marker
-                                        position={endCoords}
-                                        label={{
-                                            text: endAddress,
-                                            color: "black",
-                                            fontWeight: "bold",
-                                            fontSize: "20px",
-                                        }}
-                                        icon={{
-                                            url: "http://maps.google.com/mapfiles/ms/icons/red-dot.png",
-                                        }}
-                                        onLoad={(marker) => {
-                                            // Add marker to clusterer
-                                            if (clustererRef.current) {
-                                                clustererRef.current.addMarker(
-                                                    marker
-                                                );
-                                            }
-                                        }}
-                                    />
-                                )}
+                                {/* Marker rendering logic can be here if needed */}
                             </GoogleMap>
                         </LoadScript>
                     </div>
 
-                    {/* Sidebar */}
                     <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
@@ -1553,3 +912,4 @@ function GoogleMapComp() {
 }
 
 export default GoogleMapComp;
+

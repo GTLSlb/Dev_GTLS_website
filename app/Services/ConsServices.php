@@ -110,7 +110,6 @@ class ConsServices
         Log::info('Truncated consignment_events table.');
     }
     
-
     private function getRouteUsingRoutesAPI($startLat, $startLng, $endLat, $endLng)
     {
         try {
@@ -204,10 +203,7 @@ class ConsServices
             return [];
         }
     }
-    
-    
-    
-    
+
     private function haversineDistance($lat1, $lon1, $lat2, $lon2)
     {
         $earthRadius = 6371000; // meters
@@ -259,7 +255,7 @@ class ConsServices
         return $points;
     }
 
-    private function filterEventsOnRoute(array $route)
+    public function filterEventsOnRoute(array $route)
     {
         // Get the relevant state tables based on the route
         $stateTables = $this->getStateTablesFromRoute($route);
@@ -440,7 +436,42 @@ class ConsServices
             Log::error('Error in getRoutesForAllConsData: ' . $e->getMessage());
         }
     }
-    
-    
-    
+
+    public function snapToRoads(array $coordinates)
+    {
+        try {
+            // Build the path parameter by concatenating lat/lng pairs
+            $path = implode('|', array_map(function ($coordinate) {
+                return $coordinate['lat'] . ',' . $coordinate['lng'];
+            }, $coordinates));
+
+            // Send a request to the Google Roads API
+            $response = Http::get("https://roads.googleapis.com/v1/snapToRoads", [
+                'path' => $path,
+                'key' => $this->googleApiKey,
+                'interpolate' => true  // Optional: returns interpolated points along the road
+            ]);
+            if ($response->successful()) {
+                $data = $response->json();
+                $snappedPoints = [];
+
+                // Extract snapped points from the API response
+                foreach ($data['snappedPoints'] as $point) {
+                    $snappedPoints[] = [
+                        'lat' => $point['location']['latitude'],
+                        'lng' => $point['location']['longitude'],
+                    ];
+                }
+
+                return $snappedPoints;  // Return the snapped coordinates
+            } else {
+                Log::error("Failed to snap coordinates to roads: " . $response->body());
+                return [];
+            }
+        } catch (\Exception $e) {
+            Log::error("Error in snapToRoads: " . $e->getMessage());
+            return [];
+        }
+    }
+
 }

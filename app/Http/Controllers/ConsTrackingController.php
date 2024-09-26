@@ -200,7 +200,20 @@ class ConsTrackingController extends Controller
         // If all parameters are present
         $vehicleNo = $this->getVehicleNo( $consignmentNo,$typeId);
         $vehicleId = $this->getVehicleId($vehicleNo);
-        return response()->json(['message' => 'All Data exist', 'vehicleNo' =>  $vehicleNo, 'vehicleId' => $vehicleId ], 200);
+        $vehiclePositions = $this->getVehiclePositions($vehicleId, $fromDate, $toDate);
+        $vehicleRoad = $this->getVehicleRoad($vehiclePositions);
+        $snappedRoad = $this->conService->snapToRoads($vehicleRoad);
+        $routeWithEvents = $this->conService->filterEventsOnRoute($vehicleRoad);
+        
+        return response()->json([
+            // 'message' => 'All Data exist', 
+            // 'vehicleNo' =>  $vehicleNo, 
+            // 'vehicleId' => $vehicleId, 
+            // 'vehiclePositions' => $vehiclePositions, 
+            'vehicleRoad' => $snappedRoad ,
+            'routeWithEvents' => $routeWithEvents
+        ], 
+            200);
     }
     
     function getVehicleNo($consignmentNo, $typeId){
@@ -240,5 +253,49 @@ class ConsTrackingController extends Controller
             Log::error('Error retreiving the vehicle ID : ' . $e->getMessage());
         }
     }
+    
+    function getVehiclePositions($vehicleId, $fromDate, $toDate)
+    {
+        try {
+            $url = "https://api-au.telematics.com/v1/vehicles/{$vehicleId}/positions"; // Vehicle ID in the URL
+            $params = [
+                'key' => $this->navmanApiKey,
+                'from' => $fromDate,
+                'to' => $toDate,
+                'pruning' => 'ALL',
+                'limit' => 'off',
+                'lastHdgpsLocation' => 'false', // Pass as string if needed by the API
+                'highDefinition' => 'false' // Pass as string if needed by the API
+            ];
+    
+            // Make the request with the vehicle ID in the URL and the query parameters
+            $result = Http::timeout(40)->get($url, $params);
+            $data = $result->json();
+            
+            // Return data or handle response based on your use case
+            return $data;
+        } catch (\Exception $e) {
+            Log::error('Error retrieving the vehicle position: ' . $e->getMessage());
+        }
+    }
+    function getVehicleRoad($vehiclePositions) {
+        if (empty($vehiclePositions) || count($vehiclePositions) === 0) {
+            return response()->json([
+                'message' => 'No vehicle positions provided',
+            ], 400); // Return a 400 Bad Request if no positions
+        }
+    
+        $roadCoordinates = array_map(function ($position) {
+            return [
+                'lat' => $position['Lat'],  // Latitude
+                'lng' => $position['Lng'],  // Longitude
+            ];
+        }, $vehiclePositions);
+    
+        // Return only the data
+        return $roadCoordinates;
+    }
+    
+    
     
 }
