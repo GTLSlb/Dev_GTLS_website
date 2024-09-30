@@ -2,6 +2,9 @@
 
 namespace App\Services;
 use App\Models\TrafficDataNSW;
+use App\Models\TrafficDataQLD;
+use App\Models\TrafficDataSA;
+use App\Models\TrafficDataVIC;
 use Spatie\Async\Pool;
 use Illuminate\Support\Facades\Log;
 use App\Models\ConsData;
@@ -520,24 +523,61 @@ class ConsServices
         $lineStringWKT = $this->convertCoordinatesToLineStringWKT($routeCoordinates);
     
         // Distance threshold in meters (e.g., 1000 meters)
-        $distanceThresholdMeters = 20;
+        $distanceThresholdMeters = 15;
     
         // Convert distance from meters to degrees (approximate)
         $bufferDistanceDegrees = $distanceThresholdMeters / 111320; // Meters per degree at the equator
     
-        // Query events using raw SQL
-        $events = TrafficDataNSW::selectRaw("id, ST_AsText(location) as location_wkt")
-        ->whereRaw(
-            "ST_Intersects(
-                location,
-                ST_Buffer(ST_GeomFromText(?, 4326), ?)
-            )",
-            [$lineStringWKT, $bufferDistanceDegrees]
-        )->get();
+        // Array of models you want to query
+        $models = [
+            TrafficDataNSW::class,
+            TrafficDataVIC::class,
+            TrafficDataQLD::class,
+            TrafficDataSA::class,
+            // Add more models as needed
+        ];
     
+        $allEvents = collect(); // Use a collection to store all events
     
-        return $events;
+        foreach ($models as $model) {
+            // Query events using raw SQL for each model
+            $events = $model::selectRaw("
+                id,
+                event_id,
+                suburb,
+                road_name,
+                start_date,
+                event_type,
+                end_date,
+                advice,
+                CAST(latitude AS DECIMAL(10, 6)) as latitude,
+                CAST(longitude AS DECIMAL(10, 6)) as longitude,
+                information,
+                api_source,
+                otherAdvice,
+                ST_AsText(location) as location_wkt
+            ")
+            ->whereRaw(
+                "ST_Intersects(
+                    location,
+                    ST_Buffer(ST_GeomFromText(?, 4326), ?)
+                )",
+                [$lineStringWKT, $bufferDistanceDegrees]
+            )->get();
+    
+            // Filter out any events where latitude or longitude are not valid numbers
+            $filteredEvents = $events->filter(function ($event) {
+                return is_numeric($event->latitude) && is_numeric($event->longitude);
+            });
+    
+            // Merge the filtered events into the collection
+            $allEvents = $allEvents->merge($filteredEvents);
+        }
+    
+        return $allEvents;
     }
+    
+    
     
     private function convertCoordinatesToLineStringWKT(array $coordinates)
     {

@@ -298,6 +298,4 @@ class ConsTrackingController extends Controller
         return $roadCoordinates;
     }
     
-    
-    
 }

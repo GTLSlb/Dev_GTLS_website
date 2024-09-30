@@ -197,12 +197,14 @@ function GoogleMapComp() {
                         eventFilter[filterKey] &&
                         typeArray.includes(position.event_type)
                 );
-                return isEventSelected && isStateSelected;
+                const isEventId = position.event_id === "207542";
+                return isEventId;
             });
             setMarkerPositions(filteredData);
         }
     }, [eventFilter, stateFilter, originalData]);
 
+    console.log(markerPositions);
     const getConsignmentRoute = (e) => {
         e.preventDefault();
         setLoading(true);
@@ -341,7 +343,7 @@ function GoogleMapComp() {
                                         strictBounds: true,
                                     },
                                 }}
-                                onLoad={initializeClusterer}
+                                // onLoad={initializeClusterer}
                             >
                                 <TrafficLayer />
 
@@ -358,14 +360,14 @@ function GoogleMapComp() {
                                         onClick={() =>
                                             handleMarkerClick(position)
                                         }
-                                        onLoad={(marker) => {
-                                            // Add marker to clusterer
-                                            if (clustererRef.current) {
-                                                clustererRef.current.addMarker(
-                                                    marker
-                                                );
-                                            }
-                                        }}
+                                        // onLoad={(marker) => {
+                                        //     // Add marker to clusterer
+                                        //     if (clustererRef.current) {
+                                        //         clustererRef.current.addMarker(
+                                        //             marker
+                                        //         );
+                                        //     }
+                                        // }}
                                     />
                                 ))}
                             </GoogleMap>
