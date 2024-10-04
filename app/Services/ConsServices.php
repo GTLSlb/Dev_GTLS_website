@@ -577,8 +577,6 @@ class ConsServices
         return $allEvents;
     }
     
-    
-    
     private function convertCoordinatesToLineStringWKT(array $coordinates)
     {
         $points = array_map(function ($coordinate) {

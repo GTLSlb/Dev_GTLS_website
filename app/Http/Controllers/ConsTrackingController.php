@@ -204,6 +204,7 @@ class ConsTrackingController extends Controller
         $vehicleRoad = $this->getVehicleRoad($vehiclePositions);
         $snappedRoad = $this->conService->snapToRoads($vehicleRoad);
         $eventsOnRoute = $this->conService->checkEventsOnRoute($vehicleRoad);
+        $consignmentDetails = $this->getConsignmentData();
         foreach ($eventsOnRoute as $event) {
             echo $event->description . "\n";
         }
@@ -213,7 +214,8 @@ class ConsTrackingController extends Controller
             // 'vehicleId' => $vehicleId, 
             // 'vehiclePositions' => $vehiclePositions, 
             'vehicleRoad' => $snappedRoad ,
-            'routeWithEvents' => $eventsOnRoute
+            'routeWithEvents' => $eventsOnRoute,
+            'consignmentDetails' => $consignmentDetails,
         ], 
             200);
     }
@@ -297,5 +299,51 @@ class ConsTrackingController extends Controller
         // Return only the data
         return $roadCoordinates;
     }
-    
+    function getConsignmentData() { //todo: Replace the static with the request
+        $data = [
+            [
+                "ConsignmentNo" => "FPKE00002015",
+                "ChargeCode" => "FREIGHTPEOPLE - KERRY FOODS",
+                "ServiceType" => "EXPRESS",
+                "Pickdate" => "2024-09-23T00:00:00",
+                "RequiredDeliverDate" => "2024-09-25T00:00:00",
+                "SenderName" => "KERRY INGREDIENTS AUST PL - QLD",
+                "ReceiverName" => "PRIMO CHULLORA",
+                "SenderAddress" => "3/96 Export Street",
+                "SenderSuburb" => "LYTTON",
+                "SenderState" => "QLD",
+                "SenderPostCode" => "4178",
+                "ReceiverAddress" => "18 Hume Hwy",
+                "ReceiverSuburb" => "CHULLORA",
+                "ReceiverState" => "NSW",
+                "ReceiverPostcode" => "2190"
+            ]
+        ];
+        // Create the nested structure without modifying $data
+        $nestedData = [
+            "consignmentDetails" => [
+                "ConsignmentNo" => $data[0]["ConsignmentNo"],
+                "ChargeCode" => $data[0]["ChargeCode"],
+                "ServiceType" => $data[0]["ServiceType"],
+                "Pickdate" => $data[0]["Pickdate"],
+                "RequiredDeliverDate" => $data[0]["RequiredDeliverDate"]
+            ],
+            "senderDetails" => [
+                "SenderName" => $data[0]["SenderName"],
+                "SenderAddress" => $data[0]["SenderAddress"],
+                "SenderSuburb" => $data[0]["SenderSuburb"],
+                "SenderState" => $data[0]["SenderState"],
+                "SenderPostCode" => $data[0]["SenderPostCode"]
+            ],
+            "receiverDetails" => [
+                "ReceiverName" => $data[0]["ReceiverName"],
+                "ReceiverAddress" => $data[0]["ReceiverAddress"],
+                "ReceiverSuburb" => $data[0]["ReceiverSuburb"],
+                "ReceiverState" => $data[0]["ReceiverState"],
+                "ReceiverPostcode" => $data[0]["ReceiverPostcode"]
+            ]
+        ];
+        // Return the data as a JSON string
+        return $nestedData;
+    }
 }
