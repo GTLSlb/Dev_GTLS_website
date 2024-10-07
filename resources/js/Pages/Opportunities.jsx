@@ -10,6 +10,7 @@ import TruckDriver from "./Component/opportunities/TruckDriver";
 import Mechanic from "./Component/opportunities/Mechanic";
 import HaulDriver from "./Component/opportunities/HaulDriver";
 import BusinessExecutive from "./Component/opportunities/BusinessExecutive";
+import Navbars from "@/Components/Navbars";
 
 export default function Opportunities(props) {
 
