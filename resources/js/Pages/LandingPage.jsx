@@ -182,25 +182,36 @@ export default function LandingPage({}) {
     const pca = new PublicClientApplication(msalConfig);
 
     const handleLogout = async () => {
-        try {
-            const response = await axios.post("/logoutAPI");
-            console.log("Logout response:", response);
-            if (response.status === 200) {
-                setcurrentUser(null);
+        const credentials = {
+            URL: window.Laravel.gtamUrl,
+            CurrentUser: currentUser,
+            SessionDomain: window.Laravel.appDomain,
+        };
+        await pca.initialize();
+        axios
+            .post("/composerLogout", credentials)
+            .then((response) => {
+                if (response.status === 200 && response.data.status === 200) {
+                    const isMicrosoftLogin = Cookies.get(
+                        "msal.isMicrosoftLogin"
+                    );
 
-                const isMicrosoftLogin = Cookies.get('msal.isMicrosoftLogin');
-                console.log("isMicrosoftLogin:", isMicrosoftLogin);
-                clearMSALLocalStorage();
-    
-                if (isMicrosoftLogin === 'true') {
-                    window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${appUrl}/login`;
-                } else {
-                    window.location.href = `${appUrl}/login`;
+                    clearMSALLocalStorage();
+
+                    if (isMicrosoftLogin === "true") {
+                        window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
+                        setToken(null);
+                        setcurrentUser(null);
+                    } else {
+                        window.location.href = `${window.Laravel.appUrl}/login`;
+                        setToken(null);
+                        setcurrentUser(null);
+                    }
                 }
-            }
-        } catch (error) {
-            console.log("Logout error:", error);
-        }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     const [appsImgs, setAppsImgs] = useState([]);
     const [isFetchingImg, setIsFetchingImg] = useState(true);

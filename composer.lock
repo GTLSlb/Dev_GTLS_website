@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fbf05cb3ac27427abf783ca15e6ede54",
+    "content-hash": "f4b208221d99432923197761499dda72",
     "packages": [
         {
             "name": "alexazartsev/heroicon",
@@ -1475,6 +1475,44 @@
                 }
             ],
             "time": "2024-07-20T21:45:45+00:00"
+        },
+        {
+            "name": "gtls/loginstory",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MiraCh-gtls/loginStory.git",
+                "reference": "c698ad90b59153885ee385d80809c8329c7323e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MiraCh-gtls/loginStory/zipball/c698ad90b59153885ee385d80809c8329c7323e3",
+                "reference": "c698ad90b59153885ee385d80809c8329c7323e3",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "gtls\\loginstory\\": [
+                        "src"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MiraCh"
+                }
+            ],
+            "description": "[]",
+            "support": {
+                "issues": "https://github.com/MiraCh-gtls/loginStory/issues",
+                "source": "https://github.com/MiraCh-gtls/loginStory/tree/v1.0.2"
+            },
+            "time": "2024-10-08T08:24:56+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

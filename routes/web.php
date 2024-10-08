@@ -13,18 +13,16 @@ use App\Http\Controllers\SupportFormController;
 use App\Http\Controllers\UserVisitController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\FileController;
-use App\Http\Controllers\AzureAuthController;
 use App\Http\Controllers\SendDailyEmail;
 use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
-use SocialiteProviders\Azure\AzureProvider;
 use Illuminate\Http\Request;
-use App\Http\Controllers\LoginController;
 use App\Models\Blog;
 use App\Http\Middleware\LogUserVisit;
+use gtls\loginstory\LoginClass;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,13 +48,19 @@ Route::get('/login', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
 
+Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
+
+Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
+
+Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
+
+Route::post('/composerLogout', [ LoginClass::class, 'logout'])->middleware(['custom.auth'])->name('composerLogout');
+
+Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
+
+
 Route::get('/visitor',[UserVisitController::class, 'index']);
 
-Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
-
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom.auth'])->name('logoutAPI');
-
-Route::post('/logoutWithoutRequest', [LoginController::class, 'logoutWithoutRequest'])->name('logoutWithoutRequest');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
@@ -204,9 +208,6 @@ Route::middleware('custom.auth')->group(function () {
     Route::post('/auth/azure', function () {
         return Socialite::driver('azure')->redirect();
     })->name('azure.login');
-    Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'])->name('azure.callback');
-    Route::post('/microsoftToken', [AzureAuthController::class, 'sendToken'])->name('azure.token');
-    Route::get('/azure/logout', [LoginController::class, 'azureLogout'])->name('azure.logout');
     Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/childrens');
     Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/childrensList');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -272,36 +273,10 @@ Route::fallback(function () {
     ]);
 });
 
-
-// ******************************************************************
-// Positions API Request
-Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
-Route::get('/get-positions', [ApiController::class, 'index']); 
-Route::get('/get-eventsCategories', [ApiController::class, 'getEventsCategories']);
-Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']); // todo: check inside to do 
-Route::get('/get-positions/{id}', [ApiController::class, 'getById']); // todo: check inside to do 
-Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
-// ******************************************************************
-
-
-// ******************************************************************
-// Consignment Tracking API 
-Route::get('/fetch-consignment-data', [ConsTrackingController::class, 'fetchData']);
-Route::get('/getConsRoutes', [ConsTrackingController::class, 'getConsRoute']);
-Route::get('/consroutegetall', [ConsTrackingController::class, 'getAllConsRoutes']); // the request that do all the calculations
-Route::get('/conswithevents', [ConsTrackingController::class, 'getAllConsDataWithEvents']); 
-Route::get('/conswithevents/{id}', [ConsTrackingController::class, 'getConsEventsById']);
-Route::get('/getConsignmentRoute', [ConsTrackingController::class, 'getConsignmentRoute']);
-
-// ******************************************************************
-
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
 require __DIR__ . '/auth.php';
 
-
-Route::get('/api/geocode', [ApiController::class, 'geocode']);
-Route::get('/api/directions', [ApiController::class, 'directions']);
 //Route::post('/api/directions', [ApiController::class, 'directions']);
 

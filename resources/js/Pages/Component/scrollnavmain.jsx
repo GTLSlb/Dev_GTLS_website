@@ -20,7 +20,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "/traffic", link: true },
+    // { id: 8, name: "Map", href: "/traffic", link: true },
 ];
 
 export default function ScrollNav({ getTrainNotification }) {
@@ -371,7 +371,7 @@ export default function ScrollNav({ getTrainNotification }) {
                                                 // className="border-2 w-10 bg-goldt text-gray-600 hover:text-gray-900 dark:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                             >
                                                 <button className="border rounded bg-goldt text-white h-10 w-20 hover:bg-black"> Log in</button>
-                                                
+
                                             </Link>
 
                                             <Link

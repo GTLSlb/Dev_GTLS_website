@@ -359,18 +359,30 @@ export default function MainSidebar({
     };
     const pca = new PublicClientApplication(msalConfig);
     const handleLogout = async () => {
-        const isLoggingOut = true;
+        const credentials = {
+            URL: window.Laravel.gtamUrl,
+            CurrentUser: currentUser,
+            SessionDomain: window.Laravel.appDomain,
+        };
         await pca.initialize();
         axios
-            .post("/logoutAPI", isLoggingOut)
-            .then(async (response) => {
-                if (response.status == 200) {
-                    const allAccounts = await pca.getAllAccounts();
-                    if (allAccounts.length > 0) {
-                        await pca.logoutRedirect({ scopes: ["user.read"] });
-                        window.location.href = "/login";
-                    }else{
-                        window.location.href = "/login";
+            .post("/composerLogout", credentials)
+            .then((response) => {
+                if (response.status === 200 && response.data.status === 200) {
+                    const isMicrosoftLogin = Cookies.get(
+                        "msal.isMicrosoftLogin"
+                    );
+
+                    clearMSALLocalStorage();
+
+                    if (isMicrosoftLogin === "true") {
+                        window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
+                        // setToken(null);
+                        // setcurrentUser(null);
+                    } else {
+                        window.location.href = `${window.Laravel.appUrl}/login`;
+                        // setToken(null);
+                        // setcurrentUser(null);
                     }
                 }
             })
