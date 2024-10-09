@@ -18,11 +18,19 @@ const pca = new PublicClientApplication(msalConfig);
 
 export async function handleSessionExpiration() {
     const appUrl = window.Laravel.appUrl;
-    
     // Ensure CSRF token is set in Axios for the logout request
     axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     axios
-        .post("/logoutWithoutRequest")
+    .get("/users")
+    .then((res) => {
+        const credentials = {
+            CurrentUser: res.data,
+            URL: window.Laravel.gtamUrl,
+            SessionDomain: window.Laravel.appDomain,
+        };
+
+        axios
+        .post("/logoutWithoutRequest", credentials)
         .then(async (response) => {
             if (response.status === 200) {
                 const isMicrosoftLogin = Cookies.get('msal.isMicrosoftLogin');
@@ -44,11 +52,13 @@ export async function handleSessionExpiration() {
         .catch((error) => {
             console.log(error);
         });
+    })
+    .catch((error) => console.log(error));
 }
 
 export function clearMSALLocalStorage() {
     const appDomain = window.Laravel.appDomain;
-    
+
     // Find all keys in localStorage starting with 'msal' and remove them
     const msalKeys = Object.keys(localStorage).filter(key => key.startsWith("msal"));
     msalKeys.forEach(key => {
