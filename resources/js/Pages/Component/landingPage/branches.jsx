@@ -15,13 +15,14 @@ const people = [
     },
     {
         name: "BRISBANE BRANCH",
-        role: "341 Freeman Rd, Richlands, QLD 4077",
-        mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1768.1956935527426!2d152.958802024188!3d-27.581392949605526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b914f05d239f3dd%3A0xd22bdddb5823983a!2sGold%20Tiger%20Logistics%20Soltuions!5e0!3m2!1sen!2slb!4v1679896698046!5m2!1sen!2slb",
+        role: "839 Beaudesert Road ARCHERFIELD QLD 4108",
+        mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1768.5031384264314!2d153.01982962457825!3d-27.562315667156273!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b91450b84319bdd%3A0x519723c623f5117!2sGold%20Tiger%20Logistics%20Solutions!5e0!3m2!1sen!2slb!4v1728544917084!5m2!1sen!2slb",
         twitterUrl: "#",
         linkedinUrl: "#",
     },
     // More people...<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1768.1956935527426!2d152.958802024188!3d-27.581392949605526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b914f05d239f3dd%3A0xd22bdddb5823983a!2sGold%20Tiger%20Logistics%20Soltuions!5e0!3m2!1sen!2slb!4v1679896698046!5m2!1sen!2slb" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 ];
+
 
 export default function Branches() {
     return (

@@ -145,7 +145,7 @@ export default function ContatcUs() {
                                 <dd className="text-lg">
                                     BRISBANE BRANCH
                                     <br />
-                                    341 Freeman Road, Richlands, QLD 4077
+                                    839 Beaudesert Road ARCHERFIELD QLD 4108
                                 </dd>
                             </div>
                         </dl>
