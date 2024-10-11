@@ -43,7 +43,12 @@ export default function LandingPage({}) {
                     setcurrentUser(res.data);
                 }
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error)
+                if(error.response.status === 401){
+                    window.location.href = `/login`;
+                }
+            });
     }, []);
 
     // useEffect(() => {
@@ -155,18 +160,6 @@ export default function LandingPage({}) {
         setGreeting(getGreeting());
     }, []);
 
-    const handleGTAMIndexChange = (e) => {
-        setActiveIndexGtam(e);
-    };
-    useEffect(() => {
-        axios
-            .get("/users")
-            .then((res) => {
-                setcurrentUser(res.data);
-            })
-            .catch((error) => console.log(error));
-    }, []);
-
     const msalConfig = {
         auth: {
             clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
@@ -191,20 +184,17 @@ export default function LandingPage({}) {
         axios
             .post("/composerLogout", credentials)
             .then((response) => {
-                if (response.status === 200 && response.data.status === 200) {
+                if (response.status === 200) {
                     const isMicrosoftLogin = Cookies.get(
                         "msal.isMicrosoftLogin"
                     );
-
                     clearMSALLocalStorage();
 
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
-                        setToken(null);
                         setcurrentUser(null);
                     } else {
                         window.location.href = `${window.Laravel.appUrl}/login`;
-                        setToken(null);
                         setcurrentUser(null);
                     }
                 }

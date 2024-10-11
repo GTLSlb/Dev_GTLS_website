@@ -157,7 +157,6 @@ export default function Welcome(props) {
                     certificatesResponse,
                     footerResponse,
                 ] = responses;
-                console.log(headerResponse);
 
                 // Set states with data
                 setGetHeader(headerResponse);

@@ -54,7 +54,7 @@ Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name(
 
 Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
 
-Route::post('/composerLogout', [ LoginClass::class, 'logout'])->middleware(['custom.auth'])->name('composerLogout');
+Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogout');
 
 Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
 
