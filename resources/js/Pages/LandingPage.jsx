@@ -189,6 +189,7 @@ export default function LandingPage({}) {
                         "msal.isMicrosoftLogin"
                     );
                     clearMSALLocalStorage();
+                    Cookies.remove('access_token');
 
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
