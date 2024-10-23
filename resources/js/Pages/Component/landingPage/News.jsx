@@ -24,6 +24,7 @@ import Conferencnews from "../../../assets/news/Conference.jpeg";
 import gearboxnews from "../../../assets/news/gearboxnews.jpeg";
 import jaixtraining from "../../../assets/news/jaixtraining.jpeg";
 import fireWardinImage from "@/assets/news/FireWardenBlog.jpg";
+import safetyImage from "@/assets/news/Safety-3.jpeg"
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -35,6 +36,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 24,
+        title: "Building a Safety-Conscious Workforce with Fire & Safety Australia",
+        href: "#",
+        description: `At Gold Tiger Logistics Company, safety is at the heart of our operations. Recently, our team participated in an essential firefighting training session, facilitated by Fire and Safety Australia, as part of our ongoing commitment to safety and compliance.`,
+        imageUrl: safetyImage,
+        date: "October 23, 2024",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 23,
         title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",

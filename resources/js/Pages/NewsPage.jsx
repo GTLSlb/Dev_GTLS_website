@@ -46,7 +46,9 @@ import fireWardinCoverImage from "@/assets/news/FireWardingCover.jpg";
 import fireWardinBlogImage from "@/assets/news/FireWardenBlog.jpg";
 import fireWardin2Image from "@/assets/news/FireWarden2.jpeg";
 import fireWardin3Image from "@/assets/news/FireWarden3.jpeg";
-
+import safetyImage from "@/assets/news/Safety-1.jpeg"
+import safetyImage2 from "@/assets/news/Safety-2.jpeg"
+import safetyImage3 from "@/assets/news/Safety-3.jpeg"
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import {
@@ -720,6 +722,47 @@ export default function NewsPage(props) {
                 fireWardin3Image
             ],
         },
+        {
+            id: 24,
+            title: "Building a Safety-Conscious Workforce with Fire & Safety Australia",
+            content1:
+                `Building a Safety-Conscious Workforce with Fire & Safety Australia
+                At Gold Tiger Logistics Company, safety is at the heart of our operations. Recently, our team participated in an essential firefighting training session, facilitated by Fire and Safety Australia, as part of our ongoing commitment to safety and compliance.
+                
+                The training covered the following areas:`,
+            list: [
+                {
+                    id: 0,
+                    title: "Fire Prevention Strategies: Understanding the common causes of workplace fires and how to implement preventative measures.",
+                },
+                {
+                    id: 1,
+                    title: "Emergency Response: How to assess and react quickly to various types of fires, ensuring the safety of all personnel.",
+                },
+                {
+                    id: 2,
+                    title: "Use of Firefighting Equipment: Hands-on practice with fire extinguishers, fire hoses, and other essential firefighting tools.",
+                },
+                {
+                    id: 3,
+                    title: "Evacuation Procedures: Ensuring that all staff know how to evacuate safely and efficiently in case of a fire.",
+                },
+            ],
+            content2:
+                `By equipping our employees with practical firefighting skills, we not only meet our compliance obligations but also foster a culture of safety within Gold Tiger Logistics. Our workforce is now more confident in managing fire risks and more prepared to protect each other and our assets in an emergency.
+
+                Staying Compliant and Safe
+                
+                Compliance with safety regulations is essential for Gold Tiger’s continued success. Firefighting training is just one part of our broader safety strategy that ensures we adhere to national workplace safety standards while prioritizing the well-being of our employees.
+                
+                This training further solidifies our commitment to safety and excellence in logistics, keeping our operations running smoothly while safeguarding our most valuable assets—our people.`,
+            imgUrl: safetyImage3,
+            imgSliders: [
+                safetyImage,
+                safetyImage2,
+                safetyImage3
+            ],
+        },
     ];
 
     const posts = [
@@ -1001,7 +1044,7 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 || id == 22 || id == 23 ? (
+                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 || id == 22 || id == 23  ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
