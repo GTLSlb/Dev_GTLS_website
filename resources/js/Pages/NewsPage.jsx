@@ -56,10 +56,8 @@ import Footer from "./Component/landingPage/Footer";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;

@@ -16,7 +16,7 @@ import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
 
 import News from "./Component/landingPage/News";
-import Map from '../Components/map'
+import Map from "../Components/map";
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
 import Technologies from "./Component/landingPage/Technologies";
@@ -48,7 +48,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: true },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    // { id: 8, name: "Map", href: "/traffic", link: true },
+    { id: 8, name: "Map", href: "https://map.gtls.store/", link: false },
 ];
 
 const scrollToElement = (elementId) => {
@@ -352,7 +352,8 @@ export default function Welcome(props) {
                                 </div>
                                 <div className="hidden lg:flex lg:gap-x-8">
                                     {navigation.map((item) =>
-                                        item.id == 5 || item.id == 6 ? null : (
+                                        item.id == 5 ||
+                                        item.id == 6 ? null : item.id != 8 ? (
                                             <div key={item.name}>
                                                 {item.link ? (
                                                     <Link
@@ -375,6 +376,14 @@ export default function Welcome(props) {
                                                     </ScrollLink>
                                                 )}
                                             </div>
+                                        ) : (
+                                            <a
+                                                href={item.href}
+                                                target="_blank"
+                                                className="hover:cursor-pointer hover:border-b hover:border-goldt text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                            >
+                                                {item.name}
+                                            </a>
                                         )
                                     )}
                                 </div>
@@ -482,24 +491,11 @@ export default function Welcome(props) {
                                         <div className="-my-6 divide-y divide-gray-500/10">
                                             <div className="space-y-2 py-6">
                                                 {navigation.map((item) => (
-                                                    // <ScrollLink
-                                                    //     key={item.name}
-                                                    //     to={item.href}
-                                                    //     smooth={true}
-                                                    //     onClick={() =>
-                                                    //         setMobileMenuOpen(false)
-                                                    //     }
-                                                    //     className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
-                                                    // >
-                                                    //     {item.name}
-                                                    // </ScrollLink>
                                                     <div key={item.name}>
                                                         {item.link ? (
                                                             <Link
                                                                 key={item.name}
                                                                 href={item.href}
-                                                                // data={item.ref}
-                                                                // smooth={true}
                                                                 className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
                                                             >
                                                                 {item.name}
@@ -530,7 +526,10 @@ export default function Welcome(props) {
                             getAbout={getAbout}
                             setGetAbout={setGetAbout}
                         />
-                        <div id="services" className="lg:mb-32 hidden lg:block"></div>
+                        <div
+                            id="services"
+                            className="lg:mb-32 hidden lg:block"
+                        ></div>
                         <PrimaryServices
                             getservices={getservices}
                             setServices={setServices}
