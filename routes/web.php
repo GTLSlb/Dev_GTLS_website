@@ -201,9 +201,9 @@ Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 Route::middleware('custom')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/gtms');
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/gtms');
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName']);
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens']);
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList']);
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
