@@ -49,6 +49,7 @@ import fireWardin3Image from "@/assets/news/FireWarden3.jpeg";
 import safetyImage from "@/assets/news/Safety-1.jpeg"
 import safetyImage2 from "@/assets/news/Safety-2.jpeg"
 import safetyImage3 from "@/assets/news/Safety-3.jpeg"
+import safetyCoverImage from "@/assets/news/SafetyCover.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import {
@@ -76,16 +77,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/contact_us", ref: "contact" },
-];
-
-const handleClick = () => {
-    history.push("/", { scrollToElement: "news" });
-};
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -756,7 +747,7 @@ export default function NewsPage(props) {
                 Compliance with safety regulations is essential for Gold Tiger’s continued success. Firefighting training is just one part of our broader safety strategy that ensures we adhere to national workplace safety standards while prioritizing the well-being of our employees.
                 
                 This training further solidifies our commitment to safety and excellence in logistics, keeping our operations running smoothly while safeguarding our most valuable assets—our people.`,
-            imgUrl: safetyImage3,
+            imgUrl: safetyCoverImage,
             imgSliders: [
                 safetyImage,
                 safetyImage2,
@@ -1053,7 +1044,7 @@ export default function NewsPage(props) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
-                ) : id == 20 || id == 21  ? (
+                ) : id == 20 || id == 21  || id == 24 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
