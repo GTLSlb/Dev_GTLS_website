@@ -12,6 +12,8 @@ import { Link } from "@inertiajs/inertia-react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 import TrainNotification from "@/Components/TrainNotification";
 
+const mapUrl = window.Laravel.mapUrl;
+
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
     { id: 2, name: "Services", href: "services", link: false },
@@ -20,7 +22,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "/traffic", link: true },
+    { id: 8, name: "Map", href: mapUrl, link: false },
 ];
 
 export default function ScrollNav({ getTrainNotification }) {
@@ -215,7 +217,8 @@ export default function ScrollNav({ getTrainNotification }) {
                         </div>
                         <div className="hidden lg:flex lg:gap-x-8 h-8">
                             {navigation.map((item) =>
-                                item.id == 5 || item.id == 6 ? null : (
+                                item.id == 5 || item.id == 6 ? null : item.id !=
+                                8 ? (
                                     <div key={item.name}>
                                         {item.link ? (
                                             <Link
@@ -238,6 +241,14 @@ export default function ScrollNav({ getTrainNotification }) {
                                             </ScrollLink>
                                         )}
                                     </div>
+                                ) : (
+                                    <a
+                                        href={item.href}
+                                        target="_blank"
+                                        className="hover:cursor-pointer hover:border-b hover:border-goldt text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                    >
+                                        {item.name}
+                                    </a>
                                 )
                             )}
                         </div>
