@@ -19,7 +19,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities" },
     { id: 6, name: "Contact Us", href: "/contact_us" },
     { id: 7, name: "Going Green", href: "/goinggreen" },
-    { id: 8, name: "Map", href: mapUrl, link: false },
+    { id: 8, name: "Map", href: "https://map-test.gtls.com.lb/", link: false },
 ];
 export default function Navbars() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
