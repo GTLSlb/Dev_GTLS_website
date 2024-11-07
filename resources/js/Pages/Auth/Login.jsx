@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Logo from "../../assets/pictures/Logo.png";
+import Logo from "../../assets/pictures/Logo-upscaled.png";
 import { PublicClientApplication  } from "@azure/msal-browser";
 import "../../../css/scroll.css";
 import MicrosoftLogo from "@/assets/icons/microsoft-logo.png";
@@ -24,6 +24,7 @@ const pca = new PublicClientApplication(msalConfig);
 export default function Login({ status, canResetPassword }) {
     const gtamURl = window.Laravel.gtamUrl;
     const appDomain = window.Laravel.appDomain;
+    const backToHomeURL = window.Laravel.backToHomeURL;
 
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function Login({ status, canResetPassword }) {
                     (window.location.href = "/forgot-password")
                 }
                 gtlsLogo={Logo}
+                backToHomeURL={backToHomeURL}
                 microsoftLogo={MicrosoftLogo}
             />
         </div>
