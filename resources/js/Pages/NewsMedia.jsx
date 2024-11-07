@@ -8,78 +8,70 @@ import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import Navbars from "@/Components/Navbars";
 
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/contact_us", ref: "contact" },
-];
-
 const handleClick = () => {
     history.push("/", { scrollToElement: "news" });
 };
 
 export default function Newss(props) {
-
     const [getfooter, setfooter] = useState([]);
     const [getPageDesc, setPageDesc] = useState([]);
     const [getPosts, setPosts] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
-    // Page desc 
+    // Page desc
     useEffect(() => {
-        axios.get('/NewsPage')
-          .then(response => {
-              // console.log('fetching data:',response.data);
-              setPageDesc(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
+        axios
+            .get("/NewsPage")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setPageDesc(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
 
-    // Posts 
+    // Posts
     useEffect(() => {
-        axios.get('/posts')
-          .then(response => {
-              // console.log('fetching data:',response.data);
-              setPosts(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
+        axios
+            .get(
+                "http://localhost:1337/api/blogs?pagination%5BwithCount%5D=false&populate=cover",
+                {
+                    headers: {
+                        Authorization: `Bearer 00c4e4f2e6367047b34383b974bba431b6b00352daaefda9f8d27b41cdfad2b3d8c2d43f1e005662e8939947dde5a7d47262bd3217b5d2946b2189ce6f102a420125bb983fed5c39ba87e14e63adafde9b40138bcdbbc7c76f94885b3bd6e975d4dcde2cbe1f820f8f3e0614da1ba6c40d943c7207f717c3a6e79c244bb403d1`,
+                    },
+                }
+            )
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setPosts(response.data.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
 
     // Footer
     useEffect(() => {
-        axios.get('/footer')
-          .then(response => {
-              // console.log('fetching data:',response.data);
-              setfooter(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+        axios
+            .get("/footer")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setfooter(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
     const [showNavbar, setShowNavbar] = useState(false);
-    const [resumeFile, setResumeFile] = useState(null);
-    const [resumePreview, setResumePreview] = useState(null);
-
-    const handleFileUpload = (file) => {
-        setResumeFile(file);
-        setResumePreview(URL.createObjectURL(file));
-    };
 
     useEffect(() => {
-        let prevScrollPosition = window.pageYOffset;
-
         function handleScroll() {
             const scrollTop =
                 window.pageYOffset || document.documentElement.scrollTop;
@@ -107,9 +99,9 @@ export default function Newss(props) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                 </div>
-                <News getPageDesc={getPageDesc} getPosts={getPosts}/>
-            
-                <Footer getfooter={getfooter}/>
+                <News getPageDesc={getPageDesc} getPosts={getPosts} />
+
+                <Footer getfooter={getfooter} />
             </div>
         </>
     );

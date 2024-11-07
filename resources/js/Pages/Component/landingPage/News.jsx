@@ -22,63 +22,57 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
- import {
-    ArrowSmallRightIcon,
-} from "@heroicons/react/24/solid";
+import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from 'react';
-
+import React from "react";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block"}}
-        onClick={onClick}
-      />
+        <div
+            className={className}
+            style={{ ...style, display: "block" }}
+            onClick={onClick}
+        />
     );
-  }
-  
-  function SamplePrevArrow(props) {
+}
+
+function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
     return (
-      <div
-        className={className}
-        style={{ ...style, display: "block", background: "" }}
-        onClick={onClick}
-      >
-        <ArrowSmallRightIcon/>
-      </div>
+        <div
+            className={className}
+            style={{ ...style, display: "block", background: "" }}
+            onClick={onClick}
+        >
+            <ArrowSmallRightIcon />
+        </div>
     );
-  }
+}
 
 export default function News(props) {
+    const getPageDesc = props.getPageDesc;
+    const getPosts = props.getPosts;
 
-    const getPageDesc=props.getPageDesc;
-    const getPosts=props.getPosts;
-    
     const sliderRef = useRef(null);
 
-    
     const slideNextWithDelay = (delay) => {
         setTimeout(() => {
-          if (sliderRef.current) {
-            sliderRef.current.slickNext();
-          }
+            if (sliderRef.current) {
+                sliderRef.current.slickNext();
+            }
         }, delay);
-      };
+    };
 
-
-      useEffect(() => {
+    useEffect(() => {
         const interval = setInterval(() => {
-          sliderRef.current.slickNext();
+            sliderRef.current.slickNext();
         }, 5000);
-    
+
         return () => {
-          clearInterval(interval);
+            clearInterval(interval);
         };
-      }, []);
+    }, []);
 
     const settings = {
         dots: false,
@@ -87,58 +81,27 @@ export default function News(props) {
         slidesToShow: 3,
         slidesToScroll: 1,
         responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                },
             },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
             },
-          },
         ],
         nextArrow: <SampleNextArrow />,
-      prevArrow: <SamplePrevArrow />
-      };
+        prevArrow: <SamplePrevArrow />,
+    };
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
-
-    const movePrev = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex((prevState) => prevState - 1);
-        }
-    };
-
-    const moveNext = () => {
-        if (
-            carousel.current !== null &&
-            carousel.current.offsetWidth * currentIndex <=
-                maxScrollWidth.current
-        ) {
-            setCurrentIndex((prevState) => prevState + 1);
-        }
-    };
-
-    const isDisabled = (direction) => {
-        if (direction === "prev") {
-            return currentIndex <= 0;
-        }
-
-        if (direction === "next" && carousel.current !== null) {
-            return (
-                carousel.current.offsetWidth * currentIndex >=
-                maxScrollWidth.current
-            );
-        }
-
-        return false;
-    };
 
     useEffect(() => {
         if (carousel !== null && carousel.current !== null) {
@@ -153,7 +116,6 @@ export default function News(props) {
             : 0;
     }, []);
 
-
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -167,107 +129,82 @@ export default function News(props) {
                             <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
                                 {getPageDesc?.name}
                             </h2>
-                            <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getPageDesc?.description }}></div>
-                            {/* <p className="mt-2 text-lg leading-8 text-gray-300">
-                                Know more about our company.
-                            </p> */}
+                            <div
+                                className="mt-3 text-smooth"
+                                dangerouslySetInnerHTML={{
+                                    __html: getPageDesc?.description,
+                                }}
+                            ></div>
                         </div>
 
                         <div className="grid lg:grid-cols-3 gap-4">
-                        {getPosts?.map((post) => (
+                            {getPosts?.map((post) => (
                                 <div key={post.id} className="px-5  ">
-                                    <Link href={route("news", { id: post.slug})} className="">
+                                    <Link
+                                        href={route("newsPage", { slug: post.slug })}
+                                        className=""
+                                    >
                                         <div className="h-full ">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={"/app/webimages/"+post?.image}
-                                                alt={post?.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.created_at}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {/* {post.date} */}
-                                                        {post?.date?.split('T')[0]}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
-                                                        <span className="absolute inset-0" />
-                                                        {post?.title}
-                                                    </h3>
-                                                    <dd
-                                                        className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: post?.desc,
-                                                        }}
-                                                    ></dd>
-                                                </div>
+                                            <div className="relative w-full www">
+                                                <img
+                                                    src={
+                                                        "http://localhost:1337" +
+                                                        post.cover.formats
+                                                            .medium.url
+                                                    }
+                                                    alt={
+                                                        post.cover.formats
+                                                            .medium.name
+                                                    }
+                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                                />
+                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
-                                        </article>
+                                            <article
+                                                key={post.id}
+                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
+                                            >
+                                                <div className="max-w-xl mx-4 mb-6  mt-12">
+                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
+                                                        <time
+                                                            dateTime={
+                                                                post.publishedAt
+                                                            }
+                                                            className="text-goldl font-bold"
+                                                        >
+                                                            {/* {post.date} */}
+                                                            {
+                                                                post?.publishedAt?.split(
+                                                                    "T"
+                                                                )[0]
+                                                            }
+                                                        </time>
+                                                    </div>
+                                                    <div className="group relative">
+                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
+                                                            <span className="absolute inset-0" />
+                                                            {post?.title}
+                                                        </h3>
+                                                        {console.log()}
+                                                        <dd
+                                                            className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: post
+                                                                    .new_description[0]
+                                                                    .children[0]
+                                                                    .text,
+                                                            }}
+                                                        ></dd>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
                                     </Link>
                                 </div>
                             ))}
-                        
-                        {/* {posts.map((post) => (
-                                <div key={post.id} className="px-5  ">
-                                    <Link href={route("news", { id: post.id })} className="">
-                                        <div className="h-full ">
-                                        <div className="relative w-full www">
-                                            <img
-                                                src={post.imageUrl}
-                                                alt={post.title}
-                                                className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                            />
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.datetime}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {post.date}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))} */}
-
                         </div>
-                        
 
-                        
-
-                        <Slider ref={sliderRef} {...settings}>
-                            
-                        </Slider>
+                        <Slider ref={sliderRef} {...settings}></Slider>
                     </div>
                 </div>
             </div>
