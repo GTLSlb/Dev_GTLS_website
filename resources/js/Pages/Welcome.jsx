@@ -546,7 +546,6 @@ export default function Welcome(props) {
                         />
                         <GTRS getGtrs={getGtrs} />
                         <Safety getSafety={getSafety} />
-                        <GoogleMapComp />
                         {/* <Video /> */}
 
                         <Technologies gettechnologies={gettechnologies} />
