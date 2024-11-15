@@ -1,43 +1,6 @@
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
-import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
-import gtlsway from "../assets/videos/GTLSWAY.mp4";
-import RoadSafety from "../assets/videos/RoadSafety.mp4";
-import trucks from "../assets/news/trucks.webp";
-import postpic from "../assets/news/postpic.webp";
-import tcapp from "../assets/news/tcapp.webp";
-import device from "../assets/news/device.webp";
-import earth from "../assets/news/earth.webp";
-import safety from "..//assets/news/safety.webp";
-import track from "../assets/news/track.webp";
-import newSite from "../assets/news/newSite.webp";
 import { useState, useRef, useEffect } from "react";
-import worker from "../assets/news/worker.webp";
-import goldt from "../assets/news/goldt.webp";
-import movers from "../assets/news/3movers.webp";
-import greennews from "../assets/news/greennews.webp";
-import weeklySafety from "../assets/news/weeklySafety.webp";
-import EmployeesSafety from "../assets/news/EmployeesSafety.png";
-import weighbridge from "../assets/news/weighbridge.webp";
-import Navman from "../assets/news/Navman.webp";
-import weighbridgenews from "../assets/news/weighbridgenews.webp";
-import Navmannews from "../assets/news/Navmannews.webp";
-import onSiteFueling from "@/assets/news/onSiteFueling.webp";
-import Efficiency from "../assets/news/Efficiency.webp";
-import JostCover from "../assets/news/Jost5Cover.jpeg";
-import BBWImage from "../assets/news/BPW.webp";
-import Conferencnews from "../assets/news/Conference.jpeg";
-import Conferencnews2 from "../assets/news/Conference2.jpeg";
-import Conferencnews3 from "../assets/news/Conference3.jpeg";
-import Conferencnews4 from "../assets/news/Conference4.jpeg";
-import Conferencnews5 from "../assets/news/Conference5.jpeg";
-import Conferencnews6 from "../assets/news/Conference6.jpeg";
-import Conferencnews7 from "../assets/news/Conference7.jpeg";
-import Conferencnews8 from "../assets/news/Conference8.jpeg";
-import Conferencnews9 from "../assets/news/Conference9.jpg";
-import Conferencnews10 from "../assets/news/Conference10.jpeg";
-import Conferencnews11 from "../assets/news/Conference11.jpeg";
-
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
@@ -58,8 +21,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "swiper/css";
 import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 import Navbars from "../Components/Navbars";
 import { BounceLoader } from "react-spinners";
+import ReactMarkdown from "react-markdown";
+import RichTextRenderer from "@/Components/ContentRenderer";
+import { getFromStrapi } from "@/CommonFunctions";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -86,34 +56,28 @@ function SamplePrevArrow(props) {
 }
 
 export default function NewsPage(props) {
-    console.log(usePage().props);
+    const { slug } = usePage().props;
     const [postslug, setPostSlug] = useState();
     const [getfooter, setfooter] = useState([]);
     const [getPosts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
 
-    useEffect(() => {
-        axios
-            .get(
-                `http://localhost:1337/api/blogs?pagination%5BwithCount%5D=false&*&filters[slug][$eq]=${
-                    usePage().props.slug
-                }`,
-                {
-                    headers: {
-                        Authorization: `Bearer 00c4e4f2e6367047b34383b974bba431b6b00352daaefda9f8d27b41cdfad2b3d8c2d43f1e005662e8939947dde5a7d47262bd3217b5d2946b2189ce6f102a420125bb983fed5c39ba87e14e63adafde9b40138bcdbbc7c76f94885b3bd6e975d4dcde2cbe1f820f8f3e0614da1ba6c40d943c7207f717c3a6e79c244bb403d1`,
-                    },
-                }
-            )
-            .then((response) => {
-                // console.log('fetching data:',response.data);
-                setPostSlug(response.data.data);
-                setLoading(false)
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    }, []);
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getFromStrapi(
+                `/api/blogs?pagination%5BwithCount%5D=false&populate=*&filters[slug][$eq]=${slug}`
+            );
+            
+            if (result.success) {
+                setPostSlug(result.data[0]);
+            } else {
+                console.error("Fetch failed:", result.error);
+            }
+        };
+
+        fetchData();
+    }, []);
     // *********************************************************
     // ********************* All requests  *********************
     // *********************************************************
@@ -183,21 +147,6 @@ export default function NewsPage(props) {
             : 0;
     }, []);
 
-    useEffect(() => {
-        let prevScrollPosition = window.pageYOffset;
-
-        function handleScroll() {
-            const scrollTop =
-                window.pageYOffset || document.documentElement.scrollTop;
-            setShowNavbar(scrollTop > 0);
-        }
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
     const pageUrl = window.location.href;
 
     function customEncodeTitle(title) {
@@ -212,17 +161,20 @@ export default function NewsPage(props) {
             <Head title="News" />
             <div className="relative isolate bg-dark">
                 <Navbars />
-                {1 == 1 ? (
+                {loading ? (
                     <div className="bg-dark flex justify-center items-center h-screen">
                         {" "}
                         <BounceLoader color="#e2b540" />
                     </div>
                 ) : (
                     <>
-                        {" "}
                         <div aria-hidden="true" className="relative">
+                            {console.log(postslug)}
                             <img
-                                src={"/app/webimages/" + postslug.image}
+                                src={
+                                    "http://localhost:1337" +
+                                    postslug.cover.formats.medium.url
+                                }
                                 alt="news"
                                 className="h-[40rem] w-full object-cover  "
                             />
@@ -239,22 +191,22 @@ export default function NewsPage(props) {
                                         Back to main
                                     </span>
                                 </a>
-                                <div key={postslug.id}>
+                                <div key={postslug.documentId}>
                                     <h1 className="mt-2 text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
                                         {postslug.title}
                                     </h1>
                                     <time
-                                        dateTime={postslug.date}
+                                        dateTime={postslug.publish_date}
                                         className="text-gray-500 font-bold"
                                     >
-                                        {postslug.date.split("T")[0]}
+                                        {postslug.publish_date.split("T")[0]}
                                     </time>
-                                    <dd
-                                        className="mt-6 text-lg leading-8 text-gray-200 text-justify"
-                                        dangerouslySetInnerHTML={{
-                                            __html: postslug.desc,
-                                        }}
-                                    ></dd>
+                                    {console.log(postslug.new_description)}
+                                    <div className=" text-smooth">
+                                        <RichTextRenderer
+                                            content={postslug.new_description}
+                                        />
+                                    </div>
                                     <figure className="mt-16">
                                         {postslug.videoUrl ? (
                                             <video
@@ -272,16 +224,34 @@ export default function NewsPage(props) {
                                                 the video tag.
                                             </video>
                                         ) : (
-                                            <div className="h-full w-full">
-                                                <img
-                                                    className="aspect-video rounded-xl bg-gray-50 w-full object-cover"
-                                                    src={
-                                                        "/app/webimages/" +
-                                                        postslug.image
-                                                    }
-                                                    alt={postslug.title}
-                                                />
-                                            </div>
+                                            <Swiper
+                                                navigation={true}
+                                                modules={[Navigation]}
+                                                className="mySwiper"
+                                            >
+                                                {postslug.images.map(
+                                                    (item, index) => (
+                                                        <SwiperSlide
+                                                            key={index}
+                                                        >
+                                                            <img
+                                                                className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
+                                                                src={
+                                                                    "http://localhost:1337" +
+                                                                    item.formats
+                                                                        .medium
+                                                                        .url
+                                                                }
+                                                                alt={
+                                                                    item.formats
+                                                                        .medium
+                                                                        .name
+                                                                }
+                                                            />
+                                                        </SwiperSlide>
+                                                    )
+                                                )}
+                                            </Swiper>
                                         )}
                                     </figure>
                                     <div className="mt-10">
@@ -314,84 +284,6 @@ export default function NewsPage(props) {
                                         </WhatsappShareButton>
                                     </div>
                                 </div>
-                                {/* ))} */}
-                            </div>
-                        </div>
-                        <div
-                            className="bg-dark py-24 px-1 sm:py-10 mb-5"
-                            id="news"
-                        >
-                            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                                <div className="mx-auto max-w-2xl text-center">
-                                    <h2 className="text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                        More News
-                                    </h2>
-                                </div>
-
-                                <Slider {...settings}>
-                                    {getPosts.map((post) => (
-                                        <div key={post.id} className="px-5 ">
-                                            <Link
-                                                href={route("news", {
-                                                    id: post.id,
-                                                    title: customEncodeTitle(
-                                                        post.title
-                                                    ),
-                                                })}
-                                                className=""
-                                            >
-                                                <div className="h-full">
-                                                    <div className="relative w-full www">
-                                                        <img
-                                                            src={
-                                                                "/app/webimages/" +
-                                                                post.cover_image
-                                                            }
-                                                            alt={post.title}
-                                                            className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                                        />
-                                                        <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                                    </div>
-                                                    <article
-                                                        key={post.id}
-                                                        className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                                    >
-                                                        <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                            <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                                <time
-                                                                    dateTime={
-                                                                        post.datetime
-                                                                    }
-                                                                    className="text-goldl font-bold"
-                                                                >
-                                                                    {
-                                                                        post?.date?.split(
-                                                                            "T"
-                                                                        )[0]
-                                                                    }
-                                                                </time>
-                                                            </div>
-                                                            <div className="group relative">
-                                                                <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold ">
-                                                                    <span className="absolute inset-0" />
-                                                                    {
-                                                                        post?.title
-                                                                    }
-                                                                </h3>
-                                                                <div
-                                                                    className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3 list-style-type: disc;"
-                                                                    dangerouslySetInnerHTML={{
-                                                                        __html: post?.desc,
-                                                                    }}
-                                                                ></div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    ))}
-                                </Slider>
                             </div>
                         </div>
                     </>

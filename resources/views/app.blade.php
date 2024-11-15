@@ -33,6 +33,8 @@
             appDomain: "{{ env('SESSION_DOMAIN') }}",
             appUrl: "{{ env('APP_URL') }}",
             backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
+            strapiAppUrl: "{{env('STRAPI_APP') }}",
+            strapiApiKey: "{{env('STRAPI_API_KEY')}}"
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->

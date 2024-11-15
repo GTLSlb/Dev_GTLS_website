@@ -7,6 +7,7 @@ import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
 import Navbars from "@/Components/Navbars";
+import { getFromStrapi } from "@/CommonFunctions";
 
 const handleClick = () => {
     history.push("/", { scrollToElement: "news" });
@@ -36,22 +37,19 @@ export default function Newss(props) {
 
     // Posts
     useEffect(() => {
-        axios
-            .get(
-                "http://localhost:1337/api/blogs?pagination%5BwithCount%5D=false&populate=cover",
-                {
-                    headers: {
-                        Authorization: `Bearer 00c4e4f2e6367047b34383b974bba431b6b00352daaefda9f8d27b41cdfad2b3d8c2d43f1e005662e8939947dde5a7d47262bd3217b5d2946b2189ce6f102a420125bb983fed5c39ba87e14e63adafde9b40138bcdbbc7c76f94885b3bd6e975d4dcde2cbe1f820f8f3e0614da1ba6c40d943c7207f717c3a6e79c244bb403d1`,
-                    },
-                }
-            )
-            .then((response) => {
-                // console.log('fetching data:',response.data);
-                setPosts(response.data.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
+        const fetchData = async () => {
+            const result = await getFromStrapi(
+                `/api/blogs?populate=cover`
+            );
+            if (result.success) {
+                console.log("Data:", result);
+                setPosts(result.data);
+            } else {
+                console.error("Fetch failed:", result.error);
+            }
+        };
+
+        fetchData();
     }, []);
 
     // Footer

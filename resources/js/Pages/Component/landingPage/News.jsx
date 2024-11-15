@@ -185,7 +185,6 @@ export default function News(props) {
                                                             <span className="absolute inset-0" />
                                                             {post?.title}
                                                         </h3>
-                                                        {console.log()}
                                                         <dd
                                                             className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
                                                             dangerouslySetInnerHTML={{
