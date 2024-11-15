@@ -17,6 +17,7 @@ const navigation = [
     { id:5, name: "Careers", href: "/opportunities" },
     { id:6, name: "Contact Us", href: "/contact_us" },
     { id:7, name: "Going Green", href: "/goinggreen" },
+    { id:8, name: "National Road Alerts", href: window.Laravel.mapUrl },
 ];
 export default function Navbars() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
