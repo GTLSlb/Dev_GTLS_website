@@ -92,7 +92,7 @@ export default function ScrollNav({ getTrainNotification }) {
                                 </a>
                             </div>
                             <a
-                                href="tel:+180040306"
+                                href="tel:+1800040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 {" "}
