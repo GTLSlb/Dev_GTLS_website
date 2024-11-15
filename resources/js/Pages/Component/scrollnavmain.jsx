@@ -11,6 +11,8 @@ import { Fragment } from "react";
 import { Link } from "@inertiajs/inertia-react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 
+const mapUrl = window.Laravel.mapUrl;
+
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
     { id: 2, name: "Services", href: "services", link: false },
@@ -19,6 +21,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
+    { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 
 export default function ScrollNav() {
@@ -66,8 +69,6 @@ export default function ScrollNav() {
                     showNavbar ? "opacity-100" : "opacity-0 -translate-y-full"
                 }`}
             >
-
-
                 <div className="bg-dark w-full">
                     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                         <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
@@ -209,29 +210,25 @@ export default function ScrollNav() {
                         </div>
                         <div className="hidden lg:flex lg:gap-x-8 h-8">
                             {navigation.map((item) =>
-                                item.id == 5 || item.id == 6 ? null : (
-                                    <div key={item.name}>
-                                        {item.link ? (
-                                            <Link
-                                                key={item.name}
-                                                href={item.href}
-                                                // data={item.ref}
-                                                // smooth={true}
-                                                className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ) : (
-                                            <ScrollLink
-                                                key={item.name}
-                                                to={item.href}
-                                                smooth={true}
-                                                className="hover:cursor-pointer h-8 hover:border-b hover:border-goldt p-1 hover:text-white text-md font-semibold leading-6 text-goldt"
-                                            >
-                                                {item.name}
-                                            </ScrollLink>
-                                        )}
-                                    </div>
+                                item.id == 5 || item.id == 6 ? null : item.id !=
+                                  8 ? (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        // data={item.ref}
+                                        // smooth={true}
+                                        className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        href={item.href}
+                                        target="_blank"
+                                        className="hover:cursor-pointer hover:border-b hover:border-goldt p-1 text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                    >
+                                        {item.name}
+                                    </a>
                                 )
                             )}
                         </div>

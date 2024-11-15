@@ -28,6 +28,7 @@
     <script>
         window.Laravel = {
             gtamUrl: "{{ env('GTAM_API_URL') }}",
+            mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->
