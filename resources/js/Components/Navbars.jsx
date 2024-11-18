@@ -7,6 +7,8 @@ import { Link } from "@inertiajs/inertia-react";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
+const mapUrl = window.Laravel.mapUrl;
+
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus" },
     { id: 2, name: "Services", href: "/#services" },
@@ -15,7 +17,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities" },
     { id: 6, name: "Contact Us", href: "/contact_us" },
     { id: 7, name: "Going Green", href: "/goinggreen" },
-    { id: 8, name: "Map", href: "https://map.gtls.store/" },
+    { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 export default function Navbars() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

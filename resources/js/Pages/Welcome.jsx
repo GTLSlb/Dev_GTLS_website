@@ -40,6 +40,8 @@ import GoogleMapComp from "@/Components/GoogleMap";
 import { BounceLoader } from "react-spinners";
 import TrainNotification from "@/Components/TrainNotification";
 
+const mapUrl = window.Laravel.mapUrl;
+
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
     { id: 2, name: "Services", href: "services", link: false },
@@ -48,7 +50,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: true },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "https://map.gtls.store/", link: false },
+    { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 
 const scrollToElement = (elementId) => {

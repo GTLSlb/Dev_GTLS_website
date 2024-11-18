@@ -218,25 +218,6 @@ class ContactForm extends Component {
                                 )}
                             </div>
 
-                            {/* <div className="mt-2.5 border-b border-goldt">
-                                <input
-                                    required
-                                    autoComplete="off"
-                                    placeholder="Phone"
-                                    type="text"
-                                    id="phone"
-                                    name="phone"
-                                    onChange={this.handleChange}
-                                    value={this.state.phone}
-                                    className="bg-transparent appearance-none block w-full rounded-md border-none py-2 px-3.5 text-gray-100 shadow-sm  placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-goldt sm:text-sm sm:leading-6"
-                                />
-                                {errors.phone && (
-                                    <div className="error">
-                                        {errors.phone[0]}
-                                    </div>
-                                )}
-                            </div> */}
-
                             <div className="mt-2.5  border-goldt">
                                 <label
                                     htmlFor="message"

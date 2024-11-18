@@ -1,43 +1,6 @@
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
-import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
-import gtlsway from "../assets/videos/GTLSWAY.mp4";
-import RoadSafety from "../assets/videos/RoadSafety.mp4";
-import trucks from "../assets/news/trucks.webp";
-import postpic from "../assets/news/postpic.webp";
-import tcapp from "../assets/news/tcapp.webp";
-import device from "../assets/news/device.webp";
-import earth from "../assets/news/earth.webp";
-import safety from "..//assets/news/safety.webp";
-import track from "../assets/news/track.webp";
-import newSite from "../assets/news/newSite.webp";
 import { useState, useRef, useEffect } from "react";
-import worker from "../assets/news/worker.webp";
-import goldt from "../assets/news/goldt.webp";
-import movers from "../assets/news/3movers.webp";
-import greennews from "../assets/news/greennews.webp";
-import weeklySafety from "../assets/news/weeklySafety.webp";
-import EmployeesSafety from "../assets/news/EmployeesSafety.png";
-import weighbridge from "../assets/news/weighbridge.webp";
-import Navman from "../assets/news/Navman.webp";
-import weighbridgenews from "../assets/news/weighbridgenews.webp";
-import Navmannews from "../assets/news/Navmannews.webp";
-import onSiteFueling from "@/assets/news/onSiteFueling.webp";
-import Efficiency from "../assets/news/Efficiency.webp";
-import JostCover from "../assets/news/Jost5Cover.jpeg";
-import BBWImage from "../assets/news/BPW.webp";
-import Conferencnews from "../assets/news/Conference.jpeg";
-import Conferencnews2 from "../assets/news/Conference2.jpeg";
-import Conferencnews3 from "../assets/news/Conference3.jpeg";
-import Conferencnews4 from "../assets/news/Conference4.jpeg";
-import Conferencnews5 from "../assets/news/Conference5.jpeg";
-import Conferencnews6 from "../assets/news/Conference6.jpeg";
-import Conferencnews7 from "../assets/news/Conference7.jpeg";
-import Conferencnews8 from "../assets/news/Conference8.jpeg";
-import Conferencnews9 from "../assets/news/Conference9.jpg";
-import Conferencnews10 from "../assets/news/Conference10.jpeg";
-import Conferencnews11 from "../assets/news/Conference11.jpeg";
-
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
@@ -58,6 +21,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "swiper/css";
 import "swiper/css/navigation";
+import Navbars from "@/Components/Navbars";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -186,8 +150,6 @@ export default function NewsPage(props) {
             .replace(/ /g, "-")
             .replace(/[^\w-]+/g, "");
     }
-
-    console.log(getPosts);
 
     return (
         <>
