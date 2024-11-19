@@ -224,30 +224,32 @@ export default function NewsPage(props) {
                                 <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">
                                     Share to your friends
                                 </p>
-                                <FacebookShareButton
-                                    url={pageUrl}
-                                    title={postslug.title}
-                                >
-                                    <FacebookIcon className="rounded-md h-10 w-auto mr-3" />
-                                </FacebookShareButton>
-                                <TwitterShareButton
-                                    url={pageUrl}
-                                    title={postslug.title}
-                                >
-                                    <TwitterIcon className="rounded-md h-10 w-auto mr-3" />
-                                </TwitterShareButton>
-                                <LinkedinShareButton
-                                    url={pageUrl}
-                                    title={postslug.title}
-                                >
-                                    <LinkedinIcon className="rounded-md h-10 w-auto mr-3" />
-                                </LinkedinShareButton>
-                                <WhatsappShareButton
-                                    url={pageUrl}
-                                    title={postslug.title}
-                                >
-                                    <WhatsappIcon className="rounded-md h-10 w-auto mr-3" />
-                                </WhatsappShareButton>
+                                <div className="flex gap-4">
+                                    <FacebookShareButton
+                                        url={pageUrl}
+                                        title={postslug.title}
+                                    >
+                                        <FacebookIcon className="rounded-md h-10 w-auto mr-3" />
+                                    </FacebookShareButton>
+                                    <TwitterShareButton
+                                        url={pageUrl}
+                                        title={postslug.title}
+                                    >
+                                        <TwitterIcon className="rounded-md h-10 w-auto mr-3" />
+                                    </TwitterShareButton>
+                                    <LinkedinShareButton
+                                        url={pageUrl}
+                                        title={postslug.title}
+                                    >
+                                        <LinkedinIcon className="rounded-md h-10 w-auto mr-3" />
+                                    </LinkedinShareButton>
+                                    <WhatsappShareButton
+                                        url={pageUrl}
+                                        title={postslug.title}
+                                    >
+                                        <WhatsappIcon className="rounded-md h-10 w-auto mr-3" />
+                                    </WhatsappShareButton>
+                                </div>
                             </div>
                         </div>
                         {/* ))} */}

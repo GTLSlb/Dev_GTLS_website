@@ -24,7 +24,6 @@ class ContactForm extends Component {
         this.setState({ recaptchaValue: false });
     };
 
-
     handleDrop = (acceptedFiles) => {
         // check if the file is a PDF
         const pdfType = ["application/pdf"];
@@ -135,6 +134,30 @@ class ContactForm extends Component {
                         </span>
                     </div>
                 )}
+                {success == false && (
+                    <div
+                        className="bg-red-200 border border-red-400 text-dark px-4 py-3 rounded relative mb-4"
+                        role="alert"
+                    >
+                        <strong className="font-bold">Failed! </strong>
+                        <span className="block sm:inline">
+                            {" "}
+                            Your message has not been sent.
+                        </span>
+                        <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
+                            <svg
+                                onClick={() => this.setState({ errors: false })}
+                                className="fill-current h-6 w-6 text-dark cursor-pointer"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1024 1024"
+                                fill="currentColor"
+                            >
+                                <path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" />{" "}
+                            </svg>
+                        </span>
+                    </div>
+                )}
+
                 <div className=" flex flex-col border-4 border-goldt rounded-3xl">
                     <div className="p-5">
                         <div className="p-2">
@@ -165,7 +188,7 @@ class ContactForm extends Component {
                                     Full name
                                 </label>
                                 {errors.name && (
-                                    <div className="error text-goldt">
+                                    <div className="error text-red-500 text-sm">
                                         {errors.name[0]}
                                     </div>
                                 )}
@@ -189,7 +212,7 @@ class ContactForm extends Component {
                                     Email
                                 </label>
                                 {errors.email && (
-                                    <div className="error text-goldt">
+                                    <div className="error text-red-500 text-sm">
                                         {errors.email[0]}
                                     </div>
                                 )}
@@ -212,7 +235,7 @@ class ContactForm extends Component {
                                     Phone
                                 </label>
                                 {errors.phone && (
-                                    <div className="error text-goldt">
+                                    <div className="error text-red-500 text-sm">
                                         {errors.phone[0]}
                                     </div>
                                 )}
@@ -236,7 +259,7 @@ class ContactForm extends Component {
                                     />
                                 </div>
                                 {errors.message && (
-                                    <div className="error">
+                                    <div className="error text-red-500 text-sm">
                                         {errors.message[0]}
                                     </div>
                                 )}
@@ -286,15 +309,19 @@ class ContactForm extends Component {
                                 onChange={this.handleRecaptchaChange}
                                 onExpired={this.handleRecaptchaExpired}
                                 className="mt-0 flex justify-center"
-                            size="normal" // Set the desired size here: "compact", "normal", or "invisible"
-                            render="explicit" // Use "explicit" rendering
-                            theme="dark" // Set the desired theme: "light" or "dark"
-                            style={{ transform: 'scale(0.8)' }} // Use CSS transform to adjust the size
+                                size="normal" // Set the desired size here: "compact", "normal", or "invisible"
+                                render="explicit" // Use "explicit" rendering
+                                theme="dark" // Set the desired theme: "light" or "dark"
+                                style={{ transform: "scale(0.8)" }} // Use CSS transform to adjust the size
                             />
                             <button
                                 type="submit"
                                 disabled={!recaptchaValue || isLoading}
-                                className="mt-10 block w-full sm:w-4/12 rounded-3xl bg-gradient-to-r from-goldl to-goldd hover:from-goldd hover:to-goldl px-3.5 py-2.5 text-center text-sm font-semibold text-dark shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goldt"
+                                className={`mt-10 block w-full sm:w-4/12 rounded-3xl bg-gradient-to-r from-goldl to-goldd hover:from-goldd hover:to-goldl px-3.5 py-2.5 text-center text-sm font-semibold text-dark shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goldt ${
+                                    !recaptchaValue
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : ""
+                                }`}
                             >
                                 {isLoading ? (
                                     <div className=" inset-0 flex justify-center items-center bg-opacity-50">
