@@ -46,10 +46,11 @@ import fireWardinCoverImage from "@/assets/news/FireWardingCover.jpg";
 import fireWardinBlogImage from "@/assets/news/FireWardenBlog.jpg";
 import fireWardin2Image from "@/assets/news/FireWarden2.jpeg";
 import fireWardin3Image from "@/assets/news/FireWarden3.jpeg";
-import safetyImage from "@/assets/news/Safety-1.jpeg"
-import safetyImage2 from "@/assets/news/Safety-2.jpeg"
-import safetyImage3 from "@/assets/news/Safety-3.jpeg"
+import safetyImage from "@/assets/news/Safety-1.jpeg";
+import safetyImage2 from "@/assets/news/Safety-2.jpeg";
+import safetyImage3 from "@/assets/news/Safety-3.jpeg";
 import safetyCoverImage from "@/assets/news/SafetyCover.webp";
+import bTripleImage from "@/assets/news/b-triple.webp";
 import React from "react";
 import { usePage } from "@inertiajs/react";
 import {
@@ -76,7 +77,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-
+import ReactPlayer from "react-player";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -623,7 +624,7 @@ export default function NewsPage(props) {
             id: 21,
             title: "GTLS: A Strategic Vision",
             content1: `At Gold Tiger Logistics Solutions (GTLS), we’re committed to more than just ticking boxes; we focus on building a strong, supportive team and sustaining robust processes for the long term. Which is why today we revisited the Gearbox training from 6 weeks ago, conducting an internal audit to ensure we stay at the forefront of maintenance excellence and continue to uphold our high DIFOT standards. This commitment is crucial to maintaining our position as a preferred supplier within the FMCG sector.`,
-           
+
             content2: `By continuously auditing our internal processes and fostering a culture of continuous improvement, with a key focus on safety, we continue to seek ways to enhance our operations. This approach not only allows us to deliver cost savings but also reduces CO2 emissions.`,
             imgUrl: gearboxnews,
         },
@@ -701,23 +702,18 @@ export default function NewsPage(props) {
                 {
                     id: 9,
                     title: "Documented evacuation drill & reporting requirements",
-                }
+                },
             ],
             content2: `Thank you to our Expert trainer for attending Gold Tiger Logistics Solutions facility and providing important skills and knowledge to the designated Fire Wardens within GTLS.
 
             `,
             imgUrl: fireWardinCoverImage,
-            imgSliders: [
-                fireWardinImage,
-                fireWardin2Image,
-                fireWardin3Image
-            ],
+            imgSliders: [fireWardinImage, fireWardin2Image, fireWardin3Image],
         },
         {
             id: 24,
             title: "Building a Safety-Conscious Workforce with Fire & Safety Australia",
-            content1:
-                `Building a Safety-Conscious Workforce with Fire & Safety Australia
+            content1: `Building a Safety-Conscious Workforce with Fire & Safety Australia
                 At Gold Tiger Logistics Company, safety is at the heart of our operations. Recently, our team participated in an essential firefighting training session, facilitated by Fire and Safety Australia, as part of our ongoing commitment to safety and compliance.
                 
                 The training covered the following areas:`,
@@ -739,8 +735,7 @@ export default function NewsPage(props) {
                     title: "Evacuation Procedures: Ensuring that all staff know how to evacuate safely and efficiently in case of a fire.",
                 },
             ],
-            content2:
-                `By equipping our employees with practical firefighting skills, we not only meet our compliance obligations but also foster a culture of safety within Gold Tiger Logistics. Our workforce is now more confident in managing fire risks and more prepared to protect each other and our assets in an emergency.
+            content2: `By equipping our employees with practical firefighting skills, we not only meet our compliance obligations but also foster a culture of safety within Gold Tiger Logistics. Our workforce is now more confident in managing fire risks and more prepared to protect each other and our assets in an emergency.
 
                 Staying Compliant and Safe
                 
@@ -748,15 +743,75 @@ export default function NewsPage(props) {
                 
                 This training further solidifies our commitment to safety and excellence in logistics, keeping our operations running smoothly while safeguarding our most valuable assets—our people.`,
             imgUrl: safetyCoverImage,
-            imgSliders: [
-                safetyImage,
-                safetyImage2,
-                safetyImage3
+            imgSliders: [safetyImage, safetyImage2, safetyImage3],
+        },
+        {
+            id: 25,
+            title: "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Transport",
+            content1: `We’re thrilled to announce our latest service upgrade – the addition of B-triple configurations to our fleet! Known for their increased capacity and efficiency, B-triples are among the most powerful solutions for long-haul freight. These trucks consist of three trailers, each securely coupled to maximize load volume while maintaining stability on the road.
+
+                Key Benefits of Our B-Triple Solution`,
+            list: [
+                {
+                    id: 0,
+                    title: "Higher Load Capacity:",
+                    content:
+                        "With an extra trailer, B-triples allow us to transport more goods per trip, which is ideal for customers with large-volume shipments or high-frequency needs.",
+                },
+                {
+                    id: 1,
+                    title: "Separation of Fragile Goods:",
+                    content:
+                        "Our Trailers are fitted with adjustable mezzanine floors to cater for delicate or fragile goods that cannot be double stacked in transit thus preventing damage to your products while in transit.",
+                },
+                {
+                    id: 2,
+                    title: "Enhanced Fuel Efficiency:",
+                    content:
+                        "By moving more freight in fewer trips, B-triples provide a more fuel-efficient solution that reduces environmental impact.",
+                },
+                {
+                    id: 3,
+                    title: "Extended Reach:",
+                    content:
+                        "Our B-triple solution will operate on specific approved routes across major states, enabling us to deliver goods faster over longer distances.",
+                },
+                {
+                    id: 4,
+                    title: "Reliability and Safety:",
+                    content:
+                        "Safety is our priority. Our B-triple trucks are equipped with state-of-the-art monitoring systems, and our drivers undergo specialized training to handle these configurations with care and precision.",
+                },
             ],
+            content2: `As we roll out this service, we’re committed to continuing our high standards in freight logistics. The B-triple expansion reflects our dedication to adapting and growing to meet the evolving needs of our customers. Enquire today by calling 1800 04 03 06 to learn more about how our B-triple solution can benefit your business!
+
+            `,
+            imgUrl: bTripleImage,
+            youtubeUrl: "https://youtu.be/lqfwHrotJLs?si=fU6BWcJgR9CUmKkQ",
         },
     ];
 
     const posts = [
+        {
+            id: 25,
+            title: "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Transport",
+            href: "#",
+            description: `We’re thrilled to announce our latest service upgrade – the addition of B-triple configurations to our fleet! Known for their increased capacity and efficiency, B-triples are among the most powerful solutions for long-haul freight. These trucks consist of three trailers, `,
+            imageUrl: bTripleImage,
+            date: "November 19, 2024",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
+        {
+            id: 24,
+            title: "Building a Safety-Conscious Workforce with Fire & Safety Australia",
+            href: "#",
+            description: `At Gold Tiger Logistics Company, safety is at the heart of our operations. Recently, our team participated in an essential firefighting training session, facilitated by Fire and Safety Australia, as part of our ongoing commitment to safety and compliance.`,
+            imageUrl: safetyImage,
+            date: "October 23, 2024",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 23,
             title: "Fire Warden, Fire Extinguisher & Fire Blanket Training.",
@@ -1035,7 +1090,13 @@ export default function NewsPage(props) {
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
-                {id == 12 || id == 15 || id == 17 || id == 18 || id == 19 || id == 22 || id == 23  ? (
+                {id == 12 ||
+                id == 15 ||
+                id == 17 ||
+                id == 18 ||
+                id == 19 ||
+                id == 22 ||
+                id == 23 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -1044,7 +1105,7 @@ export default function NewsPage(props) {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
-                ) : id == 20 || id == 21  || id == 24 ? (
+                ) : id == 20 || id == 21 || id == 24 || id == 25 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -1209,6 +1270,16 @@ export default function NewsPage(props) {
                                             )
                                         )}
                                     </Swiper>
+                                ) : contentJson[id].youtubeUrl ? (
+                                    <>
+                                        <ReactPlayer
+                                            controls={true}
+                                            url={contentJson[id].youtubeUrl}
+                                            width="100%"
+                                            autoPlay={true}
+                                            height={500}
+                                        />
+                                    </>
                                 ) : (
                                     <img
                                         className="aspect-video rounded-xl bg-gray-50 object-cover"
@@ -1258,56 +1329,60 @@ export default function NewsPage(props) {
                             </h2>
                         </div>
                         <Slider {...settings}>
-                            {posts.filter((post) => post.id != id).map((post) => (
-                                <div key={post.id} className="px-5 ">
-                                    <Link
-                                        href={route("news", {
-                                            id: post.id,
-                                            title: customEncodeTitle(
-                                                post.title
-                                            ),
-                                        })}
-                                        className=""
-                                    >
-                                        <div className="h-full">
-                                            <div className="relative w-full www">
-                                                <img
-                                                    src={post.imageUrl}
-                                                    alt={post.title}
-                                                    className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full "
-                                                />
-                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                            </div>
-                                            <article
-                                                key={post.id}
-                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                            >
-                                                <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                        <time
-                                                            dateTime={
-                                                                post.datetime
-                                                            }
-                                                            className="text-goldl font-bold"
-                                                        >
-                                                            {post.date}
-                                                        </time>
-                                                    </div>
-                                                    <div className="group relative">
-                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                            <span className="absolute inset-0" />
-                                                            {post.title}
-                                                        </h3>
-                                                        <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                            {post.description}
-                                                        </p>
-                                                    </div>
+                            {posts
+                                .filter((post) => post.id != id)
+                                .map((post) => (
+                                    <div key={post.id} className="px-5 ">
+                                        <Link
+                                            href={route("news", {
+                                                id: post.id,
+                                                title: customEncodeTitle(
+                                                    post.title
+                                                ),
+                                            })}
+                                            className=""
+                                        >
+                                            <div className="h-full">
+                                                <div className="relative w-full www">
+                                                    <img
+                                                        src={post.imageUrl}
+                                                        alt={post.title}
+                                                        className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full "
+                                                    />
+                                                    <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                                 </div>
-                                            </article>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
+                                                <article
+                                                    key={post.id}
+                                                    className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
+                                                >
+                                                    <div className="max-w-xl mx-4 mb-6  mt-12">
+                                                        <div className="mt-5 flex items-center gap-x-4 text-xs">
+                                                            <time
+                                                                dateTime={
+                                                                    post.datetime
+                                                                }
+                                                                className="text-goldl font-bold"
+                                                            >
+                                                                {post.date}
+                                                            </time>
+                                                        </div>
+                                                        <div className="group relative">
+                                                            <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
+                                                                <span className="absolute inset-0" />
+                                                                {post.title}
+                                                            </h3>
+                                                            <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
+                                                                {
+                                                                    post.description
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
                         </Slider>
                     </div>
                 </div>

@@ -24,7 +24,8 @@ import Conferencnews from "../../../assets/news/Conference.jpeg";
 import gearboxnews from "../../../assets/news/gearboxnews.jpeg";
 import jaixtraining from "../../../assets/news/jaixtraining.jpeg";
 import fireWardinImage from "@/assets/news/FireWardenBlog.jpg";
-import safetyImage from "@/assets/news/Safety-3.jpeg"
+import safetyImage from "@/assets/news/Safety-3.jpeg";
+import bTripleImage from "@/assets/news/b-triple.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -36,6 +37,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 25,
+        title: "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Transport",
+        href: "#",
+        description: `We’re thrilled to announce our latest service upgrade – the addition of B-triple configurations to our fleet! Known for their increased capacity and efficiency, B-triples are among the most powerful solutions for long-haul freight. These trucks consist of three trailers, `,
+        imageUrl: bTripleImage,
+        date: "November 19, 2024",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 24,
         title: "Building a Safety-Conscious Workforce with Fire & Safety Australia",
