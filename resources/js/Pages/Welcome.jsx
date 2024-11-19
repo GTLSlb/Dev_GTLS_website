@@ -184,7 +184,7 @@ export default function Welcome(props) {
                     <Head title="Welcome" />
                     {/* <Navbars /> */}
                     <div className="relative isolate bg-dark">
-                        <MainLayout loading={loading}>
+                        <MainLayout loading={loading} isHomeScreen={true}>
                             <VideoHeader getHeader={getHeader} />
                             <AboutUs getAbout={getAbout} />
                             <PrimaryServices getservices={getservices} />

@@ -96,36 +96,38 @@ export default function News(props) {
         });
     }, []);
 
+    const strapiAppUrl = window.Laravel.strapiAppUrl;
+
     return (
         <div>
             <div className="bg-dark">
                 <div className="py-2 sm:py-32 px-1 sm:pb-1">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">
-                            <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
+                            <h2 className="">
                                 <span
                                     dangerouslySetInnerHTML={{
-                                        __html: getTeam?.title,
+                                        __html: getTeam?.Title,
                                     }}
                                 ></span>
                             </h2>
-                            <div className="mt-2 text-lg leading-8 text-gray-300">
+                            <div className="mt-2">
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html: getTeam?.description,
+                                        __html: getTeam?.Description,
                                     }}
                                 ></div>
                             </div>
                         </div>
 
                         <Slider ref={sliderRef} {...settings}>
-                            {getTeam?.team_pics.map((person) => (
+                            {getTeam?.team_members.map((person) => (
                                 <div key={person.id} className="px-5  ">
                                     <img
                                         src={
-                                            "http://localhost:1337" + person.url
+                                            strapiAppUrl + person.TeamImage.url
                                         }
-                                        alt={person.alternativeText}
+                                        alt={person.MemberName}
                                         className=" rounded-2xl p-10 object-containh-96 w-full "
                                     />
                                 </div>
