@@ -26,22 +26,33 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: true },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "https://map.gtls.store/", link: false },
+    {
+        id: 8,
+        name: "National Road Alerts",
+        href: "https://map.gtls.store/",
+        link: false,
+    },
 ];
 
 function MainLayout({ children, loading, isHomeScreen }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [getTrainNotification, setTrainNotification] = useState();
     const [getfooter, setfooter] = useState([]);
+    const [getNavigation, setNavigation] = useState([]);
     const [layoutloading, setLayoutLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
             setLayoutLoading(true);
             try {
                 const footerReq = await getFromStrapi(`/api/footer/?pLevel=2`);
-
+                const navigationReq = await getFromStrapi(
+                    `/api/nav-bar/?pLevel=2`
+                );
                 if (footerReq.success) {
                     setfooter(footerReq.data);
+                }
+                if (navigationReq.success) {
+                    setNavigation(navigationReq.data);
                 }
                 setLayoutLoading(false);
                 // scroll to the correct div
@@ -383,7 +394,7 @@ function MainLayout({ children, loading, isHomeScreen }) {
                             </>
                         ) : (
                             <>
-                                <Navbars />
+                                <Navbars getNavigation={getNavigation} />
                             </>
                         )}
 

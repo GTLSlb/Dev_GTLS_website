@@ -1,8 +1,5 @@
-import { Head } from "@inertiajs/react";
-import Footer from "./Component/landingPage/Footer";
 import "../../css/gradient.css";
 import { useState, useEffect } from "react";
-import Navbars from "@/Components/Navbars";
 
 export default function GoingGreen() {
     const [getfooter, setfooter] = useState([]);
@@ -27,12 +24,6 @@ export default function GoingGreen() {
     // *********************************************************
     return (
         <>
-            <Head title="Traffic Notification" />
-            <div className="relative isolate min-h-screen bg-dark">
-                <Navbars />
-            
-            </div>
-            <Footer getfooter={getfooter} />
         </>
     );
 }

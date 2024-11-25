@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 
+ol, ul {
+  list-style: unset !important;
+  color: #e2b540 !important;
+  list-style-position: inside !important;
+}
 .ChangeSVGSize svg {
   width: 1.5rem !important;
   height: 1.5rem !important;

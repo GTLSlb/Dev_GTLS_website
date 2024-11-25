@@ -83,48 +83,48 @@ export default function Welcome(props) {
         const fetchData = async () => {
             try {
                 const result = await getFromStrapi(
-                    `/api/pages/?pLevel=4&filters%5Bpage_name%5D=Homepage`
+                    `/api/home-page?pLevel=4`
                 );
 
                 if (result.success) {
-                    setGetHeader(result.data[0]);
-                    setGetAbout(result.data[0].Dynamic_zone[1]);
+                    setGetHeader(result.data);
+                    setGetAbout(result.data.Dynamic_zone[1]);
                     setServices(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) =>
                                 zone.__component === "global.related-services"
                         )
                     );
                     setGreen(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) => zone.sectionName === "GoingGreen-HomePage"
                         )
                     );
                     setwhygtls(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) =>
                                 zone.__component === "global.related-values"
                         )
                     );
                     setGtrs(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) =>
                                 zone.__component === "global.video-section"
                         )
                     );
                     setSafety(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) => zone.sectionName === "Safety-HomePage"
                         )
                     );
                     settechnologies(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) =>
                                 zone.sectionName === "Technologies-HomePage"
                         )
                     );
                     setcertificates(
-                        result.data[0].Dynamic_zone.find(
+                        result.data.Dynamic_zone.find(
                             (zone) =>
                                 zone.__component ===
                                 "global.related-certificate"

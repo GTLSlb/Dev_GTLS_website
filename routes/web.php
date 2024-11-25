@@ -86,9 +86,6 @@ Route::get('/gtw', function () {
     return Inertia::render('GTW');
 })->middleware(['custom']);
 
-// Route::get('/main', function () {
-//     return Inertia::render('Layout');
-// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -97,11 +94,6 @@ Route::get('/opportunities', function () {
 Route::get('/goinggreen', function () {
     return Inertia::render('GoingGreen');
 })->name('goinggreen');
-
-// Route::get('/traffic', function () {
-//     return Inertia::render('TrafficPage');
-// })->name('traffic');
-
 
 Route::get('/terms', function () {
     return Inertia::render('Terms');
@@ -266,6 +258,3 @@ Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
 require __DIR__ . '/auth.php';
-
-//Route::post('/api/directions', [ApiController::class, 'directions']);
-

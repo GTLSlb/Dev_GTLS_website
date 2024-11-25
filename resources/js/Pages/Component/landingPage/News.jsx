@@ -1,21 +1,5 @@
 import { Link } from "@inertiajs/react";
-import trucks from "../../../assets/news/trucks.webp";
-import postpic from "../../../assets/news/postpic.webp";
 import newscircle from "../../../assets/pictures/newscircle.webp";
-import device from "../../../assets/news/device.webp";
-import earth from "../../../assets/news/earth.webp";
-import safety from "../../../assets/news/safety.webp";
-import track from "../../../assets/news/track.webp";
-import worker from "../../../assets/news/worker.webp";
-import newSite from "../../../assets/news/newSite.webp";
-import goldt from "../../../assets/news/goldt.webp";
-import tcapp from "../../../assets/news/tcapp.webp";
-import movers from "../../../assets/news/3movers.webp";
-import weighbridge from "../../../assets/news/weighbridge.webp";
-import Navman from "../../../assets/news/Navman.webp";
-import weighbridgenews from "../../../assets/news/weighbridgenews.webp";
-import Navmannews from "../../../assets/news/Navmannews.webp";
-import greennews from "../../../assets/news/greennews.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -23,8 +7,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
-import React from "react";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -51,18 +33,9 @@ function SamplePrevArrow(props) {
 }
 
 export default function News(props) {
-    const getPageDesc = props.getPageDesc;
     const getPosts = props.getPosts;
 
     const sliderRef = useRef(null);
-
-    const slideNextWithDelay = (delay) => {
-        setTimeout(() => {
-            if (sliderRef.current) {
-                sliderRef.current.slickNext();
-            }
-        }, delay);
-    };
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -116,6 +89,9 @@ export default function News(props) {
             : 0;
     }, []);
 
+    const strapiApiUrl = window.Laravel.strapiAppUrl;
+
+
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -126,42 +102,45 @@ export default function News(props) {
                 <div className="py-24 sm:py-32 px-1 sm:pb-1">
                     <div className="mx-auto max-w-7xl px-6 lg:px-8">
                         <div className=" max-w-2xl ">
-                            <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                {getPageDesc?.name}
-                            </h2>
                             <div
-                                className="mt-3 text-smooth"
+                                className="mt-3"
                                 dangerouslySetInnerHTML={{
-                                    __html: getPageDesc?.description,
+                                    __html: getPosts?.Title,
+                                }}
+                            ></div>
+                            <div
+                                className="mt-3"
+                                dangerouslySetInnerHTML={{
+                                    __html: getPosts?.Description,
                                 }}
                             ></div>
                         </div>
 
                         <div className="grid lg:grid-cols-3 gap-4">
-                            {getPosts?.map((post) => (
-                                <div key={post.id} className="px-5  ">
+                            {getPosts?.RelatedBlogs?.blogs.map((post) => (
+                                <div key={post.documentId} className="px-5  ">
                                     <Link
-                                        href={route("newsPage", { slug: post.slug })}
+                                        href={route("newsPage", {
+                                            slug: post.Slug,
+                                        })}
                                         className=""
                                     >
                                         <div className="h-full ">
                                             <div className="relative w-full www">
                                                 <img
                                                     src={
-                                                        "http://localhost:1337" +
-                                                        post.cover.formats
-                                                            .medium.url
+                                                        strapiApiUrl +
+                                                        post.CoverImage.url
                                                     }
                                                     alt={
-                                                        post.cover.formats
-                                                            .medium.name
+                                                        post.CoverImage.alternativeText
                                                     }
                                                     className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
                                                 />
                                                 <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
                                             <article
-                                                key={post.id}
+                                                key={post.documentId}
                                                 className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
                                             >
                                                 <div className="max-w-xl mx-4 mb-6  mt-12">
@@ -183,15 +162,13 @@ export default function News(props) {
                                                     <div className="group relative">
                                                         <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
                                                             <span className="absolute inset-0" />
-                                                            {post?.title}
+                                                            {post?.Title}
                                                         </h3>
                                                         <dd
                                                             className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
                                                             dangerouslySetInnerHTML={{
                                                                 __html: post
-                                                                    .new_description[0]
-                                                                    .children[0]
-                                                                    .text,
+                                                                    .Body,
                                                             }}
                                                         ></dd>
                                                     </div>
