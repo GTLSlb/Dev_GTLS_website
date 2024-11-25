@@ -1,6 +1,4 @@
-import aboutimage from "../../../assets/pictures/goldtiger-imad-elmasri.webp";
 import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
-import { useState, useEffect, useRef } from "react";
 
 
 export default function AboutUs(props) {

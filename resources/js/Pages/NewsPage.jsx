@@ -22,7 +22,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { BounceLoader } from "react-spinners";
-import RichTextRenderer from "@/Components/ContentRenderer";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
 

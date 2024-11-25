@@ -1,5 +1,3 @@
-import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid";
-import Green from "../../../assets/pictures/gogreen.webp";
 import "../../../../css/gradient.css";
 import Calc from "../../Component/landingPage/Calc";
 

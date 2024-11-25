@@ -1,7 +1,6 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import styled from "styled-components";
-import Gtrs from "../../../assets/videos/GTRS-Demo.mp4";
 
 export default function ResponsiveStyledPlayer(props) {
     const getGtrs = props.getGtrs;

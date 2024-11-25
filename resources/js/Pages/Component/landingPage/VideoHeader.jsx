@@ -1,9 +1,3 @@
-import headerImage from "../../../assets/pictures/header-image.webp";
-import aus from "../../../assets/pictures/aus.webp";
-import { PhoneIcon } from "@heroicons/react/24/outline";
-import Gtlsh from "../../../assets/videos/goldtiger-header.mp4";
-import { Link as ScrollLink } from "react-scroll";
-import { useState, useEffect, useRef } from "react";
 
 export default function VideoHeader(props) {
     const getHeader = props.getHeader.Dynamic_zone.find(
