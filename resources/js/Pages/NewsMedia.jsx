@@ -44,7 +44,7 @@ export default function Newss(props) {
                     </div>
                 </>
             ) : (
-                <MainLayout loading={loading} >
+                <MainLayout loading={loading}>
                     <Head title="News Gold Tiger" />
                     <div className="relative isolate bg-dark">
                         <div aria-hidden="true" className="relative">

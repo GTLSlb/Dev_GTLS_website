@@ -25,9 +25,7 @@ export default function ScrollNav({ getTrainNotification }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [nextPage, setNextPage] = useState(false);
-    const toggleElement = () => {
-        setNextPage(!nextPage);
-    };
+
     useEffect(() => {
         function handleScroll() {
             const scrollTop =

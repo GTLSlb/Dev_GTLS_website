@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import BounceLoader from "react-spinners/BounceLoader";
 import MainLayout from "@/Layouts/MainLayout";
 import { getFromStrapi } from "@/CommonFunctions";
+import LoadingComp from "@/Components/LoadingComp";
 
 export default function AboutUs(props) {
     // *********************************************************
@@ -21,7 +22,7 @@ export default function AboutUs(props) {
 
                 if (aboutUsReq.success) {
                     setaboutBody(aboutUsReq.data);
-                    setTeam(aboutUsReq.data.Team)
+                    setTeam(aboutUsReq.data.Team);
                 }
                 // Set loading to false when all requests are completed
                 setLoading(false);
@@ -42,13 +43,7 @@ export default function AboutUs(props) {
     return (
         <>
             {loading ? (
-                <>
-                    {" "}
-                    <div className="bg-dark flex justify-center items-center h-screen">
-                        {" "}
-                        <BounceLoader color="#e2b540" />
-                    </div>
-                </>
+                <LoadingComp />
             ) : (
                 <>
                     <MainLayout alt loading={loading}>
@@ -60,8 +55,7 @@ export default function AboutUs(props) {
                             >
                                 <img
                                     src={
-                                        strapiApiUrl +
-                                        aboutBody.herosection.url
+                                        strapiApiUrl + aboutBody.herosection.url
                                     }
                                     alt={
                                         aboutBody.herosection.formats.large.name

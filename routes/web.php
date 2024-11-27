@@ -48,8 +48,6 @@ Route::get('/login', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
 
-Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
-
 Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
 
 Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
@@ -58,34 +56,12 @@ Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->mi
 
 Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
 
-
-Route::get('/visitor',[UserVisitController::class, 'index']);
-
-
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
     return Inertia::render('LandingPage');
 })->middleware(['custom.auth'])->name('landing.page');
-
-
-Route::get('/gtms', function () {
-    return Inertia::render('GTMS');
-})->middleware(['custom']);
-
-Route::get('/gtam', function () {
-    return Inertia::render('GTAM');
-})->middleware(['custom']);
-
-Route::get('/gtrs', function () {
-    return Inertia::render('GTRS');
-})->middleware(['custom']);
-
-Route::get('/gtw', function () {
-    return Inertia::render('GTW');
-})->middleware(['custom']);
-
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -99,7 +75,7 @@ Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
 
-Route::get('/palletterms', function () {
+Route::get('/palletterms', function () { 
     return Inertia::render('PalletTerms');
 })->name('palletterms');
 
@@ -131,8 +107,6 @@ Route::get('/Subscribe/{id}', function ($id) {
     return Inertia::render('Subscribe',['id'=> $id]);
 })->name('Subscribe');
 
-
-Route::resource('posts', BlogController::class);
 
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
