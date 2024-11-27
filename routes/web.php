@@ -1,18 +1,12 @@
 <?php
 
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\ConsTrackingController;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\SupportFormController;
-use App\Http\Controllers\UserVisitController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\FileController;
 use App\Http\Controllers\SendDailyEmail;
 use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
@@ -20,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
-use App\Models\Blog;
-use App\Http\Middleware\LogUserVisit;
 use gtls\loginstory\LoginClass;
 
 /*
@@ -179,40 +171,8 @@ Route::get('/session-data', function () {
 
 
 
-// ************************ AdminPanel  API Route ************************
-Route::resource('section',SectionController::class);
-Route::get('/getSec/{id}',[SectionController::class,'getSec']);
-Route::get('/getaboutus',[SectionController::class,'about']);
-Route::get('/getheader',[SectionController::class,'header']);
-Route::get('/getTrainNotification',[SectionController::class,'TrainNotification']);
-Route::get('/getGtrs',[SectionController::class,'gtrs']);
-Route::get('/getservices',[SectionController::class,'services']);
-Route::get('/getgoingGreen',[SectionController::class,'goingGreenSection']);
-Route::get('/whygtls',[SectionController::class,'whygtls']);
-Route::get('/safety',[SectionController::class,'safety']);
-Route::get('/tecnologies',[SectionController::class,'tecnologies']);
-Route::get('/certificates',[SectionController::class,'certificates']);
-Route::get('/footer',[SectionController::class,'footer']);
-Route::get('/aboutPageHeader',[SectionController::class,'aboutPageHeader']);
-Route::get('/aboutPageCoreValue',[SectionController::class,'aboutPageCoreValue']);
-Route::get('/aboutPageSolutions',[SectionController::class,'aboutPageSolutions']);
-Route::get('/aboutPageTeam',[SectionController::class,'aboutPageTeam']);
-Route::get('/technologiesPage',[SectionController::class,'technologiesPage']);
-Route::get('/technologiesPageIT',[SectionController::class,'technologiesPageIT']);
-Route::get('/GreenPage',[SectionController::class,'GreenPage']);
-Route::get('/ContactPage',[SectionController::class,'ContactPage']);
-Route::get('/ContactPageBranches',[SectionController::class,'ContactPageBranches']);
-Route::get('/NewsPage',[SectionController::class,'NewsPage']);
-Route::get('/CareerHead',[SectionController::class,'CareerHead']);
-Route::get('/CareerAttractive',[SectionController::class,'CareerAttractive']);
-Route::get('/CareerSkills',[SectionController::class,'CareerSkills']);
-Route::get('/CareerJobs',[SectionController::class,'CareerJobs']);
-Route::get('/vister',[UserVisitController::class,'index']);
-// ******************************************************************
-
 
 // ************************ News Pages Route ************************
-Route::get('/posts',[BlogController::class,'index']);
 Route::get('/news/{slug}', function ($slug) {
     return Inertia::render('NewsPage', ['slug' => $slug]);
 })->name('newsPage');
