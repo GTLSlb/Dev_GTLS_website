@@ -41,8 +41,6 @@ import { BounceLoader } from "react-spinners";
 import TrainNotification from "@/Components/TrainNotification";
 
 const mapUrl = window.Laravel.mapUrl;
-
-const mapUrl = window.Laravel.mapUrl;
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
     { id: 2, name: "Services", href: "services", link: false },
