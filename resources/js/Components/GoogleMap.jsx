@@ -1,36 +1,36 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
+import {
+    GoogleMap,
+    LoadScript,
+    Polyline,
+    Marker,
+    TrafficLayer,
+} from "@react-google-maps/api";
+import { Spinner } from "flowbite-react";
+import axios from "axios";
+import {
+    Checkbox,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import LocationOn from "@mui/icons-material/LocationOn";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import List from "@mui/icons-material/List";
+import HelpCenterRounded from "@mui/icons-material/HelpCenterRounded";
 import Roadworks from "@/assets/icons/RoadWork.png";
 import Alpine from "@/assets/icons/Alpine.png";
 import Flooding from "@/assets/icons/Flooding.png";
 import Congestion from "@/assets/icons/Congestion.png";
 import Hazard from "@/assets/icons/Hazard.png";
-import RegionalLGA from "@/assets/icons/RegionalLGA.png";
 import Incident from "@/assets/icons/Incident.png";
 import Major from "@/assets/icons/Major.png";
+import RegionalLGA from "@/assets/icons/RegionalLGA.png";
 import Other from "@/assets/icons/Other.png";
-import {
-    Checkbox,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Typography,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import axios from "axios";
-import {
-    List,
-    LocationOn,
-    AccessTime as AccessTimeIcon,
-    Close as CloseIcon,
-    HelpCenterRounded,
-} from "@mui/icons-material";
-import "../../css/scroll.css";
+import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 const center = { lat: -25.2744, lng: 133.7751 };
 const australiaBounds = { north: -5.0, south: -55.0, east: 165.0, west: 105.0 };
 
+// Mapping event types to icon categories
 const eventTypeMapping = {
     Roadworks: ["ROADWORKS", "24HR ROADWORKS", "Roadwork", "Roadworks"],
     Alpine: ["Alpine"],
@@ -39,16 +39,11 @@ const eventTypeMapping = {
     Hazard: ["Hazard", "Vehicle fire", "Fire", "Vehicle rollover", "Landslip"],
     "Regional LGA Incident": ["Regional LGA Incident", "Emergency Incident"],
     "Major Event": ["Major Event", "Special event", "Demonstration"],
-    Incident: [
-        "INCIDENT",
-        "COLLISION",
-        "Incident",
-        "Crash",
-        "Emergency Incident",
-    ],
+    Incident: ["INCIDENT", "COLLISION", "Incident", "Crash", "Emergency Incident"],
     Other: ["Equipment damage", "Equipment fault"],
 };
 
+// Mapping icons to categories
 const iconMappings = {
     Roadworks,
     Alpine,
@@ -96,10 +91,16 @@ function formatLastUpdated(minutesDifference) {
     }
 }
 
-const GoogleMapComp = () => {
+function GoogleMapComp() {
     const [originalData, setOriginalData] = useState([]);
     const [markerPositions, setMarkerPositions] = useState([]);
+    const [consignmentNb, setConsignmentNb] = useState("");
+    const [typeId, setTypeId] = useState("");
+    const [fromdate, setFromdate] = useState("");
+    const [todate, setTodate] = useState("");
     const [lastUpdatedAt, setLastUpdatedAt] = useState();
+    const [loading, setLoading] = useState(false);
+    const [polyline, setPolyline] = useState(null);
     const [eventFilter, setEventFilter] = useState({
         Roadworks: true,
         Incident: true,
@@ -121,21 +122,6 @@ const GoogleMapComp = () => {
     const mapRef = useRef(null);
     const clustererRef = useRef(null);
 
-    const getIcon = (eventType) => {
-        const mainCategory = Object.keys(eventTypeMapping).find((category) =>
-            eventTypeMapping[category].includes(eventType)
-        );
-        const iconUrl =
-            iconMappings[mainCategory] ||
-            "https://qldtraffic.qld.gov.au/images/roadevents/SpecialEvents.png";
-        return {
-            url: iconUrl,
-            scaledSize: new window.google.maps.Size(20, 20),
-            origin: new window.google.maps.Point(0, 0),
-            anchor: new window.google.maps.Point(16, 16),
-        };
-    };
-
     const fetchPositions = async () => {
         try {
             const [positionsResponse, lastUpdatedResponse] = await Promise.all([
@@ -152,25 +138,9 @@ const GoogleMapComp = () => {
 
     useEffect(() => {
         fetchPositions();
-        const intervalId = setInterval(fetchPositions, 3600000); // Fetch data every 60 minutes
+        const intervalId = setInterval(fetchPositions, 3600000); // Fetch every 60 minutes
         return () => clearInterval(intervalId);
     }, []);
-
-    useEffect(() => {
-        console.log(originalData)
-        if (originalData) {
-            const filteredData = originalData?.filter((position) => {
-                const isStateSelected = stateFilter[position.api_source];
-                const isEventSelected = Object.entries(eventTypeMapping).some(
-                    ([filterKey, typeArray]) =>
-                        eventFilter[filterKey] &&
-                        typeArray.includes(position.event_type)
-                );
-                return isStateSelected && isEventSelected;
-            });
-            setMarkerPositions(filteredData);
-        }
-    }, [eventFilter, stateFilter, originalData]);
 
     const handleMarkerClick = (position) => {
         setMarkerDetails({
@@ -189,64 +159,175 @@ const GoogleMapComp = () => {
         });
     };
 
+    const handleClose = () => {
+        setMarkerDetails(null);
+    };
+
     const initializeClusterer = useCallback((map) => {
         mapRef.current = map;
 
-        // Initialize MarkerClusterer with new keyword
+        // Create the MarkerClusterer instance
         clustererRef.current = new MarkerClusterer({
             map,
-            markers: [],
+            markers: [], // Add any markers to this array later
         });
     }, []);
 
-    const renderMarkers = () => {
-        if (!clustererRef.current) return;
-
-        clustererRef.current.clearMarkers(); // Clear existing markers
-
-        const markers = markerPositions
-            .map((geometry) => {
-                const {
-                    geometry_type,
-                    geometry_coordinates,
-                    event_type,
-                    event_id,
-                } = geometry;
-                if (geometry_type === "Point") {
-                    return new window.google.maps.Marker({
-                        position: {
-                            lat: geometry_coordinates[1],
-                            lng: geometry_coordinates[0],
-                        },
-                        icon: getIcon(event_type),
-                    });
-                }
-                return null;
-            })
-            .filter((marker) => marker !== null); // Remove null markers
-
-        clustererRef.current.addMarkers(markers); // Add markers to clusterer
+    const getIcon = (eventType) => {
+        const mainCategory = Object.keys(eventTypeMapping).find((category) =>
+            eventTypeMapping[category].includes(eventType)
+        );
+        const iconUrl =
+            iconMappings[mainCategory] ||
+            "https://qldtraffic.qld.gov.au/images/roadevents/SpecialEvents.png";
+        return {
+            url: iconUrl,
+            scaledSize: new window.google.maps.Size(20, 20),
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(16, 16),
+        };
     };
 
     useEffect(() => {
-        if (mapRef.current) {
-            renderMarkers();
+        if (originalData) {
+            const filteredData = originalData?.filter((position) => {
+                const isStateSelected = stateFilter[position.api_source];
+                const isEventSelected = Object.entries(eventTypeMapping).some(
+                    ([filterKey, typeArray]) =>
+                        eventFilter[filterKey] &&
+                        typeArray.includes(position.event_type)
+                );
+                const isEventId = position.event_id === "207542";
+                return isEventId;
+            });
+            setMarkerPositions(filteredData);
         }
-    }, [markerPositions, renderMarkers]);
+    }, [eventFilter, stateFilter, originalData]);
+
+    console.log(markerPositions);
+    const getConsignmentRoute = (e) => {
+        e.preventDefault();
+        setLoading(true);
+        axios
+            .get("/getConsignmentRoute", {
+                params: {
+                    consignmentNo: consignmentNb,
+                    typeId: typeId,
+                    fromDate: fromdate,
+                    toDate: todate,
+                },
+            })
+            .then((response) => {
+                setLoading(false);
+                setPolyline(response.data.vehicleRoad);
+
+                // Zoom to fit the polyline if map is ready
+                if (mapRef.current && response.data.vehicleRoad) {
+                    zoomToPolyline(response.data.vehicleRoad);
+                }
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+            });
+    };
+
+    // Ensure mapRef.current is ready before zooming to polyline
+    useEffect(() => {
+        if (polyline && mapRef.current) {
+            zoomToPolyline(polyline);
+        }
+    }, [polyline]);
+
+    const zoomToPolyline = (path) => {
+        if (!mapRef.current || !path || path.length === 0) return;
+    
+        const bounds = new window.google.maps.LatLngBounds();
+    
+        // Extend bounds for each point in the polyline
+        path.forEach((point) => {
+            bounds.extend(new window.google.maps.LatLng(point.lat, point.lng));
+        });
+    
+        // Fit the map to the bounds of the polyline with animation options
+        mapRef.current.fitBounds(bounds, {
+            padding: 50, // Optional: Adds padding around the polyline
+            duration: 1000, // Duration in milliseconds
+            easing: 'easeInOut', // Easing function
+        });
+    };
+    
+
+    const polylineOptions = {
+        strokeColor: "#FF0000", // Red color
+        strokeOpacity: 1.0,     // Full opacity
+        strokeWeight: 5,        // Thicker line
+    };
+
+    const formatDateTime = (dateTimeString) => {
+        const dateObj = new Date(dateTimeString);
+        return dateObj.toLocaleString();
+    };
 
     return (
         <div className="md:py-[8rem] mx-auto max-w-7xl h-full rounded-lg">
             <div className="text-goldt text-4xl font-semibold">
-                National Road events
+                National Road Events
             </div>
             <p className="text-sm text-white">
                 {lastUpdatedAt && <LastUpdated lastUpdatedAt={lastUpdatedAt} />}
             </p>
+
+            <div className="mt-4 mb-4 flex">
+                <input
+                    type="text"
+                    placeholder="Consignment Number"
+                    value={consignmentNb}
+                    onChange={(e) => setConsignmentNb(e.target.value)}
+                    className="border p-2 mr-2 w-full"
+                />
+                <input
+                    type="number"
+                    placeholder="Consignment Type"
+                    value={typeId}
+                    onChange={(e) => setTypeId(e.target.value)}
+                    className="border p-2 mr-2 w-full"
+                />
+                <input
+                    type="datetime-local"
+                    placeholder="From Date"
+                    value={fromdate}
+                    onChange={(e) => setFromdate(e.target.value)}
+                    className="border p-2 mr-2 w-full"
+                />
+                <input
+                    type="datetime-local"
+                    placeholder="To Date"
+                    value={todate}
+                    onChange={(e) => setTodate(e.target.value)}
+                    className="border p-2 mr-2 w-full"
+                />
+                <button
+                    onClick={(e) => getConsignmentRoute(e)}
+                    className="bg-blue-500 text-white p-2"
+                >
+                    Check
+                </button>
+            </div>
+
+            {loading && (
+                <div className="flex justify-center items-center h-full">
+                    <Spinner color="#e0c981" aria-label="Warning spinner example" />
+                </div>
+            )}
+
             <div className="flex flex-col h-[800px] mt-10">
                 <div className="flex-grow flex flex-row-reverse">
-                    {/* Google Map */}
                     <div className="flex-grow rounded-3xl">
-                        <LoadScript googleMapsApiKey="AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go">
+                        <LoadScript
+                            googleMapsApiKey="AIzaSyCvQ-XLmR8QNAr25M30xEcqX-nD-yTQ0go"
+                            libraries={["geometry", "visualization"]}
+                        >
                             <GoogleMap
                                 mapContainerStyle={{
                                     width: "100%",
@@ -262,15 +343,41 @@ const GoogleMapComp = () => {
                                         strictBounds: true,
                                     },
                                 }}
-                                onLoad={initializeClusterer}
-                            />
+                                // onLoad={initializeClusterer}
+                            >
+                                <TrafficLayer />
+
+                                {/* Render Polyline */}
+                                {polyline && (
+                                    <Polyline path={polyline} options={polylineOptions} />
+                                )}
+
+                                {markerPositions.map((position, index) => (
+                                    <Marker
+                                        key={index}
+                                        position={position}
+                                        icon={getIcon(position.event_type)}
+                                        onClick={() =>
+                                            handleMarkerClick(position)
+                                        }
+                                        // onLoad={(marker) => {
+                                        //     // Add marker to clusterer
+                                        //     if (clustererRef.current) {
+                                        //         clustererRef.current.addMarker(
+                                        //             marker
+                                        //         );
+                                        //     }
+                                        // }}
+                                    />
+                                ))}
+                            </GoogleMap>
                         </LoadScript>
                     </div>
+
                     {/* Sidebar */}
                     <div className="h-full w-80 bg-[#2A3034] rounded-l-2xl p-4 pr-2 overflow-y-auto">
                         {markerDetails ? (
                             <>
-                                {/* Details Section */}
                                 <div className="flex justify-between">
                                     <div className="flex gap-5 items-center">
                                         <img
@@ -285,9 +392,7 @@ const GoogleMapComp = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <button
-                                        onClick={() => setMarkerDetails(null)}
-                                    >
+                                    <button onClick={handleClose}>
                                         <CloseIcon sx={{ color: "#e0c981" }} />
                                     </button>
                                 </div>
@@ -311,11 +416,18 @@ const GoogleMapComp = () => {
                                                 markerDetails.startDate
                                             )}
                                         </p>
-                                        {markerDetails.endDate && (
+                                        {markerDetails.endDate ? (
                                             <p className="font-thin">
                                                 Ends At{" "}
                                                 {formatDateTime(
                                                     markerDetails.endDate
+                                                )}
+                                            </p>
+                                        ) : (
+                                            <p className="font-thin">
+                                                Last checked at{" "}
+                                                {formatDateTime(
+                                                    markerDetails.lastUpdated
                                                 )}
                                             </p>
                                         )}
@@ -334,8 +446,7 @@ const GoogleMapComp = () => {
                                         </div>
                                     </div>
                                 )}
-                                {markerDetails.information ||
-                                markerDetails.otherAdvice ? (
+                                {markerDetails.information ? (
                                     <div className="mt-8 flex gap-7 items-start">
                                         <HelpCenterRounded
                                             sx={{ color: "#e0c981" }}
@@ -344,16 +455,25 @@ const GoogleMapComp = () => {
                                             <p className="font-semibold">
                                                 Information
                                             </p>
+                                            <p className=" font-thin max-h-[300px] overflow-y-auto pr-2 containerscroll">
+                                                {markerDetails.information}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ) : markerDetails.otherAdvice ? (
+                                    <div className="mt-8 flex gap-7 items-start">
+                                        <HelpCenterRounded
+                                            sx={{ color: "#e0c981" }}
+                                        />
+                                        <div className="flex flex-col text-white">
+                                            <p className="font-semibold">
+                                                Information
+                                            </p>
+
                                             <p
-                                                className="font-thin max-w-60 max-h-[300px] overflow-auto pr-2 containerscroll"
-                                                style={{
-                                                    wordBreak: "break-word",
-                                                    hyphens: "auto",
-                                                }}
+                                                className="font-thin max-w-60 max-h-[300px] overflow-y-auto pr-2 containerscroll"
                                                 dangerouslySetInnerHTML={{
-                                                    __html:
-                                                        markerDetails.information ||
-                                                        markerDetails.otherAdvice,
+                                                    __html: markerDetails.otherAdvice,
                                                 }}
                                             ></p>
                                         </div>
@@ -371,7 +491,7 @@ const GoogleMapComp = () => {
                                     {/* QLD State Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
                                                 QLD: !prev.QLD,
@@ -402,7 +522,7 @@ const GoogleMapComp = () => {
                                     {/* NSW State Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
                                                 NSW: !prev.NSW,
@@ -433,7 +553,7 @@ const GoogleMapComp = () => {
                                     {/* SA State Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
                                                 SA: !prev.SA,
@@ -464,7 +584,7 @@ const GoogleMapComp = () => {
                                     {/* VIC State Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer pb-3 "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setStateFilter((prev) => ({
                                                 ...prev,
                                                 VIC: !prev.VIC,
@@ -502,7 +622,7 @@ const GoogleMapComp = () => {
                                     {/* Roadworks Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer   "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 Roadworks: !prev.Roadworks,
@@ -539,10 +659,10 @@ const GoogleMapComp = () => {
                                             Roadworks
                                         </p>
                                     </div>
-                                    {/* Incident Filter */}
-                                    <div
+                                      {/* Incident Filter */}
+                                      <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center cursor-pointer   "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 Incident: !prev.Incident,
@@ -580,7 +700,7 @@ const GoogleMapComp = () => {
                                     {/* Flooding Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center   cursor-pointer"
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 Flooding: !prev.Flooding,
@@ -617,7 +737,7 @@ const GoogleMapComp = () => {
                                     {/* Hazard Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer   "
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 Hazard: !prev.Hazard,
@@ -654,7 +774,7 @@ const GoogleMapComp = () => {
                                     {/* Major Event Filter */}
                                     <div
                                         className="  mr-8  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 ["Major Event"]:
@@ -693,10 +813,47 @@ const GoogleMapComp = () => {
                                         </p>
                                     </div>
 
+                                    {/* Alpine Filter */}
+                                    <div
+                                        className="  mr-8 hidden flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
+                                        onClick={() =>
+                                            setEventFilter((prev) => ({
+                                                ...prev,
+                                                Alpine: !prev.Alpine,
+                                            }))
+                                        }
+                                    >
+                                        <Checkbox
+                                            onChange={(e) =>
+                                                setEventFilter((prev) => ({
+                                                    ...prev,
+                                                    Alpine: e.target.checked,
+                                                }))
+                                            }
+                                            checked={eventFilter["Alpine"]}
+                                            sx={{
+                                                "& .MuiSvgIcon-root": {
+                                                    fontSize: 28,
+                                                },
+                                                color: "#e2b540",
+                                                "&.Mui-checked": {
+                                                    color: "#ebcb7a",
+                                                },
+                                            }}
+                                            defaultChecked
+                                        />
+                                        <img
+                                            src={Alpine}
+                                            width={28}
+                                            height={21}
+                                            alt=""
+                                        />
+                                        <p className="text-white ">Alpine</p>
+                                    </div>
                                     {/* Regional LGA Incident Filter */}
                                     <div
                                         className="  mr-2  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 ["Regional LGA Incident"]:
@@ -743,7 +900,7 @@ const GoogleMapComp = () => {
                                     {/* Congestion LGA Incident Filter */}
                                     <div
                                         className="  mr-2  flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
-                                        onClick={(e) =>
+                                        onClick={() =>
                                             setEventFilter((prev) => ({
                                                 ...prev,
                                                 Congestion: !prev.Congestion,
@@ -780,43 +937,6 @@ const GoogleMapComp = () => {
                                             Congestion
                                         </p>
                                     </div>
-                                    {/* Other Filter */}
-                                    <div
-                                        className="  mr-8 flex flex-row rounded-lg   space-x-5 items-center  cursor-pointer"
-                                        onClick={(e) =>
-                                            setEventFilter((prev) => ({
-                                                ...prev,
-                                                Other: !prev.Other,
-                                            }))
-                                        }
-                                    >
-                                        <Checkbox
-                                            onChange={(e) =>
-                                                setEventFilter((prev) => ({
-                                                    ...prev,
-                                                    Other: e.target.checked,
-                                                }))
-                                            }
-                                            checked={eventFilter["Other"]}
-                                            sx={{
-                                                "& .MuiSvgIcon-root": {
-                                                    fontSize: 28,
-                                                },
-                                                color: "#e2b540",
-                                                "&.Mui-checked": {
-                                                    color: "#ebcb7a",
-                                                },
-                                            }}
-                                            defaultChecked
-                                        />
-                                        <img
-                                            src={Other}
-                                            width={28}
-                                            height={21}
-                                            alt=""
-                                        />
-                                        <p className="text-white ">Other</p>
-                                    </div>
                                 </div>
                             </>
                         )}
@@ -825,6 +945,6 @@ const GoogleMapComp = () => {
             </div>
         </div>
     );
-};
+}
 
 export default GoogleMapComp;

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\DB;
 
 class CustomAuth extends Middleware
 {
-    
+
     /**
      * Attempt to authenticate a user using the given credentials.
      *
@@ -46,31 +46,25 @@ class CustomAuth extends Middleware
         return false;
     }
 
-    public function handle($request, Closure $next, ...$guards)
+    public function handle($request, $next, ...$guards)
     {
         $hasSession = $request->hasSession();
         if ($hasSession) {
-            $sessionId = $request->session()->getId();
-            
-            // Query the database to get the user based on the session ID
-            $user = DB::table('custom_sessions')
-                ->where('id', $sessionId)
-                ->value('user');
-    
-            //dd($user);
-            $sessionToken = $request->session()->token();
             $path = $request->path();
+
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
             // Allow access to the login route
-            if ($path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'logoutAPI') {
+            if($request->getBasePath() == ""){
                 return $next($request);
             }
-            if($request->session()->has('user')==false) {
-                return redirect('/login');
+            if ($path == 'loginComp' ||  $path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken' || $path == 'logoutWithoutRequest') {
+                return $next($request);
+            }
+            if ($path !== 'login' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+                return redirect()->route('login');
             }
         } else {
-            //dd('$request');
-            if ($request->path() == 'login' || $request->path() == 'loginapi') {
+            if ($request->path() == 'login' || $request->path() == 'loginapi' || $request->path() == '/auth/azure' || $request->path() == 'auth/azure/callback' || $request->path() == 'microsoftToken'  || $request->path() == 'logoutWithoutRequest' ) {
                 return $next($request);
             }
 

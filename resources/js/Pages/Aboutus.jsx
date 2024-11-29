@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 import Footer from "./Component/landingPage/Footer";
-import Navbars from "./Component/Navbars";
 import BounceLoader from "react-spinners/BounceLoader";
+import Navbars from "@/Components/Navbars";
 
 
 export default function AboutUs(props) {

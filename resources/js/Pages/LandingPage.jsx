@@ -11,13 +11,19 @@ import {
     MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
+import { PublicClientApplication } from "@azure/msal-browser";
+import Cookies from "js-cookie";
+import { clearMSALLocalStorage } from "@/CommonFunctions";
+
 export default function LandingPage({}) {
-    const [apps, setApps] = useState();
+    const appUrl = window.Laravel.appUrl;
+
+    const [apps, setApps] = useState([]);
     const [currentUser, setcurrentUser] = useState(null);
     const [isClicked, setIsClicked] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
-    const [filteredApps, setFilteredApps] = useState();
+    const [filteredApps, setFilteredApps] = useState([]);
     const [appsApi, setAppsApi] = useState();
     const gtamUrl = window.Laravel.gtamUrl;
     function classNames(...classes) {
@@ -33,10 +39,49 @@ export default function LandingPage({}) {
         axios
             .get("/users")
             .then((res) => {
-                setcurrentUser(res.data);
+                if(typeof res.data == "object"){
+                    setcurrentUser(res.data);
+                }
             })
-            .catch((error) => console.log(error));
+            .catch((error) => {
+                console.log(error)
+                if(error.response.status === 401){
+                    window.location.href = `/login`;
+                }
+            });
     }, []);
+
+    // useEffect(() => {
+    //     if (currentUser) {
+    //         axios
+    //             .get(`${gtamUrl}User/Permissions`, {
+    //                 headers: {
+    //                     UserId: currentUser.UserId,
+    //                 },
+    //             })
+    //             .then((res) => {
+    //                 const x = JSON.stringify(res.data);
+    //                 const parsedDataPromise = new Promise((resolve, reject) => {
+    //                     try {
+    //                         const parsedData = JSON.parse(x);
+    //                         resolve(parsedData || []); // Use an empty array if parsedData is null
+    //                     } catch (error) {
+    //                         reject(error);
+    //                     }
+    //                 });
+    //                 parsedDataPromise.then((parsedData) => {
+    //                     console.log('dataaaaaaaaaa',currentUser);
+
+    //                     setFilteredApps(parsedData);
+    //                     setApps(parsedData);
+    //                     setAppsApi(true);
+    //                 });
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //             });
+    //     }
+    // }, [currentUser]);
 
     useEffect(() => {
         if (currentUser) {
@@ -44,6 +89,7 @@ export default function LandingPage({}) {
                 .get(`${gtamUrl}User/Permissions`, {
                     headers: {
                         UserId: currentUser.UserId,
+                        //Authorization: `Bearer ${Token}`,
                     },
                 })
                 .then((res) => {
@@ -63,7 +109,11 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                    console.log(err);
+                        // Handle other errors
+                        console.log(err);
+                        setFilteredApps([]);
+                        setApps([]);
+                        setAppsApi(true);
                 });
         }
     }, [currentUser]);
@@ -110,74 +160,93 @@ export default function LandingPage({}) {
         setGreeting(getGreeting());
     }, []);
 
-    const handleGTAMIndexChange = (e) => {
-        setActiveIndexGtam(e);
+    const msalConfig = {
+        auth: {
+            clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
+            authority:
+                "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
+            redirectUri: window.Laravel.azureCallback,
+        },
+        cache: {
+            cacheLocation: "localStorage",
+            storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
+        },
     };
-    useEffect(() => {
-        axios
-            .get("/users")
-            .then((res) => {
-                setcurrentUser(res.data);
-            })
-            .catch((error) => console.log(error));
-    }, []);
+    const pca = new PublicClientApplication(msalConfig);
 
-    const handleLogout = () => {
-        const isLoggingOut = true;
+    const handleLogout = async () => {
+        const credentials = {
+            URL: window.Laravel.gtamUrl,
+            CurrentUser: currentUser,
+            SessionDomain: window.Laravel.appDomain,
+        };
+        await pca.initialize();
         axios
-            .post("/logoutAPI", isLoggingOut)
+            .post("/composerLogout", credentials)
             .then((response) => {
-                if (response.status == 200) {
-                    window.location.href = "/login";
+                if (response.status === 200) {
+                    const isMicrosoftLogin = Cookies.get(
+                        "msal.isMicrosoftLogin"
+                    );
+                    clearMSALLocalStorage();
+                    Cookies.remove('access_token');
+
+                    if (isMicrosoftLogin === "true") {
+                        window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
+                        setcurrentUser(null);
+                    } else {
+                        window.location.href = `${window.Laravel.appUrl}/login`;
+                        setcurrentUser(null);
+                    }
                 }
             })
             .catch((error) => {
                 console.log(error);
             });
     };
-    // const [appsImgs, setAppsImgs] = useState([]);
-    // const [isFetchingImg, setIsFetchingImg] = useState(true);
-    // const fetchImageData = async (picName, app) => {
-    //     try {
-    //         const response = await axios({
-    //             method: "post",
-    //             url: "/getAppLogo",
-    //             responseType: "blob", // Set the expected response type as 'blob'
-    //             data: {
-    //                 filename: picName,
-    //             },
-    //         });
-    //         const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
-    //         setAppsImgs((prev) => ({
-    //             ...prev,
-    //             [app.AppId]: blobUrl,
-    //         }));
-    //     } catch (error) {
-    //         console.log(error);
-    //         setAppsImgs((prev) => ({
-    //             ...prev,
-    //             [app.AppId]: "/icons/NoPhoto.jpg",
-    //         }));
-    //     }
-    // };
+    const [appsImgs, setAppsImgs] = useState([]);
+    const [isFetchingImg, setIsFetchingImg] = useState(true);
+    const fetchImageData = async (picName, app) => {
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/getAppLogo",
+                responseType: "blob", // Set the expected response type as 'blob'
+                data: {
+                    filename: picName,
+                },
+            });
+            const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: blobUrl,
+            }));
+        } catch (error) {
+            console.log(error);
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: "/icons/NoPhoto.jpg",
+            }));
+        }
+    };
 
-    // useEffect(() => {
-    //     if (filteredApps?.length > 0) {
-    //         filteredApps?.forEach((app) => {
-    //             if (!appsImgs[app.AppId]) {
-    //                 // Check if the image URL is not already loaded
-    //                 fetchImageData(app?.AppPic, app);
-    //             }
-    //         });
-    //     }
-    // }, [filteredApps]);
+    useEffect(() => {
+        if (filteredApps?.length > 0) {
+            filteredApps?.forEach((app) => {
+                if (!appsImgs[app.AppId]) {
+                    // Check if the image URL is not already loaded
+                    fetchImageData(app?.AppIcon, app);
+                }
+            });
+        }
+    }, [filteredApps]);
 
-    // useEffect(() => {
-    //     const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
-    //     if (appsImgsArray?.length == filteredApps?.length) {
-    //         setIsFetchingImg(false);
-    //     }
-    // }, [appsImgs, filteredApps]);
+    useEffect(() => {
+        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
+        if (appsImgsArray?.length == filteredApps?.length) {
+            setIsFetchingImg(false);
+        }
+    }, [appsImgs, filteredApps]);
 
     const [getfooter, setfooter] = useState([]);
 
@@ -233,7 +302,7 @@ export default function LandingPage({}) {
                                                 currentUser.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser.FirstName.substring(
+                                                            {currentUser?.FirstName?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -242,7 +311,7 @@ export default function LandingPage({}) {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser.Username.substring(
+                                                            {currentUser?.Username?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -251,11 +320,11 @@ export default function LandingPage({}) {
                                                 )}
                                             </>
                                             <>
-                                                {currentUser.FirstName &&
-                                                currentUser.LastName ? (
+                                                {currentUser?.FirstName &&
+                                                currentUser?.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser.FirstName.substring(
+                                                            {currentUser?.LastName?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -264,9 +333,9 @@ export default function LandingPage({}) {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser.Username.substring(
-                                                                0,
-                                                                1
+                                                            {currentUser?.Username?.substring(
+                                                                1,
+                                                                2
                                                             ).toUpperCase()}
                                                         </p>
                                                     </>
@@ -274,14 +343,14 @@ export default function LandingPage({}) {
                                             </>
                                         </div>
                                         <p className="text-sm text-white w-71 hidden sm:block">
-                                            {currentUser.FirstName &&
-                                            currentUser.LastName ? (
+                                            {currentUser?.FirstName &&
+                                            currentUser?.LastName ? (
                                                 <>
-                                                    {currentUser.FirstName}{" "}
-                                                    {currentUser.LastName}
+                                                    {currentUser?.FirstName}{" "}
+                                                    {currentUser?.LastName}
                                                 </>
                                             ) : (
-                                                <>{currentUser.Username}</>
+                                                <>{currentUser?.Username}</>
                                             )}
                                         </p>
                                     </div>
@@ -369,8 +438,9 @@ export default function LandingPage({}) {
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-8">
                                     {filteredApps?.length > 0
-                                        ? filteredApps.map((app) => (
+                                        ? filteredApps?.map((app) => (
                                               <div
+                                                  key={app.AppId}
                                                   id={app.AppName}
                                                   className={`bg-gradient-to-tr sm:w-auto border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
                                                   onClick={() => {
@@ -382,7 +452,8 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`${app.AppPic}`}
+                                                              src={appsImgs[app?.AppId]}
+                                                              //{`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />

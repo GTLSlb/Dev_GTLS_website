@@ -2,15 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class ApiData extends Model
+class TrafficDataSA extends TrafficData
 {
-    protected $table = 'api_data';
-
-    protected $casts = [
-        'geometry_coordinates' => 'array', // Cast to array or json
-    ];
+    protected $table = 'traffic_data_sa'; // Specify the table for SA
 
     protected $fillable = [
         'api_source',
@@ -19,21 +13,19 @@ class ApiData extends Model
         'start_date',
         'end_date',
         'latitude',
+        'location',
         'longitude',
+        'geometry_type',
+        'geometry_coordinates',
         'suburb',
         'traffic_direction',
         'road_name',
         'status',
+        'event_category_id',
         'event_type',
         'impact',
         'source_url',
         'advice',
         'information',
-        'lastUpdated_date',
-        'otherAdvice',
-        'event_category_id',
-        'is_processing',
-        'geometry_type',
-        'geometry_coordinates',
     ];
 }

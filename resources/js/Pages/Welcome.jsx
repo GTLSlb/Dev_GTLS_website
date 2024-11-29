@@ -16,7 +16,7 @@ import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
 
 import News from "./Component/landingPage/News";
-import Map from "../Components/map";
+import Map from '../Components/map'
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
 import Technologies from "./Component/landingPage/Technologies";
@@ -39,7 +39,8 @@ import GoogleMap from "@/Components/GoogleMap";
 import GoogleMapComp from "@/Components/GoogleMap";
 import { BounceLoader } from "react-spinners";
 import TrainNotification from "@/Components/TrainNotification";
-import Navbars from "./Component/Navbars";
+
+const mapUrl = window.Laravel.mapUrl;
 
 const mapUrl = window.Laravel.mapUrl;
 const navigation = [
@@ -50,7 +51,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: true },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "https://map-test.gtls.com.lb/", link: false },
+    { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 
 const scrollToElement = (elementId) => {
@@ -159,6 +160,7 @@ export default function Welcome(props) {
                     certificatesResponse,
                     footerResponse,
                 ] = responses;
+
                 // Set states with data
                 setGetHeader(headerResponse);
                 setTrainNotification(getTrainNotificationResponse.data);
@@ -244,7 +246,7 @@ export default function Welcome(props) {
                                     </a>
                                 </div>
                                 <a
-                                    href="tel:+180040306"
+                                    href="tel:+1800040306"
                                     className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                                 >
                                     {" "}

@@ -6,7 +6,7 @@ import News from "./Component/landingPage/News";
 import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
-import Navbars from "./Component/Navbars";
+import Navbars from "@/Components/Navbars";
 
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },

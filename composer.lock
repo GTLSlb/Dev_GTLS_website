@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b9b21f22a0382a77364814ecbf6d31a",
+    "content-hash": "f4b208221d99432923197761499dda72",
     "packages": [
         {
             "name": "alexazartsev/heroicon",
@@ -118,16 +118,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.321.7",
+            "version": "3.321.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c64ee32d80ec2ab5d8d6a0b77297c2d69602ef3b"
+                "reference": "5de5099cfe0e17cb3eb2fe51de0101c99bc9442a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c64ee32d80ec2ab5d8d6a0b77297c2d69602ef3b",
-                "reference": "c64ee32d80ec2ab5d8d6a0b77297c2d69602ef3b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5de5099cfe0e17cb3eb2fe51de0101c99bc9442a",
+                "reference": "5de5099cfe0e17cb3eb2fe51de0101c99bc9442a",
                 "shasum": ""
             },
             "require": {
@@ -210,9 +210,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.321.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.321.9"
             },
-            "time": "2024-09-09T18:09:23+00:00"
+            "time": "2024-09-11T18:15:49+00:00"
         },
         {
             "name": "ayvazyan10/nova-imagic",
@@ -1475,6 +1475,44 @@
                 }
             ],
             "time": "2024-07-20T21:45:45+00:00"
+        },
+        {
+            "name": "gtls/loginstory",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MiraCh-gtls/loginStory.git",
+                "reference": "435c08b8a704a0c2ff6ea5adb01cc7a3599f15f9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MiraCh-gtls/loginStory/zipball/435c08b8a704a0c2ff6ea5adb01cc7a3599f15f9",
+                "reference": "435c08b8a704a0c2ff6ea5adb01cc7a3599f15f9",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "gtls\\loginstory\\": [
+                        "src"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MiraCh"
+                }
+            ],
+            "description": "[]",
+            "support": {
+                "issues": "https://github.com/MiraCh-gtls/loginStory/issues",
+                "source": "https://github.com/MiraCh-gtls/loginStory/tree/v1.0.4"
+            },
+            "time": "2024-10-14T09:39:03+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -3210,21 +3248,21 @@
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "3.28.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "22071ef1604bc776f5ff2468ac27a752514665c8"
+                "reference": "f8ba6a92a5c1fdcbdd89dede009a1e6e1b93ba8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/22071ef1604bc776f5ff2468ac27a752514665c8",
-                "reference": "22071ef1604bc776f5ff2468ac27a752514665c8",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/f8ba6a92a5c1fdcbdd89dede009a1e6e1b93ba8c",
+                "reference": "f8ba6a92a5c1fdcbdd89dede009a1e6e1b93ba8c",
                 "shasum": ""
             },
             "require": {
-                "aws/aws-sdk-php": "^3.295.10",
-                "league/flysystem": "^3.10.0",
+                "aws/aws-sdk-php": "^3.132.4",
+                "league/flysystem": "^2.0.0 || ^3.0.0",
                 "league/mime-type-detection": "^1.0.0",
                 "php": "^8.0.2"
             },
@@ -3259,9 +3297,10 @@
                 "storage"
             ],
             "support": {
-                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.28.0"
+                "issues": "https://github.com/thephpleague/flysystem-aws-s3-v3/issues",
+                "source": "https://github.com/thephpleague/flysystem-aws-s3-v3/tree/3.0.0"
             },
-            "time": "2024-05-06T20:05:52+00:00"
+            "time": "2022-01-13T21:11:49+00:00"
         },
         {
             "name": "league/flysystem-local",
@@ -3613,7 +3652,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-06-28T09:40:51+00:00"
+            "time": "2023-10-27T15:32:31+00:00"
         },
         {
             "name": "mostafaznv/larupload",
@@ -5669,6 +5708,73 @@
             "time": "2024-03-15T03:02:10+00:00"
         },
         {
+            "name": "spatie/async",
+            "version": "1.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/async.git",
+                "reference": "c270e692f6eabafb4312e1ecd44e062032785635"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/async/zipball/c270e692f6eabafb4312e1ecd44e062032785635",
+                "reference": "c270e692f6eabafb4312e1ecd44e062032785635",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/serializable-closure": "^1.0",
+                "php": "^7.4|^8.0",
+                "symfony/process": "^3.3 || ^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^7.5 || ^8.5.21 || ^9.0 || ^10.0",
+                "symfony/stopwatch": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "suggest": {
+                "ext-pcntl": "Required to use async processes",
+                "ext-posix": "Required to use async processes"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\Async\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Asynchronous and parallel PHP with the PCNTL extension",
+            "homepage": "https://github.com/spatie/async",
+            "keywords": [
+                "async",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/async/issues",
+                "source": "https://github.com/spatie/async/tree/1.6.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-12-14T13:21:46+00:00"
+        },
+        {
             "name": "spatie/image-optimizer",
             "version": "1.7.5",
             "source": {
@@ -5845,6 +5951,67 @@
                 }
             ],
             "time": "2023-12-25T11:46:58+00:00"
+        },
+        {
+            "name": "staudenmeir/laravel-cte",
+            "version": "v1.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/staudenmeir/laravel-cte.git",
+                "reference": "cc1d3cff4eabb94a07afecf13306eb3f2a1d68e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/staudenmeir/laravel-cte/zipball/cc1d3cff4eabb94a07afecf13306eb3f2a1d68e0",
+                "reference": "cc1d3cff4eabb94a07afecf13306eb3f2a1d68e0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^10.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "harrygulliford/laravel-firebird": "^3.2",
+                "orchestra/testbench": "^8.0",
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.1",
+                "singlestoredb/singlestoredb-laravel": "^1.5.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Staudenmeir\\LaravelCte\\DatabaseServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Staudenmeir\\LaravelCte\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonas Staudenmeir",
+                    "email": "mail@jonas-staudenmeir.de"
+                }
+            ],
+            "description": "Laravel queries with common table expressions",
+            "support": {
+                "issues": "https://github.com/staudenmeir/laravel-cte/issues",
+                "source": "https://github.com/staudenmeir/laravel-cte/tree/v1.10.1"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/JonasStaudenmeir",
+                    "type": "custom"
+                }
+            ],
+            "time": "2024-07-11T09:04:40+00:00"
         },
         {
             "name": "symfony/cache",

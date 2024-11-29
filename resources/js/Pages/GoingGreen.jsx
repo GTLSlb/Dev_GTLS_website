@@ -5,7 +5,7 @@ import Calc from "./Component/landingPage/Calc";
 import "../../css/gradient.css";
 import Green from "../assets/pictures/gogreen.webp";
 import { useState, useEffect } from "react";
-import Navbars from "./Component/Navbars";
+import Navbars from "@/Components/Navbars";
 
 const content = [
     {
@@ -36,75 +36,71 @@ const content = [
 ];
 
 export default function GoingGreen() {
-
     const [getfooter, setfooter] = useState([]);
     const [getGreen, setGreen] = useState([]);
 
-
-
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     // Going Green
-    
+
     useEffect(() => {
-        axios.get('/GreenPage')
-          .then(response => {
-              // console.log('fetching data:',response.data);
-              setGreen(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
-    
+        axios
+            .get("/GreenPage")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setGreen(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+
     // Footer
 
     useEffect(() => {
-        axios.get('/footer')
-          .then(response => {
-              // console.log('fetching data:',response.data);
-              setfooter(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
+        axios
+            .get("/footer")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setfooter(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
     return (
         <>
             <Head title="Going Green" />
-            <div className="relative isolate min-h-screen bg-dark"><Navbars />
+            <div className="relative isolate min-h-screen bg-dark">
+                <Navbars />
                 <div className=" py-28 text-smooth ">
-                    <div className="bg-gg bg-cover" >
+                    <div className="bg-gg bg-cover">
                         <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-20 items-center">
                             <div className="md:w-6/12">
                                 <h1 className="gradient-text py-5 text-4xl font-bold">
                                     {getGreen?.name}
                                     {/* GTLS Towards a Green  Future */}
                                 </h1>
-                                <div className="mt-3 text-smooth" dangerouslySetInnerHTML={{ __html: getGreen?.description }}></div>
-                                {/* <p className="mt-2 text-smooth">
-                                    Gold Tiger is working toward a more
-                                    sustained future by managing the risks of
-                                    climate change. Going green is our major
-                                    focus and we understand how air pollution
-                                    and resource depletion impact the
-                                    environment. That’s why we decided to
-                                    implement a positive action program. We
-                                    acknowledge that the most effective efforts
-                                    should be directed at the decarbonisation of
-                                    the transport industry, our intention is to
-                                    produce an outcome that will positively
-                                    impact global society.
-                                </p> */}
-                                <Calc/>
+                                <div
+                                    className="mt-3 text-smooth"
+                                    dangerouslySetInnerHTML={{
+                                        __html: getGreen?.description,
+                                    }}
+                                ></div>
+
+                                <Calc />
                             </div>
                             <div className="w-full md:w-1/2 ">
-                                <img src={"/app/webimages/"+getGreen?.image} alt={getGreen?.image_alt} className="" />
+                                <img
+                                    src={"/app/webimages/" + getGreen?.image}
+                                    alt={getGreen?.image_alt}
+                                    className=""
+                                />
                             </div>
                         </div>
                     </div>
@@ -119,14 +115,19 @@ export default function GoingGreen() {
                                     <h1 className="text-goldt text-3xl font-bold">
                                         {item.name}
                                     </h1>
-                                    <div className="mt-2 text-smooth pl-10"  dangerouslySetInnerHTML={{ __html: item.content }}></div>
+                                    <div
+                                        className="mt-2 text-smooth pl-10"
+                                        dangerouslySetInnerHTML={{
+                                            __html: item.content,
+                                        }}
+                                    ></div>
                                 </li>
                             ))}
                         </ul>
                     </div>
                 </div>
             </div>
-            <Footer getfooter={getfooter}/>
+            <Footer getfooter={getfooter} />
         </>
     );
 }

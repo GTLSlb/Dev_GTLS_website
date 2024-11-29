@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\ConsTrackingController;
+use App\Http\Controllers\FeedBackFormController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
@@ -12,18 +14,16 @@ use App\Http\Controllers\SupportFormController;
 use App\Http\Controllers\UserVisitController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\FileController;
-use App\Http\Controllers\AzureAuthController;
 use App\Http\Controllers\SendDailyEmail;
 use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
-use SocialiteProviders\Azure\AzureProvider;
 use Illuminate\Http\Request;
-use App\Http\Controllers\LoginController;
 use App\Models\Blog;
 use App\Http\Middleware\LogUserVisit;
+use gtls\loginstory\LoginClass;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,42 +43,53 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('emptyRoute');
+
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
+
+Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
+
+Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
+
+Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
+
+Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogout');
+
+Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
+
 
 Route::get('/visitor',[UserVisitController::class, 'index']);
 
-Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
-
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
-    
     return Inertia::render('LandingPage');
-})->middleware(['custom'])->name('landing.page');
+})->middleware(['custom.auth'])->name('landing.page');
 
 
 Route::get('/gtms', function () {
     return Inertia::render('GTMS');
-})->middleware(['custom'])->name('gtms');
+})->middleware(['custom']);
 
 Route::get('/gtam', function () {
     return Inertia::render('GTAM');
-})->middleware(['custom'])->name('gtam');
+})->middleware(['custom']);
 
 Route::get('/gtrs', function () {
     return Inertia::render('GTRS');
-})->middleware(['custom'])->name('gtrs');
+})->middleware(['custom']);
 
 Route::get('/gtw', function () {
     return Inertia::render('GTW');
-})->middleware(['custom'])->name('gtw');
+})->middleware(['custom']);
 
 // Route::get('/main', function () {
 //     return Inertia::render('Layout');
-// })->middleware(['custom'])->name('layout');
+// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -148,7 +159,7 @@ Route::resource('posts', BlogController::class);
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
 Route::post('/support', [SupportFormController::class, 'submitSupportForm'])->name('support.submit');
-
+Route::post('/feedback', [FeedBackFormController::class, 'submitFeedBackForm'])->name('feedback.submit');
 Route::get('/download-docx', function () {
     $pathToFile = public_path('docs/20230913-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf');
     $headers = array(
@@ -190,20 +201,16 @@ Route::get('/downloadGTLS-docx', function () {
 });
 
 Route::get('/checkAuth', [AuthenticatedSessionController::class, 'checkAuth']);
-Route::get('/auth/azure', function () {
-    return Socialite::driver('azure')->redirect();
-});
 
-Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback']);
-Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
-
-
-Route::middleware('custom')->group(function () {
+Route::middleware('custom.auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName']);
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens']);
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList']);
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/users');
+    Route::post('/auth/azure', function () {
+        return Socialite::driver('azure')->redirect();
+    })->name('azure.login');
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/childrens');
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/childrensList');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
@@ -211,7 +218,7 @@ Route::middleware('custom')->group(function () {
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
     Route::post('/getAppLogo', [ImageController::class, 'showAppLogo'])->name('logo.show');
-    
+
 });
 
 Route::get('/session-data', function () {
@@ -258,7 +265,7 @@ Route::get('/news/{slug}', function ($slug) {
     $post = Blog::where('slug', $slug)->firstOrFail();
     // $post = 123;
     return Inertia::render('NewsPage', ['postslug' => $post]);
-})->name('news');
+})->name('newsPage');
 // ******************************************************************
 
 Route::fallback(function () {
@@ -267,21 +274,10 @@ Route::fallback(function () {
     ]);
 });
 
-Route::get('/fetch-api-data', [ApiController::class, 'fetchData']);
-Route::get('/get-positions', [ApiController::class, 'index']);
-Route::get('/get-eventsCategories', [ApiController::class, 'getEventsCategories']);
-
-Route::get('/getrecent-positions', [ApiController::class, 'getRecentRecords']);
-
-Route::get('/get-positions/{id}', [ApiController::class, 'getById']);
-
-Route::get('/lastUpdatedPositions', [ApiController::class, 'getLastUpdatedAt']);
 Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
 require __DIR__ . '/auth.php';
 
+//Route::post('/api/directions', [ApiController::class, 'directions']);
 
-// Route::middleware(['logUserVisit'])->get('/', function () {
-//     // Route logic...
-// });

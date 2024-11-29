@@ -8,6 +8,7 @@
     <meta name="type" property= "og:type" content="website">
     <meta name="url" property="og:url" content="https://web.gtls.au" />
     <meta name="site_name" property="og:site_name" content="GTLS" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="image" property="og:image" content="{{ asset('favicon.ico') }}" />
     <meta name="title" property= "og:title" content="Gold Tiger Logistics Solutions">
     <meta name="description" property= "og:description"
@@ -29,6 +30,11 @@
         window.Laravel = {
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
             gtamUrl: "{{ env('GTAM_API_URL') }}",
+            azureCallback: "{{ env('AZURE_CALLBACK_URL') }}",
+            appDomain: "{{ env('SESSION_DOMAIN') }}",
+            appUrl: "{{ env('APP_URL') }}",
+            backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
+            mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->

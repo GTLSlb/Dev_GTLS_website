@@ -34,6 +34,7 @@ import tiger from "../assets/pictures/tiger.png";
 import JAIX from "../assets/partners/JAIX.webp";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import SupportModal from "@/Pages/Component/modals/SupportModal";
+import { PublicClientApplication } from "@azure/msal-browser";
 
 export default function MainSidebar({
     setMobileMenuOpen,
@@ -344,13 +345,45 @@ export default function MainSidebar({
         setIsModalOpen(isModalCurrentlyOpen);
         setMobileMenuOpen(false);
     };
-    const handleLogout = () => {
-        const isLoggingOut = true;
+    const msalConfig = {
+        auth: {
+            clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
+            authority:
+                "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
+            redirectUri: window.Laravel.azureCallback,
+        },
+        cache: {
+            cacheLocation: "sessionStorage",
+            storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
+        },
+    };
+    const pca = new PublicClientApplication(msalConfig);
+    const handleLogout = async () => {
+        const credentials = {
+            URL: window.Laravel.gtamUrl,
+            CurrentUser: currentUser,
+            SessionDomain: window.Laravel.appDomain,
+        };
+        await pca.initialize();
         axios
-            .post("/logoutAPI", isLoggingOut)
+            .post("/composerLogout", credentials)
             .then((response) => {
-                if (response.status == 200) {
-                    window.location.href = "/login";
+                if (response.status === 200 && response.data.status === 200) {
+                    const isMicrosoftLogin = Cookies.get(
+                        "msal.isMicrosoftLogin"
+                    );
+
+                    clearMSALLocalStorage();
+
+                    if (isMicrosoftLogin === "true") {
+                        window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
+                        // setToken(null);
+                        // setcurrentUser(null);
+                    } else {
+                        window.location.href = `${window.Laravel.appUrl}/login`;
+                        // setToken(null);
+                        // setcurrentUser(null);
+                    }
                 }
             })
             .catch((error) => {
@@ -700,7 +733,7 @@ export default function MainSidebar({
                                                                                         item.name
                                                                                     }
                                                                                 </span>
-                                                                                {/* {item.options ? 
+                                                                                {/* {item.options ?
                                                                     <svg
                                                                         class={`w-6 h-6 ${
                                                                             !open

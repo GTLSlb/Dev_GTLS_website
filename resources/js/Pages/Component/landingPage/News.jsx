@@ -176,7 +176,7 @@ export default function News(props) {
                         <div className="grid lg:grid-cols-3 gap-4">
                         {getPosts?.map((post) => (
                                 <div key={post.id} className="px-5  ">
-                                    <Link href={route("news", { id: post.slug})} className="">
+                                    <Link href={route("newsPage", { id: post.slug})} className="">
                                         <div className="h-full ">
                                         <div className="relative w-full www">
                                             <img

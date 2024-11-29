@@ -22,7 +22,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "https://map-test.gtls.com.lb/", link: false },
+    { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 
 export default function ScrollNav({ getTrainNotification }) {
@@ -94,7 +94,7 @@ export default function ScrollNav({ getTrainNotification }) {
                                 </a>
                             </div>
                             <a
-                                href="tel:+180040306"
+                                href="tel:+1800040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 {" "}
@@ -121,27 +121,6 @@ export default function ScrollNav({ getTrainNotification }) {
                             </a>
                         </div>
                         <div className="flex lg:hidden">
-                            {/* <a
-                                target={"_blank"}
-                                href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                                className="mr-2 bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt"
-                            >
-                                <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                    <button className=" rounded-3xl  font-bold  ">
-                                        Client Login
-                                    </button>
-                                </div>
-                            </a>
-                            <a
-                                href="/login"
-                                className="mr-6 bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt"
-                            >
-                                <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                    <button className=" rounded-3xl  font-bold  ">
-                                        Log In
-                                    </button>
-                                </div>
-                            </a> */}
                             <Popover className="relative object-right flex-item md:ml-auto ">
                                 <Popover.Button
                                     className={` inline-flex items-center  px-4 py-2 border-2 border-goldt rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white`}
@@ -190,14 +169,6 @@ export default function ScrollNav({ getTrainNotification }) {
                                                     </a>
                                                 </div>
                                             </div>
-                                            {/* <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
-                                                <button
-                                                    // onClick={handleDownloadExcel}
-                                                    className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-                                                >
-                                                    Export XLS
-                                                </button>
-                                            </div> */}
                                         </div>
                                     </Popover.Panel>
                                 </Transition>
@@ -301,14 +272,6 @@ export default function ScrollNav({ getTrainNotification }) {
                                                     </a>
                                                 </div>
                                             </div>
-                                            {/* <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
-                                                <button
-                                                    // onClick={handleDownloadExcel}
-                                                    className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-                                                >
-                                                    Export XLS
-                                                </button>
-                                            </div> */}
                                         </div>
                                     </Popover.Panel>
                                 </Transition>
@@ -368,39 +331,6 @@ export default function ScrollNav({ getTrainNotification }) {
                                     )}
                                 </div>
                             ))}
-                            {/* {props.auth.user ? (
-                                        <Link
-                                            href={route("dashboard")}
-                                            className="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                        >
-                                            Dashboard
-                                        </Link>
-                                    ) : (
-                                        <>
-                                            <Link
-                                                href={route("login")}
-                                                // className="border-2 w-10 bg-goldt text-gray-600 hover:text-gray-900 dark:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                            >
-                                                <button className="border rounded bg-goldt text-white h-10 w-20 hover:bg-black"> Log in</button>
-                                                
-                                            </Link>
-
-                                            <Link
-                                                href={route("register")}
-                                                className="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                            >
-                                                Register
-                                            </Link>
-                                        </>
-                                    )} */}
-                            {/* <a
-                                            href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                                            className="border-2 w-10 bg-goldt text-gray-600 hover:text-gray-900 dark:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                        >
-                                            <button className="border  rounded bg-goldt text-white font-bold h-10 w-20 hover:bg-black">
-                                                Log In
-                                            </button>
-                                        </a> */}
                         </div>
                     </Dialog.Panel>
                 </Dialog>
