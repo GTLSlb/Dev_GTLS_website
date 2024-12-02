@@ -1,6 +1,5 @@
-import React from "react";
-import Truck from "@/assets/pictures/truck.png";
 function TrainNotification({ getTrainNotification }) {
+    const strapiUrl = window.Laravel.strapiAppUrl;
     return (
         <div>
             {typeof getTrainNotification === "object" &&
@@ -8,74 +7,23 @@ function TrainNotification({ getTrainNotification }) {
                     <div className="py-2 bg-dark overflow-hidden">
                         <div className="animate-moveRight w-auto ">
                             <p className="text-white font-bold whitespace-nowrap flex gap-2">
-                                {getTrainNotification.elements.map(
-                                    (element) => {
-                                        if (
-                                            element.name === "Icon" &&
-                                            element.image
-                                        ) {
-                                            return (
-                                                <img
-                                                    key={element.id}
-                                                    className="h-7 inline-block pr-5"
-                                                    src={
-                                                        `/app/webimages/` +
-                                                        element.image
-                                                    }
-                                                    alt={
-                                                        element.image_alt ||
-                                                        "icon"
-                                                    }
-                                                />
-                                            );
-                                        }
-                                        return null;
+                                <img
+                                    key={getTrainNotification.documentId}
+                                    className="h-7 inline-block pr-5"
+                                    src={
+                                        strapiUrl +
+                                        getTrainNotification.Icon.url
                                     }
-                                )}
+                                    alt={
+                                        getTrainNotification.Icon
+                                            .alternativeText
+                                    }
+                                />
                                 <div
                                     dangerouslySetInnerHTML={{
-                                        __html:
-                                            getTrainNotification.elements.find(
-                                                (element) =>
-                                                    element.name === "Content"
-                                            )?.content || "",
+                                        __html: getTrainNotification.Body,
                                     }}
                                 ></div>
-
-                                {getTrainNotification.elements.map(
-                                    (element) => {
-                                        if (
-                                            element.name === "Link" &&
-                                            element.url
-                                        ) {
-                                            return (
-                                                <a
-                                                    key={element.id}
-                                                    href={element.url}
-                                                    className="text-sm leading-6 text-goldl hover:text-white"
-                                                >
-                                                    {(
-                                                        <div
-                                                            dangerouslySetInnerHTML={{
-                                                                __html:
-                                                                    getTrainNotification.elements.find(
-                                                                        (
-                                                                            element
-                                                                        ) =>
-                                                                            element.name ===
-                                                                            "Link"
-                                                                    )
-                                                                        ?.content ||
-                                                                    "",
-                                                            }}
-                                                        ></div>
-                                                    ) || "Read more"}
-                                                </a>
-                                            );
-                                        }
-                                        return null;
-                                    }
-                                )}
                             </p>
                         </div>
 

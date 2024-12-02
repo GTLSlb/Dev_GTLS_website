@@ -7,6 +7,7 @@ import {
     PhoneIcon,
 } from "@heroicons/react/20/solid";
 import { Link } from "@inertiajs/inertia-react";
+import TrainNotification from "./TrainNotification";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 // Top Bar component
@@ -165,7 +166,7 @@ function MobileMenu({
     );
 }
 
-export default function Navbars({ getNavigation }) {
+export default function Navbars({ getNavigation, getTrainNotification }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
@@ -271,6 +272,11 @@ export default function Navbars({ getNavigation }) {
                 }`}
             >
                 <div className="w-full bg-dark">
+                    {getTrainNotification.Active && (
+                        <TrainNotification
+                            getTrainNotification={getTrainNotification}
+                        />
+                    )}
                     <TopBar
                         topBarLinks={topBarLinks}
                         phoneNb={getNavigation.PhoneNb}

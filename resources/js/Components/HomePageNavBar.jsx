@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition, Popover } from "@headlessui/react";
 import {
     ChevronDownIcon,
@@ -7,9 +7,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/inertia-react";
 import { PhoneIcon } from "@heroicons/react/20/solid";
-import LogoWhite from "@/assets/pictures/LogoWhite.webp";
-import ScrollNav from "@/Pages/Component/scrollnavmain";
 import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
+import TrainNotification from "./TrainNotification";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
@@ -194,26 +193,87 @@ const Header = ({
     </nav>
 );
 
+const ScrollNavBar = ({
+    getTrainNotification,
+    topBarLinks,
+    navLinks,
+    getNavigation,
+}) => {
+    const [showNavbar, setShowNavbar] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    useEffect(() => {
+        function handleScroll() {
+            const scrollTop =
+                window.pageYOffset || document.documentElement.scrollTop;
+            setShowNavbar(scrollTop > 0);
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    return (
+        <div className="relative bg-goldt">
+            <div
+                className={`shadow-md shadow-bottom z-50 h-auto pb-2 fixed bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd top-0 left-0 w-full transition duration-500 ease-in-out ${
+                    showNavbar ? "opacity-100" : "opacity-0 -translate-y-full"
+                }`}
+            >
+                {getTrainNotification.Active && (
+                    <TrainNotification
+                        getTrainNotification={getTrainNotification}
+                    />
+                )}
+
+                <div className="bg-dark w-full">
+                    <TopBar
+                        topBarLinks={topBarLinks}
+                        phoneNb={getNavigation.PhoneNb}
+                    />
+                    <nav className="mx-auto bg-dark lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between">
+                        <Logo Image={getNavigation.Icon.url} />
+                        <div className="hidden lg:flex lg:gap-x-8">
+                            <NavigationLinks navLinks={navLinks} />
+                        </div>
+                        <div className="flex lg:hidden">
+                            <LoginPopover />
+                            <button
+                                type="button"
+                                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-goldt"
+                                onClick={() => setMobileMenuOpen(true)}
+                            >
+                                <span className="sr-only">Open main menu</span>
+                                <Bars3Icon
+                                    className="h-6 w-6 text-goldt"
+                                    aria-hidden="true"
+                                />
+                            </button>
+                        </div>
+                        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                            <FeedbackButton />
+                            <LoginPopover />
+                        </div>
+                    </nav>
+                </div>
+                <MobileMenu
+                    mobileMenuOpen={mobileMenuOpen}
+                    setMobileMenuOpen={setMobileMenuOpen}
+                    getNavigation={getNavigation}
+                />
+            </div>
+        </div>
+    );
+};
 const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
     const [navLinks, setNavLinks] = useState([]);
 
-    const navigation = [
-        { id: 1, name: "About Us", href: "/aboutus", link: true },
-        { id: 2, name: "Services", href: "services", link: false },
-        { id: 3, name: "Technologies", href: "/technologies", link: true },
-        { id: 4, name: "Media & News", href: "/news", link: true },
-        { id: 5, name: "Careers", href: "/opportunities", link: true },
-        { id: 6, name: "Contact Us", href: "/contact_us", link: true },
-        { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-        {
-            id: 8,
-            name: "National Road Alerts",
-            href: "https://map.gtls.store/",
-            link: false,
-        },
-    ];
     useEffect(() => {
         setNavLinks(
             getNavigation.navigation_links
@@ -252,7 +312,12 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
                     setMobileMenuOpen={setMobileMenuOpen}
                     getNavigation={getNavigation}
                 />
-                <ScrollNav getTrainNotification={getTrainNotification} />
+                <ScrollNavBar
+                    getTrainNotification={getTrainNotification}
+                    topBarLinks={topBarLinks}
+                    navLinks={navLinks}
+                    getNavigation={getNavigation}
+                />
             </div>
         </div>
     );

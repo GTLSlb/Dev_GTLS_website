@@ -1,23 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import ScrollToTopButton from "@/Components/ScrollUpButton";
-import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import { Link } from "@inertiajs/inertia-react";
-import { Link as ScrollLink } from "react-scroll";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import LogoWhite from "../assets/pictures/LogoWhite.webp";
 import TrainNotification from "@/Components/TrainNotification";
-import ScrollNav from "@/Pages/Component/scrollnavmain";
 import CookiePopup from "@/Pages/Component/CookiePopup";
-import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
 import { useState } from "react";
 import Footer from "@/Pages/Component/landingPage/Footer";
 import { getFromStrapi } from "@/CommonFunctions";
 import { BounceLoader } from "react-spinners";
 import Navbars from "@/Components/Navbars";
 import HomePageNavBar from "@/Components/HomePageNavBar";
-
 
 function MainLayout({ children, loading, isHomeScreen }) {
     const [getTrainNotification, setTrainNotification] = useState();
@@ -32,11 +22,18 @@ function MainLayout({ children, loading, isHomeScreen }) {
                 const navigationReq = await getFromStrapi(
                     `/api/nav-bar/?pLevel=2`
                 );
+                const trainNotificationReq = await getFromStrapi(
+                    `/api/train-notification/?pLevel=2`
+                );
                 if (footerReq.success) {
                     setfooter(footerReq.data);
                 }
                 if (navigationReq.success) {
                     setNavigation(navigationReq.data);
+                }
+                if (trainNotificationReq.success) {
+                    console.log(trainNotificationReq.data);
+                    setTrainNotification(trainNotificationReq.data);
                 }
                 setLayoutLoading(false);
                 // scroll to the correct div
@@ -58,16 +55,25 @@ function MainLayout({ children, loading, isHomeScreen }) {
                     </div>
                 ) : (
                     <>
-                        <TrainNotification
-                            getTrainNotification={getTrainNotification}
-                        />
+                        {getTrainNotification.Active && (
+                            <TrainNotification
+                                getTrainNotification={getTrainNotification}
+                            />
+                        )}
+
                         {isHomeScreen ? (
                             <>
-                                <HomePageNavBar getNavigation={getNavigation}/>
+                                <HomePageNavBar
+                                    getNavigation={getNavigation}
+                                    getTrainNotification={getTrainNotification}
+                                />
                             </>
                         ) : (
                             <>
-                                <Navbars getNavigation={getNavigation} />
+                                <Navbars
+                                    getNavigation={getNavigation}
+                                    getTrainNotification={getTrainNotification}
+                                />
                             </>
                         )}
 
