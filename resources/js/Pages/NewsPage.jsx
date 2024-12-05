@@ -1,6 +1,5 @@
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
-import goldTigerLogo from "../assets/pictures/goldTigerLogo.webp";
 import gtlsway from "../assets/videos/GTLSWAY.mp4";
 import RoadSafety from "../assets/videos/RoadSafety.mp4";
 import trucks from "../assets/news/trucks.webp";
@@ -51,13 +50,10 @@ import safetyImage2 from "@/assets/news/Safety-2.jpeg";
 import safetyImage3 from "@/assets/news/Safety-3.jpeg";
 import safetyCoverImage from "@/assets/news/SafetyCover.webp";
 import bTripleImage from "@/assets/news/b-triple.webp";
-import React from "react";
+import nationalRoadImage from "@/assets/news/National-Road.webp";
+import nationaCoverImage from "@/assets/news/NationalRoadCover.jpg";
 import { usePage } from "@inertiajs/react";
-import {
-    Bars3Icon,
-    XMarkIcon,
-    ArrowLongLeftIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import {
     FacebookShareButton,
     FacebookIcon,
@@ -789,9 +785,67 @@ export default function NewsPage(props) {
             imgUrl: bTripleImage,
             youtubeUrl: "https://youtu.be/lqfwHrotJLs?si=fU6BWcJgR9CUmKkQ",
         },
+        {
+            id: 26,
+            title: "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Transport",
+            content1: `At Gold Tiger Logistics Solutions, we recognise that real-time information is crucial in the fast-paced logistics industry. That’s why we’re thrilled to unveil our new Road Alerts Map service. A powerful tool designed to keep you informed, empowered, and ready to navigate potential disruptions.
+                
+               <b>Why the Road Alerts Service?</b> 
+                This feature is more than an information hub; it’s a step toward smarter logistics and stronger customer partnerships. Here’s what it offers:`,
+            list: [
+                {
+                    id: 0,
+                    title: "Enhanced Transparency: Get real-time updates on road incidents and disruptions potentially affecting delivery schedules.",
+                },
+                {
+                    id: 1,
+                    title: "Improved Reliability: Plan and adjust proactively with up-to-date information.",
+                },
+                {
+                    id: 2,
+                    title: "Streamlined Communication: Stay informed seamlessly without needing to request updates.",
+                },
+            ],
+            content2: ` <b>How It Works</b>
+            Accessible via our website, the Road Alert service features an intuitive interface displaying consolidated information from various state authorities onto a single map:
+             `,
+
+            list3: [
+                {
+                    id: 0,
+                    title: " Updates for four states in one view.",
+                },
+                {
+                    id: 1,
+                    title: " Frequent updates on major transport routes.",
+                },
+                {
+                    id: 2,
+                    title: "Events covering roadworks, accidents, weather events, hazards, major events, and congestion.",
+                },
+            ],
+            content3: `This innovation reflects our commitment to being a trusted partner by delivering transparency, reliability, and exceptional service every kilometre of the way.
+
+            <b>Explore the Road Ahead</b>
+            We invite you to experience the new Road Alert feature and see how Gold Tiger Logistics Solutions is enhancing logistics and driving better customer experiences. Together, let’s navigate the road ahead with confidence, efficiency, and reliability.
+           
+            <b>Contact us today to discuss more about our warehouse and freight services! </b>`,
+            imgUrl: nationaCoverImage,
+            imgSliders: [nationalRoadImage],
+        },
     ];
 
     const posts = [
+        {
+            id: 26,
+            title: " Introducing Gold Tiger Logistics’ National Road Alerts Feature",
+            href: "#",
+            description: `At Gold Tiger Logistics Solutions, we recognise that real-time information is crucial in the fast-paced logistics industry. That’s why we’re thrilled to unveil our new Road Alerts Map service. A powerful tool designed to keep you informed, empowered, and ready to navigate potential disruptions. `,
+            imageUrl: nationalRoadImage,
+            date: "Decemver 4, 2024",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 25,
             title: "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Transport",
@@ -1096,7 +1150,8 @@ export default function NewsPage(props) {
                 id == 18 ||
                 id == 19 ||
                 id == 22 ||
-                id == 23 ? (
+                id == 23 ||
+                id == 26 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
@@ -1152,9 +1207,10 @@ export default function NewsPage(props) {
                             <p
                                 className="mt-6 text-lg leading-8 text-gray-200 text-justify"
                                 style={{ whiteSpace: "pre-line" }}
-                            >
-                                {contentJson[id].content1}
-                            </p>
+                                dangerouslySetInnerHTML={{
+                                    __html: contentJson[id].content1,
+                                }}
+                            ></p>
                             {contentJson[id].listTitle ? (
                                 <div className="text-smooth">
                                     {contentJson[id].listTitle}
@@ -1231,9 +1287,41 @@ export default function NewsPage(props) {
                                 <p
                                     style={{ whiteSpace: "pre-line" }}
                                     className="w-full"
-                                >
-                                    {contentJson[id].content2}
-                                </p>
+                                    dangerouslySetInnerHTML={{
+                                        __html: contentJson[id].content2,
+                                    }}
+                                ></p>
+                            </div>
+                            {contentJson[id].list3 ? (
+                                <ol className="p-5">
+                                    {contentJson[id].list3?.map((item) => (
+                                        <li
+                                            key={item.id}
+                                            className="flex gap-x-3 "
+                                        >
+                                            <div className=" h-2 w-2 mt-2 flex-none rounded-full bg-goldt" />
+                                            <div>
+                                                <span className="text-smooth">
+                                                    {item.title}
+                                                </span>
+                                                {item.content ? (
+                                                    <div className="text-gray-200">
+                                                        {item.content}
+                                                    </div>
+                                                ) : null}
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ol>
+                            ) : null}
+                            <div className="mt-3 text-lg  text-gray-200 text-justify">
+                                <p
+                                    style={{ whiteSpace: "pre-line" }}
+                                    className="w-full"
+                                    dangerouslySetInnerHTML={{
+                                        __html: contentJson[id].content3,
+                                    }}
+                                ></p>
                             </div>
                             <figure className="mt-16">
                                 {contentJson[id].videoUrl ? (

@@ -26,6 +26,7 @@ import jaixtraining from "../../../assets/news/jaixtraining.jpeg";
 import fireWardinImage from "@/assets/news/FireWardenBlog.jpg";
 import safetyImage from "@/assets/news/Safety-3.jpeg";
 import bTripleImage from "@/assets/news/b-triple.webp";
+import nationalRoadImage from "@/assets/news/National-Road.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -37,6 +38,16 @@ import axios from "axios";
 import React from "react";
 
 const posts = [
+    {
+        id: 26,
+        title: " Introducing Gold Tiger Logistics’ National Road Alerts Feature",
+        href: "#",
+        description: `At Gold Tiger Logistics Solutions, we recognise that real-time information is crucial in the fast-paced logistics industry. That’s why we’re thrilled to unveil our new Road Alerts Map service. A powerful tool designed to keep you informed, empowered, and ready to navigate potential disruptions. `,
+        imageUrl: nationalRoadImage,
+        date: "Decemver 4, 2024",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 25,
         title: "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Transport",
@@ -486,11 +497,19 @@ export default function News() {
                                     >
                                         <div className="h-full ">
                                             <div className="relative w-full www">
-                                                <img
+                                                {
+                                                    post.id == 26 ? (
+                                                        <img
+                                                        src={post.imageUrl}
+                                                        alt={post.title}
+                                                        className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-center  w-full "
+                                                    />
+                                                    ) :  <img
                                                     src={post.imageUrl}
                                                     alt={post.title}
                                                     className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full "
                                                 />
+                                                }
                                                 <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
                                             <article
