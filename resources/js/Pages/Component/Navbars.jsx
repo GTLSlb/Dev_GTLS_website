@@ -579,25 +579,7 @@ export default function Navbars() {
                                         </Popover.Panel>
                                     </Transition>
                                 </Popover>
-
-                                {/* <Link
-                                                href={route("register")}
-                                                className="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
-                                            >
-                                                Register
-                                            </Link> */}
                             </>
-                            {/* )} */}
-                            {/* <a
-                            href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                            className="  bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt"
-                        >
-                            <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                <button className=" rounded-3xl  font-bold  ">
-                                    Log In
-                                </button>
-                            </div>
-                        </a> */}
                         </div>
                     </nav>
                 </div>
@@ -630,14 +612,14 @@ export default function Navbars() {
                         </div>
                         <div className="mt-6 space-y-2">
                             {navigation.map((item) => (
-                                <Link
+                                <a
                                     key={item.name}
                                     href={item.href}
-                                    // smooth={true}
-                                    className="hover:cursor-pointer -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
+                                    target={item.id == 8 ? "_blank" : "_self"}
+                                    className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
                                 >
                                     {item.name}
-                                </Link>
+                                </a>
                             ))}
                             {/* {props.auth.user ? (
                                         <Link

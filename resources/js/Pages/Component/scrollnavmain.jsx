@@ -114,27 +114,6 @@ export default function ScrollNav() {
                             </a>
                         </div>
                         <div className="flex lg:hidden">
-                            {/* <a
-                                target={"_blank"}
-                                href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
-                                className="mr-2 bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt"
-                            >
-                                <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                    <button className=" rounded-3xl  font-bold  ">
-                                        Client Login
-                                    </button>
-                                </div>
-                            </a>
-                            <a
-                                href="/login"
-                                className="mr-6 bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt"
-                            >
-                                <div className="rounded-3xl border-2 border-goldt px-5 py-2 ">
-                                    <button className=" rounded-3xl  font-bold  ">
-                                        Log In
-                                    </button>
-                                </div>
-                            </a> */}
                             <Popover className="relative object-right flex-item md:ml-auto ">
                                 <Popover.Button
                                     className={` inline-flex items-center  px-4 py-2 border-2 border-goldt rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white`}
@@ -183,14 +162,6 @@ export default function ScrollNav() {
                                                     </a>
                                                 </div>
                                             </div>
-                                            {/* <div className="grid grid-cols-1 divide-x divide-gray-900/5 bg-gray-50">
-                                                <button
-                                                    // onClick={handleDownloadExcel}
-                                                    className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-                                                >
-                                                    Export XLS
-                                                </button>
-                                            </div> */}
                                         </div>
                                     </Popover.Panel>
                                 </Transition>
@@ -327,15 +298,18 @@ export default function ScrollNav() {
                             {navigation.map((item) => (
                                 <div key={item.name}>
                                     {item.link ? (
-                                        <Link
+                                        <a
                                             key={item.name}
                                             href={item.href}
-                                            // data={item.ref}
-                                            // smooth={true}
+                                            target={
+                                                item.id == 8
+                                                    ? "_blank"
+                                                    : "_self"
+                                            }
                                             className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
                                         >
                                             {item.name}
-                                        </Link>
+                                        </a>
                                     ) : (
                                         <ScrollLink
                                             key={item.name}

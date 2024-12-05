@@ -355,13 +355,14 @@ export default function Welcome(props) {
                                         {navigation.map((item) => (
                                             <div key={item.name}>
                                                 {item.link ? (
-                                                    <Link
+                                                    <a
                                                         key={item.name}
                                                         href={item.href}
+                                                        target={item.id == 8 ? "_blank" : "_self"}
                                                         className="hover:cursor-pointer  -mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-goldt hover:bg-gray-400/10"
                                                     >
                                                         {item.name}
-                                                    </Link>
+                                                    </a>
                                                 ) : (
                                                     <ScrollLink
                                                         key={item.name}
