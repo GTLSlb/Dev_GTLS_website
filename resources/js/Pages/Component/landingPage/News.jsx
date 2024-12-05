@@ -40,7 +40,7 @@ import React from "react";
 const posts = [
     {
         id: 26,
-        title: " Introducing Gold Tiger Logistics’ National Road Alerts Feature",
+        title: "Introducing Gold Tiger Logistics’ National Road Alerts Feature",
         href: "#",
         description: `At Gold Tiger Logistics Solutions, we recognise that real-time information is crucial in the fast-paced logistics industry. That’s why we’re thrilled to unveil our new Road Alerts Map service. A powerful tool designed to keep you informed, empowered, and ready to navigate potential disruptions. `,
         imageUrl: nationalRoadImage,
