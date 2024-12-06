@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ConsTrackingController;
+use App\Http\Controllers\FeedBackFormController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
@@ -158,7 +159,7 @@ Route::resource('posts', BlogController::class);
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
 Route::post('/contactus', [ContactUsFormController::class, 'submitContactUsForm'])->name('contactus.submit');
 Route::post('/support', [SupportFormController::class, 'submitSupportForm'])->name('support.submit');
-
+Route::post('/feedback', [FeedBackFormController::class, 'submitFeedBackForm'])->name('feedback.submit');
 Route::get('/download-docx', function () {
     $pathToFile = public_path('docs/20230913-Gold-Tiger-Logistics-Solutions-Trading-Terms-and-Conditions.pdf');
     $headers = array(

@@ -12,6 +12,8 @@ import { Link } from "@inertiajs/inertia-react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 import TrainNotification from "@/Components/TrainNotification";
 
+const mapUrl = window.Laravel.mapUrl;
+
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
     { id: 2, name: "Services", href: "services", link: false },
@@ -20,7 +22,7 @@ const navigation = [
     { id: 5, name: "Careers", href: "/opportunities", link: true },
     { id: 6, name: "Contact Us", href: "/contact_us", link: false },
     { id: 7, name: "Going Green", href: "/goinggreen", link: true },
-    { id: 8, name: "Map", href: "https://map.gtls.store/", link: true },
+    { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 
 export default function ScrollNav({ getTrainNotification }) {
@@ -92,7 +94,7 @@ export default function ScrollNav({ getTrainNotification }) {
                                 </a>
                             </div>
                             <a
-                                href="tel:+180040306"
+                                href="tel:+1800040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
                             >
                                 {" "}

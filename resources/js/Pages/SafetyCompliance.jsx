@@ -6,6 +6,7 @@ import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
 import Footer from "./Component/landingPage/Footer";
 import ContactForm from "./Component/landingPage/ContactForm";
+import Navbars from "@/Components/Navbars";
 
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
@@ -21,24 +22,25 @@ const handleClick = () => {
 export default function AboutUs(props) {
     const [getfooter, setfooter] = useState([]);
 
-    // ********************************************************* 
-    // ********************* All requests  ********************* 
-    // ********************************************************* 
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
 
     useEffect(() => {
-        axios.get('/footer')
-          .then(response => {
-              // console.log('fetching data:',response.data);
-              setfooter(response.data);
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-          });
-      }, []);
-      // ********************************************************* 
-      // ********************* End requests  ********************* 
-      // ********************************************************* 
-      
+        axios
+            .get("/footer")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setfooter(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [resumeFile, setResumeFile] = useState(null);
@@ -97,53 +99,93 @@ export default function AboutUs(props) {
                                 </h1>
                             </figure>
                             <p className="mt-3 text-smooth">
-                                Gold Tiger remains committed to the safety of all road users. As part of our ongoing safety innovation program, we have made a significant enhancement to our safety practices through the integration of two state-of-the-art weighbridge systems.
+                                Gold Tiger remains committed to the safety of
+                                all road users. As part of our ongoing safety
+                                innovation program, we have made a significant
+                                enhancement to our safety practices through the
+                                integration of two state-of-the-art weighbridge
+                                systems.
                             </p>
                             <p className="mt-3 text-smooth">
-                                The latest of these cutting-edge weighbridges, recently installed in the Sydney depot, complements a similar unit introduced last year in the Melbourne depot.
+                                The latest of these cutting-edge weighbridges,
+                                recently installed in the Sydney depot,
+                                complements a similar unit introduced last year
+                                in the Melbourne depot.
                             </p>
                             <p className="mt-3 text-smooth">
-                                With the introduction of this second weighbridge, a remarkable 80% of all interstate linehaul movements now undergo thorough checks before departing from our depots, enabling us to proactively prevent overloaded vehicles from taking to the roads.
+                                With the introduction of this second
+                                weighbridge, a remarkable 80% of all interstate
+                                linehaul movements now undergo thorough checks
+                                before departing from our depots, enabling us to
+                                proactively prevent overloaded vehicles from
+                                taking to the roads.
                             </p>
                             <p className="mt-3 text-smooth">
-                                This not only lightens the burden on our road infrastructure but also guarantees that all our vehicles operate within the legally prescribed weight limits.
+                                This not only lightens the burden on our road
+                                infrastructure but also guarantees that all our
+                                vehicles operate within the legally prescribed
+                                weight limits.
                             </p>
                             <p className="mt-3 text-smooth">
-                                We have introduced these advanced weighbridge systems to augment our capabilities and to revolutionise the weighing process by automating it and eliminating human error. It is our responsibility to ensure that our weighing procedures are robust and protect consumers from inaccuracies in product weight, thereby preserving their trust in our services.
+                                We have introduced these advanced weighbridge
+                                systems to augment our capabilities and to
+                                revolutionise the weighing process by automating
+                                it and eliminating human error. It is our
+                                responsibility to ensure that our weighing
+                                procedures are robust and protect consumers from
+                                inaccuracies in product weight, thereby
+                                preserving their trust in our services.
                             </p>
                             <p className="mt-3 text-smooth">
-                                The weighbridge systems also serve as valuable tools for our internal documentation requirements. The weighbridges play pivotal roles in streamlining the management of incoming/outgoing vehicles, significantly boosting overall operational efficiency. The weighbridge systems have eliminated the need for time-consuming reloads, ensuring that no time or effort is wasted while passing on cost savings and maintaining DIFOT efficiency for consignments.
+                                The weighbridge systems also serve as valuable
+                                tools for our internal documentation
+                                requirements. The weighbridges play pivotal
+                                roles in streamlining the management of
+                                incoming/outgoing vehicles, significantly
+                                boosting overall operational efficiency. The
+                                weighbridge systems have eliminated the need for
+                                time-consuming reloads, ensuring that no time or
+                                effort is wasted while passing on cost savings
+                                and maintaining DIFOT efficiency for
+                                consignments.
                             </p>
                             <p className="mt-3 text-smooth">
-                                This advancement has created a higher degree of confidence for our drivers, assuring them that the vehicle they are operating complies fully with safety standards and is perfectly suited for its intended purpose.
+                                This advancement has created a higher degree of
+                                confidence for our drivers, assuring them that
+                                the vehicle they are operating complies fully
+                                with safety standards and is perfectly suited
+                                for its intended purpose.
                             </p>
                             <p className="mt-3 text-smooth">
-                                Gold Tiger is better equipped than ever to uphold the highest standards of safety, compliance and efficiency in the logistics industry.
+                                Gold Tiger is better equipped than ever to
+                                uphold the highest standards of safety,
+                                compliance and efficiency in the logistics
+                                industry.
                             </p>
                             <p className="mt-3 text-smooth">
-                                Soon our whole fleet of Volvo trucks will meet the Euro 6 standard, with a replacement program well under way. We have recently installed a MAHA braking testing system at our workshop to accurately measure our vehicles’ brake system performance.
+                                Soon our whole fleet of Volvo trucks will meet
+                                the Euro 6 standard, with a replacement program
+                                well under way. We have recently installed a
+                                MAHA braking testing system at our workshop to
+                                accurately measure our vehicles’ brake system
+                                performance.
                             </p>
                             <p className="mt-3 text-smooth">
-                                We have an outstanding health and safety record (no injuries) and our drivers have accident-free driving records. All drivers have the relevant driving licences and tickets they need to complete their work safely and use any required equipment. Our drivers are professionals with excellent driving skills and are trained in topics such as fatigue management, mass management and dangerous goods.
+                                We have an outstanding health and safety record
+                                (no injuries) and our drivers have accident-free
+                                driving records. All drivers have the relevant
+                                driving licences and tickets they need to
+                                complete their work safely and use any required
+                                equipment. Our drivers are professionals with
+                                excellent driving skills and are trained in
+                                topics such as fatigue management, mass
+                                management and dangerous goods.
                             </p>
-                            
-
-
-
-
-
-
-
-
-                           
-
                         </div>
-
-
                     </div>
                 </div>
 
-                <Footer getfooter={getfooter}/>
+                <Footer getfooter={getfooter} />
             </div>
         </>
     );
