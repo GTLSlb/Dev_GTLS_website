@@ -22,9 +22,6 @@ class Customer extends User
      */
     protected $fillable = [
         'OwnerId',
-        'GroupId',
-        'GroupName',
-        'Accounts',
         'remember_token',
         'password',
         'UserId',
@@ -32,7 +29,7 @@ class Customer extends User
         'TypeName',
         'Username',
         'Email',
-        
+
     ];
 
     /**

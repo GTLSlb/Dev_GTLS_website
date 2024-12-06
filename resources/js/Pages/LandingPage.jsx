@@ -24,8 +24,11 @@ export default function LandingPage({}) {
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState([]);
+    const [Token, setToken] = useState(Cookies.get("access_token"));
     const [appsApi, setAppsApi] = useState();
     const gtamUrl = window.Laravel.gtamUrl;
+    const appDomain = window.Laravel.appDomain;
+
     function classNames(...classes) {
         return classes.filter(Boolean).join(" ");
     }
@@ -51,37 +54,51 @@ export default function LandingPage({}) {
             });
     }, []);
 
-    // useEffect(() => {
-    //     if (currentUser) {
-    //         axios
-    //             .get(`${gtamUrl}User/Permissions`, {
-    //                 headers: {
-    //                     UserId: currentUser.UserId,
-    //                 },
-    //             })
-    //             .then((res) => {
-    //                 const x = JSON.stringify(res.data);
-    //                 const parsedDataPromise = new Promise((resolve, reject) => {
-    //                     try {
-    //                         const parsedData = JSON.parse(x);
-    //                         resolve(parsedData || []); // Use an empty array if parsedData is null
-    //                     } catch (error) {
-    //                         reject(error);
-    //                     }
-    //                 });
-    //                 parsedDataPromise.then((parsedData) => {
-    //                     console.log('dataaaaaaaaaa',currentUser);
+    useEffect(() => {
+        if (currentUser && !Token) {
 
-    //                     setFilteredApps(parsedData);
-    //                     setApps(parsedData);
-    //                     setAppsApi(true);
-    //                 });
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     }
-    // }, [currentUser]);
+            const headers = {
+                UserId: currentUser.UserId,
+                // currentUser.UserId,
+                OwnerId: currentUser.OwnerId,
+                "Content-Type": "application/x-www-form-urlencoded",
+            };
+            const data = {
+                grant_type: "password",
+            };
+            axios
+                .post(`${gtamUrl}/Token`, data, {
+                    headers: headers,
+                })
+                .then((res) => {
+                    const x = JSON.stringify(res.data);
+                    const parsedDataPromise = new Promise((resolve, reject) => {
+                        try {
+                            const parsedData = JSON.parse(x);
+                            resolve(parsedData || []); // Use an empty array if parsedData is null
+                        } catch (error) {
+                            reject(error);
+                        }
+                    });
+                    parsedDataPromise.then((parsedData) => {
+                        setToken(parsedData.access_token);
+                        Cookies.set(
+                            "access_token",
+                            parsedData.access_token,
+                            {
+                                domain: appDomain,
+                                path: "/",
+                                secure: true, // Use this if your site is served over HTTPS
+                                sameSite: "Lax", // Optional, depending on your needs
+                            }
+                        );
+                    });
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [currentUser]);
 
     useEffect(() => {
         if (currentUser) {
