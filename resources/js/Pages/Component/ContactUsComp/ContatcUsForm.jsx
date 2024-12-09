@@ -4,7 +4,10 @@ import axios from "axios";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useEffect } from "react";
 
-const ContactUsForm = () => {
+function ContatcUsForm() {
+    const [enquiryValue, setEnquiryValue] = useState(new Set([]));
+    const [heardOfUsValue, setHeardOfUsValue] = useState(new Set([]));
+
     const [formData, setFormData] = useState({
         name: "",
         company: "",
@@ -39,27 +42,47 @@ const ContactUsForm = () => {
         const data = new FormData();
         Object.keys(formData).forEach((key) => data.append(key, formData[key]));
 
-        axios
-            .post("/contactus", data)
-            .then((response) => {
-                setFormData({
-                    name: "",
-                    company: "",
-                    email: "",
-                    message: "",
-                    phone: "",
-                    enquiry: "",
-                    heardofUs: "",
-                });
-                setErrors({});
-                setIsLoading(false);
-                setSuccess(response.status === 200);
-            })
-            .catch((error) => {
-                console.error(error.response);
-                setErrors(error.response?.data?.errors || {});
-                setIsLoading(false);
+        // Simulate API submission and reset form
+        setTimeout(() => {
+            setFormData({
+                name: "",
+                company: "",
+                email: "",
+                message: "",
+                phone: "",
+                enquiry: "",
+                heardofUs: "",
             });
+            setEnquiryValue(""); // Reset enquiry state
+            setHeardOfUsValue(""); // Reset heardOfUs state
+            setErrors({});
+            setIsLoading(false);
+            setSuccess(true);
+        }, 1000);
+
+        // axios
+        //     .post("/contactus", data)
+        //     .then((response) => {
+        //         setFormData({
+        //             name: "",
+        //             company: "",
+        //             email: "",
+        //             message: "",
+        //             phone: "",
+        //             enquiry: "",
+        //             heardofUs: "",
+        //         });
+        //         setEnquiryValue(""); // Reset enquiry state
+        //         setHeardOfUsValue(""); // Reset heardOfUs state
+        //         setErrors({});
+        //         setIsLoading(false);
+        //         setSuccess(response.status === 200);
+        //     })
+        //     .catch((error) => {
+        //         console.error(error.response);
+        //         setErrors(error.response?.data?.errors || {});
+        //         setIsLoading(false);
+        //     });
     };
 
     const typeOfEnquiry = [
@@ -76,15 +99,29 @@ const ContactUsForm = () => {
         { key: "print", label: "Print Media" },
         { key: "customer", label: "Existing Customer" },
     ];
+
     useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+        const enqvalue = typeOfEnquiry.find(
+            (item) => item.key == enquiryValue.currentKey
+        );
+        const heardvalue = heardofUs.find(
+            (item) => item.key == heardOfUsValue.currentKey
+        );
+
+        console.log(enqvalue, heardvalue)
+        setFormData((prev) => ({
+            ...prev,
+            enquiry: enqvalue?.label,
+            heardofUs: heardvalue?.label,
+        }));
+    }, [enquiryValue, heardOfUsValue]);
+
     return (
         <div className=" w-full">
             <form
                 onSubmit={handleSubmit}
                 encType="multipart/form-data"
-                className="pb-24 pt-20 sm:pb-32 lg:py-24 z-10 w-full"
+                className="py-4 sm:pb-32 lg:py-24 z-10 w-full"
             >
                 <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg rounded-3xl">
                     <div className="grid grid-cols-1 gap-y-3 gap-x-8 p-8">
@@ -97,50 +134,45 @@ const ContactUsForm = () => {
                             will call you back to assess your needs.
                         </p>
 
-                        {["name", "company", "email", "phone"].map(
-                            (field) => (
-                                <div key={field}>
-                                    <div className="relative group mt-2.5 border-b w-full border-goldt">
-                                        <input
-                                            type={
-                                                field === "email"
-                                                    ? "email"
-                                                    : "text"
-                                            }
-                                            required
-                                            autoComplete="off"
-                                            id={field}
-                                            name={field}
-                                            onChange={handleChange}
-                                            value={formData[field]}
-                                            className="w-full h-10 text-sm text-white !p-0 peer appearance-none bg-transparent outline-none border-dark form-input"
-                                        />
-                                        <label
-                                            htmlFor={field}
-                                            className="text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-full peer-valid:-translate-y-full group-focus-within:pl-0 peer-valid:pl-0"
-                                        >
-                                            {field.charAt(0).toUpperCase() +
-                                                field.slice(1)}
-                                        </label>
-                                    </div>
-                                    {errors[field] && (
-                                        <div className="error">
-                                            {errors[field][0]}
-                                        </div>
-                                    )}
+                        {["name", "company", "email", "phone"].map((field) => (
+                            <div key={field}>
+                                <div className="relative group mt-2.5 border-b w-full border-goldt">
+                                    <input
+                                        type={
+                                            field === "email" ? "email" : "text"
+                                        }
+                                        required
+                                        autoComplete="off"
+                                        id={field}
+                                        name={field}
+                                        onChange={handleChange}
+                                        value={formData[field]}
+                                        className="w-full h-10 text-sm text-white !p-0 peer appearance-none bg-transparent outline-none border-dark form-input"
+                                    />
+                                    <label
+                                        htmlFor={field}
+                                        className="text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-full peer-valid:-translate-y-full group-focus-within:pl-0 peer-valid:pl-0"
+                                    >
+                                        {field.charAt(0).toUpperCase() +
+                                            field.slice(1)}
+                                    </label>
                                 </div>
-                            )
-                        )}
-
+                                {errors[field] && (
+                                    <div className="error">
+                                        {errors[field][0]}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
                         <Select
                             variant="bordered"
                             label="Type of enquiries"
-                            value={formData.enquiry}
-                            onChange={(e) => {
-                                const value = typeOfEnquiry.find((item) => item.key == e.target.value)
+                            selectedKeys={enquiryValue}
+                            onSelectionChange={(value) => {
+                                setEnquiryValue(value); // Update the state
                                 setFormData({
                                     ...formData,
-                                    enquiry: value.label,
+                                    enquiry: enquiryValue.currentKey,
                                 });
                             }}
                             className="w-full text-white border-b border-goldt"
@@ -164,12 +196,12 @@ const ContactUsForm = () => {
                         <Select
                             variant="bordered"
                             label="How did you hear about us?"
-                            value={formData.heardofUs}
-                            onChange={(e) => {
-                                const value = heardofUs.find((item) => item.key == e.target.value)
+                            selectedKeys={heardOfUsValue}
+                            onSelectionChange={(value) => {
+                                setHeardOfUsValue(value); // Update the state
                                 setFormData({
                                     ...formData,
-                                    heardofUs: value.label,
+                                    heardofUs: heardOfUsValue.currentKey,
                                 });
                             }}
                             className="w-full text-white border-b border-goldt"
@@ -220,13 +252,23 @@ const ContactUsForm = () => {
                                 size="normal"
                                 render="explicit"
                                 theme="dark"
-                                style={{ transform: "scale(0.8)" }}
+                                style={{
+                                    transform: "scale(0.8)",
+                                    transformOrigin: "left",
+                                }}
                             />
                             <div className="mt-8 flex justify-right w-full">
                                 <button
                                     type="submit"
                                     disabled={!recaptchaValue || isLoading}
-                                    className="block w-full md:ml-auto md:w-full rounded-3xl bg-gradient-to-r from-goldl to-goldd hover:from-goldd hover:to-goldl px-3.5 py-2.5 text-center text-md font-bold text-dark shadow-sm hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-goldt"
+                                    className={`block w-full md:ml-auto md:w-full rounded-3xl 
+                                    px-3.5 py-2.5 text-center text-md font-bold shadow-sm 
+                                    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                                    ${
+                                        !recaptchaValue || isLoading
+                                            ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                                            : "bg-gradient-to-r from-goldl to-goldd hover:from-goldd hover:to-goldl text-dark"
+                                    }`}
                                 >
                                     {isLoading ? (
                                         <div className="inset-0 flex justify-center items-center bg-opacity-50">
@@ -244,8 +286,9 @@ const ContactUsForm = () => {
                             className="bg-goldt mx-8 border border-goldd text-dark px-4 py-3 rounded relative mb-4 sm:col-span-2"
                             role="alert"
                         >
-                            <strong className="font-bold">Success!</strong>
+                            <strong className="font-bold">Success! </strong>
                             <span className="block sm:inline">
+                                {" "}
                                 Your message has been sent.
                             </span>
                             <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -265,6 +308,6 @@ const ContactUsForm = () => {
             </form>
         </div>
     );
-};
+}
 
-export default ContactUsForm;
+export default ContatcUsForm;

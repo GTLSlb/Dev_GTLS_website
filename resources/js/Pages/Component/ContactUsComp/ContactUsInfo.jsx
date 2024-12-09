@@ -9,7 +9,7 @@ import {
 
 export default function ContactUsInfo() {
     return (
-        <div className="pb-24 pt-20 sm:pb-32 lg:py-24 z-10  w-full">
+        <div className="max-lg:px-8 pb-4 pt-20 sm:pb-32 lg:py-24 z-10  w-full">
             <div className="mx-auto max-w-xl lg:mx-0 lg:max-w-lg py-8 w-full">
                 <h2 className="text-4xl font-bold tracking-tight text-goldt sm:text-4xl">
                     Contact us
@@ -69,23 +69,6 @@ export default function ContactUsInfo() {
                     <div className="flex gap-x-6">
                         <dt className="flex-none">
                             <span className="sr-only">Telephone</span>
-                            <EnvelopeIcon
-                                className="h-7 w-6 text-goldt"
-                                aria-hidden="true"
-                            />
-                        </dt>
-                        <dd>
-                            <a
-                                className="hover:text-goldt text-lg"
-                                href="mailto:enquiries@gtls.com.au"
-                            >
-                                enquiries@gtls.com.au
-                            </a>
-                        </dd>
-                    </div>
-                    <div className="flex gap-x-6">
-                        <dt className="flex-none">
-                            <span className="sr-only">Telephone</span>
                             <BuildingOffice2Icon
                                 className="h-7 w-6 text-goldt"
                                 aria-hidden="true"
@@ -135,9 +118,9 @@ export default function ContactUsInfo() {
                             </div>
                             <a
                                 className="hover:text-goldt text-lg"
-                                href="tel:+1800 04 03 06"
+                                href="tel:+03 8764 7058"
                             >
-                                1800 04 03 06
+                                03 8764 7058
                             </a>
                         </dd>
                     </div>
@@ -162,12 +145,12 @@ export default function ContactUsInfo() {
                                     <MapPinIcon className="h-7 w-6 text-goldt" />
                                 </a>
                             </div>
-                            <a
+                            {/* <a
                                 className="hover:text-goldt text-lg"
                                 href="tel:+1800 04 03 06"
                             >
                                 1800 04 03 06
-                            </a>
+                            </a> */}
                         </dd>
                     </div>
                 </dl>
