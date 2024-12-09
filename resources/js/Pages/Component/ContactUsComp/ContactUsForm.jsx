@@ -122,7 +122,11 @@ function ContactUsForm() {
                                 <div className="relative group mt-2.5 border-b w-full border-goldt">
                                     <input
                                         type={
-                                            field === "email" ? "email" : "text"
+                                            field === "email"
+                                                ? "email"
+                                                : field === "phone"
+                                                ? "tel"
+                                                : "text"
                                         }
                                         required
                                         autoComplete="off"
@@ -130,11 +134,30 @@ function ContactUsForm() {
                                         name={field}
                                         onChange={handleChange}
                                         value={formData[field]}
+                                        pattern={
+                                            field === "phone"
+                                                ? "[0-9]*"
+                                                : undefined
+                                        } // Allow only numbers for phone
+                                        onInput={
+                                            field === "phone"
+                                                ? (e) =>
+                                                      (e.target.value =
+                                                          e.target.value.replace(
+                                                              /[^0-9]/g,
+                                                              ""
+                                                          ))
+                                                : undefined
+                                        } // Prevent non-numeric input
                                         className="w-full h-10 text-sm text-white !p-0 peer appearance-none bg-transparent outline-none border-dark form-input"
                                     />
                                     <label
                                         htmlFor={field}
-                                        className="text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-full peer-valid:-translate-y-full group-focus-within:pl-0 peer-valid:pl-0"
+                                        className={`text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm ${
+                                            formData[field]
+                                                ? "text-xs h-1/2 -translate-y-full pl-0"
+                                                : ""
+                                        } group-focus-within:text-xs group-focus-within:h-1/2 group-focus-within:-translate-y-full group-focus-within:pl-0`}
                                     >
                                         {field.charAt(0).toUpperCase() +
                                             field.slice(1)}
@@ -147,6 +170,7 @@ function ContactUsForm() {
                                 )}
                             </div>
                         ))}
+
                         <Select
                             variant="bordered"
                             label="Type of enquiries"

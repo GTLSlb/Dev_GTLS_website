@@ -1,4 +1,4 @@
-import ContactUsForm from "./ContatcUsForm";
+// import ContactUsForm from "./ContatcUsForm";
 
 export default function ContatcUs(props) {
     const getContsct = props.getContsct;
@@ -50,7 +50,7 @@ export default function ContatcUs(props) {
                             </dl>
                         </div>
                     </div>
-                    <ContactUsForm />
+                    {/* <ContactUsForm /> */}
                 </div>
             </div>
         </div>
