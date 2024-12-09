@@ -18,6 +18,8 @@ class ContactUsFormController extends Controller
             'email' => 'required|email',
             'message' => 'required',
             'phone' => 'required',
+            'enquiry' => 'nullable',
+            'heardofUs' => 'nullable',
         ]);
     
         // store the uploaded PDF file, if any
@@ -36,6 +38,8 @@ class ContactUsFormController extends Controller
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
             'message' => $request->input('message'),
+            'enquiry' => $request->input('enquiry'),
+            'heardofUs' => $request->input('heardofUs'),
             // 'pdf' => $pdfName,
         ];
     

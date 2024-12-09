@@ -5,6 +5,7 @@ const {nextui} = require("@nextui-org/react");
 module.exports = {
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
+        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.jsx",
