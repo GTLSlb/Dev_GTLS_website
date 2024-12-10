@@ -119,7 +119,7 @@ function ContactUsForm() {
 
                         {["name", "company", "email", "phone"].map((field) => (
                             <div key={field}>
-                                <div className="relative group mt-2.5 border-b w-full border-goldt">
+                                <div className="relative group mt-3 border-b w-full border-goldt">
                                     <input
                                         type={
                                             field === "email"
@@ -155,7 +155,7 @@ function ContactUsForm() {
                                         htmlFor={field}
                                         className={`text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm ${
                                             formData[field]
-                                                ? "text-xs h-1/2 -translate-y-full pl-0"
+                                                ? "text-xs h-1/4 -translate-y-full pl-0"
                                                 : ""
                                         } group-focus-within:text-xs group-focus-within:h-1/2 group-focus-within:-translate-y-full group-focus-within:pl-0`}
                                     >
