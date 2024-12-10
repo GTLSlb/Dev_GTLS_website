@@ -153,9 +153,9 @@ function ContactUsForm() {
                                     />
                                     <label
                                         htmlFor={field}
-                                        className={`text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm ${
+                                        className={`text-white transform transition-all absolute top-0 left-0 flex items-center text-sm ${
                                             formData[field]
-                                                ? "text-xs h-1/4 -translate-y-full pl-0"
+                                                ? "text-xs !h-1/4 -translate-y-full pl-0"
                                                 : ""
                                         } group-focus-within:text-xs group-focus-within:h-1/2 group-focus-within:-translate-y-full group-focus-within:pl-0`}
                                     >
@@ -243,7 +243,7 @@ function ContactUsForm() {
                                     name="message"
                                     onChange={handleChange}
                                     value={formData.message}
-                                    className="h-24 appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-goldt"
+                                    className="h-24 appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none"
                                 />
                             </div>
                         </div>
