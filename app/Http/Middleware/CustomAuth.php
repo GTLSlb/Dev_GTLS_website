@@ -70,43 +70,78 @@ class CustomAuth extends Middleware
     public function handle($request, $next, ...$guards)
     {
         $hasSession = $request->hasSession();
-
         if ($hasSession) {
             $path = $request->path();
-            $request->headers->set('X-CSRF-TOKEN', csrf_token());
-//   dd($_COOKIE['access_token']);
             $accessToken = $_COOKIE['access_token'] ?? false;
             $userId = $request->session()->get('user') ?? false;
+            $request->headers->set('X-CSRF-TOKEN', csrf_token());
 
-            // check if user's token is valid & is on login route
             if(($path == 'loginComp' || $path == 'login' || $path == 'loginapi') && $userId && $accessToken){
                 $isValid = $this->validateAccessToken($accessToken, $userId['UserId']);
-                if(!$isValid){
-                    //redirect to login
-                    return redirect()->route('login');
-                }else{
-                    //stay inside the system
+                // dd($isValid);
+                if($isValid){
                     return redirect($_ENV['REDIRECT_ROUTE']);
                 }
             }
-            else{
-                // Allow access to the login route
-                if ($path == 'loginComp' || $path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken' || $path == 'logoutWithoutRequest') {
-                    return $next($request);
-                }
-                if ($path !== 'login' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
-                    return redirect()->route('login');
-                }
-            }
-        } else {
-            if ($request->path() == 'login' || $request->path() == 'loginapi' || $request->path() == '/auth/azure' || $request->path() == 'auth/azure/callback' || $request->path() == 'microsoftToken' || $request->path() == 'logoutWithoutRequest') {
+            // Allow access to the login route
+            if($request->getBasePath() == ""){
                 return $next($request);
             }
-
-
+            if ($path == 'loginComp' ||  $path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken' || $path == 'logoutWithoutRequest') {
+                return $next($request);
+            }
+            if ($path !== 'login' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+                return redirect()->route('login');
+            }
+        } else {
+            if ($request->path() == 'login' || $request->path() == 'loginapi' || $request->path() == '/auth/azure' || $request->path() == 'auth/azure/callback' || $request->path() == 'microsoftToken'  || $request->path() == 'logoutWithoutRequest' ) {
+                return $next($request);
+            }
         }
         return $next($request);
     }
+
+
+    // public function handle($request, $next, ...$guards)
+    // {
+    //     $hasSession = $request->hasSession();
+
+    //     if ($hasSession) {
+    //         $path = $request->path();
+    //         $request->headers->set('X-CSRF-TOKEN', csrf_token());
+
+    //         $accessToken = $_COOKIE['access_token'] ?? false;
+    //         $userId = $request->session()->get('user') ?? false;
+
+    //         // check if user's token is valid & is on login route
+    //         if(($path == 'loginComp' || $path == 'login' || $path == 'loginapi') && $userId && $accessToken){
+    //             $isValid = $this->validateAccessToken($accessToken, $userId['UserId']);
+    //             if(!$isValid){
+    //                 //redirect to login
+    //                 return redirect()->route('login');
+    //             }else{
+    //                 //stay inside the system
+    //                 return redirect($_ENV['REDIRECT_ROUTE']);
+    //             }
+    //         }
+    //         else{
+    //             // Allow access to the login route
+    //             if ($path == 'loginComp' || $path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken' || $path == 'logoutWithoutRequest') {
+    //                 return $next($request);
+    //             }
+    //             if ($path !== 'login' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+    //                 return redirect()->route('login');
+    //             }
+    //         }
+    //     } else {
+    //         if ($request->path() == 'login' || $request->path() == 'loginapi' || $request->path() == '/auth/azure' || $request->path() == 'auth/azure/callback' || $request->path() == 'microsoftToken' || $request->path() == 'logoutWithoutRequest') {
+    //             return $next($request);
+    //         }
+
+
+    //     }
+    //     return $next($request);
+    // }
 
     protected function verifyCsrfToken($token)
     {
