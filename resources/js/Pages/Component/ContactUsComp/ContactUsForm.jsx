@@ -71,8 +71,9 @@ function ContactUsForm() {
 
     const typeOfEnquiry = [
         { key: "feedback", label: "Feedback" },
-        { key: "general", label: "General" },
-        { key: "sales", label: "Sales" },
+        { key: "compliant", label: "Compliant" },
+        { key: "services", label: "Product and Services" },
+        { key: "sales", label: "Sales Enquiry" },
     ];
     const heardofUs = [
         { key: "google", label: "Google Search" },
@@ -112,9 +113,10 @@ function ContactUsForm() {
                             <span className="text-goldt">Enquire</span> now
                         </p>
                         <p className="text-gray-200">
-                            To find out more about our services, please fill in
-                            the form below, and one of our friendly advisers
-                            will call you back to assess your needs.
+                            To provide feedback or enquire about our services,
+                            please complete the form below and one of our
+                            friendly advisers will be in contact with you
+                            shortly.
                         </p>
 
                         {["name", "company", "email", "phone"].map((field) => (
@@ -160,7 +162,7 @@ function ContactUsForm() {
                                         } group-focus-within:text-xs group-focus-within:h-1/2 group-focus-within:-translate-y-full group-focus-within:pl-0`}
                                     >
                                         {field.charAt(0).toUpperCase() +
-                                            field.slice(1)}
+                                            field.slice(1)}<span className="text-red-500">*</span>
                                     </label>
                                 </div>
                                 {errors[field] && (
@@ -173,8 +175,9 @@ function ContactUsForm() {
 
                         <Select
                             variant="bordered"
-                            label="Type of enquiries"
+                            label="Type of enquiry"
                             selectedKeys={enquiryValue}
+                            isRequired
                             onSelectionChange={(value) => {
                                 setEnquiryValue(value); // Update the state
                                 setFormData({
@@ -202,6 +205,7 @@ function ContactUsForm() {
 
                         <Select
                             variant="bordered"
+                            isRequired
                             label="How did you hear about us?"
                             selectedKeys={heardOfUsValue}
                             onSelectionChange={(value) => {
@@ -234,7 +238,7 @@ function ContactUsForm() {
                                 htmlFor="message"
                                 className="block text-sm mb-2 leading-6 text-white"
                             >
-                                Message
+                                Message<span className="text-red-500">*</span>
                             </label>
                             <div className="border rounded border-goldt">
                                 <textarea
