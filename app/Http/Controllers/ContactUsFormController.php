@@ -33,10 +33,11 @@ class ContactUsFormController extends Controller
     
         // Check the enquiry type and send to a different email if "Sales Enquiry"
         if ($request->input('enquiry') === 'Sales Enquiry') {
-            Mail::to('mariamk@gtls.com.au')->send(new ContactUsFormMail($data));
+            // Mail::to('mariamk@gtls.com.au')->send(new ContactUsFormMail($data));
+            Mail::to('fadyh@gtls.com.au')->send(new ContactUsFormMail($data));
         } else {
-            Mail::to('ahmadb@gtls.com.au')->send(new ContactUsFormMail($data));
-            // Mail::to('customerservice@gtls.com.au')->send(new ContactUsFormMail($data));
+            // Mail::to('ahmadb@gtls.com.au')->send(new ContactUsFormMail($data));
+            Mail::to('customerservice@gtls.com.au')->send(new ContactUsFormMail($data));
         }
     
         // Redirect with success message
