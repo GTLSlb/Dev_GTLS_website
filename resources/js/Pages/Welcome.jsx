@@ -24,6 +24,7 @@ import ScrollNav from "./Component/scrollnavmain";
 import ScrollToTopButton from "@/Components/ScrollUpButton";
 import Process from "./Component/landingPage/Process";
 import { Popover, Transition } from "@headlessui/react";
+import SearchIcon from "@mui/icons-material/Search";
 import { Fragment } from "react";
 import {
     ChevronDownIcon,
@@ -71,7 +72,7 @@ export default function Welcome(props) {
             const scrollTop =
                 window.pageYOffset || document.documentElement.scrollTop;
             setShowNavbar(scrollTop > 0);
-
+            setIsSuggOpen(false);
             const hash = window.location.hash;
             if (hash && document.querySelector(hash)) {
                 const element = document.querySelector(hash);
@@ -123,6 +124,159 @@ export default function Welcome(props) {
             });
         }
     }
+
+    const [searchResults, setSearchResults] = useState([]);
+    const [isSuggOpen, setIsSuggOpen] = useState(false);
+    const suggestionsRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        // Check if the click is outside the dropdown
+        if (
+            suggestionsRef.current &&
+            !suggestionsRef.current.contains(event.target)
+        ) {
+            setIsSuggOpen(false);
+            setSearchResults([]);
+        }
+    };
+    useEffect(() => {
+        // Attach event listener to document
+        document.addEventListener("mousedown", handleClickOutside);
+
+        // Cleanup listener on component unmount
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    //Function to scape content in current page
+    function scrapeContent() {
+        const elements = Array.from(
+            document.querySelectorAll(
+                "h1, h2, h3, p, a, span, li, strong, button, div"
+            )
+        );
+        const contentObj = {};
+
+        const filteredElements = elements.filter(
+            (element) =>
+                element.tagName.toLowerCase() !== "html" &&
+                element.tagName.toLowerCase() !== "body"
+        );
+
+        filteredElements.forEach((element) => {
+            // Ignore the moving truck header content
+            const text = element.textContent.trim();
+            const selector = getSelector(element); // Get the selector for the element
+            if (selector == null) {
+                return;
+            }
+            if (text && !contentObj[text]) {
+                contentObj[text] = { text, selector }; // Store text and selector in object
+            }
+        });
+
+        const contentArray = Object.values(contentObj); // Convert object values to Array
+
+        return contentArray;
+    }
+
+    // Function to get the selector for an element
+    function getSelector(element, visited = new Set()) {
+        if (!element || !element.tagName || visited.has(element)) {
+            return null;
+        }
+        visited.add(element);
+        let selector = null;
+        const classSelector = element.tagName + `.${Array.prototype.join.call(element.classList, ".")}`;
+        const parentSelector =
+            element.parentNode?.classList?.length > 0
+                ? Array.prototype.join.call(element.parentNode.classList, ".")
+                : null;
+        if (
+            element.classList &&
+            element.classList.length > 0 &&
+            (classSelector == "DIV.relative.isolate.bg-dark" ||
+            classSelector == "DIV.py-2.bg-dark.overflow-hidden" ||
+            classSelector ==
+            "P.text-white.font-bold.whitespace-nowrap.flex.gap-2" ||
+                    classSelector ==
+                    "DIV.relative.bg-goldt")
+        ) {
+            return null;
+        } else if (
+            element.parentNode &&
+            element.parentNode.classList &&
+            element.parentNode.classList.length > 0 &&
+            (parentSelector == "py-2.bg-dark.overflow-hidden" ||
+                parentSelector == "relative.isolate.bg-dark" ||
+                parentSelector ==
+                    "text-white.font-bold.whitespace-nowrap.flex.gap-2" ||
+                parentSelector ==
+                    "text-white.font-bold.whitespace-nowrap.flex.gap-2")
+        ) {
+            return null;
+        } else if (element.id) {
+            if (element.id == "app") {
+                return null;
+            }
+            selector = element.tagName;
+            selector += `#${element.id}`;
+        } else if (element.classList && element.classList.length > 0) {
+            selector = element.tagName;
+            selector += `.${Array.prototype.join.call(element.classList, ".")}`;
+        }
+        if (element.parentNode) {
+            const parentSelector = getSelector(element.parentNode, visited);
+            if (
+                element.tagName == "HTML.min-h-screen" ||
+                element.tagName ==
+                    "BODY.font-sans.antialiased.min-h-screen.bg-smooth"
+            ) {
+                return null;
+            } else if (element.id == "app" && parentSelector) {
+                return null;
+            } else if (parentSelector) {
+                selector = element.tagName;
+                selector = `${parentSelector} > ${selector}`;
+            }
+        }
+        return selector;
+    }
+
+    // Function to perform the search
+    function performSearch(query) {
+        const content = scrapeContent();
+        const results = content.filter((item) =>
+            item.text.toLowerCase().includes(query.toLowerCase())
+        );
+        // Check for duplicates before adding to searchResults
+        const newResults = results.filter(
+            (result) =>
+                !searchResults.find((existingResult) =>
+                    existingResult.text
+                        .toLowerCase()
+                        .includes(result.text.toLowerCase())
+                )
+        );
+        setSearchResults([...searchResults, ...newResults]);
+        setIsSuggOpen(true);
+    }
+
+    const [results, setResults] = useState([]);
+    async function searchAccrossWeb(keyword){
+        try {
+            const response = await axios.get('/search', {
+                headers: {
+                    'searchKeyword': keyword,
+                },
+            });
+            setResults(response.data);
+        } catch (error) {
+            console.error('Error fetching search results:', error);
+        }
+    }
+console.log('results', results);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -213,6 +367,33 @@ export default function Welcome(props) {
         }
     }, [loading]);
 
+    function navigateToSelector(selector) {
+        const elements = document.body.getElementsByTagName('*');
+        const selectorParts = selector.split(' > ');
+        const currentElement = findElement(elements, selectorParts);
+        if (currentElement) {
+          currentElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      function findElement(elements, selectorParts) {
+        const currentSelector = selectorParts.shift();
+        for (const element of elements) {
+          if (element.tagName.toLowerCase() === currentSelector.split('.')[0].toLowerCase()) {
+            const classes = currentSelector.split('.');
+            classes.shift();
+            if (classes.every((className) => element.classList.contains(className))) {
+              if (selectorParts.length === 0) {
+                return element;
+              } else {
+                return findElement(element.children, selectorParts);
+              }
+            }
+          }
+        }
+        return null;
+      }
+
     return (
         <>
             {loading ? (
@@ -244,17 +425,61 @@ export default function Welcome(props) {
                                         Careers
                                     </a>
                                 </div>
-                                <a
-                                    href="tel:+1800040306"
-                                    className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
-                                >
-                                    {" "}
-                                    <PhoneIcon
-                                        className="h-5 sm:h-6 w-auto p-0.5"
-                                        aria-hidden="true"
-                                    />
-                                    Call: 1800-040-306
-                                </a>
+                                <div className="flex gap-x-7 relative">
+                                    <div id="searchButton">
+                                        <SearchIcon className="h-4 w-4" />
+                                        <input
+                                            type="text"
+                                            id="searchInput"
+                                            className="bg-[#e7c160] outline-none border-0 h-6 text-sm focus:outline-none focus:ring-0"
+                                            placeholder="Search..."
+                                            onChange={(e) => {
+                                                if (e.target.value != "") {
+                                                    setSearchResults([]);
+                                                    performSearch(
+                                                        e.target.value
+                                                    );
+                                                    searchAccrossWeb(e.target.value)
+                                                } else {
+                                                    setSearchResults([]);
+                                                    setIsSuggOpen(false);
+                                                }
+                                            }}
+                                        />
+                                        {isSuggOpen &&
+                                            searchResults?.length > 0 && (
+                                                <div
+                                                    ref={suggestionsRef}
+                                                    id="searchResults"
+                                                    className="absolute z-50 w-full bg-white/85 overflow-y-auto flex flex-col gap-y-1 font-medium ring-1 ring-gray-100 rounded p-3"
+                                                >
+                                                    {searchResults.map(
+                                                        (result, index) => (
+                                                            <span
+                                                                key={index}
+                                                                onClick={()=>navigateToSelector(result.selector)}
+                                                                className="truncate text-black hover:font-medium hover:cursor-pointer"
+                                                            >
+                                                                {result.text}
+                                                            </span>
+                                                        )
+                                                    )}
+                                                </div>
+                                            )}
+                                    </div>
+
+                                    <a
+                                        href="tel:+1800040306"
+                                        className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
+                                    >
+                                        {" "}
+                                        <PhoneIcon
+                                            className="h-5 sm:h-6 w-auto p-0.5"
+                                            aria-hidden="true"
+                                        />
+                                        Call: 1800-040-306
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div className="absolute z-30 w-full">

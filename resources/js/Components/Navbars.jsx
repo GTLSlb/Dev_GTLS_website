@@ -441,7 +441,7 @@ export default function Navbars() {
                                                 className="bg-dark hover:bg-black rounded-3xl text-white hover:text-goldt py-2 px-5  border-2 border-goldt"
                                             >
                                                 <button className="font-bold"> Log in</button>
-                                                
+
                                             </Link> */}
                                 <Popover className="relative object-right flex-item md:ml-auto ">
                                     <Popover.Button
@@ -577,7 +577,7 @@ export default function Navbars() {
                                                 // className="border-2 w-10 bg-goldt text-gray-600 hover:text-gray-900 dark:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                             >
                                                 <button className="border rounded bg-goldt text-white h-10 w-20 hover:bg-black"> Log in</button>
-                                                
+
                                             </Link>
 
                                             <Link

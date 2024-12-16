@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Http\Middleware\LogUserVisit;
 use gtls\loginstory\LoginClass;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,9 +100,7 @@ Route::get('/goinggreen', function () {
     return Inertia::render('GoingGreen');
 })->name('goinggreen');
 
-// Route::get('/traffic', function () {
-//     return Inertia::render('TrafficPage');
-// })->name('traffic');
+Route::get('/search', [SearchController::class, 'search']);
 
 
 Route::get('/terms', function () {
