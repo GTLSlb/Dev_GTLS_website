@@ -34,6 +34,7 @@ class ContactUsFormController extends Controller
         // Check the enquiry type and send to a different email if "Sales Enquiry"
         if ($request->input('enquiry') === 'Sales Enquiry') {
             // Mail::to('mariamk@gtls.com.au')->send(new ContactUsFormMail($data));
+            Mail::to('chrisj@gtls.com.au')->send(mailable: new ContactUsFormMail($data));
             Mail::to('salesenquiries@gtls.com.au')->send(new ContactUsFormMail($data));
         } else {
             // Mail::to('ahmadb@gtls.com.au')->send(new ContactUsFormMail($data));
