@@ -7,8 +7,9 @@ import { Link } from "@inertiajs/inertia-react";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
-const mapUrl = window.Laravel.mapUrl;
+import SearchWebsite from '@/Pages/Component/SearchWebsite';
 
+const mapUrl = window.Laravel.mapUrl;
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus" },
     { id: 2, name: "Services", href: "/#services" },
@@ -76,6 +77,8 @@ export default function Navbars() {
                                 Careers
                             </a>
                         </div>
+                        <div className="flex gap-x-14 relative h-6">
+                        <SearchWebsite />
                         <a
                             href="tel:+1800040306"
                             className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
@@ -87,6 +90,7 @@ export default function Navbars() {
                             />
                             Call: 1800-040-306
                         </a>
+                        </div>
                     </div>
                 </div>
                 <nav
@@ -302,6 +306,8 @@ export default function Navbars() {
                                     Careers
                                 </a>
                             </div>
+                            <div className="flex gap-x-14 relative h-6">
+                            <SearchWebsite />
                             <a
                                 href="tel:+180040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
@@ -313,6 +319,8 @@ export default function Navbars() {
                                 />
                                 Call: 1800-040-306
                             </a>
+                            </div>
+
                         </div>
                     </div>
                     <nav
