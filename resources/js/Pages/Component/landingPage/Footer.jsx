@@ -17,9 +17,9 @@ export default function Footer(props) {
                     <div className=" gap-8  items-center flex flex-col md:flex-row md:justify-between">
                         <a href="/">
                             <img
-                                className="h-20 "
-                                src={strapiApi + `/` + getfooter?.Icon.url}
-                                alt={getfooter?.image_alt}
+                                className="h-20"
+                                src={strapiApi + getfooter?.Icon.url}
+                                alt={getfooter?.Icon.alternativeText}
                             />
                         </a>
                         <div className="  gap-8 col-span-2 mt-0 h-full flex ">
