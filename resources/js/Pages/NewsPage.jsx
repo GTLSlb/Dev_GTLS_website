@@ -33,7 +33,6 @@ export default function NewsPage(props) {
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
 
     useEffect(() => {
-        console.log("123");
         const fetchData = async () => {
             const status =
                 new URLSearchParams(window.location.search).get("status") ||
