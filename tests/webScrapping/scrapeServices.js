@@ -37,7 +37,7 @@ function getSelector(element, visited = new Set()) {
     return selector;
 }
 
-async function scrapeContent(keyword, urlsToScrape) {
+async function scrapeContent(keyword) {
     const options = new chrome.Options();
     options.addArguments('--headless'); // Enable headless mode
     options.addArguments('--no-sandbox'); // Bypass OS security model
@@ -48,13 +48,12 @@ async function scrapeContent(keyword, urlsToScrape) {
     let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
     try {
         await driver.sleep(2000); // Wait for 2 seconds
-        let contentArray, resultArray = [];
+        let contentArray = [], resultArray=[];
 
-        for (let subUrl of urlsToScrape) {
-            const url = `http://web-test.gtls.com.lb${subUrl}`; // Construct the full URL
+            const url = `http://web-test.gtls.com.lb/services`; // Construct the full URL
             await driver.get(url);
 
-            let elements = await driver.findElements(By.css('h1, h2, p, a, div, strong, span, li'));
+            let elements = await driver.findElements(By.css('h1, h2, p, a, div, dd, dt, dl, span, li, strong'));
 
             for (let element of elements) {
                 try {
@@ -64,7 +63,7 @@ async function scrapeContent(keyword, urlsToScrape) {
                     // Get a more specific selector if needed
                     // let selector = getSelector(element); // This won't work directly with Selenium as `element` is a WebElement
 
-                    if (text && text.includes(keyword)) {
+                    if (text && text != "") {
                         contentArray.push({ url: url, selector: selector, label: text.trim() }); // Include the URL and selector in the result
                     }
 
@@ -91,7 +90,6 @@ async function scrapeContent(keyword, urlsToScrape) {
                     console.error("Error processing element:", err);
                 }
             }
-        }
 
         // Output the result as JSON
         console.log(JSON.stringify(resultArray));
@@ -103,13 +101,13 @@ async function scrapeContent(keyword, urlsToScrape) {
     }
 }
 
-// Get the keyword and URLs from command-line arguments
+
+// Get the keyword from command-line arguments
 const keyword = process.argv[2];
-const urlsToScrape = ['/', '/aboutus', '/safetycompliance', '/goinggreen', '/news', '/technologies', '/services', '/opportunities', '/contact_us'];
 
 if (!keyword) {
     console.error("Keyword is required as the first argument");
     process.exit(1);
 }
 
-scrapeContent(keyword, urlsToScrape);
+scrapeContent(keyword);

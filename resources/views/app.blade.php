@@ -34,6 +34,11 @@
             appUrl: "{{ env('APP_URL') }}",
             backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
+            typesenseHost: "{{ env('TYPESENSE_HOST') }}",
+            typesenseProtocol: "{{ env('TYPESENSE_PROTOCOL') }}",
+            typesensePort: "{{ env('TYPESENSE_PORT') }}",
+            typesenseAdminKey: "{{ env('TYPESENSE_ADMIN_API_KEY') }}",
+            typesenseSearchOnlyKey: "{{ env('TYPESENSE_SEARCH_ONLY_API_KEY') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->

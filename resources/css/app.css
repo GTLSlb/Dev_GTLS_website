@@ -394,6 +394,24 @@ html {
     border-color: #e7c160 !important;
 }
 
+.ais-SearchBox-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    gap: 5px;
+}
+
+.ais-SearchBox-input{
+    border-color: #e7c160 !important;
+    max-height: 24px;
+    background-color: #e7c160 !important;
+}
+
+.ais-SearchBox-submitIcon{
+    height: 24px;
+}
+
 .css-1xc3v61-indicatorContainer{
     border-right-color: #e7c160 !important;
 }

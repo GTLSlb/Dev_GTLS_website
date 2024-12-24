@@ -3,6 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "start-typesense-server": "node resources/js/startTypesenseServer.js",
         "test": "npx mocha --no-timeout --reporter mochawesome --require mochawesome/register --reporter-options reportDir=C:/xampp/htdocs/MainPortal_Development/test-reports,reportFilename=testResults,timestamp,autoOpen 'tests/*.js'",
         "test:parallel": "npx mocha --no-timeout -p --reporter mochawesome --require mochawesome/register --reporter-options reportDir=C:/xampp/htdocs/MainPortal_Development/test-reports,reportFilename=testResults,timestamp,autoOpen 'tests/*.js'"
     },
@@ -24,6 +25,7 @@
         "@ant-design/plots": "^1.2.5",
         "@aspnet/signalr": "^1.0.27",
         "@azure/msal-browser": "^2.37.0",
+        "@babel/runtime": "^7.26.0",
         "@canvasjs/charts": "^3.7.8",
         "@canvasjs/react-charts": "^1.0.0",
         "@coreui/coreui": "^4.2.6",
@@ -50,6 +52,7 @@
         "chartjs-adapter-moment": "^1.0.1",
         "crypto-js": "^4.2.0",
         "date-fns": "^2.29.3",
+        "docker": "^1.0.0",
         "dotenv": "^16.4.7",
         "downshift": "^9.0.8",
         "exceljs": "^4.3.0",
@@ -79,6 +82,7 @@
         "react-headless-accordion": "^1.0.2",
         "react-icons": "^4.12.0",
         "react-iframe": "^1.8.5",
+        "react-instantsearch-dom": "^6.40.4",
         "react-intersection-observer": "^9.4.3",
         "react-modal": "^3.16.1",
         "react-paginate": "^8.1.5",
@@ -106,6 +110,8 @@
         "swiper": "^11.1.8",
         "tailwindcss-animated": "^1.0.1",
         "tw-elements": "^1.0.0-beta2",
+        "typesense": "^1.8.2",
+        "typesense-instantsearch-adapter": "^2.8.0",
         "xlsx": "^0.18.5"
     }
 }
