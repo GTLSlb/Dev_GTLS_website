@@ -5,7 +5,7 @@
     <title>Enquire Form Submitted</title>
 </head>
 <body>
-    <h2>Enquire through web</h2>
+    <h2>Enquiry Request</h2>
     <p>Name: {{ $data['name'] }}</p>
     <p>Company: {{ $data['company'] }}</p>
     <p>Email: {{ $data['email'] }}</p>

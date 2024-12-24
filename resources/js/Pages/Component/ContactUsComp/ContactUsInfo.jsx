@@ -35,9 +35,9 @@ export default function ContactUsInfo() {
                             </a>
                         </dd>
                     </div>
-                    <div className="flex gap-x-6">
+                    {/* <div className="flex gap-x-6">
                         <dt className="flex-none">
-                            <span className="sr-only">Telephone</span>
+                            <span className="sr-only">Fa</span>
                             <PrinterIcon
                                 className="h-7 w-6 text-goldt"
                                 aria-hidden="true"
@@ -51,10 +51,10 @@ export default function ContactUsInfo() {
                                 02 9605 1700
                             </a>
                         </dd>
-                    </div>
+                    </div> */}
                     <div className="flex gap-x-6">
                         <dt className="flex-none">
-                            <span className="sr-only">Telephone</span>
+                            <span className="sr-only">Box Address</span>
                             <InboxStackIcon
                                 className="h-7 w-6 text-goldt"
                                 aria-hidden="true"
@@ -68,7 +68,7 @@ export default function ContactUsInfo() {
                     </div>
                     <div className="flex gap-x-6">
                         <dt className="flex-none">
-                            <span className="sr-only">Telephone</span>
+                            <span className="sr-only">Sydney Branch</span>
                             <BuildingOffice2Icon
                                 className="h-7 w-6 text-goldt"
                                 aria-hidden="true"
@@ -97,7 +97,7 @@ export default function ContactUsInfo() {
                     </div>
                     <div className="flex gap-x-6">
                         <dt className="flex-none">
-                            <span className="sr-only">Location</span>
+                            <span className="sr-only">MELBOURNE BRANCH</span>
                             <BuildingOffice2Icon
                                 className="h-7 w-6 text-goldt"
                                 aria-hidden="true"
@@ -126,7 +126,7 @@ export default function ContactUsInfo() {
                     </div>
                     <div className="flex gap-x-6  w-full">
                         <dt className="flex-none">
-                            <span className="sr-only">Location</span>
+                            <span className="sr-only">BRISBANE BRANCH</span>
                             <BuildingOffice2Icon
                                 className="h-7 w-6 text-goldt"
                                 aria-hidden="true"
@@ -145,12 +145,12 @@ export default function ContactUsInfo() {
                                     <MapPinIcon className="h-7 w-6 text-goldt" />
                                 </a>
                             </div>
-                            {/* <a
+                            <a
                                 className="hover:text-goldt text-lg"
-                                href="tel:+1800 04 03 06"
+                                href="tel:+07 3416 9744"
                             >
-                                1800 04 03 06
-                            </a> */}
+                                07 3416 9744
+                            </a>
                         </dd>
                     </div>
                 </dl>

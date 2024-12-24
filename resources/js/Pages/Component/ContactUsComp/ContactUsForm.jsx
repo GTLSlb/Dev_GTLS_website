@@ -4,7 +4,7 @@ import axios from "axios";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useEffect } from "react";
 
-function ContatcUsForm() {
+function ContactUsForm() {
     const [enquiryValue, setEnquiryValue] = useState(new Set([]));
     const [heardOfUsValue, setHeardOfUsValue] = useState(new Set([]));
 
@@ -43,52 +43,37 @@ function ContatcUsForm() {
         Object.keys(formData).forEach((key) => data.append(key, formData[key]));
 
         // Simulate API submission and reset form
-        setTimeout(() => {
-            setFormData({
-                name: "",
-                company: "",
-                email: "",
-                message: "",
-                phone: "",
-                enquiry: "",
-                heardofUs: "",
+        axios
+            .post("/contactus", data)
+            .then((response) => {
+                setFormData({
+                    name: "",
+                    company: "",
+                    email: "",
+                    message: "",
+                    phone: "",
+                    enquiry: "",
+                    heardofUs: "",
+                });
+                setEnquiryValue(""); // Reset enquiry state
+                setHeardOfUsValue(""); // Reset heardOfUs state
+                setErrors({});
+                setIsLoading(false);
+                setSuccess(true);
+                setSuccess(response.status === 200);
+            })
+            .catch((error) => {
+                console.error(error.response);
+                setErrors(error.response?.data?.errors || {});
+                setIsLoading(false);
             });
-            setEnquiryValue(""); // Reset enquiry state
-            setHeardOfUsValue(""); // Reset heardOfUs state
-            setErrors({});
-            setIsLoading(false);
-            setSuccess(true);
-        }, 1000);
-
-        // axios
-        //     .post("/contactus", data)
-        //     .then((response) => {
-        //         setFormData({
-        //             name: "",
-        //             company: "",
-        //             email: "",
-        //             message: "",
-        //             phone: "",
-        //             enquiry: "",
-        //             heardofUs: "",
-        //         });
-        //         setEnquiryValue(""); // Reset enquiry state
-        //         setHeardOfUsValue(""); // Reset heardOfUs state
-        //         setErrors({});
-        //         setIsLoading(false);
-        //         setSuccess(response.status === 200);
-        //     })
-        //     .catch((error) => {
-        //         console.error(error.response);
-        //         setErrors(error.response?.data?.errors || {});
-        //         setIsLoading(false);
-        //     });
     };
 
     const typeOfEnquiry = [
         { key: "feedback", label: "Feedback" },
-        { key: "general", label: "General" },
-        { key: "sales", label: "Sales" },
+        { key: "compliant", label: "Compliant" },
+        { key: "services", label: "Product and Services" },
+        { key: "sales", label: "Sales Enquiry" },
     ];
     const heardofUs = [
         { key: "google", label: "Google Search" },
@@ -108,7 +93,6 @@ function ContatcUsForm() {
             (item) => item.key == heardOfUsValue.currentKey
         );
 
-        console.log(enqvalue, heardvalue)
         setFormData((prev) => ({
             ...prev,
             enquiry: enqvalue?.label,
@@ -129,17 +113,22 @@ function ContatcUsForm() {
                             <span className="text-goldt">Enquire</span> now
                         </p>
                         <p className="text-gray-200">
-                            To find out more about our services, please fill in
-                            the form below, and one of our friendly advisers
-                            will call you back to assess your needs.
+                            To provide feedback or enquire about our services,
+                            please complete the form below and one of our
+                            friendly advisers will be in contact with you
+                            shortly.
                         </p>
 
                         {["name", "company", "email", "phone"].map((field) => (
                             <div key={field}>
-                                <div className="relative group mt-2.5 border-b w-full border-goldt">
+                                <div className="relative group mt-3 border-b w-full border-goldt">
                                     <input
                                         type={
-                                            field === "email" ? "email" : "text"
+                                            field === "email"
+                                                ? "email"
+                                                : field === "phone"
+                                                ? "tel"
+                                                : "text"
                                         }
                                         required
                                         autoComplete="off"
@@ -147,14 +136,33 @@ function ContatcUsForm() {
                                         name={field}
                                         onChange={handleChange}
                                         value={formData[field]}
+                                        pattern={
+                                            field === "phone"
+                                                ? "[0-9]*"
+                                                : undefined
+                                        } // Allow only numbers for phone
+                                        onInput={
+                                            field === "phone"
+                                                ? (e) =>
+                                                      (e.target.value =
+                                                          e.target.value.replace(
+                                                              /[^0-9]/g,
+                                                              ""
+                                                          ))
+                                                : undefined
+                                        } // Prevent non-numeric input
                                         className="w-full h-10 text-sm text-white !p-0 peer appearance-none bg-transparent outline-none border-dark form-input"
                                     />
                                     <label
                                         htmlFor={field}
-                                        className="text-white transform transition-all absolute top-0 left-0 h-full flex items-center text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-full peer-valid:-translate-y-full group-focus-within:pl-0 peer-valid:pl-0"
+                                        className={`text-white transform transition-all absolute top-0 left-0 flex items-center text-sm ${
+                                            formData[field]
+                                                ? "text-xs !h-1/4 -translate-y-full pl-0"
+                                                : ""
+                                        } group-focus-within:text-xs group-focus-within:h-1/2 group-focus-within:-translate-y-full group-focus-within:pl-0`}
                                     >
                                         {field.charAt(0).toUpperCase() +
-                                            field.slice(1)}
+                                            field.slice(1)}<span className="text-red-500">*</span>
                                     </label>
                                 </div>
                                 {errors[field] && (
@@ -164,10 +172,12 @@ function ContatcUsForm() {
                                 )}
                             </div>
                         ))}
+
                         <Select
                             variant="bordered"
-                            label="Type of enquiries"
+                            label="Type of enquiry"
                             selectedKeys={enquiryValue}
+                            isRequired
                             onSelectionChange={(value) => {
                                 setEnquiryValue(value); // Update the state
                                 setFormData({
@@ -195,6 +205,7 @@ function ContatcUsForm() {
 
                         <Select
                             variant="bordered"
+                            isRequired
                             label="How did you hear about us?"
                             selectedKeys={heardOfUsValue}
                             onSelectionChange={(value) => {
@@ -227,7 +238,7 @@ function ContatcUsForm() {
                                 htmlFor="message"
                                 className="block text-sm mb-2 leading-6 text-white"
                             >
-                                Message
+                                Message<span className="text-red-500">*</span>
                             </label>
                             <div className="border rounded border-goldt">
                                 <textarea
@@ -236,7 +247,7 @@ function ContatcUsForm() {
                                     name="message"
                                     onChange={handleChange}
                                     value={formData.message}
-                                    className="h-24 appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full text-gray-200 mr-3 py-1 px-2 leading-tight focus:outline-goldt"
+                                    className="h-24 appearance-none text-gray-100 placeholder:text-gray-300 bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none"
                                 />
                             </div>
                         </div>
@@ -310,4 +321,4 @@ function ContatcUsForm() {
     );
 }
 
-export default ContatcUsForm;
+export default ContactUsForm;

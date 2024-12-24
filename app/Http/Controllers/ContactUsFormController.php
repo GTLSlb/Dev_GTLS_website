@@ -10,8 +10,7 @@ class ContactUsFormController extends Controller
 {
     public function submitContactUSForm(Request $request)
     {
-        
-        // validate the form data
+        // Validate the form data
         $this->validate($request, [
             'name' => 'required',
             'company' => 'required',
@@ -21,7 +20,7 @@ class ContactUsFormController extends Controller
             'enquiry' => 'nullable',
             'heardofUs' => 'nullable',
         ]);
-
+    
         $data = [
             'name' => $request->input('name'),
             'company' => $request->input('company'),
@@ -30,12 +29,20 @@ class ContactUsFormController extends Controller
             'message' => $request->input('message'),
             'enquiry' => $request->input('enquiry'),
             'heardofUs' => $request->input('heardofUs'),
-            // 'pdf' => $pdfName,
         ];
     
-        // send the email
-        Mail::to('customerservice@gtls.com.au')->send(new ContactUsFormMail($data));
+        // Check the enquiry type and send to a different email if "Sales Enquiry"
+        if ($request->input('enquiry') === 'Sales Enquiry') {
+            // Mail::to('ahmadb@gtls.com.au')->send(new ContactUsFormMail($data));
+            Mail::to('chrisj@gtls.com.au')->send(mailable: new ContactUsFormMail($data));
+            Mail::to('salesenquiries@gtls.com.au')->send(new ContactUsFormMail($data));
+        } else {
+            // Mail::to('ahmadb@gtls.com.au')->send(new ContactUsFormMail($data));
+            Mail::to('customerservice@gtls.com.au')->send(new ContactUsFormMail($data));
+        }
     
+        // Redirect with success message
         return redirect()->back()->with('success', 'Your message has been sent successfully!');
     }
+    
 }

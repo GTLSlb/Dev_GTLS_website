@@ -1,5 +1,5 @@
+import ContactUsForm from "./ContactUsForm";
 import ContactUsInfo from "./ContactUsInfo";
-import ContactUsForm from "./ContatcUsForm";
 
 export default function ContatcUs() {
     return (
