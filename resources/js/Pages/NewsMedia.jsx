@@ -18,7 +18,6 @@ export default function Newss(props) {
         const fetchData = async () => {
             const result = await getFromStrapi(`/api/news-post?pLevel=4`);
             if (result.success) {
-                console.log(result.data);
                 setPosts(result.data);
                 setLoading(false);
             } else {

@@ -24,30 +24,8 @@ import { Navigation } from "swiper/modules";
 import { BounceLoader } from "react-spinners";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
-
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        />
-    );
-}
-
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        >
-            {/* <ArrowSmallRightIcon/> */}
-        </div>
-    );
-}
+import { Helmet } from "react-helmet-async";
+import SEOComponent from "@/Components/SEO/SEOComponent";
 
 export default function NewsPage(props) {
     const { slug } = usePage().props;
@@ -55,23 +33,29 @@ export default function NewsPage(props) {
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
 
     useEffect(() => {
+        console.log("123");
         const fetchData = async () => {
-            const result = await getFromStrapi(
-                `/api/blogs?pagination%5BwithCount%5D=false&populate=*&filters[Slug][$eq]=${slug}`
-            );
+            const status =
+                new URLSearchParams(window.location.search).get("status") ||
+                "test";
+
+            const endpoint = `/api/blogs?pagination%5BwithCount%5D=false&populate=*&filters[Slug][$eq]=${slug}&status=${status}`;
+            console.log(endpoint);
+
+            const result = await getFromStrapi(endpoint);
 
             if (result.success) {
                 console.log(result.data[0]);
                 setPostSlug(result.data[0]);
                 setLoading(false);
             } else {
-                console.error("Fetch failed:", result.error);
+                console.log("Fetch failed:", result.error);
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [slug]);
 
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -112,7 +96,6 @@ export default function NewsPage(props) {
     }
     return (
         <>
-            <Head title="News" />
             <div className="relative isolate bg-dark">
                 {loading ? (
                     <div className="bg-dark flex justify-center items-center h-screen">
@@ -122,6 +105,7 @@ export default function NewsPage(props) {
                 ) : (
                     <>
                         <MainLayout loading={loading}>
+                            <SEOComponent seoData={postslug.seo} />
                             <div aria-hidden="true" className="relative">
                                 <img
                                     src={strapiApiUrl + postslug.CoverImage.url}
@@ -152,7 +136,11 @@ export default function NewsPage(props) {
                                             dateTime={postslug.publishedAt}
                                             className="text-gray-500 font-bold"
                                         >
-                                            {postslug.publishedAt.split("T")[0]}
+                                            {
+                                                postslug.DatePublished.split(
+                                                    "T"
+                                                )[0]
+                                            }
                                         </time>
                                         <dd
                                             className="mt-5"

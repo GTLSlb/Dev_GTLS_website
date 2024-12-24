@@ -32,7 +32,6 @@ function MainLayout({ children, loading, isHomeScreen }) {
                     setNavigation(navigationReq.data);
                 }
                 if (trainNotificationReq.success) {
-                    console.log(trainNotificationReq.data);
                     setTrainNotification(trainNotificationReq.data);
                 }
                 setLayoutLoading(false);
