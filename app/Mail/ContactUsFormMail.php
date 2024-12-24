@@ -26,6 +26,8 @@ class ContactUsFormMail extends Mailable
                         'company' => $this->data['company'],
                         'email' => $this->data['email'],
                         'phone' => $this->data['phone'],
+                        'enquiry' => $this->data['enquiry'],
+                        'heardofUs' => $this->data['heardofUs'],
                         'message' => $this->data['message'],
                     ]);
     }

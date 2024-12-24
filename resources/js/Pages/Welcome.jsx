@@ -7,7 +7,7 @@ import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/inertia-react";
 import { Link as ScrollLink } from "react-scroll";
 import Branches from "./Component/landingPage/branches";
-import ContatcUs from "./Component/landingPage/ContactUs";
+import ContatcUs from "./Component/ContactUsComp/ContactUs";
 import Footer from "./Component/landingPage/Footer";
 import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Video from "./Component/landingPage/video";
