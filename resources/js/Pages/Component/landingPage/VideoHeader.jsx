@@ -1,4 +1,3 @@
-
 export default function VideoHeader(props) {
     const getHeader = props.getHeader.Dynamic_zone.find(
         (zone) => zone.__component === "home-page.home-hero-section"
@@ -6,7 +5,7 @@ export default function VideoHeader(props) {
     const getSocials = props.getHeader.Dynamic_zone.find(
         (zone) => zone.__component === "global.related-socials"
     ).socials;
-    
+
     const strapiApi = window.Laravel.strapiAppUrl;
     return (
         <div>
@@ -14,17 +13,15 @@ export default function VideoHeader(props) {
                 <div className=" bg-red">
                     <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]">
                         <video
-                            src={
-                                strapiApi + `/` + getHeader.BackgroundVideo.url
-                            }
-                            autoPlay="{true}"
+                            src={`${strapiApi}/${getHeader.BackgroundVideo.url}`}
+                            preload="none"
+                            autoPlay
                             loop
-                            muted="{true}"
-                            playsInline="{true}"
-                            className="absolute  w-auto min-w-full min-h-full max-w-none"
-                        >
-                            {" "}
-                        </video>
+                            muted
+                            playsInline
+                            className="absolute w-auto min-w-full min-h-full max-w-none"
+                        ></video>
+
                         <div className="opacity-70 bg-black absolute w-full h-full"></div>
                         <div className=" lg:flex items-center lg:gap-x-10  ">
                             <div className=" lg:flex items-center lg:gap-x-10  ">
@@ -34,16 +31,18 @@ export default function VideoHeader(props) {
                                             <td className=" px-4 py-10 w-7/12 text-center">
                                                 <div className="relative lg:flex-auto w-full  ">
                                                     <div className="text-center ">
-                                                        <h1 className=" mt-10">
+                                                        <div className=" mt-10">
                                                             {getHeader ? (
-                                                                <div
-                                                                    className=""
-                                                                    dangerouslySetInnerHTML={{
-                                                                        __html: getHeader.Title,
-                                                                    }}
-                                                                ></div>
+                                                                <div className="max-md:text-xl leading-7">
+                                                                    <span
+                                                                        className=""
+                                                                        dangerouslySetInnerHTML={{
+                                                                            __html: getHeader.Title,
+                                                                        }}
+                                                                    ></span>
+                                                                </div>
                                                             ) : null}
-                                                        </h1>
+                                                        </div>
                                                         <div className="mt-4 mb-2 border-b border-opacity-30 border-goldt py-6">
                                                             {getHeader ? (
                                                                 <div
@@ -77,10 +76,10 @@ export default function VideoHeader(props) {
                                                                 >
                                                                     <a
                                                                         href={
-                                                                            item.href
+                                                                            item.url
                                                                         }
                                                                         target="blank"
-                                                                        className="text-goldl hover:text-goldt "
+                                                                        className="text-goldl hover:text-goldt hover:cursor-pointer"
                                                                     >
                                                                         <span className="sr-only">
                                                                             {

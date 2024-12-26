@@ -13,8 +13,8 @@ export default function AboutUs(props) {
                 id="about"
                 className="relative isolate overflow-hidden py-6 sm:py-16 "
             >
-                <div className="flex flex-col md:flex-row mx-auto max-w-7xl items-center  px-6 lg:px-8 gap-x-28">
-                    <div className="mx-auto mt-10 md:mt-0 w-full relative">
+                <div className="flex flex-col-reverse lg:flex-row mx-auto max-w-7xl items-center  px-6 lg:px-8 gap-x-28">
+                    <div className="mx-auto mt-10 lg:mt-0 w-full relative">
                         <div className="absolute p-4 bg-gradient-to-r from-goldd via-goldt -left-10 bottom-10 -top-10 right-1 hidden lg:block -z-10 rounded-3xl">
                             <div className="h-full  bg-dark rounded-2xl"></div>
                         </div>

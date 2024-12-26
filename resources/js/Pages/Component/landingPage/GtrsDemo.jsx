@@ -26,7 +26,7 @@ export default function ResponsiveStyledPlayer(props) {
     `;
 
     return (
-        <div className=" mx-auto max-w-2xl  px-4 py-32 sm:px-6 lg:max-w-7xl ">
+        <div className=" mx-auto max-w-2xl px-4 py-16 lg:py-32 sm:px-6 lg:max-w-7xl ">
             <p className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
                 <span className="">{getGtrs.Title}</span>
             </p>

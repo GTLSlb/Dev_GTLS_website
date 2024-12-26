@@ -1,4 +1,3 @@
-import { Head } from "@inertiajs/react";
 import { useState, useRef, useEffect } from "react";
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
@@ -24,7 +23,6 @@ import { Navigation } from "swiper/modules";
 import { BounceLoader } from "react-spinners";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
-import { Helmet } from "react-helmet-async";
 import SEOComponent from "@/Components/SEO/SEOComponent";
 
 export default function NewsPage(props) {

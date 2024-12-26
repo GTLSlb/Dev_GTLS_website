@@ -7,7 +7,7 @@ export default function Technologies(props) {
             id="technologies"
         >
             <div className="mx-auto max-w-2xl py-24 px-4 sm:py-32 sm:px-6 lg:max-w-7xl lg:px-8">
-                <div className="flex flex-col justify-center  lg:flex-row items-center gap-y-16  ">
+                <div className="flex flex-col justify-center  md:flex-row items-center gap-y-16  ">
                     <div className="h-auto w-12/12   md:w-1/2 md:pr-16">
                         <a href="/technologies" target="_blank">
                             <img

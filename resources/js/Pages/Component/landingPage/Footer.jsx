@@ -1,4 +1,3 @@
-
 export default function Footer(props) {
     const getfooter = props.getfooter;
     const strapiApi = window.Laravel.strapiAppUrl;
@@ -13,7 +12,7 @@ export default function Footer(props) {
             </h2>
             <div className="bg-goldd h-2 " />
             <div className="border-b border-t my-5 border-goldd ">
-                <div className="mx-auto max-w-7xl px-6 pb-4 pt-4  lg:px-8 ">
+                <div className="mx-auto max-w-7xl px-6 pb-4 pt-4 lg:px-8 ">
                     <div className=" gap-8  items-center flex flex-col md:flex-row md:justify-between">
                         <a href="/">
                             <img
@@ -52,11 +51,11 @@ export default function Footer(props) {
                                         </div>
                                     ))}
                                 </div>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                                <div className="grid grid-cols-1 max-md:mt-10 items-center sm:grid-cols-2 md:grid-cols-3 gap-5">
                                     {getfooter?.links?.map((feature) => (
                                         <div
                                             key={feature.Name}
-                                            className="mt-10 md:mt-0"
+                                            className="md:mt-0"
                                         >
                                             <div
                                                 dangerouslySetInnerHTML={{

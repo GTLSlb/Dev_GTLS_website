@@ -8,7 +8,7 @@ export default function PrimaryServices(props) {
     const strapiURL = window.Laravel.strapiAppUrl;
 
     return (
-        <div className="bg-dark mt-[100px] pb-12 " id="services">
+        <div className="bg-dark lg:mt-[100px] pb-12 " id="services">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto pt-10 w-full">
                     <div className=" text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
@@ -25,10 +25,10 @@ export default function PrimaryServices(props) {
                 </div>
 
                 <div className="mx-auto mt-16  sm:mt-20 ">
-                    <div className="grid max-w-xl grid-cols-1 gap-y-10 gap-x-8 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+                    <div className="grid  grid-cols-1 gap-y-10 gap-x-8  md:grid-cols-2 lg:gap-y-16">
                         {getservices?.services?.map((feature) => (
                             <div
-                                key={feature.name}
+                                key={feature.id}
                                 className="  relative  flex flex-col lg:flex-row "
                             >
                                 <div className=" top-0 left-0 flex mr-5 h-auto w-1/4 items-center mb-1 md:mb-0  rounded-lg ">
