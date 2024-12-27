@@ -1,17 +1,14 @@
 import { Head } from "@inertiajs/react";
-import jobs from "../assets/pictures/jobs.webp";
 import { useState, useEffect } from "react";
+import ContactUs from "./Component/ContactUsComp/ContactUs";
 
-import Branches from "./Component/landingPage/branches";
-import ContactUs from "./Component/landingPage/ContactUs";
 import { BounceLoader } from "react-spinners";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
 
 export default function Capability(props) {
-    const [getContactUs, setContactUs] = useState([]);
-    const [getContsct, setContsct] = useState([]);
-    const [getBranch, setBranch] = useState([]);
+    const [getContactUsInfo, setContactUsInfo] = useState([]);
+    const [getFormSection, setFormSection] = useState([]);
     const [loading, setLoading] = useState(true);
     // *********************************************************
     // ********************* All requests  *********************
@@ -24,31 +21,18 @@ export default function Capability(props) {
                 );
 
                 if (contactUsReq.success) {
-                    console.log(contactUsReq.data);
-                    setContactUs(contactUsReq.data);
+                    setContactUsInfo(contactUsReq.data.ContactInformation);
+                    setFormSection(contactUsReq.data.FormSection);
                 }
                 // Set loading to false when all requests are completed
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching data:", error);
                 // Optionally, handle error state here
                 setLoading(false); // Set loading to false if there's an error
             }
         };
 
         fetchData();
-    }, []);
-
-    useEffect(() => {
-        axios
-            .get("/ContactPage")
-            .then((response) => {
-                // console.log('fetching data:',response.data);
-                setContsct(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
     }, []);
 
     // *********************************************************
@@ -66,17 +50,11 @@ export default function Capability(props) {
                 <>
                     <MainLayout loading={loading}>
                         <Head title="Contact Us" />
-                        <div className="relative isolate bg-dark">
-                            <div aria-hidden="true" className="relative">
-                                <img
-                                    src={jobs}
-                                    alt="jobs"
-                                    className="h-10 w-full object-cover object-center "
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-dark" />
-                            </div>
-                            <ContactUs getContsct={getContsct} />
-                            <Branches getBranch={getContactUs.BranchSection} />
+                        <div className="relateive isolate bg-dark">
+                            <ContactUs
+                                getContactUsInfo={getContactUsInfo}
+                                getFormSection={getFormSection}
+                            />
                         </div>
                     </MainLayout>
                 </>
