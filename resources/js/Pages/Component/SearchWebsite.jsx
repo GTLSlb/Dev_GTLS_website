@@ -5,7 +5,7 @@ import Downshift from "downshift";
 import Typesense from "typesense";
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
 import { Hits, InstantSearch, SearchBox } from "react-instantsearch-dom";
-import data from "@/testDataset";
+
 export default function SearchWebsite() {
     const [searchResults, setSearchResults] = useState([]);
     const [filteredResults, setfilteredResults] = useState([]);
@@ -37,8 +37,13 @@ export default function SearchWebsite() {
             ],
         },
         additionalSearchParameters: {
-            query_by: "data, description, title, body",
+            query_by: "body",
         },
+        collectionSpecificSearchParameters: [
+            {   name:"aboutuses",
+                "query_by": "body",
+            }
+        ]
     });
 
     const searchClient = typesenseSearchAdapter.searchClient;
@@ -55,7 +60,14 @@ export default function SearchWebsite() {
     });
 
     const [components, setComponents] = useState([]);
-    const [indices, setIndices] = useState([]);
+    const [indices, setIndices] = useState([
+        {name:
+            "aboutuses",
+            fields: [
+                { name: "body", type: "auto" },
+            ],
+        }
+    ]);
 
     const addSearchIndex = (item) => {
         if (typeof item.data == "string") {
@@ -64,6 +76,7 @@ export default function SearchWebsite() {
                 title: item.tableName,
                 searchParameters: {
                     query_by: "data",
+                    highlight_full_fields: "",
                 },
             };
         } else {
@@ -73,6 +86,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "branch_name",
+                        highlight_full_fields: "",
                     },
                 };
             } else if (
@@ -84,6 +98,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "description",
+                        highlight_full_fields: "",
                     },
                 };
             } else if (item.tableName == "positions") {
@@ -92,6 +107,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "position_details, position_title",
+                        highlight_full_fields: "",
                     },
                 };
             } else if (item.tableName == "services") {
@@ -100,6 +116,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "description, title",
+                        highlight_full_fields: "",
                     },
                 };
             } else if (item.tableName == "socials") {
@@ -108,6 +125,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "name, url",
+                        highlight_full_fields: "",
                     },
                 };
             } else if (item.tableName == "team_members") {
@@ -116,6 +134,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "member_name",
+                        highlight_full_fields: "",
                     },
                 };
             } else {
@@ -124,6 +143,7 @@ export default function SearchWebsite() {
                     title: item.tableName,
                     searchParameters: {
                         query_by: "body",
+                        highlight_full_fields: "",
                     },
                 };
             }
@@ -132,8 +152,8 @@ export default function SearchWebsite() {
 
     const addSearchParameters = (item) => {
         const config = {
-            query_by: "", // Default value
-            highlight_full_fields: "", // Set this to a valid value if needed
+            query_by: "",
+            highlight_full_fields: "",
         };
 
         if (typeof item.data === "string") {
@@ -179,6 +199,7 @@ export default function SearchWebsite() {
                     config[item.tableName] = addSearchParameters(item);
                     items.push(addSearchIndex(item));
                 });
+                console.log(config);
                 typesenseSearchAdapter.updateConfiguration({
                     server: {
                         apiKey: apiKey,
@@ -195,7 +216,7 @@ export default function SearchWebsite() {
                     },
                     collectionSpecificSearchParameters: config,
                 });
-                setIndices(items);
+                // setIndices(items);
             })
             .catch((err) => {
                 console.log("err", err);
@@ -209,39 +230,44 @@ export default function SearchWebsite() {
         try {
             // Step 1: Retrieve existing documents
             const col = await client.collections(obj.tableName);
-            const existingDocuments = new Set(obj.data.map(doc =>  col.documents(doc.documentId)));
+            const docFromDb = components?.find((comp) => comp.tableName === obj.tableName);
 
-            const updatedData = obj.data.map(item => {
-                const exists = existingDocuments.has(item.id); // Check if the ID exists
-console.log('exists', col.documents('100'));
-                return {
-                    ...item, // Spread the original item properties
-                    id: exists ? item.id : null, // Add 'id' field if exists, otherwise null
-                    document: exists ? documents.find(doc => doc.documentId === item.id) : null // Add the corresponding document if exists
-                };
+            // Check if docFromDb.data is an array
+            if (!Array.isArray(docFromDb?.data)) return;
+
+            // Step 2: Create an array of promises to check and add documents
+            const promises = docFromDb.data.map(async (doc) => {
+                try {
+                    // Attempt to retrieve the document
+                    await col.documents(doc.id).retrieve();
+                } catch (err) {
+                    // If the document is not found, create it
+                    if (err.toString().startsWith("ObjectNotFound2")) {
+                        console.log("Document not found:", doc);
+                        console.log("Creating document...", err);
+                        try {
+                            const createdDoc = await col.documents().create(doc)
+                            .then((res) => {
+
+                            })
+                            .catch((err) => {
+
+                            })
+                        } catch (createErr) {
+                            //console.error('Error adding document:', createErr);
+                        }
+                    } else {
+                        // Log other types of errors if necessary
+                        //console.error('Error retrieving document:', err);
+                    }
+                }
             });
 
-            // Step 2: Filter new documents to find those that don't exist
-            const newDocuments = obj.data.filter(
-                (doc) => !updatedData.find((d) => d.id == doc.id)
-            );
+            // Step 3: Wait for all promises to complete
+            await Promise.all(promises);
 
-            // Step 3: Add new documents
-            if (newDocuments.length > 0) {
-                await Promise.all(
-                    newDocuments.map((doc) =>
-                        client
-                            .collections(obj.tableName)
-                            .documents()
-                            .create(doc)
-                    )
-                );
-                // console.log('New documents added successfully');
-            } else {
-                // console.log('No new documents to add');
-            }
         } catch (error) {
-            console.error("Error adding documents:", error);
+            //console.error("Error adding documents:", error);
         }
     };
 
@@ -249,17 +275,15 @@ console.log('exists', col.documents('100'));
         try {
             components?.map(async (comp) => {
                 // Check if the collection exists
-                const existingCollections = await client
-                    .collections(comp.tableName)
-                    .retrieve();
-                const collectionExists = existingCollections.name == comp?.tableName;
-                // Create the collection if it doesn't exist
-                if (!collectionExists) {
-                    await client.collections().create(comp.schema);
-                    // console.log('Collection created successfully');
-                } else {
-                    // console.log('Collection already exists');
-                }
+                client.collections().retrieve().then(async (res) => {
+                    const existingCollections = res;
+
+                    const collectionExists = existingCollections?.find((collection) => collection.name == comp?.tableName) ?? false;
+                    // Create the collection if it doesn't exist
+                    if (collectionExists == false) {
+                        await client.collections().create(comp.schema);
+                    }
+                })
 
                 // Add documents to the collection
                 addDocuments(comp);
@@ -346,7 +370,12 @@ console.log('exists', col.documents('100'));
         );
     };
 
+    const [searchQuery, setSearchQuery] = useState('');
 
+    const handleSearchChange = (event) => {
+        console.log(event.currentTarget.value);
+        setSearchQuery(event.currentTarget.value);
+    };
     return (
         // <Downshift
         //     onInputValueChange={(e) => setQuery(e)}
@@ -437,18 +466,29 @@ console.log('exists', col.documents('100'));
         //     )}
         // </Downshift>
         <div className="relative flex items-center justify-between w-full max-h-[40px] focus:outline-none">
-            {indices && (
-                <InstantSearch searchClient={searchClient} indices={indices}>
-                    <SearchBox />
-                    {indices.map((index) => {
-                    console.log('index', index);
-                    return(
+            {indices?.length > 0 && (
+                <InstantSearch searchClient={searchClient} indices={[
+                    {indexName:
+                        "aboutuses",
+                        fields: [
+                            { name: "body", type: "auto" },
+                        ],
+                    }
+                ]}>
+                    <SearchBox
+                        onChange={handleSearchChange}
+                        value={searchQuery}
+                        translations={{ placeholder: 'Search...' }}
+                        searchAsYouType
+                        showLoadingIndicator
+                    />
+                    {indices.map((index) => (
                         <Hits
                             key={index.name}
                             hitComponent={Hit}
                             indexName={index.name}
                         />
-                    )})}
+                    ))}
                 </InstantSearch>
             )}
         </div>

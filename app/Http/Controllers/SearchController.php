@@ -209,10 +209,6 @@ class SearchController extends Controller
                         'name' => 'position_details',
                         'type' => 'auto',
                     ];
-                    $fields[] = [
-                        'name' => 'position_title',
-                        'type' => 'auto',
-                    ];
                     break;
                 case "services":
                     $fields[] = [
