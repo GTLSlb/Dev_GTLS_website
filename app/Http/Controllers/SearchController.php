@@ -239,7 +239,7 @@ class SearchController extends Controller
                 default:
                     $fields[] = [
                         'name' => 'body',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     break;
             }
@@ -253,6 +253,15 @@ class SearchController extends Controller
 
         // Return JSON response
         return $schema;
+    }
+
+    function get_url($item, $routes, $tableName) {
+        switch ($tableName) {
+            case 'blogs':
+                return $routes[$tableName] . '/news/' . $item['slug'];
+            default:
+                return $routes[$tableName] ?? '';
+        }
     }
 
     public function fetchData(Request $request){
@@ -329,6 +338,13 @@ class SearchController extends Controller
                 }, $item);
             });
 
+            // Add Url to each data field
+            $tableData = $tableData->map(function ($item) use ($routes, $tableName) {
+                $item = (array) $item;
+                $item['url'] = $this->get_url($item, $routes, $tableName);
+                return $item;
+            });
+
             // If table is blogs alter url to include slug of blog
             switch ($tableName) {
                 case 'blogs':
@@ -336,7 +352,7 @@ class SearchController extends Controller
                         $data[] = [
                             'tableName' => $value['title'],
                             'url' => $url . '/news/' . $value['slug'],
-                            'data' => $value['body'],
+                            'data' => [['body' => $value['body']]],
                             'schema' => $this->addSchema(is_string($tableData), $value['title']),
                         ];
                     }

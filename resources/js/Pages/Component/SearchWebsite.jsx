@@ -11,11 +11,34 @@ export default function SearchWebsite() {
     const [filteredResults, setfilteredResults] = useState([]);
     const [isLoadingResults, setIsLoadingResults] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [query, setQuery] = useState("");
+
+    const suggRef = useRef(null);
     const host = window.Laravel.typesenseHost;
     const protocol = window.Laravel.typesenseProtocol;
     const port = window.Laravel.typesensePort;
     const apiKey = window.Laravel.typesenseAdminKey;
+
+    const handleScroll = (event) => {
+        // Get the bounding rectangle of the referenced div
+        if (suggRef.current) {
+            const rect = suggRef.current.getBoundingClientRect();
+            // Check if the scroll happened outside the div
+            if (rect.top > window.innerHeight || rect.bottom < 0) {
+                setIsOpen(false);
+            }
+        }
+    };
+
+    useEffect(() => {
+        // Add scroll event listener
+        window.addEventListener("scroll", handleScroll);
+
+        // Cleanup event listener on component unmount
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [isOpen]);
+
     const getPathname = (url) => {
         const parsedUrl = new URL(url);
         if (parsedUrl.pathname == "/") {
@@ -40,13 +63,10 @@ export default function SearchWebsite() {
             query_by: "body",
         },
         collectionSpecificSearchParameters: [
-            {   name:"aboutuses",
-                "query_by": "body",
-            }
-        ]
+            { name: "aboutuses", query_by: "body" },
+        ],
     });
 
-    const searchClient = typesenseSearchAdapter.searchClient;
     // Initialize the Typesense client
     const client = new Typesense.Client({
         nodes: [
@@ -60,14 +80,7 @@ export default function SearchWebsite() {
     });
 
     const [components, setComponents] = useState([]);
-    const [indices, setIndices] = useState([
-        {name:
-            "aboutuses",
-            fields: [
-                { name: "body", type: "auto" },
-            ],
-        }
-    ]);
+    const [indices, setIndices] = useState([]);
 
     const addSearchIndex = (item) => {
         if (typeof item.data == "string") {
@@ -199,7 +212,6 @@ export default function SearchWebsite() {
                     config[item.tableName] = addSearchParameters(item);
                     items.push(addSearchIndex(item));
                 });
-                console.log(config);
                 typesenseSearchAdapter.updateConfiguration({
                     server: {
                         apiKey: apiKey,
@@ -216,7 +228,7 @@ export default function SearchWebsite() {
                     },
                     collectionSpecificSearchParameters: config,
                 });
-                // setIndices(items);
+                setIndices(items);
             })
             .catch((err) => {
                 console.log("err", err);
@@ -226,11 +238,31 @@ export default function SearchWebsite() {
     useEffect(() => {
         fetchAllComponents();
     }, []);
+
+    // client.collections("aboutuses").delete()
+    // client.collections("Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Test").delete()
+    // client.collections("Introducing Gold Tiger Logistics’ National Road Alerts Feature Test").delete()
+    // client.collections("Introducing Gold Tiger Logistics’ National Road Alerts Feature").delete()
+    // client.collections("branches").delete()
+    // client.collections("capability_statements").delete()
+    // client.collections("certificates").delete()
+    // client.collections("going_greens").delete()
+    // client.collections("news_posts").delete()
+    // client.collections("pallet_terms").delete()
+    // client.collections("positions").delete()
+    // client.collections("safety_compliances").delete()
+    // client.collections("services").delete()
+    // client.collections("socials").delete()
+    // client.collections("team_members").delete()
+    // client.collections("technologies").delete()
+    // client.collections("terms").delete()
     const addDocuments = async (obj) => {
         try {
             // Step 1: Retrieve existing documents
             const col = await client.collections(obj.tableName);
-            const docFromDb = components?.find((comp) => comp.tableName === obj.tableName);
+            const docFromDb = components?.find(
+                (comp) => comp.tableName === obj.tableName
+            );
 
             // Check if docFromDb.data is an array
             if (!Array.isArray(docFromDb?.data)) return;
@@ -243,16 +275,17 @@ export default function SearchWebsite() {
                 } catch (err) {
                     // If the document is not found, create it
                     if (err.toString().startsWith("ObjectNotFound2")) {
-                        console.log("Document not found:", doc);
-                        console.log("Creating document...", err);
                         try {
-                            const createdDoc = await col.documents().create(doc)
-                            .then((res) => {
+                            const newDoc = {
+                                ...doc,
+                                url: doc.url,
+                            };
 
-                            })
-                            .catch((err) => {
-
-                            })
+                            const createdDoc = await col
+                                .documents()
+                                .create(newDoc)
+                                .then((res) => {})
+                                .catch((err) => {});
                         } catch (createErr) {
                             //console.error('Error adding document:', createErr);
                         }
@@ -265,7 +298,6 @@ export default function SearchWebsite() {
 
             // Step 3: Wait for all promises to complete
             await Promise.all(promises);
-
         } catch (error) {
             //console.error("Error adding documents:", error);
         }
@@ -275,15 +307,23 @@ export default function SearchWebsite() {
         try {
             components?.map(async (comp) => {
                 // Check if the collection exists
-                client.collections().retrieve().then(async (res) => {
-                    const existingCollections = res;
+                client
+                    .collections()
+                    .retrieve()
+                    .then(async (res) => {
+                        const existingCollections = res;
 
-                    const collectionExists = existingCollections?.find((collection) => collection.name == comp?.tableName) ?? false;
-                    // Create the collection if it doesn't exist
-                    if (collectionExists == false) {
-                        await client.collections().create(comp.schema);
-                    }
-                })
+                        const collectionExists =
+                            existingCollections?.find(
+                                (collection) =>
+                                    collection.name == comp?.tableName
+                            ) ?? false;
+                        // Create the collection if it doesn't exist
+                        if (collectionExists == false) {
+                            console.log("creating collection", comp);
+                            await client.collections().create(comp.schema);
+                        }
+                    });
 
                 // Add documents to the collection
                 addDocuments(comp);
@@ -316,172 +356,114 @@ export default function SearchWebsite() {
         }
     }
 
-    const filterResults = (value) => {
-        let filteredResults = searchResults.filter((result) => {
-            // Check if the URL matches the search value
-            const urlMatches = result.url.includes(value);
+    const [searchQuery, setSearchQuery] = useState("");
+    // Define a search function to find relevant words
+    function highlightRelevantWords(text, query) {
+        // Normalize the text and query for case-insensitive matching
+        const normalizedText = text.toLowerCase();
+        const normalizedQuery = query.toLowerCase();
 
-            // Check if any item's text matches the search value
-            const itemsMatch = result.items.some((item) =>
-                item.label.toLowerCase().includes(value.toLowerCase())
-            );
+        // Find the index of the query in the text
+        const index = normalizedText.indexOf(normalizedQuery);
 
-            // Return true if either the URL or any item's text matches
-            return urlMatches || itemsMatch;
-        });
-        setfilteredResults(filteredResults);
-    };
-
-    const fetchOptions = async (inputValue) => {
-        if (searchResults?.length != 0) {
-            return; // Return if already fetched
+        // If the query is not found, return an empty string
+        if (index === -1) {
+            return ""; // or return the original text if preferred
         }
-        setSearchResults([]);
-        setIsLoadingResults(true); // Set loading state
-        try {
-            const response = await axios.get("/search", {
-                headers: {
-                    searchKeyword: inputValue,
-                },
-            });
 
-            // Map response data to match expected structure for AsyncSelect
-            setSearchResults(response.data);
-            setfilteredResults(response.data);
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching search results:", error);
-            return []; // Return empty array on error
-        } finally {
-            setIsLoadingResults(false);
-        }
-    };
+        // Calculate the start and end positions for the result
+        const start = Math.max(0, index - 20); // Show 20 characters before
+        const end = Math.min(text.length, index + query.length + 20); // Show 20 characters after
+
+        // Extract the relevant substring
+        const relevantSubstring = text.slice(start, end);
+
+        // Format the result with the specified syntax
+        return `... ${relevantSubstring.replace(
+            new RegExp(query, "gi"),
+            (match) => match
+        )} ...`;
+    }
 
     const Hit = ({ hit }) => {
-        console.log('Hit data:', hit);
-        const title = hit?.title || 'No title available';
-        const description = hit?.description || 'No description available';
+        const title = hit?.document?.url || "No title available";
+        const parser = new DOMParser();
+        const key = hit?.highlights?.[0]?.field;
+        const doc = parser.parseFromString(hit?.document[key], "text/html");
+
+        // Extract the text content from the HTML
+        const textContent = doc.body.textContent;
+        const description = highlightRelevantWords(textContent, searchQuery);
 
         return (
-            <div className="hit-item">
-                <h3 className="hit-title">{title}</h3>
+            <div
+                className="px-4 py-1 hover:bg-goldt/50 hover:cursor-pointer"
+                onClick={() =>
+                    navigateToSelector(
+                        hit?.document?.selector,
+                        hit?.document?.url
+                    )
+                }
+            >
+                <h3 className="text-gray-600 text-xs">{title}</h3>
                 <p className="hit-description">{description}</p>
             </div>
         );
     };
 
-    const [searchQuery, setSearchQuery] = useState('');
+    const [results, setResults] = useState([]);
+    const handleSearchChange = async (event) => {
+        const query = event.target.value;
+        setSearchQuery(event.target.value);
 
-    const handleSearchChange = (event) => {
-        console.log(event.currentTarget.value);
-        setSearchQuery(event.currentTarget.value);
-    };
-    return (
-        // <Downshift
-        //     onInputValueChange={(e) => setQuery(e)}
-        //     isOpen={isOpen}
-        //     onOuterClick={() => setIsOpen(false)}
-        //     itemToString={(item) => (item ? item.label : "")}
-        // >
-        //     {({ getInputProps, getMenuProps, getItemProps }) => (
-        //         <div>
-        //             <div className="relative flex items-center justify-between w-full max-h-[40px] focus:outline-none">
-        //                 <input
-        //                     {...getInputProps({
-        //                         onClick: () => {
-        //                            setIsOpen(true)
-        //                         },
-        //                         onChange: (event) => {
-        //                             filterResults(event.target.value)
-        //                         }
-        //                     })}
-        //                     placeholder="Search..."
-        //                     className="focus:outline-none bg-[#edce80] sm:bg-[#ebcb7a] md:bg-[#e7c160] rounded-md w-full text-gray-700 placeholder-gray-600"
-        //                 />
-        //                 {isLoadingResults ? (
-        //                     <div className="text-gray-600">
-        //                         <CircularProgress size={12} color="inherit" />
-        //                     </div>
-        //                 ) : (
-        //                     <SearchIcon
-        //                         className="text-gray-400 hover:text-gray-600 hover:cursor-pointer"
-        //                         onClick={() => fetchOptions(query)}
-        //                     />
-        //                 )}
-        //             </div>
-        //             {isOpen && (
-        //                 <ul
-        //                     className="absolute max-w-[230px] z-[100] text-sm bg-gray-200 border border-gray-200 text-gray-700 max-h-[250px] mt-1 rounded-md overflow-auto"
-        //                     {...getMenuProps()}
-        //                 >
-        //                     {isLoadingResults && (
-        //                         <div className="text-gray-600 flex items-center p-3 w-[200px]">
-        //                             Loading...
-        //                         </div>
-        //                     )}
-        //                     {
-        //                         !isLoadingResults && filteredResults?.length == 0 && (
-        //                             <div className="text-gray-600 flex items-center p-3 w-[200px]">
-        //                                 No matching results
-        //                             </div>
-        //                         )
-        //                     }
-        //                     {filteredResults?.map((group, groupIndex) => (
-        //                         <div
-        //                             key={`group-${groupIndex}`}
-        //                             className="w-full"
-        //                         >
-        //                             <span className="text-gray-400 text-[12px] px-3">
-        //                                 {getPathname(group.url)}:
-        //                             </span>
-        //                             <ul>
-        //                                 {group.items.map((item, itemIndex) => (
-        //                                     <li
-        //                                         className={`${
-        //                                             itemIndex == 0
-        //                                                 ? "border-t border-slate-300 pt-1"
-        //                                                 : "py-3"
-        //                                         } truncate px-3 hover:text-goldd hover:font-semibold hover:cursor-pointer`}
-        //                                         {...getItemProps({
-        //                                             item: item, // Pass the item here
-        //                                             index: itemIndex,
-        //                                         })}
-        //                                         onClick={() => {
-        //                                             navigateToSelector(
-        //                                                 item.selector,
-        //                                                 group.url
-        //                                             );
-        //                                         }}
-        //                                         key={item.selector + itemIndex}
-        //                                     >
-        //                                         {item.label}
-        //                                     </li>
-        //                                 ))}
-        //                             </ul>
-        //                         </div>
-        //                     ))}
-        //                 </ul>
-        //             )}
-        //         </div>
-        //     )}
-        // </Downshift>
-        <div className="relative flex items-center justify-between w-full max-h-[40px] focus:outline-none">
-            {indices?.length > 0 && (
-                <InstantSearch searchClient={searchClient} indices={[
-                    {indexName:
-                        "aboutuses",
-                        fields: [
-                            { name: "body", type: "auto" },
-                        ],
+        if (query) {
+            try {
+                const allResults = [];
+                const searchPromises = indices?.map(async (col) => {
+                    const response = await client
+                        .collections(col.name)
+                        .documents()
+                        .search({
+                            q: query,
+                            query_by: col.searchParameters.query_by,
+                        });
+
+                    // Only push if there are hits
+                    if (response.hits?.length > 0) {
+                        allResults.push(
+                            ...response.hits.map((hit) => ({
+                                ...hit,
+                                collection: col.name,
+                            }))
+                        );
                     }
-                ]}>
+                });
+
+                // Wait for all promises to resolve
+                await Promise.all(searchPromises);
+                setResults(allResults);
+            } catch (error) {
+                console.log("Search error:", error);
+                // setResults([]);
+            }
+        } else {
+            // setResults([]);
+        }
+    };
+
+    return (
+        <div className="flex items-center justify-between w-full max-h-[40px] focus:outline-none">
+            {indices?.length > 0 && (
+                /*<InstantSearch searchClient={searchClient} indexName="going_greens" indices={indices}>
                     <SearchBox
                         onChange={handleSearchChange}
                         value={searchQuery}
+                        className="relative"
                         translations={{ placeholder: 'Search...' }}
                         searchAsYouType
                         showLoadingIndicator
                     />
+                    <div className="w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto">
                     {indices.map((index) => (
                         <Hits
                             key={index.name}
@@ -489,7 +471,26 @@ export default function SearchWebsite() {
                             indexName={index.name}
                         />
                     ))}
-                </InstantSearch>
+                    </div>
+
+                </InstantSearch>*/
+                <div>
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onMouseDown={() => setIsOpen(true)}
+                        onChange={handleSearchChange}
+                        placeholder="Search..."
+                        className="bg-[#e7c160]/40 border-none h-[20px] w-full text-gray-700 placeholder-gray-600 focus:ring-gray-400"
+                    />
+                    <div
+                        className={`w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto containerscroll`}
+                    >
+                        {results.map((hit) => (
+                            <Hit hit={hit} />
+                        ))}
+                    </div>
+                </div>
             )}
         </div>
     );
