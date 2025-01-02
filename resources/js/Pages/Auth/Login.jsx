@@ -25,7 +25,7 @@ export default function Login({ status, canResetPassword }) {
     const gtamURl = window.Laravel.gtamUrl;
     const appDomain = window.Laravel.appDomain;
     const backToHomeURL = window.Laravel.backToHomeURL;
-
+    const googleKey = window.Laravel.googleKey;
 
     useEffect(() => {
         clearMSALLocalStorage();
@@ -35,6 +35,7 @@ export default function Login({ status, canResetPassword }) {
 <div className="h-screen w-full">
             <LoginPage
                 appDomain={appDomain}
+                googlekey={googleKey}
                 redirectURL="/landingPage"
                 loginURL="/loginComp"
                 gtamURl={gtamURl}
