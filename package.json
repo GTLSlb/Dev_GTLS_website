@@ -28,7 +28,7 @@
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@tailwindcss/line-clamp": "^0.4.2",
         "framer-motion": "^11.3.19",
-        "gtls-npm-libraries": "^1.1.4",
+        "gtls-npm-libraries": "^1.1.11",
         "js-cookie": "^3.0.5",
         "lord-icon-element": "^4.1.1",
         "lottie-web": "^5.11.0",
