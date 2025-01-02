@@ -34,6 +34,7 @@
             appUrl: "{{ env('APP_URL') }}",
             backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
+            googleKey: "{{ env('RECAPTHCA_API') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->
