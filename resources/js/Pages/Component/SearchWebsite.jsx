@@ -4,7 +4,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Downshift from "downshift";
 import Typesense from "typesense";
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
-import { Hits, InstantSearch, SearchBox } from "react-instantsearch-dom";
 
 export default function SearchWebsite() {
     const [searchResults, setSearchResults] = useState([]);
@@ -12,32 +11,10 @@ export default function SearchWebsite() {
     const [isLoadingResults, setIsLoadingResults] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
-    const suggRef = useRef(null);
     const host = window.Laravel.typesenseHost;
     const protocol = window.Laravel.typesenseProtocol;
     const port = window.Laravel.typesensePort;
     const apiKey = window.Laravel.typesenseAdminKey;
-
-    const handleScroll = (event) => {
-        // Get the bounding rectangle of the referenced div
-        if (suggRef.current) {
-            const rect = suggRef.current.getBoundingClientRect();
-            // Check if the scroll happened outside the div
-            if (rect.top > window.innerHeight || rect.bottom < 0) {
-                setIsOpen(false);
-            }
-        }
-    };
-
-    useEffect(() => {
-        // Add scroll event listener
-        window.addEventListener("scroll", handleScroll);
-
-        // Cleanup event listener on component unmount
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, [isOpen]);
 
     const getPathname = (url) => {
         const parsedUrl = new URL(url);
@@ -239,23 +216,6 @@ export default function SearchWebsite() {
         fetchAllComponents();
     }, []);
 
-    // client.collections("aboutuses").delete()
-    // client.collections("Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Test").delete()
-    // client.collections("Introducing Gold Tiger Logistics’ National Road Alerts Feature Test").delete()
-    // client.collections("Introducing Gold Tiger Logistics’ National Road Alerts Feature").delete()
-    // client.collections("branches").delete()
-    // client.collections("capability_statements").delete()
-    // client.collections("certificates").delete()
-    // client.collections("going_greens").delete()
-    // client.collections("news_posts").delete()
-    // client.collections("pallet_terms").delete()
-    // client.collections("positions").delete()
-    // client.collections("safety_compliances").delete()
-    // client.collections("services").delete()
-    // client.collections("socials").delete()
-    // client.collections("team_members").delete()
-    // client.collections("technologies").delete()
-    // client.collections("terms").delete()
     const addDocuments = async (obj) => {
         try {
             // Step 1: Retrieve existing documents
@@ -385,6 +345,26 @@ export default function SearchWebsite() {
         )} ...`;
     }
 
+    const divRef = useRef();
+    useEffect(() => {
+        const handleScroll = () => {
+          if (isOpen) {
+            setIsOpen(false);
+          }
+        };
+        const handleClickOutside = (event) => {
+          if (!divRef.current.contains(event.target)) {
+            setIsOpen(false);
+          }
+        };
+        window.addEventListener("scroll", handleScroll);
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [setIsOpen, isOpen, divRef]);
+
     const Hit = ({ hit }) => {
         const title = hit?.document?.url || "No title available";
         const parser = new DOMParser();
@@ -413,6 +393,7 @@ export default function SearchWebsite() {
 
     const [results, setResults] = useState([]);
     const handleSearchChange = async (event) => {
+        setIsOpen(true);
         const query = event.target.value;
         setSearchQuery(event.target.value);
 
@@ -454,42 +435,24 @@ export default function SearchWebsite() {
     return (
         <div className="flex items-center justify-between w-full max-h-[40px] focus:outline-none">
             {indices?.length > 0 && (
-                /*<InstantSearch searchClient={searchClient} indexName="going_greens" indices={indices}>
-                    <SearchBox
-                        onChange={handleSearchChange}
-                        value={searchQuery}
-                        className="relative"
-                        translations={{ placeholder: 'Search...' }}
-                        searchAsYouType
-                        showLoadingIndicator
-                    />
-                    <div className="w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto">
-                    {indices.map((index) => (
-                        <Hits
-                            key={index.name}
-                            hitComponent={Hit}
-                            indexName={index.name}
-                        />
-                    ))}
-                    </div>
-
-                </InstantSearch>*/
                 <div>
                     <input
                         type="text"
                         value={searchQuery}
                         onMouseDown={() => setIsOpen(true)}
+                        onClick={() => setIsOpen(true)}
                         onChange={handleSearchChange}
                         placeholder="Search..."
                         className="bg-[#e7c160]/40 border-none h-[20px] w-full text-gray-700 placeholder-gray-600 focus:ring-gray-400"
                     />
-                    <div
+                    {isOpen &&<div
+                        ref={divRef}
                         className={`w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto containerscroll`}
                     >
                         {results.map((hit) => (
                             <Hit hit={hit} />
                         ))}
-                    </div>
+                    </div>}
                 </div>
             )}
         </div>

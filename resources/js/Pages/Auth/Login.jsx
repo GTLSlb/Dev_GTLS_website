@@ -25,7 +25,7 @@ export default function Login({ status, canResetPassword }) {
     const gtamURl = window.Laravel.gtamUrl;
     const appDomain = window.Laravel.appDomain;
     const backToHomeURL = window.Laravel.backToHomeURL;
-
+    const googleKey = window.Laravel.googleKey;
 
     useEffect(() => {
         clearMSALLocalStorage();
@@ -43,6 +43,7 @@ export default function Login({ status, canResetPassword }) {
                 handleForgotPassword={() =>
                     (window.location.href = "/forgot-password")
                 }
+                googlekey={googleKey}
                 gtlsLogo={Logo}
                 backToHomeURL={backToHomeURL}
                 microsoftLogo={MicrosoftLogo}

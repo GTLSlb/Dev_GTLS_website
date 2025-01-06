@@ -3,6 +3,7 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
+        "delete-collections": "node delete-typesense-collections",
         "start-typesense-server": "node resources/js/startTypesenseServer.js",
         "test": "npx mocha --no-timeout --reporter mochawesome --require mochawesome/register --reporter-options reportDir=C:/xampp/htdocs/MainPortal_Development/test-reports,reportFilename=testResults,timestamp,autoOpen 'tests/*.js'",
         "test:parallel": "npx mocha --no-timeout -p --reporter mochawesome --require mochawesome/register --reporter-options reportDir=C:/xampp/htdocs/MainPortal_Development/test-reports,reportFilename=testResults,timestamp,autoOpen 'tests/*.js'"
@@ -59,7 +60,7 @@
         "file-saver": "^2.0.5",
         "flowbite-react": "^0.5.0",
         "framer-motion": "^11.3.19",
-        "gtls-npm-libraries": "^1.1.5",
+        "gtls-npm-libraries": "^1.1.13",
         "http-proxy-middleware": "^2.0.6",
         "js-cookie": "^3.0.5",
         "leaflet": "^1.9.4",

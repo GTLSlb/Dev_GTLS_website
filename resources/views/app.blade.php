@@ -34,6 +34,7 @@
             appUrl: "{{ env('APP_URL') }}",
             backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
+            googleKey: "{{ env('RECAPTHCA_API') }}",
             typesenseHost: "{{ env('TYPESENSE_HOST') }}",
             typesenseProtocol: "{{ env('TYPESENSE_PROTOCOL') }}",
             typesensePort: "{{ env('TYPESENSE_PORT') }}",

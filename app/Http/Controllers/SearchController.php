@@ -265,22 +265,22 @@ class SearchController extends Controller
     }
 
     public function fetchData(Request $request){
-        $url = getenv('BACK_TO_HOME_URL');
+        $url = getenv('APP_URL');
         $routes = [
-            'aboutuses' => $url . 'aboutus',
-            'blogs' => $url . 'news',
-            'branches' => $url . 'contact_us',
-            'certificates' => $url . '',
-            'team_members' => $url . 'aboutus',
-            'technologies' => $url . 'technologies',
-            'capability_statements' => $url . 'aboutus',
-            'going_greens' => $url . 'goinggreen',
-            'pallet_terms' => $url . '',
-            'positions' => $url . 'opportunities',
-            'safety_compliances' => $url . '',
-            'services' => $url . '#services',
-            'socials' => $url . '',
-            'terms' => $url . '',
+            'aboutuses' => $url . '/aboutus',
+            'blogs' => $url . '/news',
+            'branches' => $url . '/contact_us',
+            'certificates' => $url . '/',
+            'team_members' => $url . '/aboutus',
+            'technologies' => $url . '/technologies',
+            'capability_statements' => $url . '/aboutus',
+            'going_greens' => $url . '/goinggreen',
+            'pallet_terms' => $url . '/',
+            'positions' => $url . '/opportunities',
+            'safety_compliances' => $url . '/',
+            'services' => $url . '/#services',
+            'socials' => $url . '/',
+            'terms' => $url . '/',
         ];
 
         //Get all data from all tables from 'dashboardstrapi' database

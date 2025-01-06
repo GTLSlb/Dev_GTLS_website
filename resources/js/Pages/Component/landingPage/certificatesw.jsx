@@ -70,11 +70,11 @@ export default function Certifiactesw(props) {
                     <div className="" dangerouslySetInnerHTML={{ __html: getcertificates.description }}></div>
                 </p>
             </div>
-           
+
             <div className="xl:absolute w-full bg-gradient-to-br xl:h-32 from-goldd via-goldl to-goldd  bg-opacity-10">
                 <div className="container mx-auto xl:px-32 items-center justify-center flex max-xl:flex-col gap-32 max-xl:py-14">
                     {getcertificates?.elements?.map((certificate) => (
-                        <div className="relative transition-transform xl:-translate-y-1/4 hover:scale-110">
+                        <div key={certificate.image} className="relative transition-transform xl:-translate-y-1/4 hover:scale-110">
                             <img
                                 src={"/app/webimages/"+certificate.image}
                                 alt="certification"
