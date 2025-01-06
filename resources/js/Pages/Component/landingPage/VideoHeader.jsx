@@ -7,13 +7,14 @@ export default function VideoHeader(props) {
     ).socials;
 
     const strapiApi = window.Laravel.strapiAppUrl;
+
     return (
         <div>
             <div className="bg-dark relative ">
                 <div className=" bg-red">
                     <div className="relative flex items-center justify-center h-screen overflow-hidden min-h-[600px]">
                         <video
-                            src={`${strapiApi}/${getHeader.BackgroundVideo.url}`}
+                            src={`${strapiApi}${getHeader.BackgroundVideo.url}`}
                             preload="none"
                             autoPlay
                             loop

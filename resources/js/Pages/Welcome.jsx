@@ -1,18 +1,18 @@
-import { useState, useEffect, useRef } from "react";
-import { Head } from "@inertiajs/react";
-import PrimaryServices from "./Component/landingPage/Primaryservices";
-import GTRS from "./Component/landingPage/GtrsDemo";
-import AboutUs from "./Component/landingPage/AboutUs";
-import Certifiactesw from "./Component/landingPage/certificatesw";
-import VideoHeader from "./Component/landingPage/VideoHeader";
-import Technologies from "./Component/landingPage/Technologies";
-import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
-import Features from "./Component/landingPage/Features";
-import Safety from "./Component/landingPage/Safety";
-import { BounceLoader } from "react-spinners";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
-
+import { Head } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import { BounceLoader } from "react-spinners";
+import "../../css/certficatesSwiper.css";
+import AboutUs from "./Component/landingPage/AboutUs";
+import Certifiactesw from "./Component/landingPage/certificatesw";
+import Features from "./Component/landingPage/Features";
+import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
+import GTRS from "./Component/landingPage/GtrsDemo";
+import PrimaryServices from "./Component/landingPage/Primaryservices";
+import Safety from "./Component/landingPage/Safety";
+import Technologies from "./Component/landingPage/Technologies";
+import VideoHeader from "./Component/landingPage/VideoHeader";
 const scrollToElement = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {

@@ -1,6 +1,5 @@
 import "./bootstrap";
 import "../css/app.css";
-import "../css/swiper.css";
 import { createRoot } from "react-dom/client";
 import ReactGA from "react-ga";
 import { createInertiaApp } from "@inertiajs/react";

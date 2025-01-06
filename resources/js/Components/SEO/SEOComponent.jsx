@@ -2,7 +2,6 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 function SEOComponent({ seoData }) {
-    console.log(seoData)
     return (
         <div>
             <Helmet>

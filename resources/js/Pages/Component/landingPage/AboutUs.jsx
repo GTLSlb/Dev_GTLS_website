@@ -20,7 +20,7 @@ export default function AboutUs(props) {
                         </div>
                         {/* <img src={aboutimage} alt="truck" className="rounded-3xl"/> */}
                         <img
-                            src={strapiApi + `/` + getAbout.Image.url}
+                            src={strapiApi + getAbout.Image.url}
                             alt="truck"
                             className="rounded-3xl"
                         />

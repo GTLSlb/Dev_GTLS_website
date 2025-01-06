@@ -111,7 +111,6 @@ export default function Certifiactesw(props) {
                                 <img
                                     src={
                                         strapiApi +
-                                        `/` +
                                         certificate.Certificate.url
                                     }
                                     alt={

@@ -1,29 +1,27 @@
-import { useState, useRef, useEffect } from "react";
-import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
+import { usePage } from "@inertiajs/react";
+import { useEffect, useRef, useState } from "react";
 import {
-    FacebookShareButton,
     FacebookIcon,
-    TwitterShareButton,
-    TwitterIcon,
+    FacebookShareButton,
     LinkedinIcon,
     LinkedinShareButton,
-    WhatsappShareButton,
+    TwitterIcon,
+    TwitterShareButton,
     WhatsappIcon,
+    WhatsappShareButton,
 } from "react-share";
-
-import "slick-carousel/slick/slick.css";
+import { getFromStrapi } from "@/CommonFunctions";
+import SEOComponent from "@/Components/SEO/SEOComponent";
+import MainLayout from "@/Layouts/MainLayout";
+import { BounceLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
-import "swiper/css";
-import "swiper/css/navigation";
-import { Swiper, SwiperSlide } from "swiper/react";
+import "slick-carousel/slick/slick.css";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
-import { BounceLoader } from "react-spinners";
-import { getFromStrapi } from "@/CommonFunctions";
-import MainLayout from "@/Layouts/MainLayout";
-import SEOComponent from "@/Components/SEO/SEOComponent";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "../../css/NewsPageSlider.css";
 
 export default function NewsPage(props) {
     const { slug } = usePage().props;
@@ -102,7 +100,9 @@ export default function NewsPage(props) {
                 ) : (
                     <>
                         <MainLayout loading={loading}>
-                            <SEOComponent seoData={postslug.seo} />
+                            {postslug.seo && (
+                                <SEOComponent seoData={postslug?.seo} />
+                            )}
                             <div aria-hidden="true" className="relative">
                                 <img
                                     src={strapiApiUrl + postslug.CoverImage.url}
@@ -145,7 +145,7 @@ export default function NewsPage(props) {
                                                 __html: postslug.Body,
                                             }}
                                         ></dd>
-                                        <figure className="mt-16">
+                                        <div className="mt-16 relative">
                                             <Swiper
                                                 navigation={true}
                                                 modules={[Navigation]}
@@ -155,7 +155,9 @@ export default function NewsPage(props) {
                                                     (item, index) => (
                                                         <SwiperSlide
                                                             key={index}
+                                                            className="flex justify-center items-center w-full"
                                                         >
+                                                            {" "}
                                                             {isValidVideoFormat(
                                                                 item.ext
                                                             ) ? (
@@ -194,7 +196,7 @@ export default function NewsPage(props) {
                                                     )
                                                 )}
                                             </Swiper>
-                                        </figure>
+                                        </div>
                                         <div className="mt-10">
                                             <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">
                                                 Share to your friends
