@@ -7,7 +7,7 @@ function TrainNotification({ getTrainNotification }) {
                 Object.keys(getTrainNotification).length > 0 && (
                     <div className="py-2 bg-dark overflow-hidden">
                         <div className="animate-moveRight w-auto ">
-                            <p className="text-white font-bold whitespace-nowrap flex gap-2">
+                            <div className="text-white font-bold whitespace-nowrap flex gap-2">
                                 {getTrainNotification.elements.map(
                                     (element) => {
                                         if (
@@ -76,7 +76,7 @@ function TrainNotification({ getTrainNotification }) {
                                         return null;
                                     }
                                 )}
-                            </p>
+                            </div>
                         </div>
 
                         <style>
@@ -89,7 +89,7 @@ function TrainNotification({ getTrainNotification }) {
                                                 transform: translateX(-100%)
                                             }
                                         }
-                                        
+
                                         .animate-moveRight{
                                             animation: moveRight 20s linear infinite;
                                         }
@@ -132,7 +132,7 @@ function TrainNotification({ getTrainNotification }) {
                                                 animation: moveRight 10s linear infinite;
                                             }
                                         }
-                                       
+
                                     `}
                         </style>
                     </div>

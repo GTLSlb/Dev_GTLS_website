@@ -359,7 +359,7 @@ export default function LandingPage({}) {
                                                 )}
                                             </>
                                         </div>
-                                        <p className="text-sm text-white w-71 hidden sm:block">
+                                        <div className="text-sm text-white w-71 hidden sm:block">
                                             {currentUser?.FirstName &&
                                             currentUser?.LastName ? (
                                                 <>
@@ -369,7 +369,7 @@ export default function LandingPage({}) {
                                             ) : (
                                                 <>{currentUser?.Username}</>
                                             )}
-                                        </p>
+                                        </div>
                                     </div>
                                     <a
                                         href="https://support.gtls.com.au/help/2703577665"

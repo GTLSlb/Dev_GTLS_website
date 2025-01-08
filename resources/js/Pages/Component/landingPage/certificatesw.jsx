@@ -66,9 +66,9 @@ export default function Certifiactesw(props) {
                 <p className="text-4xl font-bold tracking-tight text-goldd">
                     {getcertificates ? getcertificates.name:null}
                 </p>
-                <p className="text-lg  text-gray-200 ">
+                <div className="text-lg  text-gray-200 ">
                     <div className="" dangerouslySetInnerHTML={{ __html: getcertificates.description }}></div>
-                </p>
+                </div>
             </div>
 
             <div className="xl:absolute w-full bg-gradient-to-br xl:h-32 from-goldd via-goldl to-goldd  bg-opacity-10">
@@ -82,22 +82,22 @@ export default function Certifiactesw(props) {
                             />
                             <div className="absolute bg-white bottom-0 rounded-br-xl rounded-bl-xl  shadow-inner ">
                                 <div className=" p-6">
-                                    <div className=" flex items-center gap-x-4 text-xs">
-                                        <time
-                                            dateTime={certificate.data}
-                                            className="text-gray-500"
-                                        >
-                                            {formatDate(certificate.date)}
-                                        </time>
+                                <div className="flex items-center gap-x-4 text-xs">
+                                    <time
+                                        dateTime={certificate.data}
+                                        className="text-gray-500"
+                                    >
+                                        {formatDate(certificate.date)}
+                                    </time>
                                     </div>
                                     <div className="group relative ">
                                         <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
                                             <span className="absolute inset-0" />
                                             {certificate.name}
                                         </h3>
-                                        <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
+                                        <div className="mt-1 text-sm  text-gray-400 line-clamp-2">
                                             <div className="" dangerouslySetInnerHTML={{ __html: certificate.content }}></div>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

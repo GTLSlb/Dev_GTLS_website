@@ -193,7 +193,7 @@ export default function ScrollNav({ getTrainNotification }) {
                             {navigation.map((item) =>
                                 item.id == 5 || item.id == 6 ? null : item.id !=
                                   8 ? (
-                                    <div key={item.name}>
+                                    <div key={item.name + item.id}>
                                         {item.link ? (
                                             <Link
                                                 key={item.name}
@@ -218,6 +218,7 @@ export default function ScrollNav({ getTrainNotification }) {
                                 ) : (
                                     <a
                                         href={item.href}
+                                        key={item.name}
                                         target="_blank"
                                         className="hover:cursor-pointer hover:border-b hover:border-goldt text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
                                     >

@@ -35,6 +35,8 @@ export default function SearchWebsite() {
                     protocol: protocol,
                 },
             ],
+            logLevel: "SILENT",
+            connectionTimeoutSeconds: 20,
         },
         additionalSearchParameters: {
             query_by: "body",
@@ -53,6 +55,8 @@ export default function SearchWebsite() {
                 protocol: protocol, // Protocol (http or https)
             },
         ],
+        connectionTimeoutSeconds: 20,
+        logLevel: "SILENT",
         apiKey: apiKey, // Your Typesense API key
     });
 
@@ -231,7 +235,26 @@ export default function SearchWebsite() {
             const promises = docFromDb.data.map(async (doc) => {
                 try {
                     // Attempt to retrieve the document
-                    await col.documents(doc.id).retrieve();
+                    await col.documents(doc.id).retrieve().then((res) => {
+                    })
+                    .catch(async (err) => {
+                        if (err.toString().startsWith("ObjectNotFound2")) {
+                            try {
+                                const newDoc = {
+                                    ...doc,
+                                    url: doc.url,
+                                };
+
+                                const createdDoc = await col
+                                    .documents()
+                                    .create(newDoc)
+                                    .then((res) => {})
+                                    .catch((err) => {});
+                            } catch (createErr) {
+                                //console.log('Error adding document:', createErr);
+                            }
+                        }
+                    })
                 } catch (err) {
                     // If the document is not found, create it
                     if (err.toString().startsWith("ObjectNotFound2")) {
@@ -247,11 +270,11 @@ export default function SearchWebsite() {
                                 .then((res) => {})
                                 .catch((err) => {});
                         } catch (createErr) {
-                            //console.error('Error adding document:', createErr);
+                            //console.log('Error adding document:', createErr);
                         }
                     } else {
                         // Log other types of errors if necessary
-                        //console.error('Error retrieving document:', err);
+                        // console.log('Error retrieving document:', err);
                     }
                 }
             });
@@ -259,7 +282,7 @@ export default function SearchWebsite() {
             // Step 3: Wait for all promises to complete
             await Promise.all(promises);
         } catch (error) {
-            //console.error("Error adding documents:", error);
+            //console.log("Error adding documents:", error);
         }
     };
 
@@ -281,15 +304,21 @@ export default function SearchWebsite() {
                         // Create the collection if it doesn't exist
                         if (collectionExists == false) {
                             console.log("creating collection", comp);
-                            await client.collections().create(comp.schema);
+                            await client.collections().create(comp.schema).then(
+                                // Add documents to the collection
+                                () => addDocuments(comp)
+                            )
+                        }else{
+                            // Add documents to the collection
+                            await addDocuments(comp);
                         }
-                    });
-
-                // Add documents to the collection
-                addDocuments(comp);
+                    })
+                    .catch((err) => {
+                        console.log('Error retrieving collections:', err);
+                    })
             });
         } catch (error) {
-            console.error(
+            console.log(
                 "Error creating collection or adding documents:",
                 error
             );
@@ -353,7 +382,7 @@ export default function SearchWebsite() {
           }
         };
         const handleClickOutside = (event) => {
-          if (!divRef.current.contains(event.target)) {
+          if (!divRef.current?.contains(event.target)) {
             setIsOpen(false);
           }
         };

@@ -381,6 +381,7 @@ export default function Welcome(props) {
                                         ) : (
                                             <a
                                                 href={item.href}
+                                                key={item.name}
                                                 target="_blank"
                                                 className="hover:cursor-pointer hover:border-b hover:border-goldt text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
                                             >
