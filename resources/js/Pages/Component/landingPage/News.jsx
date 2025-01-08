@@ -1,9 +1,9 @@
 import { Link } from "@inertiajs/react";
-import newscircle from "../../../assets/pictures/newscircle.webp";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import newscircle from "../../../assets/pictures/newscircle.webp";
 
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";

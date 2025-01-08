@@ -105,66 +105,75 @@ export default function Certifiactesw(props) {
                         },
                     }}
                 >
-                    {getcertificates?.certificates?.map((certificate) => (
-                        <SwiperSlide className="absolute top-0 h-full xl:m-10  max-xl:py-10" key={certificate.id}>
-                            <div className="transition-transform hover:scale-110 w-fit">
-                                <img
-                                    src={
-                                        strapiApi +
-                                        certificate.Certificate.url
-                                    }
-                                    alt={
-                                        certificate.Certificate.alternativeText
-                                    }
-                                    className="rounded-xl w-full max-xl:h-96 object-cover object-top"
-                                />
-                                <div className="relative max-xl:px-32 w-full">
-                                    <div className="absolute left-0 bg-white w-full bottom-0 rounded-br-xl rounded-bl-xl shadow-inner ">
-                                        <div className=" p-6">
-                                            <div className=" flex items-center gap-x-4 text-xs">
-                                                <div className="text-gray-500">
-                                                    {reformatDate(
-                                                        certificate.Date
-                                                    )}
+                    {getcertificates?.certificates?.map(
+                        (certificate) =>
+                            certificate?.Certificate?.url && (
+                                <SwiperSlide
+                                    className="absolute top-0 h-full xl:m-10  max-xl:py-10"
+                                    key={certificate.id}
+                                >
+                                    <div className="transition-transform hover:scale-110 w-fit">
+                                        <img
+                                            src={
+                                                strapiApi +
+                                                certificate.Certificate?.url
+                                            }
+                                            alt={
+                                                certificate.Certificate
+                                                    ?.alternativeText
+                                            }
+                                            className="rounded-xl w-full max-xl:h-96 object-cover object-top"
+                                        />
+                                        <div className="relative max-xl:px-32 w-full">
+                                            <div className="absolute left-0 bg-white w-full bottom-0 rounded-br-xl rounded-bl-xl shadow-inner ">
+                                                <div className=" p-6">
+                                                    <div className=" flex items-center gap-x-4 text-xs">
+                                                        <div className="text-gray-500">
+                                                            {reformatDate(
+                                                                certificate?.Date
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <div className="group relative ">
+                                                        <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
+                                                            <span className="absolute inset-0" />
+                                                            {certificate?.Title}
+                                                        </h3>
+                                                        <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
+                                                            <div
+                                                                className=""
+                                                                dangerouslySetInnerHTML={{
+                                                                    __html: certificate?.Description,
+                                                                }}
+                                                            ></div>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="group relative ">
-                                                <h3 className="mt-2 text-xl font-bold leading-6 text-gray-600 group-hover:text-gray-600 line-clamp-1">
-                                                    <span className="absolute inset-0" />
-                                                    {certificate.Title}
-                                                </h3>
-                                                <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
-                                                    <div
-                                                        className=""
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: certificate.Description,
-                                                        }}
-                                                    ></div>
-                                                </p>
-                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    handleImageClick(
+                                                        strapiApi +
+                                                            `/` +
+                                                            certificate
+                                                                .Certificate
+                                                                ?.url
+                                                    )
+                                                }
+                                                aria-label="zoom"
+                                                className="h-14 w-14 absolute bottom-28 right-0 mr-5 items-center gap-x-1.5 rounded-full bg-black py-1.5 px-1.5 text-sm font-semibold text-white shadow-sm hover:bg-goldt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                            >
+                                                <MagnifyingGlassPlusIcon
+                                                    className=" h-6 w-6 mx-auto"
+                                                    aria-hidden="true"
+                                                />
+                                            </button>
                                         </div>
                                     </div>
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            handleImageClick(
-                                                strapiApi +
-                                                    `/` +
-                                                    certificate.Certificate.url
-                                            )
-                                        }
-                                        aria-label="zoom"
-                                        className="h-14 w-14 absolute bottom-28 right-0 mr-5 items-center gap-x-1.5 rounded-full bg-black py-1.5 px-1.5 text-sm font-semibold text-white shadow-sm hover:bg-goldt focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                    >
-                                        <MagnifyingGlassPlusIcon
-                                            className=" h-6 w-6 mx-auto"
-                                            aria-hidden="true"
-                                        />
-                                    </button>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
+                                </SwiperSlide>
+                            )
+                    )}
                 </Swiper>
             </div>
             <div>{renderModal()}</div>

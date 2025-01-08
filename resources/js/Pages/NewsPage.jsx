@@ -1,3 +1,6 @@
+import { getFromStrapi } from "@/CommonFunctions";
+import SEOComponent from "@/Components/SEO/SEOComponent";
+import MainLayout from "@/Layouts/MainLayout";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useRef, useState } from "react";
@@ -9,11 +12,8 @@ import {
     TwitterIcon,
     TwitterShareButton,
     WhatsappIcon,
-    WhatsappShareButton,
+    WhatsappShareButton
 } from "react-share";
-import { getFromStrapi } from "@/CommonFunctions";
-import SEOComponent from "@/Components/SEO/SEOComponent";
-import MainLayout from "@/Layouts/MainLayout";
 import { BounceLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
