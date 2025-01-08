@@ -283,7 +283,7 @@ class SearchController extends Controller
             'terms' => $url . '/',
         ];
 
-        //Get all data from all tables from 'dashboardstrapi' database
+        //Get all data from all tables from database
         $tables = DB::connection('mysqlOne')->select('SHOW TABLES');
         $data = [];
         $tableSchema = (object) [];
@@ -324,7 +324,8 @@ class SearchController extends Controller
 
         //Iterate through each table and fetch its data
         foreach ($filteredTables as $table) {
-            $tableName = $table->{'Tables_in_dashboardstrapi'};
+            $dbName = $_ENV['DB_DATABASE_TYPESENSE'];
+            $tableName = $table->{"Tables_in_{$dbName}"};
             $tableData = collect(DB::connection('mysqlOne')->table($tableName)->get()); // Fetch all records from the table
 
             // Convert integer fields to strings
