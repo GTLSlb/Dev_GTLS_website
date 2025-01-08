@@ -290,7 +290,8 @@ class SearchController extends Controller
 
         //Filter out certain tables from the data
         $filteredTables = collect($tables)->filter(function ($table) {
-            $tableName = $table->{'Tables_in_dashboardstrapi'};
+            $dbName = $_ENV['DB_DATABASE_TYPESENSE'];
+            $tableName = $table->{"Tables_in_{$dbName}"};
             return !(
                 str_contains($tableName, '_cmps') ||
                 str_starts_with($tableName, 'components_') ||
