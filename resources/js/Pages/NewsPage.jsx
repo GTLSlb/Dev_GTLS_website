@@ -105,8 +105,8 @@ export default function NewsPage(props) {
                             )}
                             <div aria-hidden="true" className="relative">
                                 <img
-                                    src={strapiApiUrl + postslug.CoverImage.url}
-                                    alt={postslug.CoverImage.alternativeText}
+                                    src={strapiApiUrl + postslug.HeroSection.url}
+                                    alt={postslug.HeroSection.alternativeText}
                                     className="h-[40rem] w-full object-cover  "
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-dark" />
