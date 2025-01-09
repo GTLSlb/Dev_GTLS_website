@@ -12,7 +12,7 @@ import {
     TwitterIcon,
     TwitterShareButton,
     WhatsappIcon,
-    WhatsappShareButton
+    WhatsappShareButton,
 } from "react-share";
 import { BounceLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
@@ -146,56 +146,61 @@ export default function NewsPage(props) {
                                             }}
                                         ></dd>
                                         <div className="mt-16 relative">
-                                            <Swiper
-                                                navigation={true}
-                                                modules={[Navigation]}
-                                                className="mySwiper"
-                                            >
-                                                {postslug.NewsMedia.map(
-                                                    (item, index) => (
-                                                        <SwiperSlide
-                                                            key={index}
-                                                            className="flex justify-center items-center w-full"
-                                                        >
-                                                            {" "}
-                                                            {isValidVideoFormat(
-                                                                item.ext
-                                                            ) ? (
-                                                                <video
-                                                                    loop
-                                                                    autoPlay
-                                                                    controls
-                                                                    style={{
-                                                                        width: "100%",
-                                                                    }}
-                                                                    className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
-                                                                    src={
-                                                                        strapiApiUrl +
-                                                                        item.url
-                                                                    }
-                                                                    type="video/mp4"
-                                                                >
-                                                                    Your browser
-                                                                    does not
-                                                                    support the
-                                                                    video tag.
-                                                                </video>
-                                                            ) : (
-                                                                <img
-                                                                    className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
-                                                                    src={
-                                                                        strapiApiUrl +
-                                                                        item.url
-                                                                    }
-                                                                    alt={
-                                                                        item.alternativeText
-                                                                    }
-                                                                />
-                                                            )}
-                                                        </SwiperSlide>
-                                                    )
-                                                )}
-                                            </Swiper>
+                                            {postslug.NewsMedia && (
+                                                <Swiper
+                                                    navigation={true}
+                                                    modules={[Navigation]}
+                                                    className="mySwiper"
+                                                >
+                                                    {postslug.NewsMedia.map(
+                                                        (item, index) => (
+                                                            <SwiperSlide
+                                                                key={index}
+                                                                className="flex justify-center items-center w-full"
+                                                            >
+                                                                {" "}
+                                                                {isValidVideoFormat(
+                                                                    item.ext
+                                                                ) ? (
+                                                                    <video
+                                                                        loop
+                                                                        autoPlay
+                                                                        controls
+                                                                        style={{
+                                                                            width: "100%",
+                                                                        }}
+                                                                        className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
+                                                                        src={
+                                                                            strapiApiUrl +
+                                                                            item.url
+                                                                        }
+                                                                        type="video/mp4"
+                                                                    >
+                                                                        Your
+                                                                        browser
+                                                                        does not
+                                                                        support
+                                                                        the
+                                                                        video
+                                                                        tag.
+                                                                    </video>
+                                                                ) : (
+                                                                    <img
+                                                                        className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
+                                                                        src={
+                                                                            strapiApiUrl +
+                                                                            item.url
+                                                                        }
+                                                                        alt={
+                                                                            item.alternativeText
+                                                                        }
+                                                                    />
+                                                                )}
+                                                            </SwiperSlide>
+                                                        )
+                                                    )}
+                                                </Swiper>
+                                            )}
                                         </div>
                                         <div className="mt-10">
                                             <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">

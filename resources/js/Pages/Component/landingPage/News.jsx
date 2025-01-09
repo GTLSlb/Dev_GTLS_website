@@ -91,7 +91,6 @@ export default function News(props) {
 
     const strapiApiUrl = window.Laravel.strapiAppUrl;
 
-
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -108,11 +107,12 @@ export default function News(props) {
                                     __html: getPosts?.Title,
                                 }}
                             ></div>
+                            
                             <div
-                                className="mt-3"
                                 dangerouslySetInnerHTML={{
                                     __html: getPosts?.Description,
                                 }}
+                                className="mt-3 "
                             ></div>
                         </div>
 
@@ -133,7 +133,8 @@ export default function News(props) {
                                                         post.CoverImage.url
                                                     }
                                                     alt={
-                                                        post.CoverImage.alternativeText
+                                                        post.CoverImage
+                                                            .alternativeText
                                                     }
                                                     className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
                                                 />
@@ -160,17 +161,20 @@ export default function News(props) {
                                                         </time>
                                                     </div>
                                                     <div className="group relative">
-                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
+                                                        <h3 className="mt-3 text-lg leading-6 text-white group-hover:text-gray-600 font-bold line-clamp-2">
                                                             <span className="absolute inset-0" />
                                                             {post?.Title}
                                                         </h3>
-                                                        <dd
-                                                            className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3"
+                                                        
+                                                        <div
+                                                            className="mt-5 leading-6 text-gray-400 !text-sm line-clamp-3"
                                                             dangerouslySetInnerHTML={{
-                                                                __html: post
-                                                                    .Body,
+                                                                __html: post.Body,
                                                             }}
-                                                        ></dd>
+                                                            style={{
+                                                                fontSize: "14px",
+                                                            }}
+                                                        ></div>
                                                     </div>
                                                 </div>
                                             </article>
