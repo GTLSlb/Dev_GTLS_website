@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import newscircle from "../../../assets/pictures/newscircle.webp";
-
+import "../../../../css/blog.css"
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 
@@ -167,7 +167,7 @@ export default function News(props) {
                                                         </h3>
                                                         
                                                         <div
-                                                            className="mt-5 leading-6 text-gray-400 !text-sm line-clamp-3"
+                                                            className="mt-5 leading-6 text-gray-400 !text-sm line-clamp-3 blogDescription"
                                                             dangerouslySetInnerHTML={{
                                                                 __html: post.Body,
                                                             }}
