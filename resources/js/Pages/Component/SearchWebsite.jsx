@@ -1,15 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import CircularProgress from "@mui/material/CircularProgress";
-import Downshift from "downshift";
 import Typesense from "typesense";
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
 import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function SearchWebsite() {
-    const [searchResults, setSearchResults] = useState([]);
-    const [filteredResults, setfilteredResults] = useState([]);
-    const [isLoadingResults, setIsLoadingResults] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const host = window.Laravel.typesenseHost;
@@ -227,8 +224,6 @@ export default function SearchWebsite() {
         }
         axios.post('/addCollections', formData)
         .then((res) => {
-            console.log('Collections added');
-            console.log(res)
         })
         .catch((err) => {
             console.log(err)
@@ -342,7 +337,6 @@ export default function SearchWebsite() {
             query: query,
             indices: indices
         }).then((res) => {
-            console.log(res.data);
             setResults(res.data.data);
             setIsLoading(false);
         })
@@ -353,9 +347,10 @@ export default function SearchWebsite() {
     };
 
     return (
-        <div className="flex items-center justify-between w-full max-h-[40px] focus:outline-none">
+        <div className="flex relative items-center justify-between w-full max-h-[40px] focus:outline-none">
             {indices?.length > 0 && (
-                <div>
+                <div className="relative w-full flex items-center">
+                    <SearchIcon />
                     <input
                         type="text"
                         value={searchQuery}
@@ -363,11 +358,8 @@ export default function SearchWebsite() {
                         onClick={() => setIsOpen(true)}
                         onChange={handleSearchChange}
                         placeholder="Search..."
-                        className="bg-[#e7c160]/40 border-none h-[20px] w-full text-gray-700 placeholder-gray-600 focus:ring-gray-400"
+                        className="bg-[#e7c160]/40 border-none h-[20px] w-full text-gray-700 placeholder-gray-600 focus:ring-0"
                     />
-                    {isOpen && isLoading &&(
-                        <div>Loading..</div>
-                    )}
                     {isOpen &&<div
                         ref={divRef}
                         className={`w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto containerscroll`}
@@ -377,6 +369,12 @@ export default function SearchWebsite() {
                         ))}
                     </div>}
                 </div>
+            )}
+            {isOpen && isLoading &&(
+                <div className="flex items-center gap-x-2 text-sm rounded-sm text-slate-500 w-full absolute lg:left-3 bg-white top-7 p-4 z-[100]">
+                    <CircularProgress color="inherit" size={15}/>
+                        Loading..
+                    </div>
             )}
         </div>
     );
