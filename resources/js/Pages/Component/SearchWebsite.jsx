@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Downshift from "downshift";
 import Typesense from "typesense";
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
+import axios from "axios";
 
 export default function SearchWebsite() {
     const [searchResults, setSearchResults] = useState([]);
@@ -220,114 +221,23 @@ export default function SearchWebsite() {
         fetchAllComponents();
     }, []);
 
-    const addDocuments = async (obj) => {
-        try {
-            // Step 1: Retrieve existing documents
-            const col = await client.collections(obj.tableName);
-            const docFromDb = components?.find(
-                (comp) => comp.tableName === obj.tableName
-            );
-
-            // Check if docFromDb.data is an array
-            if (!Array.isArray(docFromDb?.data)) return;
-
-            // Step 2: Create an array of promises to check and add documents
-            const promises = docFromDb.data.map(async (doc) => {
-                try {
-                    // Attempt to retrieve the document
-                    await col.documents(doc.id).retrieve().then((res) => {
-                    })
-                    .catch(async (err) => {
-                        if (err.toString().startsWith("ObjectNotFound2")) {
-                            try {
-                                const newDoc = {
-                                    ...doc,
-                                    url: doc.url,
-                                };
-
-                                const createdDoc = await col
-                                    .documents()
-                                    .create(newDoc)
-                                    .then((res) => {})
-                                    .catch((err) => {});
-                            } catch (createErr) {
-                                //console.log('Error adding document:', createErr);
-                            }
-                        }
-                    })
-                } catch (err) {
-                    // If the document is not found, create it
-                    if (err.toString().startsWith("ObjectNotFound2")) {
-                        try {
-                            const newDoc = {
-                                ...doc,
-                                url: doc.url,
-                            };
-
-                            const createdDoc = await col
-                                .documents()
-                                .create(newDoc)
-                                .then((res) => {})
-                                .catch((err) => {});
-                        } catch (createErr) {
-                            //console.log('Error adding document:', createErr);
-                        }
-                    } else {
-                        // Log other types of errors if necessary
-                        // console.log('Error retrieving document:', err);
-                    }
-                }
-            });
-
-            // Step 3: Wait for all promises to complete
-            await Promise.all(promises);
-        } catch (error) {
-            //console.log("Error adding documents:", error);
+    const addCollections = async () => {
+        const formData = {
+            collections: components
         }
-    };
-
-    const createCollection = async () => {
-        try {
-            components?.map(async (comp) => {
-                // Check if the collection exists
-                client
-                    .collections()
-                    .retrieve()
-                    .then(async (res) => {
-                        const existingCollections = res;
-
-                        const collectionExists =
-                            existingCollections?.find(
-                                (collection) =>
-                                    collection.name == comp?.tableName
-                            ) ?? false;
-                        // Create the collection if it doesn't exist
-                        if (collectionExists == false) {
-                            console.log("creating collection", comp);
-                            await client.collections().create(comp.schema).then(
-                                // Add documents to the collection
-                                () => addDocuments(comp)
-                            )
-                        }else{
-                            // Add documents to the collection
-                            await addDocuments(comp);
-                        }
-                    })
-                    .catch((err) => {
-                        console.log('Error retrieving collections:', err);
-                    })
-            });
-        } catch (error) {
-            console.log(
-                "Error creating collection or adding documents:",
-                error
-            );
-        }
-    };
-
+        axios.post('/addCollections', formData)
+        .then((res) => {
+            console.log('Collections added');
+            console.log(res)
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
     useEffect(() => {
         if (components?.length > 0) {
-            createCollection();
+            // createCollection();
+            addCollections()
         }
     }, [components, indices]);
 
@@ -421,44 +331,25 @@ export default function SearchWebsite() {
     };
 
     const [results, setResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const handleSearchChange = async (event) => {
+        setIsLoading(true);
         setIsOpen(true);
         const query = event.target.value;
         setSearchQuery(event.target.value);
 
-        if (query) {
-            try {
-                const allResults = [];
-                const searchPromises = indices?.map(async (col) => {
-                    const response = await client
-                        .collections(col.name)
-                        .documents()
-                        .search({
-                            q: query,
-                            query_by: col.searchParameters.query_by,
-                        });
-
-                    // Only push if there are hits
-                    if (response.hits?.length > 0) {
-                        allResults.push(
-                            ...response.hits.map((hit) => ({
-                                ...hit,
-                                collection: col.name,
-                            }))
-                        );
-                    }
-                });
-
-                // Wait for all promises to resolve
-                await Promise.all(searchPromises);
-                setResults(allResults);
-            } catch (error) {
-                console.log("Search error:", error);
-                // setResults([]);
-            }
-        } else {
-            // setResults([]);
-        }
+        axios.post('/searchCollections', {
+            query: query,
+            indices: indices
+        }).then((res) => {
+            console.log(res.data);
+            setResults(res.data.data);
+            setIsLoading(false);
+        })
+        .catch((err) => {
+            console.log(err);
+            setIsLoading(false);
+        })
     };
 
     return (
@@ -474,6 +365,9 @@ export default function SearchWebsite() {
                         placeholder="Search..."
                         className="bg-[#e7c160]/40 border-none h-[20px] w-full text-gray-700 placeholder-gray-600 focus:ring-gray-400"
                     />
+                    {isOpen && isLoading &&(
+                        <div>Loading..</div>
+                    )}
                     {isOpen &&<div
                         ref={divRef}
                         className={`w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto containerscroll`}

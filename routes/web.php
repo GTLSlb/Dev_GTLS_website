@@ -64,6 +64,8 @@ Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->
 Route::get('/visitor',[UserVisitController::class, 'index']);
 
 Route::get('/getAllComponents', [SearchController::class, 'fetchData'])->name('fetch.components');
+Route::post('/addCollections', [SearchController::class, 'addCollection'])->name('add.collections');
+Route::post('/searchCollections', [SearchController::class, 'searchSchema'])->name('search.collections');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {

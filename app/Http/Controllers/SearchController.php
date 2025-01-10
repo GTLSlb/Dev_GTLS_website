@@ -2,46 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Typesense\Client;
 use Illuminate\Http\Request;
+use App\Http\Promise\Promise;
 use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
-    // public function search(Request $request)
-    // {
-    //     // Get the keyword from the request header
-    //     $keyword = $request->header('searchKeyword');
+    private $client;
 
-    //     // Check if the keyword is provided
-    //     if (!$keyword) {
-    //         return response()->json(['error' => 'Keyword not provided'], 400);
-    //     }
-
-    //     // Escape the keyword to prevent command injection
-    //     $escapedKeyword = escapeshellarg($keyword);
-
-    //     // Build the command to execute the Python script
-    //     $command = "C:\\Python27\\python.exe C:\\xampp\\htdocs\\WebScapper\\src\\scrapeWebsite.py $escapedKeyword";
-    //     \Log::info("Executing command: $command");
-    //     // Execute the command and capture the output
-    //     $output = shell_exec("$command 2>&1");
-    //     \Log::info("output: $output");
-    //     // Check if the output is null, indicating a failure
-    //     if ($output === null) {
-    //         return response()->json(['error' => 'Failed to execute scraper'], 500);
-    //     }
-
-    //     // Decode the JSON output from the Python script
-    //     $content = json_decode($output, true);
-
-    //     // Check if decoding was successful
-    //     if (json_last_error() !== JSON_ERROR_NONE) {
-    //         return response()->json(['error' => 'Invalid response from scraper'], 500);
-    //     }
-
-    //     // Return the scraped content as a JSON response
-    //     return response()->json($content);
-    // }
+    public function __construct()
+    {
+        $this->client = $this->createTypesenseClient();
+    }
 
     // Run tests in parallel
     public function search(Request $request)
@@ -103,77 +77,6 @@ class SearchController extends Controller
         // Return the scraped content as a JSON response
         return response()->json($combinedResults);
     }
-
-    // public function search(Request $request)
-    // {
-    //     // Get the keyword from the request header
-    //     $keyword = $request->header('searchKeyword');
-
-    //     // Check if the keyword is provided
-    //     if (!$keyword) {
-    //         return response()->json(['error' => 'Keyword not provided'], 400);
-    //     }
-
-    //     // Escape the keyword to prevent command injection
-    //     $escapedKeyword = escapeshellarg($keyword);
-
-    //     // Path to your Node.js script
-    //     $folderPath = "C:\\xampp\\htdocs\\Dev_GTLS_website\\tests\\webScrapping";
-
-    //     // Get all .js files in the specified folder
-    //     $scripts = glob("$folderPath/*.js");
-
-    //     $processes = [];
-    //     foreach ($scripts as $script) {
-    //         // Prepare the command to run each script with the keyword
-    //         $command = "node " . escapeshellarg($script) . " $escapedKeyword";
-    //         // Run the command in the background and capture the process ID
-    //         $processId = popen($command . " 2>&1 &", 'r'); // 2>&1 captures stderr to stdout
-    //         $processes[] = $processId;
-    //     }
-
-    //     // Wait for all processes to finish
-    //     $results = [];
-    //     foreach ($processes as $process) {
-    //         // Collect output from the process
-    //         $output = '';
-    //         while (!feof($process)) {
-    //             $output .= fgets($process);
-    //         }
-    //         pclose($process); // Close the process
-
-    //         // Decode JSON output
-    //         $result = json_decode($output, true);
-    //         if ($result) {
-    //             $results[] = $result;
-
-    //             // Insert each file's result into the database
-    //             DB::table('scrapping')->insert([
-    //                 'content' => json_encode($result), // Store as string
-    //                 'created_at' => now(), // Optional: Add timestamps
-    //                 'updated_at' => now(),
-    //             ]);
-    //         }
-    //     }
-
-    //     // Combine all results into a single array
-    //     $combinedResults = [];
-    //     foreach ($results as $result) {
-    //         if ($result) {
-    //             $combinedResults = array_merge($combinedResults, $result);
-    //         }
-    //     }
-
-    //     \Log::info("Output: $output");
-
-    //     // Check if the combined results are empty
-    //     if (empty($combinedResults)) {
-    //         return response()->json(['error' => 'Failed to execute scraper'], 500);
-    //     }
-
-    //     // Return the scraped content as a JSON response
-    //     return response()->json($combinedResults);
-    // }
 
     public function addSchema($isString, $tableName) {
         // Initialize fields array
@@ -264,8 +167,8 @@ class SearchController extends Controller
         }
     }
 
-    public function fetchData(Request $request){
-        $url = getenv('APP_URL');
+    public function fetchData(){
+        $url = getenv('URL');
         $routes = [
             'aboutuses' => $url . '/aboutus',
             'blogs' => $url . '/news',
@@ -374,5 +277,131 @@ class SearchController extends Controller
         // Return the collected data as JSON
         return response()->json($data);
     }
+
+    public function addDocuments($components, $obj) {
+        // try {
+            // Step 1: Retrieve existing documents
+            $col = $this->client->collections[$obj['tableName']];
+            $docFromDb = null;
+            foreach ($components as $comp) {
+                if ($comp['tableName'] === $obj['tableName']) {
+                    $docFromDb = $comp;
+                    break;
+                }
+            }
+
+            // Check if docFromDb->data is an array
+            if (!is_array($docFromDb['data'])) return;
+
+            // Step 2: Create an array of promises to check and add documents
+            $promises = [];
+            foreach ($docFromDb['data'] as $doc) {
+                $promises[] = $this->checkAndAddDocument($col, $doc);
+            }
+
+            // Step 3: Wait for all promises to complete
+            $results = array_map(function ($promise) {
+                return $promise;
+            }, $promises);
+        // } catch (Exception $error) {
+        //     // Log error if necessary
+        // }
+    }
+    public function checkAndAddDocument($col, $doc) {
+        if (isset($doc['id'])) {
+            $id = $doc['id'];
+            try {
+                $res = $col->documents[$id]->retrieve();
+            } catch (Exception $err) {
+                if (str_contains($err->getMessage(), 'Could not find a document') == 1) {
+                    try {
+                        $newDoc = [
+                            ...$doc,
+                            'url' => $doc['url'],
+                        ];
+                        $res = $col->documents->create($newDoc);
+                    } catch (Exception $createErr) {
+                        throw $createErr;
+                    }
+                } else {
+                    throw $err;
+                }
+            }
+        return $res;
+    }}
+
+    public function createTypesenseClient() {
+        return new Client([
+            'nodes' => [
+                [
+                    'host' => $_ENV['TYPESENSE_HOST'], // Typesense server host
+                    'port' => $_ENV['TYPESENSE_PORT'], // Typesense server port
+                    'protocol' => $_ENV['TYPESENSE_PROTOCOL'], // Protocol (http or https)
+                ],
+            ],
+            'api_key' => $_ENV['TYPESENSE_ADMIN_API_KEY'], // Typesense API key
+            'connectionTimeoutSeconds' => 20,
+            'logLevel' => 'SILENT' // Set log level
+        ]);
+    }
+
+    public function addCollection(Request $request) {
+        // try {
+            $components = $request->input('collections');
+            $allCollections = [];
+
+            // Retrieve all collections from Typesense
+            $allCollections = $this->client->collections->retrieve();
+            if (empty($allCollections)) {
+                // If allCollections is empty, map over components and create client collection
+                array_map(function ($component) {
+                    $this->client->collections->create($component['schema']);
+                    $this->addDocuments($component, $component);
+                }, $components);
+            }else{
+
+                    foreach ($components as $comp) {
+                        $collectionExists = array_reduce($allCollections, function ($carry, $collection) use ($comp) {
+                            return $carry || $collection['name'] == $comp['tableName'];
+                        }, false);
+                        // Create the collection if it doesn't exist
+                        if (!$collectionExists) {
+                            $this->client->collections->create($comp['schema']);
+                            $this->addDocuments($components, $comp);
+                        } else {
+                            // Add documents to the collection
+                            $this->addDocuments($components, $comp);
+                        }
+                    }
+            }
+
+            return response()->json(['message' => 'Add Collection Success', 'data' => $this->client->collections->retrieve()], 200);
+        // } catch (Exception $e) {
+        //     return response()->json(['error' => 'Add Collection Failed', 'message' => $e], 500);
+        // }
+    }
+
+    public function searchSchema(Request $request)
+    {
+        $query = $request->input('query');
+        $indices = $request->input('indices');
+
+        $allResults = [];
+        foreach ($indices as $col) {
+            $response = $this->client
+                ->collections[$col['name']]
+                ->documents
+                ->search([
+                    'q' => $query,
+                    'query_by' => $col['searchParameters']['query_by'],
+                ]);
+
+            $results = $response['hits'];
+            $allResults = array_merge($allResults, $results);
+        }
+
+        return response()->json(['data' => $allResults, 'message' => "Search Success"], 200);
+    }
 }
+
 ?>
