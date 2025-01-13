@@ -93,50 +93,80 @@ class SearchController extends Controller
                 case "branches":
                     $fields[] = [
                         'name' => 'branch_name',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     break;
                 case "certificates":
                 case "news_posts":
                     $fields[] = [
                         'name' => 'description',
-                        'type' => 'auto',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'title',
+                        'type' => 'string',
                     ];
                     break;
                 case "positions":
                     $fields[] = [
                         'name' => 'position_title',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     $fields[] = [
                         'name' => 'position_details',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     break;
                 case "services":
                     $fields[] = [
                         'name' => 'description',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     $fields[] = [
                         'name' => 'title',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     break;
                 case "socials":
                     $fields[] = [
                         'name' => 'name',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     $fields[] = [
                         'name' => 'url',
-                        'type' => 'auto',
+                        'type' => 'string',
                     ];
                     break;
                 case "team_members":
                     $fields[] = [
                         'name' => 'member_name',
-                        'type' => 'auto',
+                        'type' => 'string',
+                    ];
+                    break;
+                case "pallet_terms":
+                        $fields[] = [
+                            'name' => 'body',
+                            'type' => 'string',
+                        ];
+                        $fields[] = [
+                            'name' => 'title',
+                            'type' => 'string',
+                        ];
+                        break;
+                case "enquiries_types":
+                    $fields[] = [
+                        'name' => 'name',
+                        'type' => 'string',
+                    ];
+                    break;
+                case "capability_statements":
+                    $fields[] = [
+                        'name' => 'body',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'title',
+                        'type' => 'string',
                     ];
                     break;
                 default:
@@ -176,7 +206,7 @@ class SearchController extends Controller
             'certificates' => $url . '/',
             'team_members' => $url . '/aboutus',
             'technologies' => $url . '/technologies',
-            'capability_statements' => $url . '/aboutus',
+            'capability_statements' => $url . '/capabilitystatement',
             'going_greens' => $url . '/goinggreen',
             'pallet_terms' => $url . '/',
             'positions' => $url . '/opportunities',
@@ -184,6 +214,7 @@ class SearchController extends Controller
             'services' => $url . '/#services',
             'socials' => $url . '/',
             'terms' => $url . '/',
+            'enquiries_types' => $url . '/contact_us',
         ];
 
         //Get all data from all tables from database
@@ -221,7 +252,8 @@ class SearchController extends Controller
                 $tableName == 'train_notifications' ||
                 $tableName == 'values' ||
                 $tableName == 'files' ||
-                $tableName == 'footers'
+                $tableName == 'footers' ||
+                $tableName == 'heared_froms'
             );
         });
 
@@ -254,10 +286,11 @@ class SearchController extends Controller
             switch ($tableName) {
                 case 'blogs':
                     foreach ($tableData as $key => $value) {
+                        $body = isset($value['body']) ? $value['body'] : [];
                         $data[] = [
                             'tableName' => $value['title'],
                             'url' => $url . '/news/' . $value['slug'],
-                            'data' => [['body' => $value['body']]],
+                            'data' => [['body' => $body]],
                             'schema' => $this->addSchema(is_string($tableData), $value['title']),
                         ];
                     }
@@ -284,14 +317,21 @@ class SearchController extends Controller
             $col = $this->client->collections[$obj['tableName']];
             $docFromDb = null;
             foreach ($components as $comp) {
-                if ($comp['tableName'] === $obj['tableName']) {
-                    $docFromDb = $comp;
-                    break;
-                }
+                // if(gettype($comp) == 'string'){
+                //     if ($comp == $obj['tableName']) {
+                //         $docFromDb = $comp;
+                //         break;
+                //     }
+                // }else if(gettype($comp) == 'object'){
+                    if ($comp['tableName'] == $obj['tableName']) {
+                        $docFromDb = $comp;
+                        break;
+                    }
+                // }
             }
 
             // Check if docFromDb->data is an array
-            if (!is_array($docFromDb['data'])) return;
+            if (!is_array($docFromDb) || !isset($docFromDb['data'])) return;
 
             // Step 2: Create an array of promises to check and add documents
             $promises = [];

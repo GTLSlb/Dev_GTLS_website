@@ -18,35 +18,22 @@ const client = new Typesense.Client({
     apiKey: apiKey, // Your Typesense API key
 });
 
-const collectionsToDelete = [
-  "aboutuses",
-  "Introducing Gold Tiger’s New B-Triple Solution: Expanding Capacity and Efficiency in Freight Test",
-  "Introducing Gold Tiger Logistics’ National Road Alerts Feature Test",
-  "Introducing Gold Tiger Logistics’ National Road Alerts Feature",
-  "branches",
-  "capability_statements",
-  "certificates",
-  "going_greens",
-  "news_posts",
-  "pallet_terms",
-  "positions",
-  "safety_compliances",
-  "services",
-  "socials",
-  "team_members",
-  "technologies",
-  "terms",
-];
 
-async function deleteCollections() {
-  for (const collectionName of collectionsToDelete) {
-    try {
-      await client.collections(collectionName).delete();
-      console.log(`Deleted collection: ${collectionName}`);
-    } catch (error) {
-      console.error(`Error deleting collection: ${collectionName}`, error);
+async function deleteAllCollections(){
+  try {
+    // Get all collections
+    const collections = await client.collections.retrieve();
+
+    for (const collection of collections) {
+      // Delete each collection
+      await client.collections(collection.name).delete();
+      console.log(`Deleted collection: ${collection.name}`);
     }
-  }
-}
 
-deleteCollections();
+    console.log("All collections have been deleted.");
+  } catch (error) {
+    console.error("Error deleting collections:", error);
+  }
+};
+
+deleteAllCollections();

@@ -307,7 +307,6 @@ export default function Navbars() {
                                 </a>
                             </div>
                             <div className="flex gap-x-14 relative h-6">
-                            <SearchWebsite />
                             <a
                                 href="tel:+180040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"

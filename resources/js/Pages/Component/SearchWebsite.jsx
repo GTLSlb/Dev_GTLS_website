@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import CircularProgress from "@mui/material/CircularProgress";
 import Typesense from "typesense";
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import SearchPopup from "./SearchPopup";
 
 export default function SearchWebsite() {
     const [isOpen, setIsOpen] = useState(false);
@@ -89,7 +88,7 @@ export default function SearchWebsite() {
                     name: item.tableName,
                     title: item.tableName,
                     searchParameters: {
-                        query_by: "description",
+                        query_by: "description, title",
                         highlight_full_fields: "",
                     },
                 };
@@ -129,6 +128,33 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
+            } else if (item.tableName == "pallet_terms") {
+                return {
+                    name: item.tableName,
+                    title: item.tableName,
+                    searchParameters: {
+                        query_by: "body, title",
+                        highlight_full_fields: "",
+                    },
+                };
+            }else if (item.tableName == "enquiries_types") {
+                return {
+                    name: item.tableName,
+                    title: item.tableName,
+                    searchParameters: {
+                        query_by: "name",
+                        highlight_full_fields: "",
+                    },
+                };
+            }else if (item.tableName == "capability_statements") {
+                return {
+                    name: item.tableName,
+                    title: item.tableName,
+                    searchParameters: {
+                        query_by: "body, title",
+                        highlight_full_fields: "",
+                    },
+                };
             } else {
                 return {
                     name: item.tableName,
@@ -157,7 +183,7 @@ export default function SearchWebsite() {
                     break;
                 case "certificates":
                 case "news_posts":
-                    config.query_by = "description";
+                    config.query_by = "description, title";
                     break;
                 case "positions":
                     config.query_by = "position_details, position_title";
@@ -170,6 +196,18 @@ export default function SearchWebsite() {
                     break;
                 case "team_members":
                     config.query_by = "member_name";
+                    break;
+                case "pallet_terms":
+                        config.query_by = "body, title";
+                        break;
+                case "enquiries_types":
+                    config.query_by = "name";
+                    break;
+                case "capability_statements":
+                    config.query_by = "body, title";
+                    break;
+                case "services":
+                    config.query_by = "title, body";
                     break;
                 default:
                     config.query_by = "body";
@@ -230,8 +268,7 @@ export default function SearchWebsite() {
         })
     }
     useEffect(() => {
-        if (components?.length > 0) {
-            // createCollection();
+        if (components?.length > 0 && indices?.length > 0) {
             addCollections()
         }
     }, [components, indices]);
@@ -279,26 +316,6 @@ export default function SearchWebsite() {
         )} ...`;
     }
 
-    const divRef = useRef();
-    useEffect(() => {
-        const handleScroll = () => {
-          if (isOpen) {
-            setIsOpen(false);
-          }
-        };
-        const handleClickOutside = (event) => {
-          if (!divRef.current?.contains(event.target)) {
-            setIsOpen(false);
-          }
-        };
-        window.addEventListener("scroll", handleScroll);
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-          window.removeEventListener("scroll", handleScroll);
-          document.removeEventListener("mousedown", handleClickOutside);
-        };
-      }, [setIsOpen, isOpen, divRef]);
-
     const Hit = ({ hit }) => {
         const title = hit?.document?.url || "No title available";
         const parser = new DOMParser();
@@ -311,7 +328,7 @@ export default function SearchWebsite() {
 
         return (
             <div
-                className="px-4 py-1 hover:bg-goldt/50 hover:cursor-pointer"
+                className="px-2 py-1 hover:bg-goldt/50 hover:cursor-pointer"
                 onClick={() =>
                     navigateToSelector(
                         hit?.document?.selector,
@@ -346,36 +363,29 @@ export default function SearchWebsite() {
         })
     };
 
+    const [showSearch, setShowSearch] = useState(false);
+    const handleFeedbackButtonClick = () => {
+        setShowSearch(!showSearch);
+    };
+    const handlePopUpClose = () => {
+        setShowSearch(false);
+    };
+
+    const handleClearInput = () =>{
+        setResults([])
+        setSearchQuery("")
+    }
     return (
-        <div className="flex relative items-center justify-between w-full max-h-[40px] focus:outline-none">
-            {indices?.length > 0 && (
-                <div className="relative w-full flex items-center">
-                    <SearchIcon />
-                    <input
-                        type="text"
-                        value={searchQuery}
-                        onMouseDown={() => setIsOpen(true)}
-                        onClick={() => setIsOpen(true)}
-                        onChange={handleSearchChange}
-                        placeholder="Search..."
-                        className="bg-[#e7c160]/40 border-none h-[20px] w-full text-gray-700 placeholder-gray-600 focus:ring-0"
-                    />
-                    {isOpen &&<div
-                        ref={divRef}
-                        className={`w-full absolute bg-white top-7 z-[100] max-h-[200px] overflow-auto containerscroll`}
-                    >
-                        {results.map((hit) => (
-                            <Hit hit={hit} />
-                        ))}
-                    </div>}
-                </div>
-            )}
-            {isOpen && isLoading &&(
-                <div className="flex items-center gap-x-2 text-sm rounded-sm text-slate-500 w-full absolute lg:left-3 bg-white top-7 p-4 z-[100]">
-                    <CircularProgress color="inherit" size={15}/>
-                        Loading..
-                    </div>
-            )}
-        </div>
+        <div className="fixed right-0 top-[22%] z-50">
+        <button
+            className="flex items-center justify-center bg-goldd text-black p-2 py-6 rounded font-bold"
+            onClick={handleFeedbackButtonClick}
+        >
+            <SearchIcon />
+        </button>
+        {showSearch &&
+            <SearchPopup handleClearInput={handleClearInput} Hit={Hit} results={results} isLoading={isLoading} searchQuery={searchQuery } handleSearchChange={handleSearchChange} handlePopUpClose={handlePopUpClose} isOpen={showSearch} indices={indices} setIsOpen={setShowSearch}/>
+        }
+    </div>
     );
 }

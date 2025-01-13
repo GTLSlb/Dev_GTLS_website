@@ -39,10 +39,9 @@ import GoogleMap from "@/Components/GoogleMap";
 import GoogleMapComp from "@/Components/GoogleMap";
 import { BounceLoader } from "react-spinners";
 import TrainNotification from "@/Components/TrainNotification";
-import CircularProgress from "@mui/material/CircularProgress";
 import { set } from "date-fns";
-import Downshift from "downshift";
-import SearchWebsite from "@/Pages/Component/SearchWebsite";
+import SearchWebsite from "./Component/SearchWebsite";
+
 const mapUrl = window.Laravel.mapUrl;
 const navigation = [
     { id: 1, name: "About Us", href: "/aboutus", link: true },
@@ -242,7 +241,6 @@ export default function Welcome(props) {
                                     </a>
                                 </div>
                                 <div className="flex gap-x-4 sm:gap-x-8 md:gap-x-14 relative h-6">
-                                    <SearchWebsite />
                                     <a
                                         href="tel:+1800040306"
                                         className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
@@ -524,6 +522,7 @@ export default function Welcome(props) {
                                 getTrainNotification={getTrainNotification}
                             />
                         </div>
+                        <SearchWebsite />
                         <VideoHeader getHeader={getHeader} />
                         <AboutUs
                             getAbout={getAbout}

@@ -11,7 +11,6 @@ import { Fragment } from "react";
 import { Link } from "@inertiajs/inertia-react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
 import TrainNotification from "@/Components/TrainNotification";
-import SearchWebsite from '@/Pages/Component/SearchWebsite';
 
 const mapUrl = window.Laravel.mapUrl;
 const navigation = [
@@ -94,7 +93,6 @@ export default function ScrollNav({ getTrainNotification }) {
                                 </a>
                             </div>
                             <div className="flex gap-x-14 relative h-6">
-                                <SearchWebsite />
                                 <a
                                 href="tel:+1800040306"
                                 className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
