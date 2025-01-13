@@ -22,7 +22,7 @@ const client = new Typesense.Client({
 async function deleteAllCollections(){
   try {
     // Get all collections
-    const collections = await client.collections.retrieve();
+    const collections = await client.collections().retrieve();
 
     for (const collection of collections) {
       // Delete each collection
