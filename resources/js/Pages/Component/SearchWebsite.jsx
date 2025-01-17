@@ -347,6 +347,7 @@ export default function SearchWebsite() {
     const handleSearchChange = async (event) => {
         setIsLoading(true);
         setIsOpen(true);
+        setError("");
         const query = event.target.value;
         setSearchQuery(event.target.value);
 
@@ -360,10 +361,17 @@ export default function SearchWebsite() {
         .catch((err) => {
             console.log(err);
             setIsLoading(false);
+            setError(err.response.data.message || "Something went wrong");
         })
     };
 
+    client.collections('aboutuses').documents('26').search({
+        q: "*",
+        query_by: "body"
+        }
+    )
     const [showSearch, setShowSearch] = useState(false);
+    const [errMsg, setError] = useState("");
     const handleFeedbackButtonClick = () => {
         setShowSearch(!showSearch);
     };
@@ -375,6 +383,7 @@ export default function SearchWebsite() {
         setResults([])
         setSearchQuery("")
     }
+
     return (
         <div className="fixed right-0 top-[22%] z-50">
         <button
@@ -384,7 +393,7 @@ export default function SearchWebsite() {
             <SearchIcon />
         </button>
         {showSearch &&
-            <SearchPopup handleClearInput={handleClearInput} Hit={Hit} results={results} isLoading={isLoading} searchQuery={searchQuery } handleSearchChange={handleSearchChange} handlePopUpClose={handlePopUpClose} isOpen={showSearch} indices={indices} setIsOpen={setShowSearch}/>
+            <SearchPopup errMsg={errMsg} handleClearInput={handleClearInput} Hit={Hit} results={results} isLoading={isLoading} searchQuery={searchQuery } handleSearchChange={handleSearchChange} handlePopUpClose={handlePopUpClose} isOpen={showSearch} indices={indices} setIsOpen={setShowSearch}/>
         }
     </div>
     );

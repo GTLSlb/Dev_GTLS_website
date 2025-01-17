@@ -65,6 +65,7 @@ Route::get('/visitor',[UserVisitController::class, 'index']);
 
 Route::get('/getAllComponents', [SearchController::class, 'fetchData'])->name('fetch.components');
 Route::post('/addCollections', [SearchController::class, 'addCollection'])->name('add.collections');
+Route::post('/deleteAllCollections', [SearchController::class, 'deleteAllCollections'])->name('delete.collections');
 Route::post('/searchCollections', [SearchController::class, 'searchSchema'])->name('search.collections');
 
 Route::match(['get', 'post'], '/landingPage', function () {

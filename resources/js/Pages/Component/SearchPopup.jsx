@@ -15,6 +15,7 @@ export default function SearchPopup({
     indices,
     handleClearInput,
     Hit,
+    errMsg,
 }) {
 
     const divRef = useRef();
@@ -43,10 +44,11 @@ export default function SearchPopup({
             onRequestClose={handlePopUpClose}
             shouldCloseOnEsc={true}
             shouldCloseOnOverlayClick={true}
+            appElement={document.getElementById("modal")}
             className="fixed inset-0 flex items-center justify-center"
             overlayClassName="fixed inset-0 bg-black bg-opacity-60 z-50"
         >
-            <div ref={divRef} className="w-[80%] h-auto max-h-[30%] pt-3 px-3 flex focus:outline-none bg-white rounded-md z-50">
+            <div ref={divRef} id="modal" className="w-[80%] h-auto max-h-[30%] pt-3 px-3 flex focus:outline-none bg-white rounded-md z-50">
                 {indices?.length > 0 && (
                     <div className="w-full flex flex-col items-center">
                         <div className="w-full flex items-center">
@@ -66,14 +68,29 @@ export default function SearchPopup({
                             <CircularProgress color="inherit" size={15} />
                             Loading..
                         </div>
-
+                        {
+                            !isLoading && errMsg != "" && (
+                                <div className="text-sm text-red-600 flex items-center justify-start text-left">
+                                    <span>
+                                        {errMsg}
+                                    </span>
+                                </div>
+                            )
+                        }
                         {isOpen && (
                             <div
-                                className={`w-full my-2 bg-white z-[100] max-h-[200px] overflow-auto containerscroll`}
+                                className={`w-full my-3 pb-3 bg-white z-[100] max-h-[200px] overflow-auto containerscroll`}
                             >
-                                {results.map((hit, index) => (
+                                {results?.length > 0 && results.map((hit, index) => (
                                     <Hit hit={hit} key={index}/>
                                 ))}
+                                {results?.length === 0 && (
+                                    <div className="text-sm text-gray-600 flex items-center justify-start text-left">
+                                        <span>
+                                            No results found
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>

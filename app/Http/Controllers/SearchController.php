@@ -286,13 +286,15 @@ class SearchController extends Controller
             switch ($tableName) {
                 case 'blogs':
                     foreach ($tableData as $key => $value) {
-                        $body = isset($value['body']) ? $value['body'] : [];
-                        $data[] = [
-                            'tableName' => $value['title'],
-                            'url' => $url . '/news/' . $value['slug'],
-                            'data' => [['body' => $body]],
-                            'schema' => $this->addSchema(is_string($tableData), $value['title']),
-                        ];
+                        if ($value['published_at'] !== null) {
+                            $body = isset($value['body']) ? $value['body'] : [];
+                            $data[] = [
+                                'tableName' => $value['title'],
+                                'url' => $url . '/news/' . $value['slug'],
+                                'data' => [['body' => $body]],
+                                'schema' => $this->addSchema(is_string($tableData), $value['title']),
+                            ];
+                        }
                     }
                     break;
                 default:
@@ -317,17 +319,17 @@ class SearchController extends Controller
             $col = $this->client->collections[$obj['tableName']];
             $docFromDb = null;
             foreach ($components as $comp) {
-                // if(gettype($comp) == 'string'){
-                //     if ($comp == $obj['tableName']) {
-                //         $docFromDb = $comp;
-                //         break;
-                //     }
-                // }else if(gettype($comp) == 'object'){
+                if(gettype($comp) == 'string'){
+                    if ($comp == $obj['tableName']) {
+                        $docFromDb = $comp;
+                        break;
+                    }
+                }else if(gettype($comp) == 'object'){
                     if ($comp['tableName'] == $obj['tableName']) {
                         $docFromDb = $comp;
                         break;
                     }
-                // }
+                }
             }
 
             // Check if docFromDb->data is an array
@@ -423,24 +425,48 @@ class SearchController extends Controller
 
     public function searchSchema(Request $request)
     {
-        $query = $request->input('query');
-        $indices = $request->input('indices');
+        try{
+            $query = $request->input('query');
+            $indices = $request->input('indices');
 
-        $allResults = [];
-        foreach ($indices as $col) {
-            $response = $this->client
-                ->collections[$col['name']]
-                ->documents
-                ->search([
-                    'q' => $query,
-                    'query_by' => $col['searchParameters']['query_by'],
-                ]);
+            $allResults = [];
+            foreach ($indices as $col) {
+                $response = $this->client
+                    ->collections[$col['name']]
+                    ->documents
+                    ->search([
+                        'q' => $query,
+                        'query_by' => $col['searchParameters']['query_by'],
+                    ]);
+                $results = $response['hits'];
+                $allResults = array_merge($allResults, $results);
+            }
 
-            $results = $response['hits'];
-            $allResults = array_merge($allResults, $results);
+            return response()->json(['data' => $allResults, 'message' => "Search Success"], 200);
+        }catch(Exception $e){
+            if(str_contains($e->getMessage(), 'cURL error') == 1){
+                return response()->json(['error' => $e, 'message' => 'Network Error, Check Connection'], 500);
+            }else{
+                return response()->json(['error' => $e, 'message' => 'Search Failed'], 500);
+            }
         }
+    }
 
-        return response()->json(['data' => $allResults, 'message' => "Search Success"], 200);
+    public function deleteAllCollections(){
+        try {
+            // Get all collections
+            $collections = $this->client->collections->retrieve();
+
+            foreach ($collections as $collection) {
+                // Delete each collection
+                $this->client->collections[$collection['name']]->delete();
+                echo "Deleted collection: " . $collection['name'] . "\n";
+            }
+
+            echo "All collections have been deleted.\n";
+        } catch (Exception $e) {
+            echo "Error deleting collections: " . $e->getMessage() . "\n";
+        }
     }
 }
 
