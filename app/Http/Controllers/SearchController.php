@@ -206,7 +206,7 @@ class SearchController extends Controller
             'certificates' => $url . '/',
             'team_members' => $url . '/aboutus',
             'technologies' => $url . '/technologies',
-            'capability_statements' => $url . '/capabilitystatement',
+            'capability_statements' => $url . '/aboutus',
             'going_greens' => $url . '/goinggreen',
             'pallet_terms' => $url . '/',
             'positions' => $url . '/opportunities',
@@ -324,7 +324,7 @@ class SearchController extends Controller
                         $docFromDb = $comp;
                         break;
                     }
-                }else if(gettype($comp) == 'object'){
+                }else if(gettype($comp) == 'array'){
                     if ($comp['tableName'] == $obj['tableName']) {
                         $docFromDb = $comp;
                         break;
