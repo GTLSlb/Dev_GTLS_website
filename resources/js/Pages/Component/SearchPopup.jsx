@@ -84,7 +84,7 @@ export default function SearchPopup({
                                 {results?.length > 0 && results.map((hit, index) => (
                                     <Hit hit={hit} key={index}/>
                                 ))}
-                                {results?.length === 0 && (
+                                {!isLoading && results?.length === 0 && (
                                     <div className="text-sm text-gray-600 flex items-center justify-start text-left">
                                         <span>
                                             No results found

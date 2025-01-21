@@ -206,9 +206,6 @@ export default function SearchWebsite() {
                 case "capability_statements":
                     config.query_by = "body, title";
                     break;
-                case "services":
-                    config.query_by = "title, body";
-                    break;
                 default:
                     config.query_by = "body";
                     break;
@@ -364,12 +361,13 @@ export default function SearchWebsite() {
             setError(err.response.data.message || "Something went wrong");
         })
     };
-
-    client.collections('aboutuses').documents('26').search({
+    client.collections('aboutuses').documents().search({
         q: "*",
         query_by: "body"
         }
-    )
+    ).then((res) => {
+        console.log(res)
+    })
     const [showSearch, setShowSearch] = useState(false);
     const [errMsg, setError] = useState("");
     const handleFeedbackButtonClick = () => {
