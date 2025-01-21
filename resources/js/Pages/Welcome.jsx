@@ -13,6 +13,7 @@ import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Safety from "./Component/landingPage/Safety";
 import Technologies from "./Component/landingPage/Technologies";
 import VideoHeader from "./Component/landingPage/VideoHeader";
+import SearchWebsite from "./Component/SearchWebsite";
 const scrollToElement = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -180,6 +181,7 @@ export default function Welcome(props) {
                     {/* <Navbars /> */}
                     <div className="relative isolate bg-dark">
                         <MainLayout loading={loading} isHomeScreen={true}>
+                            <SearchWebsite />
                             <VideoHeader getHeader={getHeader} />
                             <AboutUs getAbout={getAbout} />
                             <PrimaryServices getservices={getservices} />

@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { Link } from "@inertiajs/inertia-react";
 import TrainNotification from "./TrainNotification";
+import SearchWebsite from "@/Pages/Component/SearchWebsite";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 // Top Bar component
@@ -281,8 +282,7 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
                         topBarLinks={topBarLinks}
                         phoneNb={getNavigation.PhoneNb}
                     />
-                     <div className="flex gap-x-14 relative h-6">
-                        <SearchWebsite />
+                    <SearchWebsite />
                     <nav
                         className="mx-auto lg:max-w-7xl max-w-7xl px-6 pt-2 pb-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between"
                         aria-label="Global"

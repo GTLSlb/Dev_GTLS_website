@@ -51,9 +51,6 @@ Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->mi
 
 Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
 
-
-Route::get('/visitor',[UserVisitController::class, 'index']);
-
 Route::get('/getAllComponents', [SearchController::class, 'fetchData'])->name('fetch.components');
 Route::post('/addCollections', [SearchController::class, 'addCollection'])->name('add.collections');
 Route::post('/deleteAllCollections', [SearchController::class, 'deleteAllCollections'])->name('delete.collections');
