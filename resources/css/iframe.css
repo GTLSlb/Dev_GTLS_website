@@ -1,0 +1,6 @@
+/* Make sure that it's only included in the NewsPage Component */
+.media{
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}

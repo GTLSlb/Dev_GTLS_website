@@ -22,7 +22,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../css/NewsPageSlider.css";
-
+import "../../css/iframe.css";
 export default function NewsPage(props) {
     const { slug } = usePage().props;
     const [postslug, setPostSlug] = useState();
@@ -35,7 +35,6 @@ export default function NewsPage(props) {
                 "test";
 
             const endpoint = `/api/blogs?pagination%5BwithCount%5D=false&populate=*&filters[Slug][$eq]=${slug}&status=${status}`;
-            console.log(endpoint);
 
             const result = await getFromStrapi(endpoint);
 
@@ -89,6 +88,33 @@ export default function NewsPage(props) {
             (format) => format.toLowerCase() === value.toLowerCase()
         );
     }
+
+    const processOembed = (html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const oembedTag = doc.querySelector("oembed");
+
+        if (oembedTag) {
+            const url = oembedTag.getAttribute("url");
+            const iframe = document.createElement("iframe");
+            iframe.src = url;
+            iframe.width = "560"; // Set iframe dimensions as needed
+            iframe.height = "400";
+            iframe.allowFullscreen = true;
+            iframe.frameBorder = "0";
+
+            iframe.className = "custom-iframe flex items-center justify-center "; // Add your class names here
+
+            // Replace the oembed tag with the iframe
+            oembedTag.parentNode.replaceChild(iframe, oembedTag);
+            return doc.body.innerHTML;
+        }
+
+        return html;
+    };
+
+    const processedBody = processOembed(postslug?.Body);
+
     return (
         <>
             <div className="relative isolate bg-dark">
@@ -105,7 +131,9 @@ export default function NewsPage(props) {
                             )}
                             <div aria-hidden="true" className="relative">
                                 <img
-                                    src={strapiApiUrl + postslug.HeroSection.url}
+                                    src={
+                                        strapiApiUrl + postslug.HeroSection.url
+                                    }
                                     alt={postslug.HeroSection.alternativeText}
                                     className="h-[40rem] w-full object-cover  "
                                 />
@@ -140,9 +168,9 @@ export default function NewsPage(props) {
                                             }
                                         </time>
                                         <dd
-                                            className="mt-5"
+                                            className="mt-5 w-full"
                                             dangerouslySetInnerHTML={{
-                                                __html: postslug.Body,
+                                                __html: processedBody,
                                             }}
                                         ></dd>
                                         <div className="mt-16 relative">
