@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import tiger from "../assets/pictures/LogoWhite.webp";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import goldmap from "../assets/backgrounds/goldmap.webp";
 import {
-    QuestionMarkCircleIcon,
-    ArrowRightOnRectangleIcon,
+    ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
 import {
-    ChatBubbleLeftEllipsisIcon,
-    MagnifyingGlassIcon,
+    ChatBubbleLeftEllipsisIcon
 } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
 import { PublicClientApplication } from "@azure/msal-browser";

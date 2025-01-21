@@ -35,6 +35,7 @@ export default function Login({ status, canResetPassword }) {
 <div className="h-screen w-full">
             <LoginPage
                 appDomain={appDomain}
+                googlekey={googleKey}
                 redirectURL="/landingPage"
                 loginURL="/loginComp"
                 gtamURl={gtamURl}
