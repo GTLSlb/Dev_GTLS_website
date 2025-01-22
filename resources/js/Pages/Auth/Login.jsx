@@ -37,6 +37,7 @@ export default function Login({ status, canResetPassword }) {
                 appDomain={appDomain}
                 redirectURL="/landingPage"
                 loginURL="/loginComp"
+                microsoftURL="/microsoftToken"
                 gtamURl={gtamURl}
                 googlekey={googleKey}
                 pca={pca}
