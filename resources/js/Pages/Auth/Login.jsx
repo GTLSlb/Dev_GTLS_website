@@ -38,13 +38,13 @@ export default function Login({ status, canResetPassword }) {
                 googlekey={googleKey}
                 redirectURL="/landingPage"
                 loginURL="/loginComp"
+                microsoftURL="/microsoftToken"
                 gtamURl={gtamURl}
                 pca={pca}
                 canResetPassword={true}
                 handleForgotPassword={() =>
                     (window.location.href = "/forgot-password")
                 }
-                googlekey={googleKey}
                 gtlsLogo={Logo}
                 backToHomeURL={backToHomeURL}
                 microsoftLogo={MicrosoftLogo}

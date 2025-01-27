@@ -227,6 +227,7 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
                     topBarLinks={topBarLinks}
                     phoneNb={getNavigation.PhoneNb}
                 />
+                <SearchWebsite />
                 <nav
                     className="mx-auto lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between"
                     aria-label="Global"
@@ -282,7 +283,6 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
                         topBarLinks={topBarLinks}
                         phoneNb={getNavigation.PhoneNb}
                     />
-                    <SearchWebsite />
                     <nav
                         className="mx-auto lg:max-w-7xl max-w-7xl px-6 pt-2 pb-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between"
                         aria-label="Global"

@@ -143,6 +143,20 @@ class SearchController extends Controller
                         'type' => 'string',
                     ];
                     break;
+                case "blogs":
+                    $fields[] = [
+                        'name' => 'body',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'slug',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'title',
+                        'type' => 'string',
+                    ];
+                    break;
                 case "pallet_terms":
                         $fields[] = [
                             'name' => 'body',
@@ -169,9 +183,49 @@ class SearchController extends Controller
                         'type' => 'string',
                     ];
                     break;
+                case "aboutuses":
+                case "technologies":
+                    $fields[] = [
+                        'name' => 'body',
+                        'type' => 'string',
+                    ];
+                    break;
+                case "safety_compliances":
+                case "terms":
+                    $fields[] = [
+                        'name' => 'body',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'title',
+                        'type' => 'string',
+                    ];
+                    break;
+                    case "going_greens":
+                    $fields[] = [
+                        'name' => 'body',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'title',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'description',
+                        'type' => 'string',
+                    ];
+                    break;
                 default:
                     $fields[] = [
                         'name' => 'body',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'title',
+                        'type' => 'string',
+                    ];
+                    $fields[] = [
+                        'name' => 'slug',
                         'type' => 'string',
                     ];
                     break;
@@ -188,10 +242,10 @@ class SearchController extends Controller
         return $schema;
     }
 
-    function get_url($item, $routes, $tableName) {
+    public function get_url($item, $routes, $tableName) {
         switch ($tableName) {
             case 'blogs':
-                return $routes[$tableName] . '/news/' . $item['slug'];
+                return $routes[$tableName] . '/' .$item['slug'];
             default:
                 return $routes[$tableName] ?? '';
         }
@@ -214,6 +268,7 @@ class SearchController extends Controller
             'services' => $url . '/#services',
             'socials' => $url . '/',
             'terms' => $url . '/',
+            'news_posts' => $url . '/news',
             'enquiries_types' => $url . '/contact_us',
         ];
 
@@ -287,11 +342,13 @@ class SearchController extends Controller
                 case 'blogs':
                     foreach ($tableData as $key => $value) {
                         if ($value['published_at'] !== null) {
-                            $body = isset($value['body']) ? $value['body'] : [];
+                            $combined_data = [
+                                ['id' => $value['id'], 'body' => $value['body'], 'title' => $value['title'], 'slug' => $value['slug'], 'url' => $this->get_url($value, $routes, $tableName)]
+                            ];
                             $data[] = [
                                 'tableName' => $value['title'],
-                                'url' => $url . '/news/' . $value['slug'],
-                                'data' => [['body' => $body]],
+                                'url' => $this->get_url($value, $routes, $tableName),
+                                'data' => $combined_data,
                                 'schema' => $this->addSchema(is_string($tableData), $value['title']),
                             ];
                         }
@@ -299,12 +356,29 @@ class SearchController extends Controller
                     break;
                 default:
                     $url = $routes[$tableName] ?? '';
-                    $data[] = [
-                        'tableName' => $tableName,
-                        'url' => $url,
-                        'data' => $tableData,
-                        'schema' => $this->addSchema(is_string($tableData), $tableName),
-                    ];
+                    $hasPublishedAtKey = $tableData->contains(function ($item) {
+                        return array_key_exists('published_at', $item);
+                    });
+
+                    // Filter the data if the key exists
+                    $filteredData = $hasPublishedAtKey ? $tableData->filter(function ($item) {
+                        return isset($item['published_at']) && $item['published_at'] !== null;
+                    }) : $tableData;
+
+                    // Reset the keys if needed
+                    $filteredData = $filteredData->values();
+
+                    // Check if there's any data with published_at not null
+                    if ($filteredData->isNotEmpty() && $filteredData->contains(function ($item) {
+                        return isset($item['published_at']) && $item['published_at'] !== null;
+                    })) {
+                        $data[] = [
+                            'tableName' => $tableName,
+                            'url' => $url,
+                            'data' => $filteredData,
+                            'schema' => $this->addSchema(is_string($tableData), $tableName),
+                        ];
+                    }
                     break;
             }
         }
@@ -317,6 +391,7 @@ class SearchController extends Controller
         // try {
             // Step 1: Retrieve existing documents
             $col = $this->client->collections[$obj['tableName']];
+
             $docFromDb = null;
             foreach ($components as $comp) {
                 if(gettype($comp) == 'string'){
@@ -401,10 +476,9 @@ class SearchController extends Controller
                     $this->addDocuments($component, $component);
                 }, $components);
             }else{
-
                     foreach ($components as $comp) {
                         $collectionExists = array_reduce($allCollections, function ($carry, $collection) use ($comp) {
-                            return $carry || $collection['name'] == $comp['tableName'];
+                            return $carry || $collection['name'] == isset($comp['tableName']) ? $comp['tableName'] : $comp['title'];
                         }, false);
                         // Create the collection if it doesn't exist
                         if (!$collectionExists) {
@@ -437,6 +511,7 @@ class SearchController extends Controller
                     ->search([
                         'q' => $query,
                         'query_by' => $col['searchParameters']['query_by'],
+                        'prioritize_exact_match' => true
                     ]);
                 $results = $response['hits'];
                 $allResults = array_merge($allResults, $results);

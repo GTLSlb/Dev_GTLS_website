@@ -9,6 +9,7 @@ import { Link } from "@inertiajs/inertia-react";
 import { PhoneIcon } from "@heroicons/react/20/solid";
 import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
 import TrainNotification from "./TrainNotification";
+import SearchWebsite from "@/Pages/Component/SearchWebsite";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
@@ -169,6 +170,7 @@ const Header = ({
         className="mx-auto lg:max-w-7xl max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8 flex items-center justify-between"
         aria-label="Global"
     >
+        <SearchWebsite />
         <div className="flex lg:flex-1">
             <Logo Image={getNavigation.Icon.url} />
         </div>
