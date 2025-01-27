@@ -91,7 +91,6 @@ export default function News(props) {
 
     const strapiApiUrl = window.Laravel.strapiAppUrl;
 
-    console.log(getPosts?.RelatedBlogs?.blogs);
     return (
         <div className="pb-20">
             <div className=" h-20" id="news"></div>
@@ -119,7 +118,7 @@ export default function News(props) {
 
                         <div className="grid lg:grid-cols-3 gap-4">
                             {getPosts?.RelatedBlogs?.blogs
-                                ?.slice() 
+                                ?.slice()
                                 ?.sort(
                                     (a, b) =>
                                         new Date(b.publishedAt) -

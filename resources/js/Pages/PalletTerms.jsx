@@ -22,7 +22,6 @@ export default function PalletTerms(props) {
                 );
 
                 if (termReq.success) {
-                    console.log(termReq.data);
                     setPalletTerm(termReq.data);
                 }
                 // Set loading to false when all requests are completed

@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { get } from "react-scroll/modules/mixins/scroller";
 
 function ContactUsForm({ getFormSection }) {
-    console.log(getFormSection);
     const [enquiryValue, setEnquiryValue] = useState(new Set([]));
     const [heardOfUsValue, setHeardOfUsValue] = useState(new Set([]));
     const [formData, setFormData] = useState({
@@ -287,8 +286,8 @@ function ContactUsForm({ getFormSection }) {
                                 <button
                                     type="submit"
                                     disabled={!recaptchaValue || isLoading}
-                                    className={`block w-full md:ml-auto md:w-full rounded-3xl 
-                                    px-3.5 py-2.5 text-center text-md font-bold shadow-sm 
+                                    className={`block w-full md:ml-auto md:w-full rounded-3xl
+                                    px-3.5 py-2.5 text-center text-md font-bold shadow-sm
                                     focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                                     ${
                                         !recaptchaValue || isLoading

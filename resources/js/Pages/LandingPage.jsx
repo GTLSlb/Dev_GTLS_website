@@ -273,7 +273,6 @@ export default function LandingPage({}) {
         axios
             .get("/footer")
             .then((response) => {
-                // console.log('fetching data:',response.data);
                 setfooter(response.data);
             })
             .catch((error) => {

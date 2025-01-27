@@ -39,7 +39,6 @@ export default function NewsPage(props) {
             const result = await getFromStrapi(endpoint);
 
             if (result.success) {
-                console.log(result.data[0]);
                 setPostSlug(result.data[0]);
                 setLoading(false);
             } else {

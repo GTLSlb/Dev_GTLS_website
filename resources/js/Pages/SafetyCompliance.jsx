@@ -21,7 +21,6 @@ export default function AboutUs(props) {
                 );
 
                 if (safetyComplianceReq.success) {
-                    console.log(safetyComplianceReq.data);
                     setSafetyCompliance(safetyComplianceReq.data);
                 }
                 // Set loading to false when all requests are completed

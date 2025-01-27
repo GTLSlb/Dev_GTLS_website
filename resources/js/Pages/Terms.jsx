@@ -18,7 +18,6 @@ export default function Terms() {
                 const termReq = await getFromStrapi(`/api/term?pLevel=4`);
 
                 if (termReq.success) {
-                    console.log(termReq.data);
                     setTerm(termReq.data);
                 }
                 // Set loading to false when all requests are completed

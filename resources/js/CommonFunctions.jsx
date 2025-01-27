@@ -61,7 +61,6 @@ export async function handleSessionExpiration() {
 
 export function clearMSALLocalStorage() {
     const appDomain = window.Laravel.appDomain;
-    console.log(appDomain);
 
     // Find all keys in localStorage starting with 'msal' and remove them
     const msalKeys = Object.keys(localStorage).filter((key) =>

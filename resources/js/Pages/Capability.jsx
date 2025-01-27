@@ -21,7 +21,6 @@ export default function Capability(props) {
                 );
 
                 if (capabilityReq.success) {
-                    console.log(capabilityReq.data);
                     setCapability(capabilityReq.data);
                 }
                 // Set loading to false when all requests are completed
