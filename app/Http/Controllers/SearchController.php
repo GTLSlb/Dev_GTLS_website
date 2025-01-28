@@ -252,7 +252,7 @@ class SearchController extends Controller
     }
 
     public function fetchData(){
-        $url = getenv('URL');
+        $url = $_ENV['APP_URL'];
         $routes = [
             'aboutuses' => $url . '/aboutus',
             'blogs' => $url . '/news',
@@ -517,6 +517,9 @@ class SearchController extends Controller
                 $allResults = array_merge($allResults, $results);
             }
 
+            usort($allResults, function($a, $b) {
+                return $b['text_match_info']['score'] <=> $a['text_match_info']['score'];
+            });
             return response()->json(['data' => $allResults, 'message' => "Search Success"], 200);
         }catch(Exception $e){
             if(str_contains($e->getMessage(), 'cURL error') == 1){

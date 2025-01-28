@@ -6,12 +6,12 @@ import axios from "axios";
 import SearchPopup from "./SearchPopup";
 
 export default function SearchWebsite() {
-    const [isOpen, setIsOpen] = useState(false);
-
     const host = window.Laravel.typesenseHost;
     const protocol = window.Laravel.typesenseProtocol;
     const port = window.Laravel.typesensePort;
     const apiKey = window.Laravel.typesenseAdminKey;
+    const [showSearch, setShowSearch] = useState(false);
+    const [errMsg, setError] = useState("");
 
     const getPathname = (url) => {
         const parsedUrl = new URL(url);
@@ -137,7 +137,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "pallet_terms") {
+            } else if (item.tableName == "pallet_terms") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -155,7 +155,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "capability_statements") {
+            } else if (item.tableName == "capability_statements") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -164,7 +164,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "aboutuses") {
+            } else if (item.tableName == "aboutuses") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -173,7 +173,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "technologies") {
+            } else if (item.tableName == "technologies") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -182,7 +182,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "going_greens") {
+            } else if (item.tableName == "going_greens") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -191,7 +191,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "safety_compliances") {
+            } else if (item.tableName == "safety_compliances") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -200,7 +200,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else if (item.tableName == "terms") {
+            } else if (item.tableName == "terms") {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -209,7 +209,7 @@ export default function SearchWebsite() {
                         highlight_full_fields: "",
                     },
                 };
-            }else {
+            } else {
                 return {
                     name: item.tableName,
                     title: item.tableName,
@@ -255,8 +255,8 @@ export default function SearchWebsite() {
                     config.query_by = "body, title, slug";
                     break;
                 case "pallet_terms":
-                        config.query_by = "body, title";
-                        break;
+                    config.query_by = "body, title";
+                    break;
                 case "enquiries_types":
                     config.query_by = "name";
                     break;
@@ -327,32 +327,54 @@ export default function SearchWebsite() {
 
     const addCollections = async () => {
         const formData = {
-            collections: components
-        }
-        axios.post('/addCollections', formData)
-        .then((res) => {
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }
+            collections: components,
+        };
+        axios
+            .post("/addCollections", formData)
+            .then((res) => {})
+            .catch((err) => {
+                console.log(err);
+            });
+    };
     useEffect(() => {
         if (components?.length > 0 && indices?.length > 0) {
-            addCollections()
+            addCollections();
         }
     }, [components, indices]);
+
+    function findElementByText(text) {
+        const elements = document.body.getElementsByTagName("*");
+
+        for (let el of elements) {
+            if (el.textContent.includes(text)) {
+                return el; // Return the first matching element
+            }
+        }
+        return null; // Return null if no matching element is found
+    }
+
 
     function navigateToSelector(selector, url) {
         if (getPathname(url) !== window.location.pathname) {
             window.location.href = url;
+            setShowSearch(false);
+            handleClearInput();
         }
-        const elements = document.body.getElementsByTagName("*");
-        const selectorParts = selector.split(" > ");
-        const currentElement = findElement(elements, selectorParts);
+        else{
+            const field = selector?.highlights?.[0]?.field == 'slug' ? selector?.highlights?.[1]?.field : selector?.highlights?.[0]?.field;
+            const elements = document.body.getElementsByTagName("*");
 
-        if (currentElement) {
-            setIsOpen(false);
-            currentElement.scrollIntoView({ behavior: "smooth" });
+            const selectorParts = selector?.document[field].split(" > ");
+            const currentElement = findElementByText(selectorParts);
+
+            if (currentElement) {
+                setShowSearch(false);
+                currentElement.scrollIntoView({ behavior: "smooth" });
+                handleClearInput();
+            }else{
+                setShowSearch(false);
+                handleClearInput();
+            }
         }
     }
 
@@ -368,7 +390,7 @@ export default function SearchWebsite() {
 
         // If the query is not found, return original text
         if (index === -1) {
-            return normalizedText.slice(0, 200) + '...';
+            return normalizedText.slice(0, 200) + "...";
         }
 
         // Calculate the start and end positions for the result
@@ -398,12 +420,7 @@ export default function SearchWebsite() {
         return (
             <div
                 className="px-2 py-1 hover:bg-goldt/50 hover:cursor-pointer"
-                onClick={() =>
-                    navigateToSelector(
-                        hit?.document?.selector,
-                        hit?.document?.url
-                    )
-                }
+                onClick={() => navigateToSelector(hit, hit?.document?.url)}
             >
                 <h3 className="text-gray-600 text-xs">{title}</h3>
                 <p className="hit-description">{description}</p>
@@ -415,50 +432,64 @@ export default function SearchWebsite() {
     const [isLoading, setIsLoading] = useState(false);
     const handleSearchChange = async (event) => {
         setIsLoading(true);
-        setIsOpen(true);
+        setShowSearch(true);
         setError("");
         const query = event.target.value;
         setSearchQuery(event.target.value);
 
-        axios.post('/searchCollections', {
-            query: query,
-            indices: indices
-        }).then((res) => {
-            setResults(res.data.data);
-            setIsLoading(false);
-        })
-        .catch((err) => {
-            console.log(err);
-            setIsLoading(false);
-            setError(err.response.data.message || "Something went wrong");
-        })
+        axios
+            .post("/searchCollections", {
+                query: query,
+                indices: indices,
+            })
+            .then((res) => {
+                setResults(res.data.data);
+                setIsLoading(false);
+            })
+            .catch((err) => {
+                console.log(err);
+                setIsLoading(false);
+                setResults([]);
+                setError(err.response.data.message || "Something went wrong");
+            });
     };
 
-    const [showSearch, setShowSearch] = useState(false);
-    const [errMsg, setError] = useState("");
     const handleFeedbackButtonClick = () => {
         setShowSearch(!showSearch);
     };
     const handlePopUpClose = () => {
         setShowSearch(false);
+        handleClearInput();
     };
 
-    const handleClearInput = () =>{
-        setResults([])
-        setSearchQuery("")
-    }
+    const handleClearInput = () => {
+        setResults([]);
+        setSearchQuery("");
+    };
 
     return (
         <div className="fixed right-0 top-[22%] z-50">
-        <button
-            className="flex items-center justify-center bg-goldd text-black p-2 py-6 rounded font-bold"
-            onClick={handleFeedbackButtonClick}
-        >
-            <SearchIcon />
-        </button>
-        {showSearch &&
-            <SearchPopup errMsg={errMsg} handleClearInput={handleClearInput} Hit={Hit} results={results} isLoading={isLoading} searchQuery={searchQuery } handleSearchChange={handleSearchChange} handlePopUpClose={handlePopUpClose} isOpen={showSearch} indices={indices} setIsOpen={setShowSearch}/>
-        }
-    </div>
+            <button
+                className="flex items-center justify-center bg-goldd text-black p-2 py-6 rounded font-bold"
+                onClick={handleFeedbackButtonClick}
+            >
+                <SearchIcon />
+            </button>
+            {showSearch && (
+                <SearchPopup
+                    errMsg={errMsg}
+                    handleClearInput={handleClearInput}
+                    Hit={Hit}
+                    results={results}
+                    isLoading={isLoading}
+                    searchQuery={searchQuery}
+                    handleSearchChange={handleSearchChange}
+                    handlePopUpClose={handlePopUpClose}
+                    isOpen={showSearch}
+                    indices={indices}
+                    setIsOpen={setShowSearch}
+                />
+            )}
+        </div>
     );
 }
