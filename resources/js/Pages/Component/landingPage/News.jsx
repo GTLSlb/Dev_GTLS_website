@@ -116,17 +116,18 @@ export default function News(props) {
                             ></div>
                         </div>
 
-                        <div className="grid lg:grid-cols-3 gap-4">
+                        <div className="grid lg:grid-cols-3 gap-12">
                             {getPosts?.RelatedBlogs?.blogs
                                 ?.slice()
                                 ?.sort(
                                     (a, b) =>
                                         new Date(b.publishedAt) -
                                         new Date(a.publishedAt)
-                                ).map((post) => (
+                                )
+                                .map((post) => (
                                     <div
                                         key={post.documentId}
-                                        className="px-5  "
+                                        className=""
                                     >
                                         <Link
                                             href={route("newsPage", {
@@ -145,8 +146,9 @@ export default function News(props) {
                                                             post.CoverImage
                                                                 .alternativeText
                                                         }
-                                                        className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
+                                                        className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-center  w-full "
                                                     />
+
                                                     <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                                 </div>
                                                 <article
