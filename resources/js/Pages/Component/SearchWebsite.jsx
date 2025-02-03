@@ -342,12 +342,34 @@ export default function SearchWebsite() {
         }
     }, [components, indices]);
 
-    function navigateToSelector(selector, url) {
+    function findElement(elements, selectorParts) {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(selectorParts, 'text/html');
+        const elementsInDoc = doc.body.getElementsByTagName('*');
+
+        function findMatchingElement(elements, elementsInDoc) {
+          for (let i = 0; i < elements.length; i++) {
+            const element = elements[i];
+            for (let j = 0; j < elementsInDoc.length; j++) {
+              const elementInDoc = elementsInDoc[j];
+              if (element.outerHTML === elementInDoc.outerHTML) {
+                return element;
+              }
+            }
+          }
+          return null;
+        }
+
+        return findMatchingElement(elements, elementsInDoc);
+      }
+    function navigateToSelector(selector, url, doc) {
         if (getPathname(url) !== window.location.pathname) {
             window.location.href = url;
         }
         const elements = document.body.getElementsByTagName("*");
-        const selectorParts = selector.split(" > ");
+        const highlightKey = Object.keys(doc.highlight)[0];
+
+        const selectorParts = selector == undefined ? doc.document[highlightKey] : selector.split(" > ");
         const currentElement = findElement(elements, selectorParts);
 
         if (currentElement) {
@@ -401,7 +423,8 @@ export default function SearchWebsite() {
                 onClick={() =>
                     navigateToSelector(
                         hit?.document?.selector,
-                        hit?.document?.url
+                        hit?.document?.url,
+                        hit
                     )
                 }
             >
