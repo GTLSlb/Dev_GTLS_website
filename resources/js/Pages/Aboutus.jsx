@@ -96,7 +96,7 @@ export default function AboutUs(props) {
                                 Today, turnover is more than $55 million a year
                                 and growing. Gold Tiger’s wholly owned Volvo
                                 transport fleet has grown to more than 120 prime
-                                movers, 280 trailers and 40 delivery trucks and
+                                movers, 180 trailers and 40 delivery trucks and
                                 the workforce (drivers and administration) has
                                 passed 230. The growth, while rapid, has been
                                 strengthened by Mr El Masri’s decisions to use
@@ -204,8 +204,7 @@ export default function AboutUs(props) {
                             </p>
                             <p className="mt-3 text-smooth">
                                 Today, Gold Tiger transports more than 250,000
-                                million tonnes of freight around Australia
-                                annually.
+                                tonnes of freight around Australia annually.
                             </p>
                             <p className="mt-3 text-smooth">
                                 We have more than 40 clients from industries
