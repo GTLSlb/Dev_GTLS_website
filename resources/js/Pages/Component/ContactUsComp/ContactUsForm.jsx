@@ -256,7 +256,7 @@ function ContactUsForm() {
                         )}
                         <div className="flex items-center justify-between">
                             <ReCAPTCHA
-                                sitekey="6Lf30MEmAAAAAA4_iPf9gTM1VMNO9iSFKyaAC1P0"
+                                sitekey="6LemlMEmAAAAANZxj_04B8Am7RXM9t0NJPnz4Mqs"
                                 onChange={handleRecaptchaChange}
                                 onExpired={handleRecaptchaExpired}
                                 className="mt-4 flex justify-center"

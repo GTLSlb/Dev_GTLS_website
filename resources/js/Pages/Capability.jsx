@@ -1,12 +1,8 @@
 import { Head } from "@inertiajs/react";
+import { useEffect, useState } from "react";
 import jobs from "../assets/pictures/jobs.webp";
-import pallet from "../assets/pictures/pallet.webp";
-import { useState, useEffect } from "react";
-import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
 import Footer from "./Component/landingPage/Footer";
-import ContactForm from "./Component/landingPage/ContactForm";
-import pdf from "../../../public/docs/Goldtiger-catalogue.pdf"
 import Navbars from "./Component/Navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
@@ -179,7 +175,7 @@ export default function Capability(props) {
                                 <p className="text-gray-200 mb-3">
                                     We use leading technologies throughout our
                                     operations, from track and trace through to
-                                    radio frequency identification, sign on
+                                    RF Scanning, sign on
                                     glass and inventory management software. We
                                     can also integrate our systems with our
                                     clients’ systems, enabling you to see the
@@ -255,7 +251,7 @@ export default function Capability(props) {
                                             Management team members with
                                             extensive experience in the
                                             transport industry at all levels.
-                                            Our workforce numbers more than 120
+                                            Our workforce numbers more than 350
                                             and growing.
                                         </span>
                                     </li>

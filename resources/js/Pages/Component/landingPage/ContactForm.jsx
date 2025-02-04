@@ -301,7 +301,7 @@ class ContactForm extends Component {
                                 </div>
                             </div>
                             <ReCAPTCHA
-                                sitekey="6Lf30MEmAAAAAA4_iPf9gTM1VMNO9iSFKyaAC1P0"
+                                sitekey="6LemlMEmAAAAANZxj_04B8Am7RXM9t0NJPnz4Mqs"
                                 onChange={this.handleRecaptchaChange}
                                 onExpired={this.handleRecaptchaExpired}
                                 className="mt-0 flex justify-center"

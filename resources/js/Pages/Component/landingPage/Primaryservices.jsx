@@ -46,7 +46,7 @@ const features = [
     {
         name: "Distribution",
         description:
-            "Distribute from our warehouses to your distribution hubs or let us deliver that last mile to your individual stores. We use leading technologies throughout our operations, from track-and-trace through to radio frequency identification, customer portal, EDI, ePOD, sign-on glass and inventory management software.",
+            "Distribute from our warehouses to your distribution hubs or let us deliver that last mile to your individual stores. We use leading technologies throughout our operations, from track-and-trace through to RF Scanning, customer portal, EDI, ePOD, sign-on glass and inventory management software.",
             icon: earth,
         state: "",
     },
