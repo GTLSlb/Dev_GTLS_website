@@ -1,19 +1,23 @@
-import { useState, Fragment, useEffect } from "react";
+import { useState, Fragment, useEffect, useRef } from "react";
 import { Dialog, Transition, Popover } from "@headlessui/react";
 import {
     ChevronDownIcon,
     Bars3Icon,
     XMarkIcon,
 } from "@heroicons/react/24/outline";
+import { Input, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import { Link } from "@inertiajs/inertia-react";
 import { PhoneIcon } from "@heroicons/react/20/solid";
 import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
 import TrainNotification from "./TrainNotification";
 import SearchWebsite from "@/Pages/Component/SearchWebsite";
+import SearchIcon from "@mui/icons-material/Search";
+import SearchButton from "./SearchComponent/SearchButton";
+import SearchBoxContainer from "./SearchComponent/SearchBoxContainer";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
-const TopBar = ({ topBarLinks, phoneNb }) => (
+const TopBar = ({ topBarLinks, phoneNb, toggleSearch }) => (
     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd">
         <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
             <div className="hidden lg:flex gap-x-7">
@@ -27,16 +31,20 @@ const TopBar = ({ topBarLinks, phoneNb }) => (
                     </a>
                 ))}
             </div>
-            <a
-                href={`tel:${phoneNb}`}
-                className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
-            >
-                <PhoneIcon
-                    className="h-5 sm:h-6 w-auto p-0.5"
-                    aria-hidden="true"
-                />
-                Call: {phoneNb}
-            </a>
+
+            <div className="flex gap-4 items-center">
+                <SearchButton toggleSearch={toggleSearch} />
+                <a
+                    href={`tel:${phoneNb}`}
+                    className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
+                >
+                    <PhoneIcon
+                        className="h-5 sm:h-6 w-auto p-0.5"
+                        aria-hidden="true"
+                    />
+                    Call: {phoneNb}
+                </a>
+            </div>
         </div>
     </div>
 );
@@ -271,10 +279,117 @@ const ScrollNavBar = ({
         </div>
     );
 };
+
+const SearchBox = ({ isSearchActive, closeSearch }) => {
+    return (
+        <div
+            className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] absolute overflow-auto inset-0 transition-opacity duration-500 ${
+                isSearchActive ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
+        >
+            <div className="flex flex-col items-center w-1/2 ">
+                <Input
+                    placeholder="Search..."
+                    variant="underlined"
+                    startContent={<SearchIcon />}
+                    className="w-full px-4 py-2 rounded-md "
+                    isClearable={true}
+                    classNames={{
+                        input: "border-0 focus:ring-0 focus:shadow-none !text-white",
+                        inputWrapper:
+                            "!border-0 focus:ring-0 focus:shadow-none",
+                        inputWrapper:
+                            "after:!bg-[#ffffff] after:transition-colors after:duration-300 ",
+                        clearButton: "text-[#ffffff] hover:text-[#ffffff]",
+                    }}
+                    onChange={(e) => console.log(e.target.value)}
+                />
+                <div>
+                    {" "}
+                    <div className="border-b-2 border-goldt text-goldt w-fit mb-4 ">
+                        Latest News
+                    </div>
+                    <div className="flex w-full justify-center gap-4">
+                        <Card className="flex-1 bg-transparent border-2 border-goldt p-0">
+                            <CardHeader className="flex-col items-start p-3 pb-4">
+                                <Image
+                                    alt="Card background"
+                                    className="object-cover rounded-xl w-full"
+                                    src="http://localhost:1337/uploads/B_Triple_3c69e35556.webp"
+                                />
+                            </CardHeader>
+                            <CardBody className="overflow-visible py-2">
+                                <p className="text-tiny text-white uppercase font-bold line-clamp-2">
+                                    Introducing Gold Tiger’s New B-Triple
+                                    Solution: Expanding Capacity and Efficiency
+                                    in Freight
+                                </p>
+                                <p className="text-xs my-2 text-goldt">
+                                    2024-12-24
+                                </p>
+                            </CardBody>
+                        </Card>
+                        <Card className="flex-1 bg-goldo">
+                            <CardHeader className="flex-col items-start">
+                                <Image
+                                    alt="Card background"
+                                    className="object-cover rounded-xl"
+                                    src="http://localhost:1337/uploads/B_Triple_3c69e35556.webp"
+                                />
+                            </CardHeader>
+                            <CardBody className="overflow-visible py-2">
+                                <p className="text-tiny uppercase font-bold line-clamp-2">
+                                    Introducing Gold Tiger’s New B-Triple
+                                    Solution: Expanding Capacity and Efficiency
+                                    in Freight
+                                </p>
+                                <p className="text-xs my-2 text-goldt">
+                                    2024-12-24
+                                </p>
+                            </CardBody>
+                        </Card>
+                        <Card className="py-4 flex-1">
+                            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                                <p className="text-tiny uppercase font-bold">
+                                    Daily Mix
+                                </p>
+                                <small className="text-default-500">
+                                    12 Tracks
+                                </small>
+                                <h4 className="font-bold text-large">
+                                    Frontend Radio
+                                </h4>
+                            </CardHeader>
+                            <CardBody className="overflow-visible py-2">
+                                <Image
+                                    alt="Card background"
+                                    className="object-cover rounded-xl"
+                                    src="https://heroui.com/images/hero-card-complete.jpeg"
+                                    width={270}
+                                />
+                            </CardBody>
+                        </Card>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
     const [navLinks, setNavLinks] = useState([]);
+    const searchRef = useRef(null);
+
+    const [isSearchActive, setIsSearchActive] = useState(false);
+
+    const toggleSearch = () => {
+        setIsSearchActive((prev) => !prev);
+    };
+
+    const closeSearch = () => {
+        setIsSearchActive(false);
+    };
 
     useEffect(() => {
         setNavLinks(
@@ -299,9 +414,46 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
                 })
         );
     }, [getNavigation]);
+
+    useEffect(() => {
+        // Close search if user clicks outside of the search box
+        const handleClickOutside = (event) => {
+            if (
+                searchRef.current &&
+                !searchRef.current.contains(event.target)
+            ) {
+                closeSearch();
+            }
+        };
+
+        // Close search if user scroll outside of the search box
+        const handleScroll = () => {
+            closeSearch();
+        };
+
+        if (isSearchActive) {
+            document.addEventListener("mousedown", handleClickOutside);
+            window.addEventListener("scroll", handleScroll);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [isSearchActive, closeSearch]);
+
     return (
-        <div>
-            <TopBar topBarLinks={topBarLinks} phoneNb={getNavigation.PhoneNb} />
+        <div ref={searchRef}>
+            <TopBar
+                topBarLinks={topBarLinks}
+                phoneNb={getNavigation.PhoneNb}
+                isSearchActive={isSearchActive}
+                setIsSearchActive={setIsSearchActive}
+                toggleSearch={toggleSearch}
+            />
             <div className="absolute z-30 w-full">
                 <Header
                     navLinks={navLinks}
@@ -320,6 +472,8 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
                     navLinks={navLinks}
                     getNavigation={getNavigation}
                 />
+
+                <SearchBoxContainer isSearchActive={isSearchActive} />
             </div>
         </div>
     );

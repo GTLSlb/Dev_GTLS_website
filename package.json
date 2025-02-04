@@ -51,6 +51,7 @@
         "gtls-npm-libraries": "^1.1.13",
         "http-proxy-middleware": "^2.0.6",
         "js-cookie": "^3.0.5",
+        "lodash": "^4.17.21",
         "lord-icon-element": "^4.1.1",
         "lottie-web": "^5.11.0",
         "mocha": "^10.2.0",

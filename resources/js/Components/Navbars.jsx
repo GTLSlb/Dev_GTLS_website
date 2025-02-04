@@ -11,6 +11,7 @@ import TrainNotification from "./TrainNotification";
 import SearchWebsite from "@/Pages/Component/SearchWebsite";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
+
 // Top Bar component
 function TopBar({ topBarLinks, phoneNb }) {
     return (
@@ -27,6 +28,7 @@ function TopBar({ topBarLinks, phoneNb }) {
                         </a>
                     ))}
                 </div>
+                
                 <a
                     href={`tel:${phoneNb}`}
                     className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
