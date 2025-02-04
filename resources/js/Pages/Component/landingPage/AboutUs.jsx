@@ -1,7 +1,6 @@
 import aboutimage from "../../../assets/pictures/goldtiger-imad-elmasri.webp";
 import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
 
-
 const faqs = [
     {
         id: 1,
@@ -43,12 +42,8 @@ const faqs = [
 
 export default function AboutUs() {
     return (
-        
         <div className="bg-dark py-32" id="aboutus">
-            
             <div className="absolute right-0 ">
-            
-                        
                 <img src={aboutcircle} alt="circle" />
             </div>
             <div
@@ -58,30 +53,43 @@ export default function AboutUs() {
                 <div className="flex flex-col md:flex-row mx-auto max-w-7xl items-center  px-6 lg:px-8 gap-x-28">
                     <div className="mx-auto mt-10 md:mt-0 w-full relative">
                         <div className="absolute p-4 bg-gradient-to-r from-goldd via-goldt -left-10 bottom-10 -top-10 right-1 hidden lg:block -z-10 rounded-3xl">
-                                <div className="h-full  bg-dark rounded-2xl"></div>
+                            <div className="h-full  bg-dark rounded-2xl"></div>
                         </div>
-                        <img src={aboutimage} alt="truck" className="rounded-3xl"/>
+                        <img
+                            src={aboutimage}
+                            alt="truck"
+                            className="rounded-3xl"
+                        />
                     </div>
                     <div className="mx-auto  w-full">
                         <p className="mt-2 text-4xl font-bold tracking-tight text-goldt sm:text-5xl">
                             About Gold<span className=""> Tiger</span>
                         </p>
                         <p className="mt-6  text-base  text-gray-300">
-                            Gold Tiger Logistics Solutions (Gold Tiger) was established in 2006 by the 19-year-old Imad El Masri, who was a truck enthusiast. He began with one truck and one driver – himself – and a first-year turnover of $50,000. Early in his career he became the youngest driver in Australia to earn a B-double licence.
+                            Gold Tiger Logistics Solutions (Gold Tiger) was
+                            established in 2006 by the 19-year-old Imad El
+                            Masri, who was a truck enthusiast. He began with one
+                            truck and one driver – himself – and a first-year
+                            turnover of $50,000. Early in his career he became
+                            the youngest driver in Australia to earn a B-double
+                            licence.
                             <br></br>
                         </p>
                         <p className="mt-6  text-base  text-gray-300">
-                            With his passion for the business and his love of trucks, by the end of 2007 Mr El Masri had 10 trucks. By 2010 he had 20 trucks and had started doing interstate linehaul. The business’s continuing rapid growth prompted Mr El Masri to incorporate Gold Tiger in 2010.
-                            
+                            With his passion for the business and his love of
+                            trucks, by the end of 2007 Mr El Masri had 10
+                            trucks. By 2010 he had 20 trucks and had started
+                            doing interstate linehaul.
                         </p>
                         <div className="text-goldt mt-3">
-                            <a href={"/aboutus"} className="text-sm leading-6 text-goldl hover:text-white">
+                            <a
+                                href={"/aboutus"}
+                                className="text-sm leading-6 text-goldl hover:text-white"
+                            >
                                 Read More
                             </a>
                         </div>
                     </div>
-
-                    
                 </div>
             </div>
         </div>

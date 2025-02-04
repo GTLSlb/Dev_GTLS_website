@@ -90,9 +90,7 @@ export default function AboutUs(props) {
                                 With his passion for the business and his love
                                 of trucks, by the end of 2007 Mr El Masri had 10
                                 trucks. By 2010 he had 20 trucks and had started
-                                doing interstate linehaul. The business’s
-                                continuing rapid growth prompted Mr El Masri to
-                                incorporate Gold Tiger in 2010.
+                                doing interstate linehaul.
                             </p>
                             <p className="mt-3 text-smooth">
                                 Today, turnover is more than $55 million a year
