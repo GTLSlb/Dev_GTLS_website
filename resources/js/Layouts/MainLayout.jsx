@@ -13,6 +13,7 @@ function MainLayout({ children, loading, isHomeScreen }) {
     const [getTrainNotification, setTrainNotification] = useState();
     const [getfooter, setfooter] = useState([]);
     const [getNavigation, setNavigation] = useState([]);
+    const [getLatestBlogs, setLatestBlogs] = useState([]);
     const [layoutloading, setLayoutLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
@@ -25,11 +26,18 @@ function MainLayout({ children, loading, isHomeScreen }) {
                 const trainNotificationReq = await getFromStrapi(
                     `/api/train-notification/?pLevel=2`
                 );
+
+                const latestBlogs = await getFromStrapi(
+                    `/api/blogs?sort=DatePublished:desc&pagination[withCount]=true&pagination[limit]=3&fields=Title,Slug,DatePublished&populate=CoverImage`
+                );
                 if (footerReq.success) {
                     setfooter(footerReq.data);
                 }
                 if (navigationReq.success) {
                     setNavigation(navigationReq.data);
+                }
+                if (latestBlogs.success) {
+                    setLatestBlogs(latestBlogs.data);
                 }
                 if (trainNotificationReq.success) {
                     setTrainNotification(trainNotificationReq.data);
@@ -64,6 +72,7 @@ function MainLayout({ children, loading, isHomeScreen }) {
                             getNavigation={getNavigation}
                             getTrainNotification={getTrainNotification}
                             isHomeScreen={isHomeScreen}
+                            getLatestBlogs={getLatestBlogs}
                         />
 
                         <div>{children}</div>

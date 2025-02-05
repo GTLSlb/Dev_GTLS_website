@@ -1,24 +1,44 @@
 import React from "react";
-import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
+import { Link } from "@inertiajs/react";
 function SearchCard({ blog }) {
-    const imageSrc = blog.image;
-    const description = blog.title;
-    const date = blog.date;
+    const strapiApiUrl = window.Laravel.strapiAppUrl;
+
+    const imageSrc = strapiApiUrl + blog.CoverImage.url;
+    const imageAlt = blog.CoverImage.alternativeText;
+    const description = blog.Title;
+    const date = blog.DatePublished;
+
     return (
-        <Card className="flex-1 bg-transparent border-1 rounded-2xl border-goldt p-0">
-            <CardHeader className="flex-col items-start p-3 pb-0 ">
-                <Image
-                    alt="Card background"
-                    className="object-cover rounded-xl  w-full"
-                    src={imageSrc}
-                />
-            </CardHeader>
-            <CardBody className="overflow-visible py-2 px-3 h-auto pb-3 ">
-                <p className="text-tiny text-white uppercase line-clamp-3">
-                    {description}
-                </p>
-                <p className="text-xs mt-2 text-goldt">{date}</p>
-            </CardBody>
+        <Card
+            className="flex-1 bg-transparent border-1 rounded-2xl border-goldt p-0"
+            isPressable
+            onPress={() => {
+                console.log(blog);
+            }}
+        >
+            <Link
+                href={route("newsPage", {
+                    slug: blog.Slug,
+                })}
+                className=""
+            >
+                <CardHeader className="flex-col items-start p-3 pb-0 ">
+                    <img
+                        src={imageSrc}
+                        alt={imageAlt}
+                        className="w-full h-[200px] object-cover rounded-xl"
+                    />
+                </CardHeader>
+                <CardBody className="overflow-visible px-3 h-auto pb-0">
+                    <p className="text-tiny text-white line-clamp-3">
+                        {description}
+                    </p>
+                </CardBody>
+                <CardFooter className="pt-1">
+                    <p className="text-xs mt-2 text-goldt">{date}</p>
+                </CardFooter>
+            </Link>
         </Card>
     );
 }

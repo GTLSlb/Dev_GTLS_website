@@ -3,7 +3,9 @@ import SearchWebsite from "@/Pages/Component/SearchWebsite";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { PhoneIcon } from "@heroicons/react/20/solid";
 import {
-    Bars3Icon, ChevronDownIcon, XMarkIcon
+    Bars3Icon,
+    ChevronDownIcon,
+    XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/inertia-react";
 import { Fragment, useEffect, useRef, useState } from "react";
@@ -292,6 +294,7 @@ const HomePageNavBar = ({
     getTrainNotification,
     getNavigation,
     isHomeScreen,
+    getLatestBlogs,
 }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
@@ -387,7 +390,10 @@ const HomePageNavBar = ({
             />
 
             <div className="fixed z-50 w-full" style={{ top: "22px" }}>
-                <SearchBoxContainer isSearchActive={isSearchActive} />
+                <SearchBoxContainer
+                    isSearchActive={isSearchActive}
+                    getLatestBlogs={getLatestBlogs}
+                />
             </div>
 
             <div

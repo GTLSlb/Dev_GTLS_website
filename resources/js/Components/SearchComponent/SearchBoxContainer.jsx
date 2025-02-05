@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import SearchLoading from "./SearchResults/SearchLoading";
 import SearchContent from "./SearchResults/SearchContent";
 
-function SearchBoxContainer({ isSearchActive }) {
+function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
     const [searching, setSearching] = useState(false);
     const [content, setContent] = useState([]);
     const handleValueChange = useCallback(
@@ -58,7 +58,10 @@ function SearchBoxContainer({ isSearchActive }) {
                     {searching ? (
                         <SearchLoading />
                     ) : (
-                        <SearchContent content={content} />
+                        <SearchContent
+                            content={content}
+                            getLatestBlogs={getLatestBlogs}
+                        />
                     )}
                 </div>
             </div>
