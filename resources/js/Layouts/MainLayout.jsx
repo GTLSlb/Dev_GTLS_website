@@ -60,21 +60,11 @@ function MainLayout({ children, loading, isHomeScreen }) {
                             />
                         )}
 
-                        {isHomeScreen ? (
-                            <>
-                                <HomePageNavBar
-                                    getNavigation={getNavigation}
-                                    getTrainNotification={getTrainNotification}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <Navbars
-                                    getNavigation={getNavigation}
-                                    getTrainNotification={getTrainNotification}
-                                />
-                            </>
-                        )}
+                        <HomePageNavBar
+                            getNavigation={getNavigation}
+                            getTrainNotification={getTrainNotification}
+                            isHomeScreen={isHomeScreen}
+                        />
 
                         <div>{children}</div>
                         <CookiePopup />

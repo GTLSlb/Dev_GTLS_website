@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import SearchCard from "../SearchCard/SearchCard";
 function SearchLatest() {
     const blogs = [

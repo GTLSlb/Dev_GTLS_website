@@ -29,7 +29,7 @@ function SearchBoxContainer({ isSearchActive }) {
 
     return (
         <div
-            className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] absolute overflow-auto inset-0 transition-opacity duration-300 ${
+            className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] border-b-goldt border-b-1 absolute overflow-auto inset-0 transition-opacity duration-300 ${
                 isSearchActive ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
         >
@@ -45,7 +45,6 @@ function SearchBoxContainer({ isSearchActive }) {
                         inputWrapper:
                             "!border-0 focus:ring-0 focus:shadow-none after:!bg-[#ffffff] after:transition-colors after:duration-300 ",
                         clearButton: "text-[#ffffff] hover:text-[#ffffff]",
-
                     }}
                     onChange={(e) => {
                         handleValueChange();
@@ -55,7 +54,7 @@ function SearchBoxContainer({ isSearchActive }) {
                         setContent([]);
                     }}
                 />
-                <div className="h-full">
+                <div className="">
                     {searching ? (
                         <SearchLoading />
                     ) : (

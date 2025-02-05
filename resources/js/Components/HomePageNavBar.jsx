@@ -1,23 +1,20 @@
-import { useState, Fragment, useEffect, useRef } from "react";
-import { Dialog, Transition, Popover } from "@headlessui/react";
-import {
-    ChevronDownIcon,
-    Bars3Icon,
-    XMarkIcon,
-} from "@heroicons/react/24/outline";
-import { Input, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
-import { Link } from "@inertiajs/inertia-react";
-import { PhoneIcon } from "@heroicons/react/20/solid";
 import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
-import TrainNotification from "./TrainNotification";
 import SearchWebsite from "@/Pages/Component/SearchWebsite";
-import SearchIcon from "@mui/icons-material/Search";
-import SearchButton from "./SearchComponent/SearchButton";
+import { Dialog, Popover, Transition } from "@headlessui/react";
+import { PhoneIcon } from "@heroicons/react/20/solid";
+import {
+    Bars3Icon, ChevronDownIcon, XMarkIcon
+} from "@heroicons/react/24/outline";
+import { Link } from "@inertiajs/inertia-react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import SearchBoxContainer from "./SearchComponent/SearchBoxContainer";
+import SearchButton from "./SearchComponent/SearchButton";
+import TrainNotification from "./TrainNotification";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
-const TopBar = ({ topBarLinks, phoneNb, toggleSearch, isSearchActive }) => (
+/* ─── TopBar (no search box here) ───────────────────────────── */
+const TopBar = ({ topBarLinks, phoneNb, toggleSearch }) => (
     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd relative">
         <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
             <div className="hidden lg:flex gap-x-7">
@@ -46,14 +43,10 @@ const TopBar = ({ topBarLinks, phoneNb, toggleSearch, isSearchActive }) => (
                 </a>
             </div>
         </div>
-
-        <div className="absolute z-50 w-full">
-            {" "}
-            <SearchBoxContainer isSearchActive={isSearchActive} />
-        </div>
     </div>
 );
 
+/* ─── Logo ───────────────────────────────────────────────────── */
 const Logo = ({ Image }) => (
     <a href="/" className="-m-1.5 p-1.5">
         <span className="sr-only">Your Company</span>
@@ -61,6 +54,7 @@ const Logo = ({ Image }) => (
     </a>
 );
 
+/* ─── LoginPopover ───────────────────────────────────────────── */
 const LoginPopover = () => (
     <Popover className="relative object-right flex-item md:ml-auto">
         <Popover.Button className="inline-flex items-center px-4 py-2 border-2 border-goldt rounded-3xl mr-6 hover:bg-black hover:text-goldt text-white">
@@ -108,6 +102,7 @@ const LoginPopover = () => (
     </Popover>
 );
 
+/* ─── NavigationLinks ─────────────────────────────────────────── */
 function NavigationLinks({ navLinks }) {
     return (
         <>
@@ -136,6 +131,7 @@ function NavigationLinks({ navLinks }) {
     );
 }
 
+/* ─── MobileMenu ────────────────────────────────────────────── */
 const MobileMenu = ({ mobileMenuOpen, setMobileMenuOpen, getNavigation }) => (
     <Dialog
         as="div"
@@ -173,48 +169,55 @@ const MobileMenu = ({ mobileMenuOpen, setMobileMenuOpen, getNavigation }) => (
     </Dialog>
 );
 
+/* ─── Header ───────────────────────────────────────────────────── */
 const Header = ({
     getNavigation,
     navLinks,
     mobileMenuOpen,
     setMobileMenuOpen,
+    isHomeScreen,
 }) => (
-    <nav
-        className="mx-auto lg:max-w-7xl max-w-7xl px-6 py-6 lg:flex lg:items-center lg:gap-x-10 lg:px-8 flex items-center justify-between"
-        aria-label="Global"
-    >
-        <SearchWebsite />
-        <div className="flex lg:flex-1">
-            <Logo Image={getNavigation.Icon.url} />
-        </div>
-        <div className="flex lg:hidden">
-            <LoginPopover />
-            <button
-                type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-goldt"
-                onClick={() => setMobileMenuOpen(true)}
-            >
-                <span className="sr-only">Open main menu</span>
-                <Bars3Icon className="h-6 w-6 text-goldt" aria-hidden="true" />
-            </button>
-        </div>
-        <div className="hidden lg:flex lg:gap-x-8">
-            <NavigationLinks navLinks={navLinks} />
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <FeedbackButton />
-            <LoginPopover />
-        </div>
-    </nav>
+    <div className={`w-full ${isHomeScreen ? "" : "bg-dark"}`}>
+        <nav
+            className="mx-auto lg:max-w-7xl max-w-7xl px-6 py-2 lg:flex lg:items-center lg:gap-x-10 lg:px-8 flex items-center justify-between"
+            aria-label="Global"
+        >
+            <SearchWebsite />
+            <div className="flex lg:flex-1">
+                <Logo Image={getNavigation.Icon.url} />
+            </div>
+            <div className="flex lg:hidden">
+                <LoginPopover />
+                <button
+                    type="button"
+                    className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-goldt"
+                    onClick={() => setMobileMenuOpen(true)}
+                >
+                    <span className="sr-only">Open main menu</span>
+                    <Bars3Icon
+                        className="h-6 w-6 text-goldt"
+                        aria-hidden="true"
+                    />
+                </button>
+            </div>
+            <div className="hidden lg:flex lg:gap-x-8">
+                <NavigationLinks navLinks={navLinks} />
+            </div>
+            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                <FeedbackButton />
+                <LoginPopover />
+            </div>
+        </nav>
+    </div>
 );
 
+/* ─── ScrollNavBar ────────────────────────────────────────────── */
 const ScrollNavBar = ({
     getTrainNotification,
     topBarLinks,
     navLinks,
     getNavigation,
     toggleSearch,
-    isSearchActive,
 }) => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -225,13 +228,9 @@ const ScrollNavBar = ({
                 window.pageYOffset || document.documentElement.scrollTop;
             setShowNavbar(scrollTop > 0);
         }
-
         window.addEventListener("scroll", handleScroll);
         handleScroll();
-
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
@@ -252,7 +251,6 @@ const ScrollNavBar = ({
                         topBarLinks={topBarLinks}
                         phoneNb={getNavigation.PhoneNb}
                         toggleSearch={toggleSearch}
-                        isSearchActive={isSearchActive}
                     />
                     <nav className="mx-auto bg-dark lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between">
                         <Logo Image={getNavigation.Icon.url} />
@@ -289,13 +287,18 @@ const ScrollNavBar = ({
     );
 };
 
-const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
+/* ─── HomePageNavBar ───────────────────────────────────────────── */
+const HomePageNavBar = ({
+    getTrainNotification,
+    getNavigation,
+    isHomeScreen,
+}) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
     const [navLinks, setNavLinks] = useState([]);
     const searchRef = useRef(null);
-
     const [isSearchActive, setIsSearchActive] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
 
     const toggleSearch = () => {
         setIsSearchActive((prev) => !prev);
@@ -308,12 +311,11 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
     useEffect(() => {
         setNavLinks(
             getNavigation.navigation_links
-                .filter((link) => !link.TopBar) // Filter links where TopBar is false
+                .filter((link) => !link.TopBar)
                 .sort((a, b) => {
-                    // Extract the numeric part of the order field and compare
-                    const orderA = parseInt(a.Order.split("-")[1], 10); // Get the number after "o-"
-                    const orderB = parseInt(b.Order.split("-")[1], 10); // Get the number after "o-"
-                    return orderA - orderB; // Sort in ascending order
+                    const orderA = parseInt(a.Order.split("-")[1], 10);
+                    const orderB = parseInt(b.Order.split("-")[1], 10);
+                    return orderA - orderB;
                 })
         );
 
@@ -321,10 +323,9 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
             getNavigation.navigation_links
                 .filter((link) => link.TopBar)
                 .sort((a, b) => {
-                    // Extract the numeric part of the order field and compare
-                    const orderA = parseInt(a.Order.split("-")[1], 10); // Get the number after "o-"
-                    const orderB = parseInt(b.Order.split("-")[1], 10); // Get the number after "o-"
-                    return orderA - orderB; // Sort in ascending order
+                    const orderA = parseInt(a.Order.split("-")[1], 10);
+                    const orderB = parseInt(b.Order.split("-")[1], 10);
+                    return orderA - orderB;
                 })
         );
     }, [getNavigation]);
@@ -340,40 +341,66 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
             }
         };
 
-        // Close search if user scroll outside of the search box
-        const handleScroll = () => {
-            closeSearch();
-        };
-
         if (isSearchActive) {
             document.addEventListener("mousedown", handleClickOutside);
-            window.addEventListener("scroll", handleScroll);
         } else {
             document.removeEventListener("mousedown", handleClickOutside);
-            window.removeEventListener("scroll", handleScroll);
         }
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isSearchActive]);
+
+    // Update isScrolled to determine the current nav style
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 0);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll();
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isSearchActive) {
+                closeSearch();
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [isSearchActive, closeSearch]);
+    }, [isSearchActive]);
 
     return (
         <div ref={searchRef}>
+            {/* TopBar rendered at the very top */}
             <TopBar
                 topBarLinks={topBarLinks}
                 phoneNb={getNavigation.PhoneNb}
-                isSearchActive={isSearchActive}
-                setIsSearchActive={setIsSearchActive}
                 toggleSearch={toggleSearch}
             />
-            <div className="absolute z-30 w-full">
+
+            <div className="fixed z-50 w-full" style={{ top: "22px" }}>
+                <SearchBoxContainer isSearchActive={isSearchActive} />
+            </div>
+
+            <div
+                className={`absolute z-30 w-full ${
+                    isHomeScreen ? "" : "bg-goldd pb-2"
+                }`}
+            >
                 <Header
                     navLinks={navLinks}
                     getNavigation={getNavigation}
                     mobileMenuOpen={mobileMenuOpen}
                     setMobileMenuOpen={setMobileMenuOpen}
+                    isHomeScreen={isHomeScreen}
                 />
                 <MobileMenu
                     mobileMenuOpen={mobileMenuOpen}
@@ -386,7 +413,6 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
                     navLinks={navLinks}
                     getNavigation={getNavigation}
                     toggleSearch={toggleSearch}
-                    isSearchActive={isSearchActive}
                 />
             </div>
         </div>

@@ -316,7 +316,9 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
                 </nav>
             </div>
 
-            <SearchBoxContainer isSearchActive={isSearchActive} />
+            <div className="fixed z-50 w-full" style={{ top: "22px" }}>
+                <SearchBoxContainer isSearchActive={isSearchActive} />
+            </div>
             <SearchWebsite />
             <MobileMenu
                 mobileMenuOpen={mobileMenuOpen}
