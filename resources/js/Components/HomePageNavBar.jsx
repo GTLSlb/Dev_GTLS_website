@@ -107,7 +107,7 @@ function NavigationLinks({ navLinks }) {
     return (
         <>
             {navLinks.map((item) =>
-                item.id === 5 || item.id === 6 ? null : item.id !== 8 ? (
+                item.id === 5 || item.id === 6 ? null : item.id !== 8 && item.Name !== 'National Road Alerts' ? (
                     <Link
                         key={item.Name}
                         href={item.Url}
@@ -118,7 +118,7 @@ function NavigationLinks({ navLinks }) {
                 ) : (
                     <a
                         key={item.Name}
-                        href={item.url}
+                        href={item.Url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:cursor-pointer hover:border-b hover:border-goldt p-1 text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
@@ -272,7 +272,6 @@ const ScrollNavBar = ({
                             </button>
                         </div>
                         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                            <FeedbackButton />
                             <LoginPopover />
                         </div>
                     </nav>
