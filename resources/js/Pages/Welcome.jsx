@@ -181,7 +181,6 @@ export default function Welcome(props) {
                     {/* <Navbars /> */}
                     <div className="relative isolate bg-dark">
                         <MainLayout loading={loading} isHomeScreen={true}>
-                            <SearchWebsite />
                             <VideoHeader getHeader={getHeader} />
                             <AboutUs getAbout={getAbout} />
                             <PrimaryServices getservices={getservices} />
@@ -192,7 +191,7 @@ export default function Welcome(props) {
                             <Technologies gettechnologies={gettechnologies} />
                             <Certifiactesw getcertificates={getcertificates} />
                         </MainLayout>
-                        
+
                     </div>
                 </>
             )}

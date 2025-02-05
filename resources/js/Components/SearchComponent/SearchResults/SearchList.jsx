@@ -1,22 +1,23 @@
 import React from "react";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-function SearchList() {
+import SearchHit from "@/Pages/Component/SearchHit";
+
+function SearchList({searchQuery, errorMsg, content, setSearching}) {
+    console.log("results", content);
     return (
         <div className="mt-8">
             <div className="text-sm text-gray-400 mb-4">
                 Suggested Search List
             </div>
-            {[
-                "Search List 1",
-                "Search List 2",
-                "Search List 3",
-                "Search List 4",
-                "Search List 5",
-            ].map((item, index) => (
-                <div key={index} className="py-1">
-                    <ArrowRightAltIcon height={20} width={20}/> {item}
-                </div>
-            ))}
+            {content?.length > 0 &&
+                content.map((hit, index) => (
+                    <SearchHit
+                        hit={hit}
+                        key={index}
+                        searchQuery={searchQuery}
+                        setIsOpen={setSearching}
+                    />
+                ))}
         </div>
     );
 }

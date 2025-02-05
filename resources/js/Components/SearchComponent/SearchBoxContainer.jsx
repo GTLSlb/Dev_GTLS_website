@@ -4,10 +4,21 @@ import { debounce } from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import SearchLoading from "./SearchResults/SearchLoading";
 import SearchContent from "./SearchResults/SearchContent";
+import {
+    addSearchIndex,
+    addSearchParameters,
+    handleSearchChange,
+    navigateAfterRedirect,
+} from "@/Components/utils/SearchUtils";
 
 function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
     const [searching, setSearching] = useState(false);
     const [content, setContent] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [indices, setIndices] = useState([]);
+    const [components, setComponents] = useState([]);
+
     const handleValueChange = useCallback(
         debounce(() => {
             setSearching((prev) => !prev);
@@ -15,14 +26,58 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
         []
     );
 
+    const fetchAllComponents = async () => {
+        await axios
+            .get("/getAllComponents")
+            .then((res) => {
+                setComponents(res.data);
+                let items = [],
+                    config = {},
+                    temp = res.data;
+                temp.map((item) => {
+                    config[item.tableName] = addSearchParameters(item);
+                    items.push(addSearchIndex(item));
+                });
+                setIndices(items);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
+
+    const addCollections = async () => {
+        const formData = {
+            collections: components,
+        };
+        axios
+            .post("/addCollections", formData)
+            .then((res) => {})
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    useEffect(() => {
+        fetchAllComponents();
+        if(localStorage.getItem("selector") != null){
+            navigateAfterRedirect(setSearching)
+        }
+    }, []);
+
+    useEffect(() => {
+        if (components?.length > 0 && indices?.length > 0) {
+            addCollections();
+        }
+    }, [components, indices]);
+
+
     // Effect to set content 500ms after searching is updated
     useEffect(() => {
         if (searching) {
             const timer = setTimeout(() => {
-                setContent("Search started...");
                 setSearching(false);
             }, 500);
-
+            handleSearchChange(searchQuery, setContent, setErrorMsg, indices);
             return () => clearTimeout(timer); // Cleanup timeout on re-render
         }
     }, [searching]);
@@ -47,6 +102,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                         clearButton: "text-[#ffffff] hover:text-[#ffffff]",
                     }}
                     onChange={(e) => {
+                        setSearchQuery(e.target.value);
                         handleValueChange();
                     }}
                     onClear={(e) => {
@@ -61,7 +117,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                         <SearchContent
                             content={content}
                             getLatestBlogs={getLatestBlogs}
-                        />
+                        searchQuery={searchQuery} errorMsg={errorMsg} setSearching={setSearching}/>
                     )}
                 </div>
             </div>

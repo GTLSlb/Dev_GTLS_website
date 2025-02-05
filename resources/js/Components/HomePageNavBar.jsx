@@ -109,7 +109,7 @@ function NavigationLinks({ navLinks }) {
     return (
         <>
             {navLinks.map((item) =>
-                item.id === 5 || item.id === 6 ? null : item.id !== 8 ? (
+                item.id === 5 || item.id === 6 ? null : item.id !== 8 && item.Name !== 'National Road Alerts' ? (
                     <Link
                         key={item.Name}
                         href={item.Url}
@@ -120,7 +120,7 @@ function NavigationLinks({ navLinks }) {
                 ) : (
                     <a
                         key={item.Name}
-                        href={item.url}
+                        href={item.Url}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:cursor-pointer hover:border-b hover:border-goldt p-1 text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
@@ -184,7 +184,6 @@ const Header = ({
             className="mx-auto lg:max-w-7xl max-w-7xl px-6 py-2 lg:flex lg:items-center lg:gap-x-10 lg:px-8 flex items-center justify-between"
             aria-label="Global"
         >
-            <SearchWebsite />
             <div className="flex lg:flex-1">
                 <Logo Image={getNavigation.Icon.url} />
             </div>
@@ -274,7 +273,6 @@ const ScrollNavBar = ({
                             </button>
                         </div>
                         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                            <FeedbackButton />
                             <LoginPopover />
                         </div>
                     </nav>
