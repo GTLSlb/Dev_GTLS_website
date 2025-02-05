@@ -71,19 +71,9 @@ const teams = [
         name: "Antoine",
     },
     {
-        id: 9,
-        image: image9,
-        name: "Danialaa",
-    },
-    {
         id: 10,
         image: image10,
         name: "Megan",
-    },
-    {
-        id: 11,
-        image: image11,
-        name: "jay",
     },
     {
         id: 12,
@@ -487,7 +477,6 @@ export default function News() {
         });
     }, []);
 
-    console.log(postss);
     return (
         <div>
             <div className="bg-dark">
@@ -510,37 +499,6 @@ export default function News() {
                                         alt={post.name}
                                         className=" rounded-2xl p-10 object-containh-96 w-full "
                                     />
-
-                                    {/* <div className="h-full ">
-                                        <div className="relative w-full www">
-                                            
-                                            <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                        </div>
-                                        <article
-                                            key={post.id}
-                                            className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                        >
-                                            <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                    <time
-                                                        dateTime={post.datetime}
-                                                        className="text-goldl font-bold"
-                                                    >
-                                                        {post.date}
-                                                    </time>
-                                                </div>
-                                                <div className="group relative">
-                                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold">
-                                                        <span className="absolute inset-0" />
-                                                        {post.title}
-                                                    </h3>
-                                                    <p className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3">
-                                                        {post.description}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </article>
-                                        </div> */}
                                 </div>
                             ))}
 

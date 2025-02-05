@@ -96,9 +96,9 @@ export default function AboutUs(props) {
                                 Today, turnover is more than $55 million a year
                                 and growing. Gold Tiger’s wholly owned Volvo
                                 transport fleet has grown to more than 120 prime
-                                movers, 180 trailers and 40 delivery trucks and
+                                movers, 280 trailers and 40 delivery trucks and
                                 the workforce (drivers and administration) has
-                                passed 230. The growth, while rapid, has been
+                                passed 350. The growth, while rapid, has been
                                 strengthened by Mr El Masri’s decisions to use
                                 an all-employee driver workforce and to own his
                                 trucks, equipment and Sydney warehousing
@@ -211,8 +211,7 @@ export default function AboutUs(props) {
                                 including food, packaging, manufacturing,
                                 retail, industrial and FMCG. Prominent clients
                                 include Unilever, General Mills, Sigma
-                                Healthcare, CIA Logistics, Triangle Logistics
-                                and TMA Group.
+                                Healthcare.
                             </p>
                             <p className="mt-3 text-smooth">
                                 Gold Tiger will listen to what you want, offer
