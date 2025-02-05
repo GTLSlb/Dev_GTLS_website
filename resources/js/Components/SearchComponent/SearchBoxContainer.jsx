@@ -10,7 +10,7 @@ import {
     handleSearchChange,
     navigateAfterRedirect,
 } from "@/Components/utils/SearchUtils";
-
+import "../../../css/scroll.css";
 function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
     const [searching, setSearching] = useState(false);
     const [content, setContent] = useState([]);
@@ -45,46 +45,50 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
             });
     };
 
-    const addCollections = async () => {
-        const formData = {
-            collections: components,
-        };
-        axios
-            .post("/addCollections", formData)
-            .then((res) => {})
-            .catch((err) => {
-                console.log(err);
-            });
-    };
+    // const addCollections = async () => {
+    //     const formData = {
+    //         collections: components,
+    //     };
+    //     axios
+    //         .post("/addCollections", formData)
+    //         .then((res) => {})
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // };
 
     useEffect(() => {
         fetchAllComponents();
-        if(localStorage.getItem("selector") != null){
-            navigateAfterRedirect(setSearching)
+        if (localStorage.getItem("selector") != null) {
+            navigateAfterRedirect(setSearching);
         }
     }, []);
 
-    useEffect(() => {
-        if (components?.length > 0 && indices?.length > 0) {
-            addCollections();
-        }
-    }, [components, indices]);
-
+    // useEffect(() => {
+    //     if (components?.length > 0 && indices?.length > 0) {
+    //         addCollections();
+    //     }
+    // }, [components, indices]);
 
     // Effect to set content 500ms after searching is updated
     useEffect(() => {
-        if (searching) {
-            const timer = setTimeout(() => {
-                setSearching(false);
-            }, 500);
-            handleSearchChange(searchQuery, setContent, setErrorMsg, indices);
-            return () => clearTimeout(timer); // Cleanup timeout on re-render
+        if (searching && searchQuery.length > 0) {
+            handleSearchChange(
+                searchQuery,
+                setContent,
+                setErrorMsg,
+                indices,
+                setSearching
+            ); // Set searching to false after completion
+        } else {
+            setSearching(false);
         }
-    }, [searching]);
+    }, [searching, searchQuery]);
 
+    console.log(searching);
     return (
         <div
-            className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] border-b-goldt border-b-1 absolute overflow-auto inset-0 transition-opacity duration-300 ${
+            className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] containerscroll border-b-goldt border-b-1 absolute overflow-auto inset-0 transition-opacity duration-300 ${
                 isSearchActive ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
         >
@@ -96,7 +100,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                     className="w-full py-2 rounded-md "
                     isClearable={true}
                     classNames={{
-                        input: "border-0 focus:ring-0 focus:shadow-none !text-white",
+                        input: "border-0 focus:ring-0 focus:shadow-none !text-white placeholder:text-white",
                         inputWrapper:
                             "!border-0 focus:ring-0 focus:shadow-none after:!bg-[#ffffff] after:transition-colors after:duration-300 ",
                         clearButton: "text-[#ffffff] hover:text-[#ffffff]",
@@ -107,9 +111,11 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                     }}
                     onClear={(e) => {
                         setSearching(false);
+                        setSearchQuery("");
                         setContent([]);
                     }}
                 />
+
                 <div className="">
                     {searching ? (
                         <SearchLoading />
@@ -117,7 +123,11 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                         <SearchContent
                             content={content}
                             getLatestBlogs={getLatestBlogs}
-                        searchQuery={searchQuery} errorMsg={errorMsg} setSearching={setSearching}/>
+                            searchQuery={searchQuery}
+                            errorMsg={errorMsg}
+                            searching={searching}
+                            setSearching={setSearching}
+                        />
                     )}
                 </div>
             </div>

@@ -263,7 +263,7 @@ export const navigateAfterRedirect = (setIsOpen) => {
         currentElement.scrollIntoView({ behavior: "smooth" });
         localStorage.removeItem("selector");
     }
-}
+};
 
 export function navigateToSelector(selector, url, doc, setIsOpen) {
     const highlightKey = Object.keys(doc.highlight)[0];
@@ -317,10 +317,10 @@ export const handleSearchChange = async (
     setResults,
     // setIsOpen,
     setError,
-    indices
+    indices,
+    setIsLoading
 ) => {
-    // setIsLoading(true);
-    // setIsOpen(true);
+    setIsLoading(true);
     setError("");
     axios
         .post("/searchCollections", {
@@ -329,11 +329,11 @@ export const handleSearchChange = async (
         })
         .then((res) => {
             setResults(res.data.data);
-            // setIsLoading(false);
+            setIsLoading(false);
         })
         .catch((err) => {
             console.log(err);
-            // setIsLoading(false);
+            setIsLoading(false);
             setError(err.response.data.message || "Something went wrong");
         });
 };

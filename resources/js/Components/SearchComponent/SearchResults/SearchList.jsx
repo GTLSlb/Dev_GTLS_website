@@ -1,15 +1,12 @@
-import React from "react";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import SearchHit from "@/Pages/Component/SearchHit";
 
-function SearchList({searchQuery, errorMsg, content, setSearching}) {
-    console.log("results", content);
+function SearchList({ searchQuery, errorMsg, content, setSearching, searching }) {
     return (
-        <div className="mt-8">
+        <div className="mt-4">
             <div className="text-sm text-gray-400 mb-4">
                 Suggested Search List
             </div>
-            {content?.length > 0 &&
+            {content?.length > 0 && !searching ? (
                 content.map((hit, index) => (
                     <SearchHit
                         hit={hit}
@@ -17,7 +14,10 @@ function SearchList({searchQuery, errorMsg, content, setSearching}) {
                         searchQuery={searchQuery}
                         setIsOpen={setSearching}
                     />
-                ))}
+                ))
+            ) : (
+                <div className="text-sm text-gray-200"> Nothing Found</div>
+            )}
         </div>
     );
 }

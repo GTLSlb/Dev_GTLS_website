@@ -2,11 +2,24 @@ import React from "react";
 import SearchLatest from "./SearchLatest";
 import SearchList from "./SearchList";
 
-function SearchContent({ content, getLatestBlogs, searchQuery, errorMsg, setSearching }) {
+function SearchContent({
+    content,
+    getLatestBlogs,
+    searchQuery,
+    errorMsg,
+    setSearching,
+    searching,
+}) {
     return (
         <div>
-            {content.length > 0 || content != "" ? (
-                <SearchList searchQuery={searchQuery} errorMsg={errorMsg} content={content} setSearching={setSearching} />
+            {searchQuery.length > 0 || searchQuery != "" ? (
+                <SearchList
+                    searching={searching}
+                    searchQuery={searchQuery}
+                    errorMsg={errorMsg}
+                    content={content}
+                    setSearching={setSearching}
+                />
             ) : (
                 <SearchLatest getLatestBlogs={getLatestBlogs} />
             )}

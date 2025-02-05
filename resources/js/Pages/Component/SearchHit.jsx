@@ -16,7 +16,7 @@ export default function SearchHit({ hit, key, searchQuery, setIsOpen }) {
     return (
         <div
             className="flex gap-x-2 py-1.5 hover:bg-goldt/50 hover:cursor-pointer"
-            key={key}
+            key={hit.text_match}
             onClick={() =>
                 navigateToSelector(
                     hit?.document?.selector,
@@ -27,7 +27,7 @@ export default function SearchHit({ hit, key, searchQuery, setIsOpen }) {
             }
         >
             <ArrowRightAltIcon height={20} width={20} />
-            <p className="hit-description">{description}</p>
+            <p className="line-clamp-1">{description}</p>
         </div>
     );
 }

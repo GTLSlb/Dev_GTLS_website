@@ -8,6 +8,7 @@ import { getFromStrapi } from "@/CommonFunctions";
 import { BounceLoader } from "react-spinners";
 import Navbars from "@/Components/Navbars";
 import HomePageNavBar from "@/Components/HomePageNavBar";
+import { addSearchParameters } from "@/Components/utils/SearchUtils";
 
 function MainLayout({ children, loading, isHomeScreen }) {
     const [getTrainNotification, setTrainNotification] = useState();
@@ -52,6 +53,25 @@ function MainLayout({ children, loading, isHomeScreen }) {
 
         fetchData();
     }, []);
+
+    const fetchAllComponents = async () => {
+        await axios
+            .get("/getAllComponents")
+            .then((res) => {
+                let items = [],
+                    config = {},
+                    temp = res.data;
+                temp.map((item) => {
+                    config[item.tableName] = addSearchParameters(item);
+                    items.push(addSearchIndex(item));
+                });
+                setIndices(items);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
+
     return (
         <div>
             <>
