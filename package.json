@@ -25,6 +25,7 @@
     "dependencies": {
         "@azure/msal-browser": "^2.37.0",
         "@babel/runtime": "^7.26.0",
+        "@googlemaps/markerclusterer": "^2.5.3",
         "@heroicons/react": "^2.0.16",
         "@inertiajs/inertia-react": "^0.8.1",
         "@inovua/reactdatagrid-community": "^5.10.2",

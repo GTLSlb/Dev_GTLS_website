@@ -43,9 +43,7 @@ function SearchBoxContainer({ isSearchActive }) {
                     classNames={{
                         input: "border-0 focus:ring-0 focus:shadow-none !text-white",
                         inputWrapper:
-                            "!border-0 focus:ring-0 focus:shadow-none",
-                        inputWrapper:
-                            "after:!bg-[#ffffff] after:transition-colors after:duration-300 ",
+                            "!border-0 focus:ring-0 focus:shadow-none after:!bg-[#ffffff] after:transition-colors after:duration-300 ",
                         clearButton: "text-[#ffffff] hover:text-[#ffffff]",
 
                     }}

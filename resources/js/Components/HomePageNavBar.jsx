@@ -17,8 +17,8 @@ import SearchBoxContainer from "./SearchComponent/SearchBoxContainer";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
-const TopBar = ({ topBarLinks, phoneNb, toggleSearch }) => (
-    <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd">
+const TopBar = ({ topBarLinks, phoneNb, toggleSearch, isSearchActive }) => (
+    <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd relative">
         <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
             <div className="hidden lg:flex gap-x-7">
                 {topBarLinks.map((link) => (
@@ -45,6 +45,11 @@ const TopBar = ({ topBarLinks, phoneNb, toggleSearch }) => (
                     Call: {phoneNb}
                 </a>
             </div>
+        </div>
+
+        <div className="absolute z-50 w-full">
+            {" "}
+            <SearchBoxContainer isSearchActive={isSearchActive} />
         </div>
     </div>
 );
@@ -208,6 +213,8 @@ const ScrollNavBar = ({
     topBarLinks,
     navLinks,
     getNavigation,
+    toggleSearch,
+    isSearchActive,
 }) => {
     const [showNavbar, setShowNavbar] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -244,6 +251,8 @@ const ScrollNavBar = ({
                     <TopBar
                         topBarLinks={topBarLinks}
                         phoneNb={getNavigation.PhoneNb}
+                        toggleSearch={toggleSearch}
+                        isSearchActive={isSearchActive}
                     />
                     <nav className="mx-auto bg-dark lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between">
                         <Logo Image={getNavigation.Icon.url} />
@@ -280,101 +289,6 @@ const ScrollNavBar = ({
     );
 };
 
-const SearchBox = ({ isSearchActive, closeSearch }) => {
-    return (
-        <div
-            className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] absolute overflow-auto inset-0 transition-opacity duration-500 ${
-                isSearchActive ? "opacity-100 visible" : "opacity-0 invisible"
-            }`}
-        >
-            <div className="flex flex-col items-center w-1/2 ">
-                <Input
-                    placeholder="Search..."
-                    variant="underlined"
-                    startContent={<SearchIcon />}
-                    className="w-full px-4 py-2 rounded-md "
-                    isClearable={true}
-                    classNames={{
-                        input: "border-0 focus:ring-0 focus:shadow-none !text-white",
-                        inputWrapper:
-                            "!border-0 focus:ring-0 focus:shadow-none",
-                        inputWrapper:
-                            "after:!bg-[#ffffff] after:transition-colors after:duration-300 ",
-                        clearButton: "text-[#ffffff] hover:text-[#ffffff]",
-                    }}
-                    onChange={(e) => console.log(e.target.value)}
-                />
-                <div>
-                    {" "}
-                    <div className="border-b-2 border-goldt text-goldt w-fit mb-4 ">
-                        Latest News
-                    </div>
-                    <div className="flex w-full justify-center gap-4">
-                        <Card className="flex-1 bg-transparent border-2 border-goldt p-0">
-                            <CardHeader className="flex-col items-start p-3 pb-4">
-                                <Image
-                                    alt="Card background"
-                                    className="object-cover rounded-xl w-full"
-                                    src="http://localhost:1337/uploads/B_Triple_3c69e35556.webp"
-                                />
-                            </CardHeader>
-                            <CardBody className="overflow-visible py-2">
-                                <p className="text-tiny text-white uppercase font-bold line-clamp-2">
-                                    Introducing Gold Tiger’s New B-Triple
-                                    Solution: Expanding Capacity and Efficiency
-                                    in Freight
-                                </p>
-                                <p className="text-xs my-2 text-goldt">
-                                    2024-12-24
-                                </p>
-                            </CardBody>
-                        </Card>
-                        <Card className="flex-1 bg-goldo">
-                            <CardHeader className="flex-col items-start">
-                                <Image
-                                    alt="Card background"
-                                    className="object-cover rounded-xl"
-                                    src="http://localhost:1337/uploads/B_Triple_3c69e35556.webp"
-                                />
-                            </CardHeader>
-                            <CardBody className="overflow-visible py-2">
-                                <p className="text-tiny uppercase font-bold line-clamp-2">
-                                    Introducing Gold Tiger’s New B-Triple
-                                    Solution: Expanding Capacity and Efficiency
-                                    in Freight
-                                </p>
-                                <p className="text-xs my-2 text-goldt">
-                                    2024-12-24
-                                </p>
-                            </CardBody>
-                        </Card>
-                        <Card className="py-4 flex-1">
-                            <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                                <p className="text-tiny uppercase font-bold">
-                                    Daily Mix
-                                </p>
-                                <small className="text-default-500">
-                                    12 Tracks
-                                </small>
-                                <h4 className="font-bold text-large">
-                                    Frontend Radio
-                                </h4>
-                            </CardHeader>
-                            <CardBody className="overflow-visible py-2">
-                                <Image
-                                    alt="Card background"
-                                    className="object-cover rounded-xl"
-                                    src="https://heroui.com/images/hero-card-complete.jpeg"
-                                    width={270}
-                                />
-                            </CardBody>
-                        </Card>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
 const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
@@ -471,9 +385,9 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
                     topBarLinks={topBarLinks}
                     navLinks={navLinks}
                     getNavigation={getNavigation}
+                    toggleSearch={toggleSearch}
+                    isSearchActive={isSearchActive}
                 />
-
-                <SearchBoxContainer isSearchActive={isSearchActive} />
             </div>
         </div>
     );

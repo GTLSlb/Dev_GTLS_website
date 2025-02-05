@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment, useRef } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import {
     Bars3Icon,
@@ -9,11 +9,13 @@ import {
 import { Link } from "@inertiajs/inertia-react";
 import TrainNotification from "./TrainNotification";
 import SearchWebsite from "@/Pages/Component/SearchWebsite";
+import SearchBoxContainer from "./SearchComponent/SearchBoxContainer";
+import SearchButton from "./SearchComponent/SearchButton";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
 // Top Bar component
-function TopBar({ topBarLinks, phoneNb }) {
+function TopBar({ topBarLinks, phoneNb, toggleSearch }) {
     return (
         <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd px-2">
             <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
@@ -28,17 +30,20 @@ function TopBar({ topBarLinks, phoneNb }) {
                         </a>
                     ))}
                 </div>
-                
-                <a
-                    href={`tel:${phoneNb}`}
-                    className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
-                >
-                    <PhoneIcon
-                        className="h-5 sm:h-6 w-auto p-0.5"
-                        aria-hidden="true"
-                    />
-                    Call: {phoneNb}
-                </a>
+
+                <div className="flex gap-4 items-center">
+                    <SearchButton toggleSearch={toggleSearch} />
+                    <a
+                        href={`tel:${phoneNb}`}
+                        className="whitespace-nowrap text-xs sm:text-sm font-bold flex h-full items-center"
+                    >
+                        <PhoneIcon
+                            className="h-5 sm:h-6 w-auto p-0.5"
+                            aria-hidden="true"
+                        />
+                        Call: {phoneNb}
+                    </a>
+                </div>
             </div>
         </div>
     );
@@ -174,6 +179,48 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
     const [showNavbar, setShowNavbar] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
     const [navLinks, setNavLinks] = useState([]);
+
+    const searchRef = useRef(null);
+    const [isSearchActive, setIsSearchActive] = useState(false);
+
+    const toggleSearch = () => {
+        setIsSearchActive((prev) => !prev);
+    };
+
+    const closeSearch = () => {
+        setIsSearchActive(false);
+    };
+
+    useEffect(() => {
+        // Close search if user clicks outside of the search box
+        const handleClickOutside = (event) => {
+            if (
+                searchRef.current &&
+                !searchRef.current.contains(event.target)
+            ) {
+                closeSearch();
+            }
+        };
+
+        // Close search if user scroll outside of the search box
+        const handleScroll = () => {
+            closeSearch();
+        };
+
+        if (isSearchActive) {
+            document.addEventListener("mousedown", handleClickOutside);
+            window.addEventListener("scroll", handleScroll);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [isSearchActive, closeSearch]);
+
     useEffect(() => {
         function handleScroll() {
             const scrollTop =
@@ -222,14 +269,19 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
             getNavigation.navigation_links.filter((link) => link.TopBar)
         );
     }, [getNavigation]);
+
     return (
-        <div className="absolute pb-2 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd shadow-xl shadow-bottom z-30 w-full">
+        <div
+            className="absolute pb-2 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd shadow-xl shadow-bottom z-30 w-full "
+            ref={searchRef}
+        >
             <div className="bg-dark">
                 <TopBar
                     topBarLinks={topBarLinks}
                     phoneNb={getNavigation.PhoneNb}
+                    toggleSearch={toggleSearch}
                 />
-                <SearchWebsite />
+
                 <nav
                     className="mx-auto lg:max-w-7xl max-w-7xl px-6 pb-2 pt-2 lg:flex lg:items-center lg:gap-x-10 lg:px-10 flex items-center justify-between"
                     aria-label="Global"
@@ -263,12 +315,18 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
                     </div>
                 </nav>
             </div>
+
+            <SearchBoxContainer isSearchActive={isSearchActive} />
+            <SearchWebsite />
             <MobileMenu
                 mobileMenuOpen={mobileMenuOpen}
                 setMobileMenuOpen={setMobileMenuOpen}
                 getNavigation={getNavigation}
                 navLinks={navLinks}
             />
+
+            <SearchBoxContainer isSearchActive={isSearchActive} />
+
             {/* Fixed Navbar when scrolling */}
             <div
                 className={`shadow-md shadow-bottom z-50 h-auto pb-2 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd lg:pr-0 fixed bg-white top-0 left-0 w-full transition duration-500 ease-in-out ${
