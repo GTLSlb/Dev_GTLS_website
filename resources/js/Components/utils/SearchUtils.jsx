@@ -295,7 +295,7 @@ export function highlightRelevantWords(text, query) {
 
     // If the query is not found, return original text
     if (index === -1) {
-        return normalizedText.slice(0, 200) + "...";
+        return normalizedText.slice(0, 300) + "...";
     }
 
     // Calculate the start and end positions for the result
@@ -306,27 +306,22 @@ export function highlightRelevantWords(text, query) {
     const relevantSubstring = text.slice(start, end);
 
     // Format the result with the specified syntax
-    return `... ${relevantSubstring.replace(
+    return `${relevantSubstring.replace(
         new RegExp(query, "gi"),
         (match) => match
     )} ...`;
 }
 
 export const handleSearchChange = async (
-    event,
+    query,
     setResults,
-    setIsLoading,
-    setIsOpen,
+    // setIsOpen,
     setError,
-    setSearchQuery,
     indices
 ) => {
-    setIsLoading(true);
-    setIsOpen(true);
+    // setIsLoading(true);
+    // setIsOpen(true);
     setError("");
-    const query = event.target.value;
-    setSearchQuery(event.target.value);
-
     axios
         .post("/searchCollections", {
             query: query,
@@ -334,11 +329,11 @@ export const handleSearchChange = async (
         })
         .then((res) => {
             setResults(res.data.data);
-            setIsLoading(false);
+            // setIsLoading(false);
         })
         .catch((err) => {
             console.log(err);
-            setIsLoading(false);
+            // setIsLoading(false);
             setError(err.response.data.message || "Something went wrong");
         });
 };
