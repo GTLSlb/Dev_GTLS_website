@@ -85,7 +85,6 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
         }
     }, [searching, searchQuery]);
 
-    console.log(searching);
     return (
         <div
             className={`w-auto flex justify-center py-5 bg-dark text-white h-[30rem] containerscroll border-b-goldt border-b-1 absolute overflow-auto inset-0 transition-opacity duration-300 ${

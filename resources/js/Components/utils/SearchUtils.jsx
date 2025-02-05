@@ -299,8 +299,18 @@ export function highlightRelevantWords(text, query) {
     }
 
     // Calculate the start and end positions for the result
-    const start = Math.max(0, index - 20); // Show 20 characters before
-    const end = Math.min(text.length, index + query.length + 20); // Show 20 characters after
+    let start = Math.max(0, index - Math.floor(20 / 2)); // Show half of the desired characters before
+    let end = Math.min(text.length, index + query.length + Math.floor(20 / 2)); // Show half of the desired characters after
+
+    // Adjust the start index to include complete words
+    while (start > 0 && text[start - 1] !== ' ') {
+        start--;
+    }
+
+    // Adjust the end index to include complete words
+    while (end < text.length && text[end] !== ' ') {
+        end++;
+    }
 
     // Extract the relevant substring
     const relevantSubstring = text.slice(start, end);
@@ -308,7 +318,7 @@ export function highlightRelevantWords(text, query) {
     // Format the result with the specified syntax
     return `${relevantSubstring.replace(
         new RegExp(query, "gi"),
-        (match) => match
+        (match) => `<mark>${match}</mark>`
     )} ...`;
 }
 
