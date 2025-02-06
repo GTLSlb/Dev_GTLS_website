@@ -6,7 +6,7 @@ function SearchList({ searchQuery, errorMsg, content, setSearching, searching })
         const searchQuery = 'example';
         const state = { content: content, searchQuery: searchQuery };
 
-        window.history.pushState(state, '', `/searchResults`);
+        localStorage.setItem("searchState", JSON.stringify(state));
         window.location.href = `/searchResults`;
     }
     return (
