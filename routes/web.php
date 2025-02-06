@@ -43,6 +43,10 @@ Route::get('/login', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
 
+Route::get('/searchResults', function () {
+    return Inertia::render('WebsiteSearchResults');
+})->name('searchResults');
+
 Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
 
 Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
@@ -55,6 +59,9 @@ Route::get('/getAllComponents', [SearchController::class, 'fetchData'])->name('f
 Route::post('/addCollections', [SearchController::class, 'addCollection'])->name('add.collections');
 Route::post('/deleteAllCollections', [SearchController::class, 'deleteAllCollections'])->name('delete.collections');
 Route::post('/searchCollections', [SearchController::class, 'searchSchema'])->name('search.collections');
+Route::post('/searchIndex', [SearchController::class, 'addSearchIndex'])->name('add.search.index');
+Route::post('/searchParameters', [SearchController::class, 'addSearchParameters'])->name('add.search.parameters');
+Route::get('/searchIndices', [SearchController::class, 'createSearchIndices'])->name('add.search.indices');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
@@ -78,7 +85,7 @@ Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
 
-Route::get('/palletterms', function () { 
+Route::get('/palletterms', function () {
     return Inertia::render('PalletTerms');
 })->name('palletterms');
 

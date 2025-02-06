@@ -45,20 +45,32 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
             });
     };
 
-    // const addCollections = async () => {
-    //     const formData = {
-    //         collections: components,
-    //     };
-    //     axios
-    //         .post("/addCollections", formData)
-    //         .then((res) => {})
-    //         .catch((err) => {
-    //             console.log(err);
-    //         });
-    // };
+    const fetchAllIndices = async () => {
+        await axios
+            .get("/searchIndices")
+            .then((res) => {
+              setIndices(res.data[0].items);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
+
+    const addCollections = async () => {
+        const formData = {
+            collections: components,
+        };
+        axios
+            .post("/addCollections", formData)
+            .then((res) => {})
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     useEffect(() => {
-        fetchAllComponents();
+        // fetchAllComponents();
+        fetchAllIndices()
         if (localStorage.getItem("selector") != null) {
             navigateAfterRedirect(setSearching);
         }
