@@ -29,24 +29,7 @@ export default function SearchWebsite() {
         setSearchQuery("");
     };
 
-    const fetchAllComponents = async () => {
-        await axios
-            .get("/getAllComponents")
-            .then((res) => {
-                setComponents(res.data);
-                let items = [],
-                    config = {},
-                    temp = res.data;
-                temp.map((item) => {
-                    config[item.tableName] = addSearchParameters(item);
-                    items.push(addSearchIndex(item));
-                });
-                setIndices(items);
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
-    };
+
     const addCollections = async () => {
         const formData = {
             collections: components,
@@ -58,9 +41,18 @@ export default function SearchWebsite() {
                 console.log(err);
             });
     };
-
+    const fetchAllIndices = async () => {
+        await axios
+            .get("/searchIndices")
+            .then((res) => {
+              setIndices(res.data[0].items);
+            })
+            .catch((err) => {
+                console.log("err", err);
+            });
+    };
     useEffect(() => {
-        fetchAllComponents();
+        fetchAllIndices()
         if(localStorage.getItem("selector") != null){
             navigateAfterRedirect(setShowSearch)
         }

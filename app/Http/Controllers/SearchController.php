@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Log;
 use Typesense\Client;
 use Illuminate\Http\Request;
 use App\Http\Promise\Promise;
@@ -500,16 +501,17 @@ class SearchController extends Controller
 
     public function addCollection(Request $request) {
         // try {
-            $components = $request->input('collections');
+            $components = json_decode($this->fetchData()->getContent(), true);
             $allCollections = [];
 
             // Retrieve all collections from Typesense
             $allCollections = $this->client->collections->retrieve();
+            // Log::info($allCollections);
             if (empty($allCollections)) {
                 // If allCollections is empty, map over components and create client collection
-                array_map(function ($component) {
+                array_map(function ($component) use ($components) {
                     $this->client->collections->create($component['schema']);
-                    $this->addDocuments($component, $component);
+                    $this->addDocuments($components, $component);
                 }, $components);
             }else{
                     foreach ($components as $comp) {

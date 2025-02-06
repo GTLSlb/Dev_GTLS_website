@@ -4,7 +4,7 @@ import {Spinner} from "@nextui-org/react";
 function SearchLoading() {
     return (
         <div className="h-full flex justify-center items-center">
-            <Spinner size="md" />
+            <Spinner size="md" color="warning"/>
         </div>
     );
 }

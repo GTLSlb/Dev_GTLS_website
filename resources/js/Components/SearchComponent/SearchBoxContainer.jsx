@@ -31,14 +31,14 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
             .get("/getAllComponents")
             .then((res) => {
                 setComponents(res.data);
-                let items = [],
-                    config = {},
-                    temp = res.data;
-                temp.map((item) => {
-                    config[item.tableName] = addSearchParameters(item);
-                    items.push(addSearchIndex(item));
-                });
-                setIndices(items);
+                // let items = [],
+                //     config = {},
+                //     temp = res.data;
+                // temp.map((item) => {
+                //     config[item.tableName] = addSearchParameters(item);
+                //     items.push(addSearchIndex(item));
+                // });
+                // setIndices(items);
             })
             .catch((err) => {
                 console.log("err", err);
@@ -117,6 +117,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                         clearButton: "text-[#ffffff] hover:text-[#ffffff]",
                     }}
                     onChange={(e) => {
+                        setSearching(true);
                         setSearchQuery(e.target.value);
                         handleValueChange();
                     }}
@@ -127,9 +128,9 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                     }}
                 />
 
-                <div className="">
+                <div className="h-full w-full">
                     {searching ? (
-                        <SearchLoading />
+                        <div className="h-full w-full flex justify-center items-center"><SearchLoading /></div>
                     ) : (
                         <SearchContent
                             content={content}

@@ -9,6 +9,7 @@ function SearchList({ searchQuery, errorMsg, content, setSearching, searching })
         localStorage.setItem("searchState", JSON.stringify(state));
         window.location.href = `/searchResults`;
     }
+
     return (
         <div className="mt-4">
             <div className="text-sm text-gray-400 mb-4">
