@@ -545,7 +545,7 @@ class SearchController extends Controller
                 // Add URl and alternative text to the hits
                 if(is_array($hits) && isset($hits[0]['document'])){
 
-                    $hits[0]['document']['url'] = $file->url;
+                    $hits[0]['document']['img_url'] = $file->url;
                     $hits[0]['document']['alternative_text'] = $file->alternative_text;
                     return $hits;
                 }else{
