@@ -544,11 +544,12 @@ class SearchController extends Controller
             if(isset($file)){
                 // Add URl and alternative text to the hits
                 if(is_array($hits) && isset($hits[0]['document'])){
-                    $alteredHits = $hits[0]['document'] = array_merge($hits[0]['document'], ['url' => $file->url, 'alternative_text' => $file->alternative_text]);
-                    return $alteredHits;
+
+                    $hits[0]['document']['url'] = $file->url;
+                    $hits[0]['document']['alternative_text'] = $file->alternative_text;
+                    return $hits;
                 }else{
-                    $alteredHits = $hits['document'] = array_merge($hits['document'], ['url' => $file->url, 'alternative_text' => $file->alternative_text]);
-                    return $alteredHits;
+                    return $hits;
                 }
             }else{
                 return $hits;
@@ -573,14 +574,19 @@ class SearchController extends Controller
                     ]);
                 $isFromNews = DB::connection('mysqlOne')->table('blogs')->where('title', $col['name'])->first();
                 if(isset($isFromNews) && !empty($response['hits'])){
-                    $this->getPostImgUrl($isFromNews, $response['hits']);
+                    $alteredhits = $this->getPostImgUrl($isFromNews, $response['hits']);
+                    $results = $alteredhits;
+                }else{
+                    $results = $response['hits'];
+
                 }
-                $results = $response['hits'];
                 $allResults = array_merge($allResults, $results);
             }
 
             usort($allResults, function($a, $b) {
-                return $b['text_match_info']['score'] <=> $a['text_match_info']['score'];
+                $aScore = isset($a['text_match_info']) && is_array($a['text_match_info']) ? $a['text_match_info']['score'] : 0;
+                $bScore = isset($b['text_match_info']) && is_array($b['text_match_info']) ? $b['text_match_info']['score'] : 0;
+                return $bScore <=> $aScore;
             });
             return response()->json(['data' => $allResults, 'message' => "Search Success"], 200);
         }catch(Exception $e){
