@@ -26,25 +26,6 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
         []
     );
 
-    const fetchAllComponents = async () => {
-        await axios
-            .get("/getAllComponents")
-            .then((res) => {
-                setComponents(res.data);
-                // let items = [],
-                //     config = {},
-                //     temp = res.data;
-                // temp.map((item) => {
-                //     config[item.tableName] = addSearchParameters(item);
-                //     items.push(addSearchIndex(item));
-                // });
-                // setIndices(items);
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
-    };
-
     const fetchAllIndices = async () => {
         await axios
             .get("/searchIndices")
@@ -56,18 +37,6 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
             });
     };
 
-    const addCollections = async () => {
-        const formData = {
-            collections: components,
-        };
-        axios
-            .post("/addCollections", formData)
-            .then((res) => {})
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     useEffect(() => {
         // fetchAllComponents();
         fetchAllIndices()
@@ -75,12 +44,6 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
             navigateAfterRedirect(setSearching);
         }
     }, []);
-
-    // useEffect(() => {
-    //     if (components?.length > 0 && indices?.length > 0) {
-    //         addCollections();
-    //     }
-    // }, [components, indices]);
 
     // Effect to set content 500ms after searching is updated
     useEffect(() => {

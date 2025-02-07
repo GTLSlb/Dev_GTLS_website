@@ -21,7 +21,7 @@ function SearchCard({ blog }) {
                 href={route("newsPage", {
                     slug: blog.Slug,
                 })}
-                className=""
+                className="flex justify-between flex-col h-full"
             >
                 <CardHeader className="flex-col items-start p-3 pb-0 ">
                     <img
@@ -30,7 +30,7 @@ function SearchCard({ blog }) {
                         className="w-full h-[200px] object-cover rounded-xl"
                     />
                 </CardHeader>
-                <CardBody className="overflow-visible px-3 h-auto pb-0">
+                <CardBody className="overflow-visible px-3 pb-0">
                     <p className="text-tiny text-white line-clamp-3">
                         {description}
                     </p>
