@@ -543,8 +543,13 @@ class SearchController extends Controller
 
             if(isset($file)){
                 // Add URl and alternative text to the hits
-                $alteredHits = $hits[0]['document'] = array_merge($hits[0]['document'], ['url' => $file->url, 'alternative_text' => $file->alternative_text]);
-                return $alteredHits;
+                if(is_array($hits) && isset($hits[0]['document'])){
+                    $alteredHits = $hits[0]['document'] = array_merge($hits[0]['document'], ['url' => $file->url, 'alternative_text' => $file->alternative_text]);
+                    return $alteredHits;
+                }else{
+                    $alteredHits = $hits['document'] = array_merge($hits['document'], ['url' => $file->url, 'alternative_text' => $file->alternative_text]);
+                    return $alteredHits;
+                }
             }else{
                 return $hits;
             }
@@ -567,7 +572,7 @@ class SearchController extends Controller
                         'prioritize_exact_match' => true
                     ]);
                 $isFromNews = DB::connection('mysqlOne')->table('blogs')->where('title', $col['name'])->first();
-                if(isset($isFromNews)){
+                if(isset($isFromNews) && !empty($response['hits'])){
                     $this->getPostImgUrl($isFromNews, $response['hits']);
                 }
                 $results = $response['hits'];
