@@ -535,6 +535,21 @@ class SearchController extends Controller
         // }
     }
 
+    public function getPostImgUrl($newsArticle, $hits){
+        $relatedfileID = DB::connection('mysqlOne')->table('files_related_mph')->where('related_type', 'api::blog.blog')->where('field', 'CoverImage')->where('related_id', $newsArticle->id)->first();
+        if(isset($relatedfileID)){
+            // There is a cover image related to this blog post
+            $file = DB::connection('mysqlOne')->table('files')->where('id', $relatedfileID->file_id)->first();
+
+            if(isset($file)){
+                // Add URl and alternative text to the hits
+                $alteredHits = $hits[0]['document'] = array_merge($hits[0]['document'], ['url' => $file->url, 'alternative_text' => $file->alternative_text]);
+                return $alteredHits;
+            }else{
+                return $hits;
+            }
+        }
+    }
     public function searchSchema(Request $request)
     {
         try{
@@ -551,6 +566,10 @@ class SearchController extends Controller
                         'query_by' => $col['searchParameters']['query_by'],
                         'prioritize_exact_match' => true
                     ]);
+                $isFromNews = DB::connection('mysqlOne')->table('blogs')->where('title', $col['name'])->first();
+                if(isset($isFromNews)){
+                    $this->getPostImgUrl($isFromNews, $response['hits']);
+                }
                 $results = $response['hits'];
                 $allResults = array_merge($allResults, $results);
             }
