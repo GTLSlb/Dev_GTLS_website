@@ -18,10 +18,12 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
     const [errorMsg, setErrorMsg] = useState("");
     const [indices, setIndices] = useState([]);
     const [components, setComponents] = useState([]);
+    const [isSearchDone, setIsSearchDone] = useState(false);
 
     const handleValueChange = useCallback(
-        debounce(() => {
+        debounce((e) => {
             setSearching((prev) => !prev);
+            setSearchQuery(e.target.value);
         }, 500),
         []
     );
@@ -53,7 +55,8 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                 setContent,
                 setErrorMsg,
                 indices,
-                setSearching
+                setSearching,
+                setIsSearchDone
             ); // Set searching to false after completion
         } else {
             setSearching(false);
@@ -80,9 +83,8 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                         clearButton: "text-[#ffffff] hover:text-[#ffffff]",
                     }}
                     onChange={(e) => {
-                        setSearching(true);
-                        setSearchQuery(e.target.value);
-                        handleValueChange();
+                        setIsSearchDone(false);
+                        handleValueChange(e);
                     }}
                     onClear={(e) => {
                         setSearching(false);
@@ -102,6 +104,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                             errorMsg={errorMsg}
                             searching={searching}
                             setSearching={setSearching}
+                            isSearchDone={isSearchDone}
                         />
                     )}
                 </div>

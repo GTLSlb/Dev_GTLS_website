@@ -1,6 +1,6 @@
 import SearchHit from "@/Pages/Component/SearchHit";
 
-function SearchList({ searchQuery, errorMsg, content, setSearching, searching }) {
+function SearchList({ searchQuery, errorMsg, content, setSearching, searching, isSearchDone }) {
     const handleRedirect = () => {
         setSearching(false);
         const searchQuery = 'example';
@@ -16,10 +16,10 @@ function SearchList({ searchQuery, errorMsg, content, setSearching, searching })
                 Suggested Search List
             </div>
             <button onClick={()=>handleRedirect()} className="text-sm text-gray-400 mb-4">
-                See all results for "{searchQuery}"
+                Showing {content?.length < 6 ? content?.length : 6 } out of {content?.length} results, see all results for "{searchQuery}"
             </button>
-            {content?.length > 0 && !searching ? (
-                content.map((hit, index) => (
+            {content?.length > 0 && !searching && searchQuery != "" && isSearchDone ? (
+                content?.slice(0, 6)?.map((hit, index) => (
                     <SearchHit
                         hit={hit}
                         key={index}

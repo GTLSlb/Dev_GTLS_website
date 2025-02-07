@@ -9,16 +9,18 @@ function SearchContent({
     errorMsg,
     setSearching,
     searching,
+    isSearchDone,
 }) {
     return (
         <div>
-            {searchQuery.length > 0 || searchQuery != "" ? (
+            { searchQuery != "" ? (
                 <SearchList
                     searching={searching}
                     searchQuery={searchQuery}
                     errorMsg={errorMsg}
                     content={content}
                     setSearching={setSearching}
+                    isSearchDone={isSearchDone}
                 />
             ) : (
                 <SearchLatest getLatestBlogs={getLatestBlogs} />

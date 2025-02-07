@@ -16,10 +16,12 @@ function WebsiteSearchResults({}) {
     const [errorMsg, setErrorMsg] = useState("");
     const [indices, setIndices] = useState([]);
     const [searching, setSearching] = useState(false);
+    const [isSearchDone, setIsSearchDone] = useState(false);
 
     const handleValueChange = useCallback(
-        debounce(() => {
+        debounce((e) => {
             setSearching((prev) => !prev);
+            setSearchQuery(e.target.value);
         }, 500),
         []
     );
@@ -31,7 +33,8 @@ function WebsiteSearchResults({}) {
                 setContent,
                 setErrorMsg,
                 indices,
-                setSearching
+                setSearching,
+                setIsSearchDone,
             ); // Set searching to false after completion
         } else {
             setSearching(false);
@@ -61,8 +64,8 @@ function WebsiteSearchResults({}) {
                                     "text-[#ffffff] hover:text-[#ffffff]",
                             }}
                             onChange={(e) => {
-                                setSearchQuery(e.target.value);
-                                handleValueChange();
+                                setIsSearchDone(false)
+                                handleValueChange(e);
                             }}
                             onClear={(e) => {
                                 setSearching(false);

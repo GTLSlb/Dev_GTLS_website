@@ -328,7 +328,8 @@ export const handleSearchChange = async (
     // setIsOpen,
     setError,
     indices,
-    setIsLoading
+    setIsLoading,
+    setIsSearchDone,
 ) => {
     setIsLoading(true);
     setError("");
@@ -340,6 +341,7 @@ export const handleSearchChange = async (
         .then((res) => {
             setResults(res.data.data);
             setIsLoading(false);
+            setIsSearchDone(true);
         })
         .catch((err) => {
             console.log(err);
