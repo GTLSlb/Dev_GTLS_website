@@ -331,6 +331,7 @@ export const handleSearchChange = async (
     setIsLoading,
     setIsSearchDone,
 ) => {
+
     setIsLoading(true);
     setError("");
     axios

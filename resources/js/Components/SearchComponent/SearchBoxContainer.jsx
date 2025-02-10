@@ -1,28 +1,25 @@
+import {
+    handleSearchChange,
+    navigateAfterRedirect,
+} from "@/Components/utils/SearchUtils";
 import SearchIcon from "@mui/icons-material/Search";
 import { Input } from "@nextui-org/react";
 import { debounce } from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import SearchLoading from "./SearchResults/SearchLoading";
-import SearchContent from "./SearchResults/SearchContent";
-import {
-    addSearchIndex,
-    addSearchParameters,
-    handleSearchChange,
-    navigateAfterRedirect,
-} from "@/Components/utils/SearchUtils";
 import "../../../css/scroll.css";
+import SearchContent from "./SearchResults/SearchContent";
+import SearchLoading from "./SearchResults/SearchLoading";
 function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
     const [searching, setSearching] = useState(false);
     const [content, setContent] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [indices, setIndices] = useState([]);
-    const [components, setComponents] = useState([]);
     const [isSearchDone, setIsSearchDone] = useState(false);
 
     const handleValueChange = useCallback(
         debounce((e) => {
-            setSearching((prev) => !prev);
+            setSearching(true);
             setSearchQuery(e.target.value);
         }, 500),
         []
@@ -30,9 +27,9 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
 
     const fetchAllIndices = async () => {
         await axios
-            .get("/searchIndices")
+            .get("https://test-web.gtls.store/searchIndices")
             .then((res) => {
-              setIndices(res.data[0].items);
+                setIndices(res.data[0].items);
             })
             .catch((err) => {
                 console.log("err", err);
@@ -41,7 +38,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
 
     useEffect(() => {
         // fetchAllComponents();
-        fetchAllIndices()
+        fetchAllIndices();
         if (localStorage.getItem("selector") != null) {
             navigateAfterRedirect(setSearching);
         }
@@ -93,9 +90,11 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                     }}
                 />
 
-                <div className="h-full w-full">
+                <div className={`w-full ${searching ? "h-full" : ""}`}>
                     {searching ? (
-                        <div className="h-full w-full flex justify-center items-center"><SearchLoading /></div>
+                        <div className="h-full w-full flex justify-center items-center">
+                            <SearchLoading />
+                        </div>
                     ) : (
                         <SearchContent
                             content={content}

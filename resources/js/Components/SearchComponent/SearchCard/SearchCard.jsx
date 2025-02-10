@@ -13,6 +13,7 @@ function SearchCard({ blog }) {
         <Card
             className="flex-1 bg-transparent border-1 rounded-2xl border-goldt p-0"
             isPressable
+            key={blog.documentId}
             onPress={() => {
                 console.log(blog);
             }}
@@ -21,7 +22,7 @@ function SearchCard({ blog }) {
                 href={route("newsPage", {
                     slug: blog.Slug,
                 })}
-                className="flex justify-between flex-col h-full"
+                className="flex justify-between flex-col h-full w-full"
             >
                 <CardHeader className="flex-col items-start p-3 pb-0 ">
                     <img

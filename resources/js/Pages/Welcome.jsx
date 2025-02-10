@@ -13,7 +13,6 @@ import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Safety from "./Component/landingPage/Safety";
 import Technologies from "./Component/landingPage/Technologies";
 import VideoHeader from "./Component/landingPage/VideoHeader";
-import SearchWebsite from "./Component/SearchWebsite";
 import WebsiteSearchResults from "./WebsiteSearchResults";
 const scrollToElement = (elementId) => {
     const element = document.getElementById(elementId);

@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/20/solid";
 import { Link } from "@inertiajs/inertia-react";
 import TrainNotification from "./TrainNotification";
-import SearchWebsite from "@/Pages/Component/SearchWebsite";
 import SearchBoxContainer from "./SearchComponent/SearchBoxContainer";
 import SearchButton from "./SearchComponent/SearchButton";
 

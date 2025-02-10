@@ -1,0 +1,22 @@
+.no-style,
+.no-style * {
+    all: unset !important;
+    color: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+    line-height: normal !important;
+    text-decoration: none !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+}
+
+/* Make the first letter uppercase for both the div and its children */
+.no-style::first-letter,
+.no-style *::first-letter {
+    text-transform: uppercase !important;
+}

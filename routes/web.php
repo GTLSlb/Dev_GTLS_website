@@ -44,8 +44,12 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/searchResults', function () {
-    return Inertia::render('WebsiteSearchResults');
+    $searchQuery = request()->query('q', null); 
+    return Inertia::render('WebsiteSearchResults', [
+        'query' => $searchQuery
+    ]);
 })->name('searchResults');
+
 
 Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
 

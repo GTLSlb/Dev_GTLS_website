@@ -54,24 +54,6 @@ function MainLayout({ children, loading, isHomeScreen }) {
         fetchData();
     }, []);
 
-    const fetchAllComponents = async () => {
-        await axios
-            .get("/getAllComponents")
-            .then((res) => {
-                let items = [],
-                    config = {},
-                    temp = res.data;
-                temp.map((item) => {
-                    config[item.tableName] = addSearchParameters(item);
-                    items.push(addSearchIndex(item));
-                });
-                setIndices(items);
-            })
-            .catch((err) => {
-                console.log("err", err);
-            });
-    };
-
     return (
         <div>
             <>

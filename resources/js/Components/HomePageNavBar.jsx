@@ -1,5 +1,4 @@
 import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
-import SearchWebsite from "@/Pages/Component/SearchWebsite";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { PhoneIcon } from "@heroicons/react/20/solid";
 import {
@@ -184,7 +183,7 @@ const Header = ({
             className="mx-auto lg:max-w-7xl max-w-7xl px-6 py-2 lg:flex lg:items-center lg:gap-x-10 lg:px-8 flex items-center justify-between"
             aria-label="Global"
         >
-            <div className="flex lg:flex-1">
+            <div className="flex flex-1 ">
                 <Logo Image={getNavigation.Icon.url} />
             </div>
             <div className="flex lg:hidden">

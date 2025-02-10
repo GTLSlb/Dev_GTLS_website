@@ -3,7 +3,7 @@ import {
     navigateToSelector,
 } from "@/Components/utils/SearchUtils";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-
+import "../../../css/search.css"
 export default function SearchHit({ hit, key, searchQuery, setIsOpen }) {
     const parser = new DOMParser();
     const hitKey = hit?.highlights?.[0]?.field;
@@ -22,12 +22,18 @@ export default function SearchHit({ hit, key, searchQuery, setIsOpen }) {
                     hit?.document?.selector,
                     hit?.document?.url,
                     hit,
-                    setIsOpen,
+                    setIsOpen
                 )
             }
         >
             <ArrowRightAltIcon height={20} width={20} />
-            <p className="line-clamp-1">{description}</p>
+
+            <div
+                className="no-style"
+                dangerouslySetInnerHTML={{
+                    __html: description,
+                }}
+            ></div>
         </div>
     );
 }
