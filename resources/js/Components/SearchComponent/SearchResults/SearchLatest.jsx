@@ -2,7 +2,6 @@ import NewsCard from "@/Components/News/NewsCard";
 import React from "react";
 import SearchCard from "../SearchCard/SearchCard";
 function SearchLatest({ getLatestBlogs }) {
-
     return (
         <div>
             {" "}
@@ -11,7 +10,7 @@ function SearchLatest({ getLatestBlogs }) {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full justify-center gap-4">
                 {getLatestBlogs.map((blog) => (
-                    <NewsCard post={blog} />
+                    <SearchCard blog={blog} post={blog} />
                 ))}
             </div>
         </div>

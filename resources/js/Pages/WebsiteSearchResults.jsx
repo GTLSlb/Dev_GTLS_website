@@ -90,7 +90,7 @@ function WebsiteSearchResults({}) {
         <MainLayout loading={loading}>
             <Head title={searchQuery + " Results"} />
             <div className="mt-4 py-6 bg-dark pt-24 flex justify-center">
-                <div className=" mx-auto max-w-7xl ">
+                <div className="w-full mx-auto max-w-7xl ">
                     <div className="">
                         <Input
                             placeholder="Search..."
