@@ -275,14 +275,14 @@ export function navigateToSelector(selector, url, doc, setIsOpen) {
     if (getPathname(url) !== window.location.pathname) {
         window.location.replace(url);
         localStorage.setItem("selector", selectorParts);
-    }
+    }else{
+        const elements = document.body.getElementsByTagName("*");
+        const currentElement = findElement(elements, selectorParts);
 
-    const elements = document.body.getElementsByTagName("*");
-    const currentElement = findElement(elements, selectorParts);
-
-    if (currentElement) {
-        setIsOpen(false);
-        currentElement.scrollIntoView({ behavior: "smooth" });
+        if (currentElement) {
+            setIsOpen(false);
+            currentElement.scrollIntoView({ behavior: "smooth" });
+        }
     }
 }
 export function highlightRelevantWords(text, query) {

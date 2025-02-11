@@ -120,8 +120,8 @@ export default function News(props) {
                                 ?.slice()
                                 ?.sort(
                                     (a, b) =>
-                                        new Date(b.publishedAt) -
-                                        new Date(a.publishedAt)
+                                        new Date(b.DatePublished) -
+                                        new Date(a.DatePublished)
                                 )
                                 .map((post) => (
                                     <NewsCard post={post} />
