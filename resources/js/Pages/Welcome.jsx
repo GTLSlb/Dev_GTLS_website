@@ -190,7 +190,6 @@ export default function Welcome(props) {
                             <Safety getSafety={getSafety} />
                             <Technologies gettechnologies={gettechnologies} />
                             <Certifiactesw getcertificates={getcertificates} />
-                            <WebsiteSearchResults />
                         </MainLayout>
 
                     </div>

@@ -4,7 +4,7 @@ import React from "react";
 function NewsCard({ post }) {
 
     const strapiApiUrl = window.Laravel.strapiAppUrl;
-    
+
     return (
         <div key={post.documentId} className="">
             <Link
@@ -30,11 +30,11 @@ function NewsCard({ post }) {
                         <div className="max-w-xl mx-4 mb-6  mt-12">
                             <div className="mt-5 flex items-center gap-x-4 text-xs">
                                 <time
-                                    dateTime={post.publishedAt}
+                                    dateTime={post.DatePublished}
                                     className="text-goldl font-bold"
                                 >
                                     {/* {post.date} */}
-                                    {post?.publishedAt?.split("T")[0]}
+                                    {post?.DatePublished?.split("T")[0]}
                                 </time>
                             </div>
                             <div className="group relative">

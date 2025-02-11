@@ -14,7 +14,7 @@ function SearchList({
             <div className="text-sm text-gray-400 mb-2">
                 Suggested Search List
             </div>
-            <Link href={route("searchResults", { q: "truck" })}>
+            <Link href={route("searchResults", { q: searchQuery })}>
                 <button className="text-sm text-gray-400 mb-4">
                     Showing {content?.length < 6 ? content?.length : 6} out of{" "}
                     {content?.length} results, see all results for "
