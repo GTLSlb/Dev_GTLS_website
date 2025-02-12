@@ -44,7 +44,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::get('/searchResults', function () {
-    $searchQuery = request()->query('q', null); 
+    $searchQuery = request()->query('q', null);
     return Inertia::render('WebsiteSearchResults', [
         'query' => $searchQuery
     ]);

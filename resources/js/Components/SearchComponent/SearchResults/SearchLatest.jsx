@@ -9,8 +9,8 @@ function SearchLatest({ getLatestBlogs }) {
                 Latest News
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full justify-center gap-4">
-                {getLatestBlogs.map((blog) => (
-                    <SearchCard blog={blog} post={blog} />
+                {getLatestBlogs.map((blog, index) => (
+                    <SearchCard key={index} blog={blog} post={blog} />
                 ))}
             </div>
         </div>

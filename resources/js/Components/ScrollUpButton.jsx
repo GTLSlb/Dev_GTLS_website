@@ -39,7 +39,6 @@ const ScrollToTopButton = () => {
             smooth={true}
             duration={500}
             onClick={scrollToTop}
-            href={scrollToTop}
             className={`fixed z-50 hover:cursor-pointer bottom-4 right-4 p-4 rounded-full bg-goldd text-dark transform transition-transform ${
                 isVisible
                     ? "translate-y-0 opacity-100 duration-300"

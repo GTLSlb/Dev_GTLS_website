@@ -75,14 +75,14 @@ export default function Certifiactesw(props) {
                 <p className="text-4xl font-bold tracking-tight text-goldd">
                     {getcertificates ? getcertificates.Title : null}
                 </p>
-                <p className="text-lg  text-gray-200 ">
+                <div className="text-lg  text-gray-200 ">
                     <div
                         className=""
                         dangerouslySetInnerHTML={{
                             __html: getcertificates.Description,
                         }}
                     ></div>
-                </p>
+                </div>
             </div>
 
             <div className="xl:absolute w-full bg-gradient-to-br xl:h-32 from-goldd via-goldl to-goldd  bg-opacity-10">
@@ -139,14 +139,14 @@ export default function Certifiactesw(props) {
                                                             <span className="absolute inset-0" />
                                                             {certificate?.Title}
                                                         </h3>
-                                                        <p className="mt-1 text-sm  text-gray-400 line-clamp-2">
+                                                        <div className="mt-1 text-sm  text-gray-400 line-clamp-2">
                                                             <div
                                                                 className=""
                                                                 dangerouslySetInnerHTML={{
                                                                     __html: certificate?.Description,
                                                                 }}
                                                             ></div>
-                                                        </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
