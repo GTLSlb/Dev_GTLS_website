@@ -43,6 +43,8 @@ Route::get('/login', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
 
+Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
+
 Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
 
 Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');

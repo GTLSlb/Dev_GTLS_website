@@ -1,6 +1,7 @@
 export default function Footer(props) {
     const getfooter = props.getfooter;
     const strapiApi = window.Laravel.strapiAppUrl;
+
     return (
         <footer
             className="bg-dark pb-5 "
@@ -17,14 +18,14 @@ export default function Footer(props) {
                         <a href="/">
                             <img
                                 className="h-20"
-                                src={strapiApi + getfooter?.Icon.url}
-                                alt={getfooter?.Icon.alternativeText}
+                                src={strapiApi + getfooter?.Icon?.url}
+                                alt={getfooter?.Icon?.alternativeText}
                             />
                         </a>
                         <div className="  gap-8 col-span-2 mt-0 h-full flex ">
                             <div className=" flex flex-col items-center md:flex-row gap-x-24">
                                 <div className="flex space-x-6 ">
-                                    {getfooter.socials.map((item) => (
+                                    {getfooter?.socials?.map((item) => (
                                         <div
                                             className="border border-goldt rounded-full p-1"
                                             key={item.id}
