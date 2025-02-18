@@ -1,19 +1,14 @@
 <?php
 
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ConsTrackingController;
 use App\Http\Controllers\FeedBackFormController;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\SectionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\SupportFormController;
-use App\Http\Controllers\UserVisitController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\FileController;
 use App\Http\Controllers\SendDailyEmail;
 use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
@@ -21,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
-use App\Models\Blog;
-use App\Http\Middleware\LogUserVisit;
 use gtls\loginstory\LoginClass;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +53,10 @@ Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->mi
 
 Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
 
-
-Route::get('/visitor',[UserVisitController::class, 'index']);
-
+Route::get('/getAllComponents', [SearchController::class, 'fetchData'])->name('fetch.components');
+Route::post('/addCollections', [SearchController::class, 'addCollection'])->name('add.collections');
+Route::post('/deleteAllCollections', [SearchController::class, 'deleteAllCollections'])->name('delete.collections');
+Route::post('/searchCollections', [SearchController::class, 'searchSchema'])->name('search.collections');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
@@ -69,27 +64,6 @@ Route::match(['get', 'post'], '/landingPage', function () {
     }
     return Inertia::render('LandingPage');
 })->middleware(['custom.auth'])->name('landing.page');
-
-
-Route::get('/gtms', function () {
-    return Inertia::render('GTMS');
-})->middleware(['custom']);
-
-Route::get('/gtam', function () {
-    return Inertia::render('GTAM');
-})->middleware(['custom']);
-
-Route::get('/gtrs', function () {
-    return Inertia::render('GTRS');
-})->middleware(['custom']);
-
-Route::get('/gtw', function () {
-    return Inertia::render('GTW');
-})->middleware(['custom']);
-
-// Route::get('/main', function () {
-//     return Inertia::render('Layout');
-// })->middleware(['custom.auth'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -99,16 +73,14 @@ Route::get('/goinggreen', function () {
     return Inertia::render('GoingGreen');
 })->name('goinggreen');
 
-// Route::get('/traffic', function () {
-//     return Inertia::render('TrafficPage');
-// })->name('traffic');
+Route::get('/search', [SearchController::class, 'search']);
 
 
 Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
 
-Route::get('/palletterms', function () {
+Route::get('/palletterms', function () { 
     return Inertia::render('PalletTerms');
 })->name('palletterms');
 
@@ -136,24 +108,9 @@ Route::get('/contact_us', function () {
     return Inertia::render('ContactUsPage');
 })->name('contact_us');
 
-Route::get('/Unsubscribe/{id}', function ($id) {
-    return Inertia::render('Unsubscribe',['id'=> $id]);
-})->name('Unsubscribe');
-
 Route::get('/Subscribe/{id}', function ($id) {
     return Inertia::render('Subscribe',['id'=> $id]);
 })->name('Subscribe');
-
-
-Route::resource('posts', BlogController::class);
-// Route::resource('post', BlogController::class,'post');
-// Route::get('/news', function () {
-//     return Inertia::render('NewsPage');
-// })-> name('news');
-
-// Route::get('/news/{id}/{title?}', function ($id, $title = '') {
-//     return Inertia::render('NewsPage', ['id' => $id, 'title' => $title]);
-// })->name('news');
 
 
 Route::post('/contact', [ContactFormController::class, 'submitContactForm'])->name('contact.submit');
@@ -227,44 +184,10 @@ Route::get('/session-data', function () {
 
 
 
-// ************************ AdminPanel  API Route ************************
-Route::resource('section',SectionController::class);
-Route::get('/getSec/{id}',[SectionController::class,'getSec']);
-Route::get('/getaboutus',[SectionController::class,'about']);
-Route::get('/getheader',[SectionController::class,'header']);
-Route::get('/getTrainNotification',[SectionController::class,'TrainNotification']);
-Route::get('/getGtrs',[SectionController::class,'gtrs']);
-Route::get('/getservices',[SectionController::class,'services']);
-Route::get('/getgoingGreen',[SectionController::class,'goingGreenSection']);
-Route::get('/whygtls',[SectionController::class,'whygtls']);
-Route::get('/safety',[SectionController::class,'safety']);
-Route::get('/tecnologies',[SectionController::class,'tecnologies']);
-Route::get('/certificates',[SectionController::class,'certificates']);
-Route::get('/footer',[SectionController::class,'footer']);
-Route::get('/aboutPageHeader',[SectionController::class,'aboutPageHeader']);
-Route::get('/aboutPageCoreValue',[SectionController::class,'aboutPageCoreValue']);
-Route::get('/aboutPageSolutions',[SectionController::class,'aboutPageSolutions']);
-Route::get('/aboutPageTeam',[SectionController::class,'aboutPageTeam']);
-Route::get('/technologiesPage',[SectionController::class,'technologiesPage']);
-Route::get('/technologiesPageIT',[SectionController::class,'technologiesPageIT']);
-Route::get('/GreenPage',[SectionController::class,'GreenPage']);
-Route::get('/ContactPage',[SectionController::class,'ContactPage']);
-Route::get('/ContactPageBranches',[SectionController::class,'ContactPageBranches']);
-Route::get('/NewsPage',[SectionController::class,'NewsPage']);
-Route::get('/CareerHead',[SectionController::class,'CareerHead']);
-Route::get('/CareerAttractive',[SectionController::class,'CareerAttractive']);
-Route::get('/CareerSkills',[SectionController::class,'CareerSkills']);
-Route::get('/CareerJobs',[SectionController::class,'CareerJobs']);
-Route::get('/vister',[UserVisitController::class,'index']);
-// ******************************************************************
-
 
 // ************************ News Pages Route ************************
-Route::get('/posts',[BlogController::class,'index']);
 Route::get('/news/{slug}', function ($slug) {
-    $post = Blog::where('slug', $slug)->firstOrFail();
-    // $post = 123;
-    return Inertia::render('NewsPage', ['postslug' => $post]);
+    return Inertia::render('NewsPage', ['slug' => $slug]);
 })->name('newsPage');
 // ******************************************************************
 
@@ -278,6 +201,3 @@ Route::get('/forgot-password', function () {
     return Inertia::render('Auth/ForgotPassword');
 })->name('forgot.password');
 require __DIR__ . '/auth.php';
-
-//Route::post('/api/directions', [ApiController::class, 'directions']);
-

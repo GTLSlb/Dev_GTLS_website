@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Logo from "../../assets/pictures/Logo-upscaled.png";
-import { PublicClientApplication  } from "@azure/msal-browser";
+import { PublicClientApplication } from "@azure/msal-browser";
 import "../../../css/scroll.css";
 import MicrosoftLogo from "@/assets/icons/microsoft-logo.png";
 import { clearMSALLocalStorage } from "@/CommonFunctions";
@@ -32,12 +32,13 @@ export default function Login({ status, canResetPassword }) {
     }, []);
 
     return (
-<div className="h-screen w-full">
+        <div className="h-screen w-full">
             <LoginPage
                 appDomain={appDomain}
                 googlekey={googleKey}
                 redirectURL="/landingPage"
                 loginURL="/loginComp"
+                microsoftURL="/microsoftToken"
                 gtamURl={gtamURl}
                 pca={pca}
                 canResetPassword={true}

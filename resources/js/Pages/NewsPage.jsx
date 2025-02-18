@@ -1,111 +1,55 @@
-import { Link } from "@inertiajs/inertia-react";
-import { Head } from "@inertiajs/react";
-import { useState, useRef, useEffect } from "react";
-import React from "react";
-import { usePage } from "@inertiajs/react";
+import { getFromStrapi } from "@/CommonFunctions";
+import SEOComponent from "@/Components/SEO/SEOComponent";
+import MainLayout from "@/Layouts/MainLayout";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
+import { usePage } from "@inertiajs/react";
+import { useEffect, useRef, useState } from "react";
 import {
-    FacebookShareButton,
     FacebookIcon,
-    TwitterShareButton,
-    TwitterIcon,
+    FacebookShareButton,
     LinkedinIcon,
     LinkedinShareButton,
-    WhatsappShareButton,
+    TwitterIcon,
+    TwitterShareButton,
     WhatsappIcon,
+    WhatsappShareButton,
 } from "react-share";
-import Footer from "./Component/landingPage/Footer";
-
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
+import { BounceLoader } from "react-spinners";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import "swiper/css";
 import "swiper/css/navigation";
-import Navbars from "@/Components/Navbars";
-
-function SampleNextArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        />
-    );
-}
-
-function SamplePrevArrow(props) {
-    const { className, style, onClick } = props;
-    return (
-        <div
-            className={className}
-            style={{ ...style, display: "block" }}
-            onClick={onClick}
-        >
-            {/* <ArrowSmallRightIcon/> */}
-        </div>
-    );
-}
-
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "../../css/NewsPageSlider.css";
+import "../../css/iframe.css";
 export default function NewsPage(props) {
-    const { postslug } = usePage().props;
-    const [getfooter, setfooter] = useState([]);
-    const [getPosts, setPosts] = useState([]);
+    const { slug } = usePage().props;
+    const [postslug, setPostSlug] = useState();
+    const [loading, setLoading] = useState(true); // Add this state to manage loading state
 
-    // *********************************************************
-    // ********************* All requests  *********************
-    // *********************************************************
-    const [loading, setLoading] = useState(true);
-
-    // Posts
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const [postsResponse, footerResponse] = await Promise.all([
-                    axios.get("/posts"),
-                    axios.get("/footer"),
-                ]);
-                setPosts(postsResponse.data);
-                setfooter(footerResponse.data);
+            const status =
+                new URLSearchParams(window.location.search).get("status") ||
+                "test";
+
+            const endpoint = `/api/blogs?pagination%5BwithCount%5D=false&populate=*&filters[Slug][$eq]=${slug}&status=${status}`;
+
+            const result = await getFromStrapi(endpoint);
+
+            if (result.success) {
+                setPostSlug(result.data[0]);
                 setLoading(false);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                // Optionally, handle error state here
+            } else {
+                console.log("Fetch failed:", result.error);
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [slug]);
 
-    // *********************************************************
-    // ********************* End requests  *********************
-    // *********************************************************
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                },
-            },
-        ],
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-    };
     const maxScrollWidth = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const carousel = useRef(null);
@@ -123,211 +67,203 @@ export default function NewsPage(props) {
             : 0;
     }, []);
 
-    const [showNavbar, setShowNavbar] = useState(false);
-    const { post } = usePage().props;
-
-    console.log(postslug);
-    useEffect(() => {
-        let prevScrollPosition = window.pageYOffset;
-
-        function handleScroll() {
-            const scrollTop =
-                window.pageYOffset || document.documentElement.scrollTop;
-            setShowNavbar(scrollTop > 0);
-        }
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
     const pageUrl = window.location.href;
 
-    function customEncodeTitle(title) {
-        return title
-            .toLowerCase()
-            .replace(/ /g, "-")
-            .replace(/[^\w-]+/g, "");
+    const strapiApiUrl = window.Laravel.strapiAppUrl;
+
+    function isValidVideoFormat(value) {
+        // List of supported video formats
+        const supportedFormats = [
+            ".MPEG",
+            ".MP4",
+            ".Quicktime",
+            ".WMV",
+            ".AVI",
+            ".FLV",
+        ];
+
+        // Check if the provided value is in the list (case insensitive)
+        return supportedFormats.some(
+            (format) => format.toLowerCase() === value.toLowerCase()
+        );
     }
+
+    const processOembed = (html) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const oembedTag = doc.querySelector("oembed");
+
+        if (oembedTag) {
+            const url = oembedTag.getAttribute("url");
+            const iframe = document.createElement("iframe");
+            iframe.src = url;
+            iframe.width = "560"; // Set iframe dimensions as needed
+            iframe.height = "400";
+            iframe.allowFullscreen = true;
+            iframe.frameBorder = "0";
+
+            iframe.className = "custom-iframe flex items-center justify-center "; // Add your class names here
+
+            // Replace the oembed tag with the iframe
+            oembedTag.parentNode.replaceChild(iframe, oembedTag);
+            return doc.body.innerHTML;
+        }
+
+        return html;
+    };
+
+    const processedBody = processOembed(postslug?.Body);
 
     return (
         <>
-            <Head title="News" />
             <div className="relative isolate bg-dark">
-                <Navbars />
-                {/* <HeroSection/> */}
-                <div aria-hidden="true" className="relative">
-                    <img
-                        src={"/app/webimages/" + postslug.image}
-                        alt="news"
-                        className="h-[40rem] w-full object-cover  "
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark" />
-                </div>
-
-                <div className="bg-dark pb-10 px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
-                        <a
-                            href="/news"
-                            className="relative inline-flex items-center justify-center text-black "
-                        >
-                            <ArrowLongLeftIcon className="h-5 text-goldt " />
-                            <span className="p-1 text-white">Back to main</span>
-                        </a>
-                        <div key={postslug.id}>
-                            <h1 className="mt-2 text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                {postslug.title}
-                            </h1>
-                            <time
-                                dateTime={postslug.date}
-                                className="text-gray-500 font-bold"
-                            >
-                                {postslug.date.split("T")[0]}
-                            </time>
-                            <dd
-                                className="mt-6 text-lg leading-8 text-gray-200 text-justify"
-                                dangerouslySetInnerHTML={{
-                                    __html: postslug.desc,
-                                }}
-                            ></dd>
-                            <figure className="mt-16">
-                                {postslug.videoUrl ? (
-                                    <video
-                                        loop
-                                        autoPlay
-                                        controls
-                                        style={{ width: "100%" }}
-                                        src={
-                                            "/app/webimages/" +
-                                            postslug.videoUrl
-                                        }
-                                        type="video/mp4"
+                {loading ? (
+                    <div className="bg-dark flex justify-center items-center h-screen">
+                        {" "}
+                        <BounceLoader color="#e2b540" />
+                    </div>
+                ) : (
+                    <>
+                        <MainLayout loading={loading}>
+                            {postslug.seo && (
+                                <SEOComponent seoData={postslug?.seo} />
+                            )}
+                            <div aria-hidden="true" className="relative">
+                                <img
+                                    src={
+                                        strapiApiUrl + postslug.HeroSection.url
+                                    }
+                                    alt={postslug.HeroSection.alternativeText}
+                                    className="h-[40rem] w-full object-cover  "
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-dark" />
+                            </div>
+                            <div className="bg-dark pb-10 px-6 lg:px-8">
+                                <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+                                    <a
+                                        href="/news"
+                                        className="relative inline-flex items-center justify-center text-black "
                                     >
-                                        Your browser does not support the video
-                                        tag.
-                                    </video>
-                                ) : (
-                                    <div className="h-full w-full">
-                                        <img
-                                            className="aspect-video rounded-xl bg-gray-50 w-full object-cover"
-                                            src={
-                                                "/app/webimages/" +
-                                                postslug.image
-                                            }
-                                            alt={postslug.title}
+                                        <ArrowLongLeftIcon className="h-5 text-goldt " />
+                                        <span className="p-1 text-white">
+                                            Back to main
+                                        </span>
+                                    </a>
+                                    <div key={postslug.documentId}>
+                                        <h1
+                                            className="mt-2 text-3xl font-bold tracking-tight text-goldt sm:text-4xl"
+                                            dangerouslySetInnerHTML={{
+                                                __html: postslug.Title,
+                                            }}
                                         />
+                                        <time
+                                            dateTime={postslug.publishedAt}
+                                            className="text-gray-500 font-bold"
+                                        >
+                                            {
+                                                postslug.DatePublished.split(
+                                                    "T"
+                                                )[0]
+                                            }
+                                        </time>
+                                        <dd
+                                            className="mt-5 w-full"
+                                            dangerouslySetInnerHTML={{
+                                                __html: processedBody,
+                                            }}
+                                        ></dd>
+                                        <div className="mt-16 relative">
+                                            {postslug.NewsMedia && (
+                                                <Swiper
+                                                    navigation={true}
+                                                    modules={[Navigation]}
+                                                    className="mySwiper"
+                                                >
+                                                    {postslug.NewsMedia.map(
+                                                        (item, index) => (
+                                                            <SwiperSlide
+                                                                key={index}
+                                                                className="flex justify-center items-center w-full"
+                                                            >
+                                                                {" "}
+                                                                {isValidVideoFormat(
+                                                                    item.ext
+                                                                ) ? (
+                                                                    <video
+                                                                        loop
+                                                                        autoPlay
+                                                                        controls
+                                                                        style={{
+                                                                            width: "100%",
+                                                                        }}
+                                                                        className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
+                                                                        src={
+                                                                            strapiApiUrl +
+                                                                            item.url
+                                                                        }
+                                                                        type="video/mp4"
+                                                                    >
+                                                                        Your
+                                                                        browser
+                                                                        does not
+                                                                        support
+                                                                        the
+                                                                        video
+                                                                        tag.
+                                                                    </video>
+                                                                ) : (
+                                                                    <img
+                                                                        className="aspect-video w-full h-[550px] px-20 rounded-xl object-contain"
+                                                                        src={
+                                                                            strapiApiUrl +
+                                                                            item.url
+                                                                        }
+                                                                        alt={
+                                                                            item.alternativeText
+                                                                        }
+                                                                    />
+                                                                )}
+                                                            </SwiperSlide>
+                                                        )
+                                                    )}
+                                                </Swiper>
+                                            )}
+                                        </div>
+                                        <div className="mt-10">
+                                            <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">
+                                                Share to your friends
+                                            </p>
+                                            <FacebookShareButton
+                                                url={pageUrl}
+                                                title={postslug.title}
+                                            >
+                                                <FacebookIcon className="rounded-md h-10 w-auto mr-3" />
+                                            </FacebookShareButton>
+                                            <TwitterShareButton
+                                                url={pageUrl}
+                                                title={postslug.title}
+                                            >
+                                                <TwitterIcon className="rounded-md h-10 w-auto mr-3" />
+                                            </TwitterShareButton>
+                                            <LinkedinShareButton
+                                                url={pageUrl}
+                                                title={postslug.title}
+                                            >
+                                                <LinkedinIcon className="rounded-md h-10 w-auto mr-3" />
+                                            </LinkedinShareButton>
+                                            <WhatsappShareButton
+                                                url={pageUrl}
+                                                title={postslug.title}
+                                            >
+                                                <WhatsappIcon className="rounded-md h-10 w-auto mr-3" />
+                                            </WhatsappShareButton>
+                                        </div>
                                     </div>
-                                )}
-                            </figure>
-                            <div className="mt-10">
-                                <p className="mt-2 mb-5 text-xl font-bold tracking-tight text-white sm:text-xl">
-                                    Share to your friends
-                                </p>
-                                <div className="flex gap-4">
-                                    <FacebookShareButton
-                                        url={pageUrl}
-                                        title={postslug.title}
-                                    >
-                                        <FacebookIcon className="rounded-md h-10 w-auto mr-3" />
-                                    </FacebookShareButton>
-                                    <TwitterShareButton
-                                        url={pageUrl}
-                                        title={postslug.title}
-                                    >
-                                        <TwitterIcon className="rounded-md h-10 w-auto mr-3" />
-                                    </TwitterShareButton>
-                                    <LinkedinShareButton
-                                        url={pageUrl}
-                                        title={postslug.title}
-                                    >
-                                        <LinkedinIcon className="rounded-md h-10 w-auto mr-3" />
-                                    </LinkedinShareButton>
-                                    <WhatsappShareButton
-                                        url={pageUrl}
-                                        title={postslug.title}
-                                    >
-                                        <WhatsappIcon className="rounded-md h-10 w-auto mr-3" />
-                                    </WhatsappShareButton>
                                 </div>
                             </div>
-                        </div>
-                        {/* ))} */}
-                    </div>
-                </div>
-                <div className="bg-dark py-24 px-1 sm:py-10 mb-5" id="news">
-                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div className="mx-auto max-w-2xl text-center">
-                            <h2 className="text-3xl font-bold tracking-tight text-goldt sm:text-4xl">
-                                More News
-                            </h2>
-                        </div>
-
-                        <Slider {...settings}>
-                            {getPosts.map((post) => (
-                                <div key={post.id} className="px-5 ">
-                                    <Link
-                                        href={route("news", {
-                                            id: post.id,
-                                            title: customEncodeTitle(
-                                                post.title
-                                            ),
-                                        })}
-                                        className=""
-                                    >
-                                        <div className="h-full">
-                                            <div className="relative w-full www">
-                                                <img
-                                                    src={
-                                                        "/app/webimages/" +
-                                                        post.cover_image
-                                                    }
-                                                    alt={post.title}
-                                                    className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[5/2] w-full "
-                                                />
-                                                <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
-                                            </div>
-                                            <article
-                                                key={post.id}
-                                                className="flex flex-col items-start justify-between border border-yellow-200 border-opacity-20 rounded-2xl h-72"
-                                            >
-                                                <div className="max-w-xl mx-4 mb-6  mt-12">
-                                                    <div className="mt-5 flex items-center gap-x-4 text-xs">
-                                                        <time
-                                                            dateTime={
-                                                                post.datetime
-                                                            }
-                                                            className="text-goldl font-bold"
-                                                        >
-                                                            {
-                                                                post?.date?.split(
-                                                                    "T"
-                                                                )[0]
-                                                            }
-                                                        </time>
-                                                    </div>
-                                                    <div className="group relative">
-                                                        <h3 className="mt-3 text-lg font-semibold leading-6 text-white group-hover:text-gray-600 font-bold ">
-                                                            <span className="absolute inset-0" />
-                                                            {post?.title}
-                                                        </h3>
-                                                        <div
-                                                            className="mt-5 text-sm leading-6 text-gray-400 line-clamp-3 list-style-type: disc;"
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: post?.desc,
-                                                            }}
-                                                        ></div>
-                                                    </div>
-                                                </div>
-                                            </article>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
-                        </Slider>
-                    </div>
-                </div>
-                <Footer getfooter={getfooter} />
+                        </MainLayout>
+                    </>
+                )}
             </div>
         </>
     );

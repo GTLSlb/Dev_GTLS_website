@@ -1,19 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import tiger from "../assets/pictures/LogoWhite.webp";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import goldmap from "../assets/backgrounds/goldmap.webp";
-import {
-    QuestionMarkCircleIcon,
-    ArrowRightOnRectangleIcon,
-} from "@heroicons/react/24/outline";
-import {
-    ChatBubbleLeftEllipsisIcon,
-    MagnifyingGlassIcon,
-} from "@heroicons/react/20/solid";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
 import { PublicClientApplication } from "@azure/msal-browser";
 import Cookies from "js-cookie";
-import { clearMSALLocalStorage } from "@/CommonFunctions";
+import { clearMSALLocalStorage, getFromStrapi } from "@/CommonFunctions";
 
 export default function LandingPage({}) {
     const appUrl = window.Laravel.appUrl;
@@ -42,13 +36,13 @@ export default function LandingPage({}) {
         axios
             .get("/users")
             .then((res) => {
-                if(typeof res.data == "object"){
+                if (typeof res.data == "object") {
                     setcurrentUser(res.data);
                 }
             })
             .catch((error) => {
-                console.log(error)
-                if(error.response.status === 401){
+                console.log(error);
+                if (error.response.status === 401) {
                     window.location.href = `/login`;
                 }
             });
@@ -56,7 +50,6 @@ export default function LandingPage({}) {
 
     useEffect(() => {
         if (currentUser && !Token) {
-
             const headers = {
                 UserId: currentUser.UserId,
                 // currentUser.UserId,
@@ -82,16 +75,12 @@ export default function LandingPage({}) {
                     });
                     parsedDataPromise.then((parsedData) => {
                         setToken(parsedData.access_token);
-                        Cookies.set(
-                            "access_token",
-                            parsedData.access_token,
-                            {
-                                domain: appDomain,
-                                path: "/",
-                                secure: true, // Use this if your site is served over HTTPS
-                                sameSite: "Lax", // Optional, depending on your needs
-                            }
-                        );
+                        Cookies.set("access_token", parsedData.access_token, {
+                            domain: appDomain,
+                            path: "/",
+                            secure: true, // Use this if your site is served over HTTPS
+                            sameSite: "Lax", // Optional, depending on your needs
+                        });
                     });
                 })
                 .catch((err) => {
@@ -126,11 +115,11 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                        // Handle other errors
-                        console.log(err);
-                        setFilteredApps([]);
-                        setApps([]);
-                        setAppsApi(true);
+                    // Handle other errors
+                    console.log(err);
+                    setFilteredApps([]);
+                    setApps([]);
+                    setAppsApi(true);
                 });
         }
     }, [currentUser]);
@@ -206,7 +195,7 @@ export default function LandingPage({}) {
                         "msal.isMicrosoftLogin"
                     );
                     clearMSALLocalStorage();
-                    Cookies.remove('access_token');
+                    Cookies.remove("access_token");
 
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
@@ -272,15 +261,20 @@ export default function LandingPage({}) {
     // *********************************************************
 
     useEffect(() => {
-        axios
-            .get("/footer")
-            .then((response) => {
-                // console.log('fetching data:',response.data);
-                setfooter(response.data);
-            })
-            .catch((error) => {
+        const fetchData = async () => {
+            try {
+                const footerReq = await getFromStrapi(`/api/footer/?pLevel=2`);
+                if (footerReq.success) {
+                    setfooter(footerReq.data);
+                }
+                // scroll to the correct div
+            } catch (error) {
                 console.error("Error fetching data:", error);
-            });
+                // Optionally, handle error state here
+            }
+        };
+
+        fetchData();
     }, []);
     // *********************************************************
     // ********************* End requests  *********************
@@ -359,7 +353,7 @@ export default function LandingPage({}) {
                                                 )}
                                             </>
                                         </div>
-                                        <p className="text-sm text-white w-71 hidden sm:block">
+                                        <div className="text-sm text-white w-71 hidden sm:block">
                                             {currentUser?.FirstName &&
                                             currentUser?.LastName ? (
                                                 <>
@@ -369,7 +363,7 @@ export default function LandingPage({}) {
                                             ) : (
                                                 <>{currentUser?.Username}</>
                                             )}
-                                        </p>
+                                        </div>
                                     </div>
                                     <a
                                         href="https://support.gtls.com.au/help/2703577665"
@@ -469,7 +463,11 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={appsImgs[app?.AppId]}
+                                                              src={
+                                                                  appsImgs[
+                                                                      app?.AppId
+                                                                  ]
+                                                              }
                                                               //{`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"

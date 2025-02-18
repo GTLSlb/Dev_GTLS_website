@@ -1,59 +1,40 @@
-import { ChevronDoubleRightIcon } from "@heroicons/react/20/solid"
-import Green from "../../../assets/pictures/gogreen.webp"
-import "../../../../css/gradient.css"
+import "../../../../css/gradient.css";
 import Calc from "../../Component/landingPage/Calc";
 
-export default function GoingGreenSection (props){
+export default function GoingGreenSection(props) {
     const getGreen = props.getGreen;
-    const setGreen = props.setGreen;
-    
-return(
-    <div>
-        <div className=" text-smooth py-32">
-                    <div className="bg-gg bg-cover">
-                        <div className="mx-auto max-w-7xl  px-6 lg:px-8  flex flex-col md:flex-row gap-x-10 gap-y-10 py-2 items-center">
-                            <div className="wfull md:w-1/2">
-                                <img src={"/app/webimages/"+getGreen[0]?.image} alt={getGreen[0]?.image_alt} className="" />
-                            </div>
-                            
-                            <div className="md:w-1/2">
-                                <h2 className="gradient-text py-5 text-4xl font-bold">
-                                    {/* GTLS Towards a Green  Future  */}
-                                    {getGreen[0]?.name}
-                                </h2>
-                      
-                                <div className="mt-2 text-smooth">
-                                    <div dangerouslySetInnerHTML={{ __html: getGreen[0]?.description }}></div>
-                                    
-                                    {/* Gold Tiger is working toward a more
-                                    sustained future by managing the risks of
-                                    climate change. Going green is our major
-                                    focus and we understand how air pollution
-                                    and resource depletion impact the
-                                    environment. That’s why we decided to
-                                    implement a positive action program. */}
-                                     {/* We
-                                    acknowledge that the most effective efforts
-                                    should be directed at the decarbonisation of
-                                    the transport industry, our intention is to
-                                    produce an outcome that will positively
-                                    impact global society. */}
-                                </div>
-                               
-                                
-                                <div className="flex items-center gap-x-1 text-goldt mt-2 hover:text-smooth">
-                                    
-                                <a href="/goinggreen" className="text">Read more</a>
-                                    <ChevronDoubleRightIcon className="h-4"/>
-                                </div>
+    const strapiApi = window.Laravel.strapiAppUrl;
+    return (
+        <div>
+            <div className=" text-smooth lg:py-32">
+                <div className="bg-gg bg-cover">
+                    <div className="lg:mx-auto lg:max-w-7xl  px-6 lg:px-8  flex flex-col lg:flex-row gap-x-10 gap-y-10 py-2 items-center">
+                        <div className="wfull lg:w-1/2">
+                            <img
+                                src={strapiApi + getGreen.Image.url}
+                                alt={getGreen.Image.alternativeText}
+                                className=""
+                            />
+                        </div>
 
-                                <Calc/>
+                        <div className="lg:w-1/2">
+                            <h2 className="gradient-text py-5 text-4xl font-bold">
+                                {getGreen.Title}
+                            </h2>
+
+                            <div className="mt-2 text-smooth">
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: getGreen.Description,
+                                    }}
+                                ></div>
                             </div>
-                            
+
+                            <Calc />
                         </div>
                     </div>
-                   
                 </div>
-    </div>
-)
+            </div>
+        </div>
+    );
 }
