@@ -29,6 +29,7 @@
         window.Laravel = {
             gtamUrl: "{{ env('GTAM_API_URL') }}",
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
+            recaptchaKey: "{{ env('RECAPTHCA_API') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->

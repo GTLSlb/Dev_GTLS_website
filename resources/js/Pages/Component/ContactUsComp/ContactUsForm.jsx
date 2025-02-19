@@ -256,7 +256,7 @@ function ContactUsForm() {
                         )}
                         <div className="flex items-center justify-between">
                             <ReCAPTCHA
-                                sitekey="6LemlMEmAAAAANZxj_04B8Am7RXM9t0NJPnz4Mqs"
+                                sitekey={window.Laravel.recaptchaKey}
                                 onChange={handleRecaptchaChange}
                                 onExpired={handleRecaptchaExpired}
                                 className="mt-4 flex justify-center"

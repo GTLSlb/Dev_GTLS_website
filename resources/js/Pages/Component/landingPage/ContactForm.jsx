@@ -301,7 +301,7 @@ class ContactForm extends Component {
                                 </div>
                             </div>
                             <ReCAPTCHA
-                                sitekey="6LemlMEmAAAAANZxj_04B8Am7RXM9t0NJPnz4Mqs"
+                                sitekey={window.Laravel.recaptchaKey}
                                 onChange={this.handleRecaptchaChange}
                                 onExpired={this.handleRecaptchaExpired}
                                 className="mt-0 flex justify-center"

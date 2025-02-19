@@ -90,21 +90,21 @@ export default function Login({ status, canResetPassword }) {
     };
 
     const handleOnChangePassword = (event) => {
-        
         setData(
             event.target.name,
             event.target.type === "checkbox"
                 ? event.target.checked
                 : event.target.value
         );
-    setPassword(event.target.value);
-    }
+        setPassword(event.target.value);
+    };
 
     const gtamUrl = window.Laravel.gtamUrl;
+    const recaptchaKey = window.Laravel.recaptchaKey;
     const submit = (e) => {
         setLoading(true);
         e.preventDefault();
-        setErrorMessage("")
+        setErrorMessage("");
         const hashedPassword = CryptoJS.SHA256(password).toString();
         axios
             .get(`${gtamUrl}Login`, {
@@ -119,30 +119,29 @@ export default function Login({ status, canResetPassword }) {
                     const parsedData = JSON.parse(x);
                     resolve(parsedData);
                 });
-                
+
                 const credentials = {
                     Email: email,
                     Password: hashedPassword,
                 };
                 axios
-                .post("/loginapi", credentials)
-                .then((response)=>{
-                    if(response.status == 200) {
-                       window.location.href = '/landingPage';
-                    }else{
-                        //window.location.href = '/login';
-                    }
-                })
-                .catch((error) => {
-                    setLoading(false);
-                    console.log(error);
-                });
+                    .post("/loginapi", credentials)
+                    .then((response) => {
+                        if (response.status == 200) {
+                            window.location.href = "/landingPage";
+                        } else {
+                            //window.location.href = '/login';
+                        }
+                    })
+                    .catch((error) => {
+                        setLoading(false);
+                        console.log(error);
+                    });
             })
             .catch((err) => {
                 setLoading(false);
-                setErrorMessage(err.response.data.Message)
+                setErrorMessage(err.response.data.Message);
             });
-            
     };
     const handleKeyPress = (event) => {
         if (event.key === "Enter") {
@@ -246,7 +245,10 @@ export default function Login({ status, canResetPassword }) {
                                     <div className="flex items-center justify-end mt-0">
                                         {canResetPassword && (
                                             <Link
-                                                onClick={()=>window.location.href = '/forgot-password'}
+                                                onClick={() =>
+                                                    (window.location.href =
+                                                        "/forgot-password")
+                                                }
                                                 className="underline text-sm text-goldd dark:text-smooth hover:text-gray-900 dark:hover:text-goldd rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
                                             >
                                                 Forgot your password?
@@ -254,7 +256,9 @@ export default function Login({ status, canResetPassword }) {
                                         )}
                                     </div>
                                     {errorMessage && (
-                                        <div className="py-2 text-red-600">{errorMessage}</div>
+                                        <div className="py-2 text-red-600">
+                                            {errorMessage}
+                                        </div>
                                     )}
                                     <InputError
                                         message={errors.email}
@@ -288,7 +292,7 @@ export default function Login({ status, canResetPassword }) {
                             </div>
                         </form>
                         <ReCAPTCHA
-                            sitekey="6LexGKoqAAAAAAGChsMvFBOScJ71oRS88RkGgVm3"
+                            sitekey={recaptchaKey}
                             onChange={handleRecaptchaChange}
                             onExpired={handleRecaptchaExpired}
                             className="mt-4 flex justify-center "
@@ -299,7 +303,6 @@ export default function Login({ status, canResetPassword }) {
                         />
                     </div>
                 </div>
-               
             </GuestLayout>
         </div>
     );
