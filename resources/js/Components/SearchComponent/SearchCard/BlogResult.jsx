@@ -17,7 +17,6 @@ function BlogResult({ result }) {
 
     const strapiApiUrl = window.Laravel.strapiAppUrl;
 
-    console.log(result)
     return (
         <Card
             className="flex justify-start bg-transparent text-left text-white p-0"
@@ -32,7 +31,7 @@ function BlogResult({ result }) {
             }}
         >
             <div className={`flex flex-row gap-10 px-4`}>
-                {imageUrl && (
+                {/* {imageUrl && (
                     <Image
                         alt="HeroUI hero Image"
                         src={strapiApiUrl + imageUrl}
@@ -40,7 +39,7 @@ function BlogResult({ result }) {
                         height={200}
                         className="object-cover"
                     />
-                )}
+                )} */}
 
                 <div className="mt-2 flex flex-col justify-between w-full">
                     <div>
@@ -55,7 +54,7 @@ function BlogResult({ result }) {
                         </div>
                     </div>
 
-                    <div className="text-goldt text-sm cursor-pointer flex items-center mt-10">
+                    <div className="text-goldt text-sm cursor-pointer flex items-center mt-4">
                         Read more <ChevronDoubleRightIcon className="h-4 w-4" />
                     </div>
                 </div>
