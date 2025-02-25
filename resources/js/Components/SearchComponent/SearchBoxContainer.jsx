@@ -66,7 +66,7 @@ function SearchBoxContainer({ isSearchActive, getLatestBlogs }) {
                 isSearchActive ? "opacity-100 visible" : "opacity-0 invisible"
             }`}
         >
-            <div className="w-1/2 ">
+            <div className="w-[90%] lg:w-[75%] xl:w-2/3">
                 <Input
                     placeholder="Search..."
                     variant="underlined"
