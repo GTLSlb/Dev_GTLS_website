@@ -2,38 +2,27 @@ import { useState, useEffect, useRef } from "react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import LogoWhite from "../assets/pictures/LogoWhite.webp";
-import Truck from "../assets/pictures/truck.png";
 import { Head } from "@inertiajs/react";
 import { Link } from "@inertiajs/inertia-react";
 import { Link as ScrollLink } from "react-scroll";
-import Branches from "./Component/landingPage/branches";
-import ContatcUs from "./Component/ContactUsComp/ContactUs";
 import Footer from "./Component/landingPage/Footer";
 import PrimaryServices from "./Component/landingPage/Primaryservices";
-import Video from "./Component/landingPage/video";
 import GTRS from "./Component/landingPage/GtrsDemo";
 import FeedbackButton from "./Component/landingPage/FeedbackButton";
 import AboutUs from "./Component/landingPage/AboutUs";
 
-import News from "./Component/landingPage/News";
 import Certifiactesw from "./Component/landingPage/certificatesw";
 import VideoHeader from "./Component/landingPage/VideoHeader";
-import OpportuniotiesSection from "./Component/landingPage/OpportunitiesSection";
 import Technologies from "./Component/landingPage/Technologies";
-import WhyGoldTiger from "./Component/landingPage/whyGoldTiger";
 import ScrollNav from "./Component/scrollnavmain";
-import { Softwares } from "./Component/landingPage/Softwares";
 import ScrollToTopButton from "@/Components/ScrollUpButton";
-import Benefits from "./Component/landingPage/Benefits";
-import Process from "./Component/landingPage/Process";
 import Features from "./Component/landingPage/Features";
 import Safety from "./Component/landingPage/Safety";
 import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import {
     ChevronDownIcon,
-    PhoneIcon,
-    BellAlertIcon,
+    PhoneIcon
 } from "@heroicons/react/20/solid";
 import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
