@@ -27,6 +27,7 @@ import fireWardinImage from "@/assets/news/FireWardenBlog.jpg";
 import safetyImage from "@/assets/news/Safety-3.jpeg";
 import bTripleImage from "@/assets/news/b-triple.webp";
 import nationalRoadImage from "@/assets/news/National-Road.webp";
+import cycloneImage from "@/assets/news/Cyclone.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -35,9 +36,18 @@ import "slick-carousel/slick/slick-theme.css";
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from "react";
 
 const posts = [
+    {
+        id: 27,
+        title: "Cyclone Alfred Update",
+        href: "#",
+        description: `Gold Tiger Logistics Solutions is closely monitoring Tropical Cyclone Alfred, which is expected to impact Queensland and Northern New South Wales over the coming days. As safety remains our top priority, we want to keep you informed about potential freight disruptions and what to expect`,
+        imageUrl: cycloneImage,
+        date: "March 5, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 26,
         title: "Introducing Gold Tiger Logistics’ National Road Alerts Feature",
@@ -498,7 +508,7 @@ export default function News() {
                                         <div className="h-full ">
                                             <div className="relative w-full www">
                                                 {
-                                                    post.id == 26 ? (
+                                                    post.id == 26 || post.id == 27 ? (
                                                         <img
                                                         src={post.imageUrl}
                                                         alt={post.title}

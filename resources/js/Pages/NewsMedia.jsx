@@ -1,11 +1,8 @@
 import { Head } from "@inertiajs/react";
 import jobs from "../assets/pictures/jobs.webp";
 import { useState, useEffect } from "react";
-import Video from "./Component/landingPage/video";
 import News from "./Component/landingPage/News";
-import PrimaryServices from "./Component/landingPage/Primaryservices";
 import Footer from "./Component/landingPage/Footer";
-import ContactForm from "./Component/landingPage/ContactForm";
 import Navbars from "./Component/Navbars";
 const navigation = [
     { name: "Services", href: "/#services", ref: "services" },
