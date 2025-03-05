@@ -837,21 +837,21 @@ export default function NewsPage(props) {
         {
             id: 27,
             title: "Cyclone Alfred Update Wednesday 5th March 2025 – Freight Disruptions & Safety Advisory",
-            content1: `Gold Tiger Logistics Solutions is closely monitoring Tropical Cyclone Alfred, which is expected to impact Queensland and Northern New South Wales over the coming days. As safety remains our top priority, we want to keep you informed about potential freight disruptions and what to expect.
+            content1: `Gold Tiger Logistics Solutions is closely monitoring Tropical Cyclone Alfred, which is expected to impact <b>Queensland and Northern New South Wales</b> over the coming days. As safety remains our top priority, we want to keep you informed about potential freight disruptions and what to expect.
             
-            <b>Weather Outlook</b>`,
+            <b>Weather Outlook:</b>`,
             list: [
                 {
                     id: 0,
-                    title: "Cyclone Movement – Cyclone Alfred (Category 2) is moving west towards the Queensland coast, with sustained winds of 95 km/h and gusts up to 120 km/h.",
+                    title: `<b>Cyclone Movement</b> – Cyclone Alfred (Category 2) is moving west towards the Queensland coast, with <b>sustained winds of 95 km/h</b> and gusts up to <b>120 km/h.</b>`,
                 },
                 {
                     id: 1,
-                    title: "Damaging Winds – Strong winds up to 120 km/h are expected along the southeast QLD and northeastern NSW coastal regions, from Tewantin to Grafton on Wednesday, and may extend further north to Sandy Cape by early Thursday.",
+                    title: `<b>Damaging Winds</b> Damaging Winds – Strong winds up to <b>120 km/h</b> are expected along the <b>southeast QLD and northeastern NSW</b> coastal regions, from <b>Tewantin to Grafton on Wednesday</b>, and may extend further north to <b>Sandy Cape</b> by early Thursday.`,
                 },
                 {
                     id: 2,
-                    title: "Heavy Rain & Flooding – Heavy rainfall is forecast for southeast QLD and northeastern NSW from Wednesday, with the potential for life-threatening flash flooding as the cyclone nears the coast late Thursday or early Friday.",        
+                    title: `<b>Heavy Rain & Flooding</b> – Heavy rainfall is forecast for <b>southeast QLD and northeastern NSW</b> from Wednesday, with the potential for <b>life-threatening flash flooding</b> as the cyclone nears the coast late Thursday or early Friday.`,
                 },
             ],
             content2: ` <b>What this means to you and the impact on Freight Services:</b>
@@ -860,25 +860,24 @@ export default function NewsPage(props) {
             list3: [
                 {
                     id: 0,
-                    title: "GLTS Brisbane Depot Closure – To ensure the safety of our QLD team, our Brisbane depot will close at noon on Thursday, 6th March 2025. This will allow our staff and drivers to return home safely and prepare for the storm. The depot will remain closed on Friday, 7th March, with reopening updates to follow once conditions allow.",
+                    title: `<b>Brisbane Depot Closure</b> – To ensure the safety of our QLD team, <b>our Brisbane depot will close at noon on Thursday, 6th March 2025.</b> This will allow our staff and drivers to return home safely and prepare for the storm. The depot will remain <b>closed on Friday, 7th March,</b> with reopening updates to follow once conditions allow.`,
                 },
                 {
                     id: 1,
-                    title: "Delivery Delays Expected – Significant freight disruptions are anticipated due to road closures and severe weather. No freight will be dispatched to our QLD depot on Thursday or Friday. We will reassess the situation and provide updates once operations resume.",
+                    title: `<b>Delivery Delays Expected</b> – Significant freight disruptions are anticipated due to road closures and severe weather. <b>No freight will be dispatched to our QLD depot on Thursday or Friday.</b> We will reassess the situation and provide updates once operations resume.`,
                 },
                 {
                     id: 2,
-                    title: "Safety First – We are actively monitoring weather conditions and adjusting operations to prioritise the safety of our drivers, freight, and the communities we serve.",
+                    title: `<b>Safety First</b> – We are actively monitoring weather conditions and adjusting operations to prioritise the <b>safety of our drivers, freight, and the communities we serve.</b>`,
                 },
                 {
                     id: 3,
-                    title: "Protecting Freight – All vehicles will be securely stored within our Brisbane warehouse, and customer goods will be raised and placed within vehicles inside the warehouse to minimise the risk of water damage from potential flooding."
+                    title: `<b>Protecting Freight</b>Protecting Freight – All vehicles will be securely stored within our <b>Brisbane warehouse</b>, and <b>customer goods will be raised and placed within vehicles</b> inside the warehouse to minimise the risk of water damage from potential flooding.`,
                 },
                 {
                     id: 4,
-                    title: "Ongoing Updates – We will continue to provide updates as more information becomes available."
-                }
-        
+                    title: `<b>Ongoing Updates</b> – We will continue to provide updates as more information becomes available.`,
+                },
             ],
             content3: `To all Customers, communities, businesses, and transport workers affected; Please stay safe, take every precaution and follow official safety advisories.
 
@@ -1288,9 +1287,12 @@ export default function NewsPage(props) {
                                         >
                                             <div className=" h-2 w-2 mt-2 flex-none rounded-full bg-goldt" />
                                             <div>
-                                                <span className="text-smooth">
-                                                    {item.title}
-                                                </span>
+                                                <span
+                                                    className="text-smooth"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: item.title,
+                                                    }}
+                                                ></span>
                                                 {item.content ? (
                                                     Array.isArray(
                                                         item.content
@@ -1364,13 +1366,19 @@ export default function NewsPage(props) {
                                         >
                                             <div className=" h-2 w-2 mt-2 flex-none rounded-full bg-goldt" />
                                             <div>
-                                                <span className="text-smooth">
-                                                    {item.title}
-                                                </span>
+                                                <span
+                                                    className="text-smooth"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: item.title,
+                                                    }}
+                                                ></span>
                                                 {item.content ? (
-                                                    <div className="text-gray-200">
-                                                        {item.content}
-                                                    </div>
+                                                    <div
+                                                        className="text-gray-200"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: item.content,
+                                                        }}
+                                                    ></div>
                                                 ) : null}
                                             </div>
                                         </li>
