@@ -26,6 +26,7 @@ import {
 } from "@heroicons/react/20/solid";
 import CookiePopup from "./Component/CookiePopup";
 import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
+import TrainNotification from "./Component/TrainNotification";
 
 
 const mapUrl = window.Laravel.mapUrl;
@@ -48,11 +49,6 @@ export default function Welcome(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);
     const [nextPage, setNextPage] = useState(false);
-    const toggleElement = () => {
-        setNextPage(!nextPage);
-    };
-
-    const prevScrollPositionRef = useRef(0);
 
     useEffect(() => {
         function handleScroll() {
@@ -86,10 +82,10 @@ export default function Welcome(props) {
         };
     }, []);
 
-    const [showMoreLinks, setShowMoreLinks] = useState(false);
     return (
         <>
             <Head title="Welcome" />
+            <TrainNotification />
             <div className="relative isolate bg-dark">
                 <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                     <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">

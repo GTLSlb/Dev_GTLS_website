@@ -10,6 +10,7 @@ import { Popover, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Link } from "@inertiajs/inertia-react";
 import { ChevronDownIcon, BellAlertIcon } from "@heroicons/react/20/solid";
+import TrainNotification from "./TrainNotification";
 
 const mapUrl = window.Laravel.mapUrl;
 
@@ -69,6 +70,7 @@ export default function ScrollNav() {
                     showNavbar ? "opacity-100" : "opacity-0 -translate-y-full"
                 }`}
             >
+                <TrainNotification />
                 <div className="bg-dark w-full">
                     <div className="w-full h-6 bg-goldd bg-gradient-to-r from-goldl via-goldt to-goldd ">
                         <div className="mx-auto sm:max-w-7xl sm:px-6 lg:px-8 flex items-center h-full justify-end lg:justify-between">
