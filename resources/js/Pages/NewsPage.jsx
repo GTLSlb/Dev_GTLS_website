@@ -75,6 +75,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import ReactPlayer from "react-player";
 import cycloneImage from "@/assets/news/Cyclone.webp";
+import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -885,9 +886,58 @@ export default function NewsPage(props) {
             imgUrl: cycloneImage,
             imgSliders: [cycloneImage],
         },
+        {
+            id: 28,
+            title: "Cyclone Alfred – Ongoing Monitoring – Thursday, 6th March 2025",
+            content1: `Dear Customers,
+            As per our previous communication, we continue to closely monitor <b>Cyclone Alfred</b> and its impact on freight operations. While there are no major updates at this time, we want to assure you that <b>safety remains our top priority</b> as we assess conditions.
+            
+            <b>Current Status:</b>`,
+            list: [
+                {
+                    id: 0,
+                    title: `<b>Brisbane Depot Remains Closed</b> – Our depot will stay closed until conditions improve. We will provide further updates on reopening as soon as it is safe to do so.`,
+                },
+                {
+                    id: 1,
+                    title: `<b>Freight Disruptions Ongoing</b> – Deliveries to and from affected areas remain impacted due to road closures and severe weather conditions.`,
+                },
+                {
+                    id: 2,
+                    title: `<b>Safety First</b> – Our team is actively monitoring the situation and will adjust operations as needed to ensure the safety of our staff, drivers, and customers' freight.`,
+                },
+                {
+                    id: 3,
+                    title: `<b>Protecting Freight</b> – All protection mechanisms are in place with vehicles securely stored within our <b>Brisbane warehouse</b>, and <b>customer goods raised and placed within vehicles</b> inside the warehouse to minimise the risk of water damage.`,
+                },
+                {
+                    id: 4,
+                    title: `<b>Consignment Status</b> – Customers with freight still held within our network destined to impacted areas have been <b>directly advised of their consignment status</b>.`,
+                },
+            ],
+            content2: `We appreciate your patience and understanding. Please stay safe, and we will keep you informed of any further developments.
+
+            If you have any urgent enquiries regarding your freight, please contact our team on <a href="tel:1800 040 306" class="font-extrabold">1800 040 306</a> or <a href="mailto:customerservice@gtls.com.au" class="font-extrabold">customerservice@gtls.com.au.</a> 
+            
+            Continue to monitor our <a href="/news" class="underline " >website</a>  for major developments.
+             `,
+            
+            imgUrl: cycloneUpdateImage,
+            imgSliders: [cycloneUpdateImage],
+        },
     ];
 
     const posts = [
+        {
+            id: 28,
+            title: "Cyclone Alfred – Ongoing Monitoring – Thursday, 6th March 2025",
+            href: "#",
+            description: `We continue to closely monitor Cyclone Alfred and its impact on freight operations. While there are no major updates at this time, we want to assure you that safety remains our top priority as we assess conditions.`,
+            imageUrl: cycloneUpdateImage,
+            date: "March 6, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 27,
             title: "Cyclone Alfred Update",
@@ -1243,7 +1293,7 @@ export default function NewsPage(props) {
                 )}
 
                 <div className="bg-dark pb-10 px-6 lg:px-8">
-                    <div className="mx-auto max-w-3xl text-base leading-7 text-gray-700">
+                    <div className="mx-auto max-w-4xl text-base leading-7 text-gray-700">
                         <a
                             href="/news"
                             className="relative inline-flex items-center justify-center text-black "
@@ -1267,7 +1317,7 @@ export default function NewsPage(props) {
                                 ))}
                             </p>
                             <p
-                                className="mt-6 text-lg leading-8 text-gray-200 text-justify"
+                                className="mt-6 text-lg leading-8 text-gray-200 "
                                 style={{ whiteSpace: "pre-line" }}
                                 dangerouslySetInnerHTML={{
                                     __html: contentJson[id].content1,
@@ -1279,7 +1329,7 @@ export default function NewsPage(props) {
                                 </div>
                             ) : null}
                             {contentJson[id].list ? (
-                                <ol className="p-5">
+                                <ol className="p-5 pt-2">
                                     {contentJson[id].list?.map((item) => (
                                         <li
                                             key={item.id}
@@ -1348,7 +1398,7 @@ export default function NewsPage(props) {
                                     ))}
                                 </ol>
                             ) : null}
-                            <div className="mt-3 text-lg  text-gray-200 text-justify">
+                            <div className="mt-3 text-lg  text-gray-200 ">
                                 <p
                                     style={{ whiteSpace: "pre-line" }}
                                     className="w-full"
@@ -1385,7 +1435,7 @@ export default function NewsPage(props) {
                                     ))}
                                 </ol>
                             ) : null}
-                            <div className="mt-3 text-lg  text-gray-200 text-justify">
+                            <div className="mt-3 text-lg  text-gray-200 ">
                                 <p
                                     style={{ whiteSpace: "pre-line" }}
                                     className="w-full"

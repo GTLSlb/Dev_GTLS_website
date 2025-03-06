@@ -28,6 +28,7 @@ import safetyImage from "@/assets/news/Safety-3.jpeg";
 import bTripleImage from "@/assets/news/b-triple.webp";
 import nationalRoadImage from "@/assets/news/National-Road.webp";
 import cycloneImage from "@/assets/news/Cyclone.webp";
+import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -38,6 +39,16 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 const posts = [
+    {
+        id: 28,
+        title: "Cyclone Alfred – Ongoing Monitoring – Thursday, 6th March 2025",
+        href: "#",
+        description: `We continue to closely monitor Cyclone Alfred and its impact on freight operations. While there are no major updates at this time, we want to assure you that safety remains our top priority as we assess conditions.`,
+        imageUrl: cycloneUpdateImage,
+        date: "March 6, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 27,
         title: "Cyclone Alfred Update",
@@ -508,7 +519,7 @@ export default function News() {
                                         <div className="h-full ">
                                             <div className="relative w-full www">
                                                 {
-                                                    post.id == 26 || post.id == 27 ? (
+                                                    post.id == 26 || post.id == 27 || post.id == 28 ? (
                                                         <img
                                                         src={post.imageUrl}
                                                         alt={post.title}
