@@ -930,7 +930,7 @@ export default function NewsPage(props) {
     const posts = [
         {
             id: 28,
-            title: "Cyclone Alfred – Ongoing Monitoring – Thursday, 6th March 2025",
+            title: "Cyclone Alfred – Ongoing Monitoring",
             href: "#",
             description: `We continue to closely monitor Cyclone Alfred and its impact on freight operations. While there are no major updates at this time, we want to assure you that safety remains our top priority as we assess conditions.`,
             imageUrl: cycloneUpdateImage,
