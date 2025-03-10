@@ -40,6 +40,16 @@ import axios from "axios";
 
 const posts = [
     {
+        id: 29,
+        title: "Severe Weather in Queensland and Northern NSW",
+        href: "#",
+        description: `We continue to monitor the severe weather conditions in Queensland and northern NSW, and its impact on freight operations. Safety remains our top priority, and we appreciate your patience during this time.`,
+        imageUrl: goldt,
+        date: "March 10, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
+    {
         id: 28,
         title: "Cyclone Alfred – Ongoing Monitoring",
         href: "#",

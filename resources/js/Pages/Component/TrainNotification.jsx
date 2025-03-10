@@ -9,9 +9,9 @@ function TrainNotification() {
                         src={truckPng}
                         alt={"Banner Truck"}
                     />
-                    <a href="/news/28/cyclone-alfred--ongoing-monitoring">
-                        Cyclone Alfred – Ongoing Monitoring – Thursday, 6th
-                        March 2025
+                    <a href="/news/29/severe-weather-in-queensland-and-northern-nsw">
+                        Ongoing Monitoring – Severe Weather in Queensland and
+                        Northern NSW
                     </a>
                 </div>
             </div>

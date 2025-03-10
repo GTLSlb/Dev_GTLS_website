@@ -925,9 +925,50 @@ export default function NewsPage(props) {
             imgUrl: cycloneUpdateImage,
             imgSliders: [cycloneUpdateImage],
         },
+        {
+            id: 28,
+            title: "Severe Weather in Queensland and Northern NSW",
+            content1: `We continue to monitor the severe weather conditions in Queensland and northern NSW, and its impact on freight operations. <b>Safety remains our top priority</b>, and we appreciate your patience during this time.
+            
+            Current Status:`,
+            list: [
+                {
+                    id: 0,
+                    title: `<b>Road Closures </b> –  Key freight routes remain closed due to severe weather conditions, impacting transportation schedules.`,
+                },
+                {
+                    id: 1,
+                    title: `<b>Flood Risks</b> – We are closely watching for potential river and creek flooding, which may further affect operations.`,
+                },
+                {
+                    id: 2,
+                    title: `<b>Operational Impact</b> – For the safety of our staff, fleet, and customer freight, we are <b>not yet fully operational.</b>`,
+                },
+                {
+                    id: 3,
+                    title: `<b>Telecommunications Disruptions</b> – Some areas are experiencing outages, limiting direct communication. NBN has confirmed they are actively working to restore services.`,
+                },
+            ],
+            content2: `With <b>rainfall beginning to subside</b>, we will assess changing flood conditions and provide an <b>operational update</b> as soon as possible.
+
+            We appreciate your understanding and will continue to keep you informed. <b>Please stay safe, and reach out to our team for any urgent inquiries on 1800 040306.</b>`,
+            
+            imgUrl: goldt,
+            // imgSliders: [cycloneUpdateImage],
+        },
     ];
 
     const posts = [
+        {
+            id: 29,
+            title: "Severe Weather in Queensland and Northern NSW",
+            href: "#",
+            description: `We continue to monitor the severe weather conditions in Queensland and northern NSW, and its impact on freight operations. Safety remains our top priority, and we appreciate your patience during this time.`,
+            imageUrl: goldt,
+            date: "March 10, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 28,
             title: "Cyclone Alfred – Ongoing Monitoring",
