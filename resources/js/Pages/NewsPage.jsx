@@ -927,8 +927,10 @@ export default function NewsPage(props) {
         },
         {
             id: 28,
-            title: "Severe Weather in Queensland and Northern NSW",
-            content1: `We continue to monitor the severe weather conditions in Queensland and northern NSW, and its impact on freight operations. <b>Safety remains our top priority</b>, and we appreciate your patience during this time.
+            title: "Customer Update: Severe Weather in Queensland and Northern NSW",
+            content1: `Dear Customers,
+
+We continue to monitor the severe weather conditions in Queensland and northern NSW, and its impact on freight operations. <b>Safety remains our top priority</b>, and we appreciate your patience during this time.
             
             Current Status:`,
             list: [
