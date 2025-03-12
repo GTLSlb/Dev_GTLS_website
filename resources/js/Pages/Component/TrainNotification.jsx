@@ -1,7 +1,7 @@
 import truckPng from "@/assets/pictures/truck.png";
 function TrainNotification() {
     return (
-        <div className="py-2 bg-dark overflow-hidden">
+        <div className="py-2 bg-dark overflow-hidden hidden">
             <div className="animate-moveRight w-auto">
                 <div className="flex gap-2 items-center text-white font-bold whitespace-nowrap">
                     <img
