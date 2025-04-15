@@ -1,33 +1,24 @@
-import { Link } from "@inertiajs/react";
-
-import image8 from "../../../assets/teams/Antoine.png";
+import image6 from "../../../assets/teams/Antoine.png";
 import image3 from "../../../assets/teams/Aref_Al_Nehmani.png";
-
+import image9 from "../../../assets/teams/Debora.png";
 import image1 from "../../../assets/teams/imad_el_masri.png";
+import image5 from "../../../assets/teams/Leslie_Haines.png";
+import image7 from "../../../assets/teams/Megan.png";
+import image4 from "../../../assets/teams/Richelle.png";
 import image2 from "../../../assets/teams/Theodoros.png";
-import image9 from "../../../assets/teams/Danialaa.png";
-import image13 from "../../../assets/teams/Debora.png";
-import image14 from "../../../assets/teams/Florance.png";
-import image11 from "../../../assets/teams/jay.png";
-import image6 from "../../../assets/teams/Leslie_Haines.png";
-import image7 from "../../../assets/teams/josh.png";
-import image10 from "../../../assets/teams/Megan.png";
-import image15 from "../../../assets/teams/Ruby.png";
-import image4 from "../../../assets/teams/Stan.png";
-import image5 from "../../../assets/teams/Richelle.png";
-import image16 from "../../../assets/teams/Tracey.png";
-
-import image12 from "../../../assets/teams/Veronica.png";
-
-import { useState, useRef, useEffect } from "react";
+import image10 from "../../../assets/teams/Tracey.png";
+import image8 from "../../../assets/teams/Veronica.png";
+import image11 from "../../../assets/teams/mark-hennes.png";
+import image12 from "../../../assets/teams/Fady-hadad.png";
+import image13 from "../../../assets/teams/Chris-Joseph.png";
+import { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import React from "react";
 
 const teams = [
     {
@@ -41,315 +32,61 @@ const teams = [
         name: "Theodoros",
     },
     {
+        id: 13,
+        image: image13,
+        name: "Chris_Joseph",
+    },
+    {
         id: 3,
         image: image3,
         name: "Aref_Al_Nehmani",
     },
     {
-        id: 4,
-        image: image4,
-        name: "stan",
+        id: 12,
+        image: image12,
+        name: "Fady_Hadad",
     },
     {
-        id: 5,
-        image: image5,
+        id: 4,
+        image: image4,
         name: "Richelle",
     },
     {
         id: 6,
         image: image6,
+        name: "Antoine",
+    },
+    {
+        id: 11,
+        image: image11,
+        name: "Mark_Hennes",
+    },
+    {
+        id: 5,
+        image: image5,
         name: "Leslie_Haines",
     },
-    // {
-    //     id:7,
-    //     image:image7,
-    //     name:"josh",
-    // },
+    {
+        id: 7,
+        image: image7,
+        name: "Megan",
+    },
     {
         id: 8,
         image: image8,
-        name: "Antoine",
+        name: "Veronica",
+    },
+    {
+        id: 9,
+        image: image9,
+        name: "Debora",
     },
     {
         id: 10,
         image: image10,
-        name: "Megan",
-    },
-    {
-        id: 12,
-        image: image12,
-        name: "Veronica",
-    },
-    {
-        id: 13,
-        image: image13,
-        name: "Debora",
-    },
-    // {
-    //     id:14,
-    //     image:image14,
-    //     name:"Florance",
-    // },
-    // {
-    //     id:15,
-    //     image:image15,
-    //     name:"Ruby",
-    // },
-    {
-        id: 16,
-        image: image16,
         name: "Tracey",
     },
 ];
-
-// const posts = [
-//     {
-//         id: 13,
-//         title: "Gold Tiger's Green Journey",
-//         href: "#",
-//         description:
-//             "Gold Tiger's Green Journey: Innovating with Harmony. As we firmly pledge to eco-friendliness, join us on the road to a better future. We at Gold Tiger Group are a force for positive change rather than just a logistics provider.",
-//         imageUrl: greennews,
-//         date: "October 24, 2023",
-//         datetime: "2023-10-24",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },
-//     {
-//         id: 12,
-//         title: "Maintaining the safety of your drivers is a primary concern to our organisation",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics solutions continues to maintain and develop best practice standards in all aspects of driver safety and constantly strives to ensure safety standards are both met and exceeded. A major focus in long distance transport safety is the issue of drivers’ fatigue. Utilising the latest technology as part of our safety and compliance processes, Gold Tiger has collaborated with Navman, one of the world’s most innovative companies in automotive technology and risk reduction.",
-//         imageUrl: Navmannews,
-//         date: "September 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },
-//     {
-//         id: 11,
-//         title: "GTLS Enhances Road Safety and Efficiency with Advanced Weighbridge Integration",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions (GTLS) remains committed to the safety of all road users. As part of our ongoing safety innovation program, we take considerable pride in announcing a significant enhancement to our safety practices through the integration of two state-of-the-art weighbridge systems. ",
-//         imageUrl: weighbridgenews,
-//         date: "September 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },
-//     {
-//         id: 10,
-//         title: "Gold Tiger Logistics Solutions Continues advancement with three new volvo F16 prime movers",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions has, this week taken delivery of three new Volvo F16 (Euro 6) prime movers as part of its continuing commitment to constantly modernising and upgrading the fleet. Gold Tiger has used Volvo equipment since the company was formed in 2006 and the partnership has gone from strength to strength over the years.",
-//         imageUrl: movers,
-//         date: "June 2, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },
-//     {
-//         id: 9,
-//         title: "Gold Tiger Logistics Solutions: Unveiling exciting developments and expanding operations",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions and their group of companies are making strides towards expanding their operations with several exciting developments underway.",
-//         imageUrl: newSite,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },
-//     {
-//         id: 8,
-//         title: "Gold Tiger Logistics Solution Implements Gearbox Workshop Software for Streamlined Maintenance",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solution, a leading logistics and transportation company, has recently implemented Gearbox workshop software to manage their maintenance operations. The software, which was",
-//         imageUrl: worker,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 7,
-//         title: "Gold Tiger Logistics Solutions Adopts State-of-the-Art Software to Enhance Staff Safety and Compliance",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions, a leading logistics and transportation company, has announced the adoption of a new cloud-based software platform to enhance staff safety and",
-//         imageUrl: safety,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 6,
-//         title: "Gold Tiger Logistics Solutions completes Fibre internet upgrade across all sites",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions has announced the completion of its internet upgrade, bringing fibre internet to all of its sites. The upgrade is expected to",
-//         imageUrl: earth,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 5,
-//         title: "GTLS Expansion",
-//         href: "#",
-//         description:
-//             "As part of the GTLS expansion a greenfield site has been purchased within the Ingleburn Industrial Estate. This is stage 1 in a major investment",
-//         imageUrl: goldt,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 4,
-//         title: "Driver PDA’s",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solution, a prominent logistics company, is making waves with its purchase of product – Zebra TX57 PDA’s. The company’s purchase has revolutionized",
-//         imageUrl: device,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 3,
-//         title: "Vehicle Tracking",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions, a company in the transportation and logistics industry, has recently adopted three cutting-edge technologies to improve its operations. Firstly, the VT102",
-//         imageUrl: track,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 2,
-//         title: "TC8300 Touch Computer implementation",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistics Solutions, an Australian logistics company, revolutionised their business three years ago by implementing a cutting-edge product scanning system.",
-//         imageUrl: tcapp,
-//         date: "April 19, 2023",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 1,
-//         title: "Gold Tiger in $100m business expansion",
-//         href: "#",
-//         description:
-//             "Purpose-built transport hubs in Sydney and Brisbane are part of a $100-million business expansion now underway at Gold Tiger Logistic",
-//         imageUrl: trucks,
-//         date: "October 13, 2022",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },{
-//         id: 0,
-//         title: "Fleet boosted by 25 Volvo Euro 6 prime movers",
-//         href: "#",
-//         description:
-//             "Gold Tiger Logistic Solutions has added 25 new prime movers and trailers to its transport fleet, taking the total to",
-//         imageUrl: postpic,
-//         date: "October 31, 2022",
-//         datetime: "2020-03-16",
-//         category: { title: "", href: "#" },
-//         author: {
-//             name: "Michael Foster",
-//             role: "Co-Founder / CTO",
-//             href: "#",
-//             imageUrl:
-//                 "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//         },
-//     },
-
-//     // More posts...
-// ];
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -501,8 +238,6 @@ export default function News() {
                                     />
                                 </div>
                             ))}
-
-                            {/* </div> */}
                         </Slider>
                         <div className=" h-20"></div>
                     </div>
