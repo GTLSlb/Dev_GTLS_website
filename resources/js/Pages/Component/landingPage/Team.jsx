@@ -56,11 +56,11 @@ const teams = [
         image: image6,
         name: "Antoine",
     },
-    {
-        id: 11,
-        image: image11,
-        name: "Mark_Hennes",
-    },
+    // {
+    //     id: 11,
+    //     image: image11,
+    //     name: "Mark_Hennes",
+    // },
     {
         id: 5,
         image: image5,
