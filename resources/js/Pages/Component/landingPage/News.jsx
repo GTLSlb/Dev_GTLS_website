@@ -29,6 +29,7 @@ import bTripleImage from "@/assets/news/b-triple.webp";
 import nationalRoadImage from "@/assets/news/National-Road.webp";
 import cycloneImage from "@/assets/news/Cyclone.webp";
 import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
+import QueenslandDepot from "@/assets/news/QueenslandDepot.png";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -39,6 +40,16 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 const posts = [
+    {
+        id: 30,
+        title: "Gold Tiger Logistics Solutions is expanding in Queensland!",
+        href: "#",
+        description: `We are proud to announce the expansion of our operations in Queensland with a dynamic, secure, and environment friendly Distribution Centre. This significant milestone is a direct result of our customers’ trust and increasing demand for reliable, seamless, and cost-effective logistics solutions.`,
+        imageUrl: QueenslandDepot,
+        date: "April 16, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 29,
         title: "Severe Weather in Queensland and Northern NSW",
@@ -529,7 +540,7 @@ export default function News() {
                                         <div className="h-full ">
                                             <div className="relative w-full www">
                                                 {
-                                                    post.id == 26 || post.id == 27 || post.id == 28 ? (
+                                                    post.id == 26 || post.id == 27 || post.id == 28 || post.id == 30 ? (
                                                         <img
                                                         src={post.imageUrl}
                                                         alt={post.title}

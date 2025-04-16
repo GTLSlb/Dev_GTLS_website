@@ -52,6 +52,8 @@ import safetyCoverImage from "@/assets/news/SafetyCover.webp";
 import bTripleImage from "@/assets/news/b-triple.webp";
 import nationalRoadImage from "@/assets/news/National-Road.webp";
 import nationaCoverImage from "@/assets/news/NationalRoadCover.jpg";
+import QueenslandDepot from "@/assets/news/QueenslandDepot.png";
+
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import {
@@ -921,12 +923,12 @@ export default function NewsPage(props) {
             
             Continue to monitor our <a href="/news" class="underline " >website</a>  for major developments.
              `,
-            
+
             imgUrl: cycloneUpdateImage,
             imgSliders: [cycloneUpdateImage],
         },
         {
-            id: 28,
+            id: 29,
             title: "Customer Update: Severe Weather in Queensland and Northern NSW",
             content1: `Dear Customers,
 
@@ -954,13 +956,70 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             content2: `With <b>rainfall beginning to subside</b>, we will assess changing flood conditions and provide an <b>operational update</b> as soon as possible.
 
             We appreciate your understanding and will continue to keep you informed. <b>Please stay safe, and reach out to our team for any urgent inquiries on 1800 040306.</b>`,
-            
+
             imgUrl: goldt,
             // imgSliders: [cycloneUpdateImage],
+        },
+        {
+            id: 30,
+            title: "Gold Tiger Logistics Solutions is expanding in Queensland!",
+            content1: `We are proud to announce the expansion of our operations in Queensland with a dynamic, secure, and environment friendly Distribution Centre. This significant milestone is a direct result of our customers’ trust and increasing demand for reliable, seamless, and cost-effective logistics solutions.
+            
+            With construction now underway, we anticipate opening our new facility in September 2025.
+
+            Our new facility is a strategic addition to our integrated logistics model supporting greater operational efficiency, real-time visibility across the supply chain, and Smarter cost-effective solutions without compromising service quality. Its prime location near major road infrastructure enables seamless national transport integration, ensuring your goods are moved efficiently and handled with the highest level of care.
+
+            Additional key Features of the Distribution Centre include:
+            `,
+            list: [
+                {
+                    id: 0,
+                    title: `Increased transport capacity to support our fleet and growing demand, with a super awning for all weather operations.`,
+                },
+                {
+                    id: 1,
+                    title: `Warehouse space for 8,000+ lots, catering for Euro, US and Australian standards up to 1500kg with mesh racking.`,
+                },
+                {
+                    id: 2,
+                    title: `Sustainable operations designed for off-grid capability, including a planned solar and battery installation for energy efficiency and resilience.`,
+                },
+                {
+                    id: 3,
+                    title: `Secure entrance and exits with 24 X 7 security monitoring throughout the facility.`,
+                },
+                {
+                    id: 4,
+                    title: `Onsite weigh bridge to ensure compliance with NHVR.`,
+                },
+                {
+                    id: 5,
+                    title: `A dedicated onsite cleaning and workshop centre to enhance fleet performance and operational reliability.`,
+                },
+            ],
+            content2: `This expansion represents more than just growth—it’s a commitment to our customers and a step forward in reinforcing our position as a leader in integrated logistics. We look forward to welcoming our partners, customers, and team members to our Queensland expansion as we continue to drive the future of logistics together.
+
+
+            If you're interested in joining the growing list of companies choosing Gold Tiger Logistics Solutions as their logistics partner of choice we’d love to connect!
+            
+            Contact Chris Joseph for a free consultation at 1800 040 306 or visit us at  <a href="www.gtls.com.au/news" class="font-bold"> www.gtls.com.au/news <a/> to learn more.`,
+
+            imgUrl: QueenslandDepot,
+            imgSliders: [QueenslandDepot],
         },
     ];
 
     const posts = [
+        {
+            id: 30,
+            title: "Gold Tiger Logistics Solutions is expanding in Queensland!",
+            href: "#",
+            description: `We are proud to announce the expansion of our operations in Queensland with a dynamic, secure, and environment friendly Distribution Centre. This significant milestone is a direct result of our customers’ trust and increasing demand for reliable, seamless, and cost-effective logistics solutions.`,
+            imageUrl: QueenslandDepot,
+            date: "April 16, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 29,
             title: "Severe Weather in Queensland and Northern NSW",
@@ -1296,6 +1355,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
     return (
         <>
             <Head title="News" />
+
             <div className="relative isolate bg-dark">
                 <Navbars />
                 {/* <HeroSection/> */}
