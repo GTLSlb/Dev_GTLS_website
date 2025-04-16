@@ -1008,8 +1008,8 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             Stay tuned for updates as we build the future of integrated logistics in Queensland.
             `,
 
-            imgUrl: QueenslandDepot,
-            imgSliders: [QLDDepotCover],
+            imgUrl: QLDDepotCover,
+            imgSliders: [QueenslandDepot],
         },
     ];
 
