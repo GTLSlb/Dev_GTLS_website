@@ -29,7 +29,7 @@ import bTripleImage from "@/assets/news/b-triple.webp";
 import nationalRoadImage from "@/assets/news/National-Road.webp";
 import cycloneImage from "@/assets/news/Cyclone.webp";
 import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
-import QueenslandDepot from "@/assets/news/QueenslandDepot.png";
+import QueenslandDepot from "@/assets/news/QLDDepot.jpg";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

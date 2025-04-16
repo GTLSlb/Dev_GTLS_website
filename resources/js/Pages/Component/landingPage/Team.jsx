@@ -9,6 +9,7 @@ import image2 from "../../../assets/teams/Theodoros.png";
 import image10 from "../../../assets/teams/Tracey.png";
 import image8 from "../../../assets/teams/Veronica.png";
 import image11 from "../../../assets/teams/mark-hennes.png";
+import image14 from "@/assets/teams/Malcolm-Madsen.png";
 import image12 from "../../../assets/teams/Fady-hadad.png";
 import image13 from "../../../assets/teams/Chris-Joseph.png";
 import { useEffect, useRef, useState } from "react";
@@ -61,6 +62,11 @@ const teams = [
     //     image: image11,
     //     name: "Mark_Hennes",
     // },
+    {
+        id: 12,
+        image: image14,
+        name: "Malcolm_Madsen",
+    },
     {
         id: 5,
         image: image5,
