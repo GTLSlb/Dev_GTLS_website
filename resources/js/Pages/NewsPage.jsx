@@ -1002,7 +1002,10 @@ We continue to monitor the severe weather conditions in Queensland and northern 
 
             If you're interested in joining the growing list of companies choosing Gold Tiger Logistics Solutions as their logistics partner of choice we’d love to connect!
             
-            Contact Chris Joseph for a free consultation at 1800 040 306 or visit us at  <a href="www.gtls.com.au/news" class="font-bold"> www.gtls.com.au/news <a/> to learn more.`,
+            Contact Chris Joseph for a free consultation at 1800 040 306 or visit us at  <a href="www.gtls.com.au/news" class="font-bold"> www.gtls.com.au/news <a/> to learn more.
+            
+            Stay tuned for updates as we build the future of integrated logistics in Queensland.
+            `,
 
             imgUrl: QueenslandDepot,
             imgSliders: [QueenslandDepot],
