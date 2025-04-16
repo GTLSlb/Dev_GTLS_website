@@ -1000,7 +1000,6 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             ],
             content2: `This expansion represents more than just growth—it’s a commitment to our customers and a step forward in reinforcing our position as a leader in integrated logistics. We look forward to welcoming our partners, customers, and team members to our Queensland expansion as we continue to drive the future of logistics together.
 
-
             If you're interested in joining the growing list of companies choosing Gold Tiger Logistics Solutions as their logistics partner of choice we’d love to connect!
             
             Contact Chris Joseph for a free consultation at 1800 040 306 or visit us at  <a href="www.gtls.com.au/news" class="font-bold"> www.gtls.com.au/news <a/> to learn more.
