@@ -78,6 +78,7 @@ import { Navigation } from "swiper/modules";
 import ReactPlayer from "react-player";
 import cycloneImage from "@/assets/news/Cyclone.webp";
 import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
+import QLDDepotCover from "@/assets/news/QLDDepotCover.jpg";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -1008,7 +1009,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             `,
 
             imgUrl: QueenslandDepot,
-            imgSliders: [QueenslandDepot],
+            imgSliders: [QLDDepotCover],
         },
     ];
 
