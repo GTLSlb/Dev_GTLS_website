@@ -120,7 +120,7 @@ Route::get('/terms', function () {
     return Inertia::render('Terms');
 })->name('terms');
 
-Route::get('/palletterms', function () { 
+Route::get('/palletterms', function () {
     return Inertia::render('PalletTerms');
 })->name('palletterms');
 
@@ -172,6 +172,7 @@ Route::get('/downloadGTLS-Pallets', function () {
     );
     return response()->download($pathToFile, 'GTLS Pallet Trading Policy 14-12-23.pdf', $headers);
 });
+
 
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
