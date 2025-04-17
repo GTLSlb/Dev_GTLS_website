@@ -20,6 +20,7 @@
         "php-http/curl-client": "^2.3",
         "socialiteproviders/microsoft-azure": "^5.1",
         "spatie/async": "^1.6",
+        "spatie/laravel-sitemap": "^7.3",
         "staudenmeir/laravel-cte": "^1.0",
         "tightenco/ziggy": "^1.0",
         "typesense/typesense-php": "^4.9"

@@ -10,7 +10,6 @@ use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\SupportFormController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\SendDailyEmail;
-use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,7 +17,9 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Http\Request;
 use gtls\loginstory\LoginClass;
 use App\Http\Controllers\SearchController;
-
+use GuzzleHttp\Client;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,46 @@ use App\Http\Controllers\SearchController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/sitemap.xml', function () {
+    $client = new Client();
+    $strapiUrl = env('STRAPI_APP');
+
+    $sitemap = Sitemap::create();
+    $headers = [
+        'Authorization' => 'Bearer ' . env('STRAPI_API_KEY'),
+        'Accept' => 'application/json', 
+    ];
+    $staticUrls = [
+        '/terms',
+        '/palletterms',
+        '/capabilitystatement',
+        '/aboutus',
+        '/safetycompliance',
+        '/news',
+        '/technologies',
+        '/contact_us'
+    ];
+
+    foreach ($staticUrls as $url) {
+        $sitemap->add(Url::create($url)->setPriority(0.8)->setChangeFrequency('monthly'));
+    }
+
+    $response = $client->get("{$strapiUrl}/api/blogs", [
+        'headers' => $headers
+    ]);
+    $newsArticles = json_decode($response->getBody()->getContents(), true);
+
+    foreach ($newsArticles["data"] as $article) {
+        $sitemap->add(Url::create('/news/' . $article['Slug'])
+            ->setPriority(0.7)
+            ->setChangeFrequency('daily'));
+    }
+    return response($sitemap->render(), 200)
+    ->header('Content-Type', 'application/xml');
+
+});
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -74,7 +115,6 @@ Route::get('/goinggreen', function () {
 })->name('goinggreen');
 
 Route::get('/search', [SearchController::class, 'search']);
-
 
 Route::get('/terms', function () {
     return Inertia::render('Terms');
@@ -133,8 +173,6 @@ Route::get('/downloadGTLS-Pallets', function () {
     return response()->download($pathToFile, 'GTLS Pallet Trading Policy 14-12-23.pdf', $headers);
 });
 
-Route::post('/sendemail', [SendDailyEmail::class, 'SendEmail']);
-
 Route::post('/upload', function (Request $request) {
     if($request->hasFile('file')){
         $file = $request->file('file');
@@ -181,9 +219,6 @@ Route::middleware('custom.auth')->group(function () {
 Route::get('/session-data', function () {
     return response()->json(['userr' => session('userr')]);
 });
-
-
-
 
 // ************************ News Pages Route ************************
 Route::get('/news/{slug}', function ($slug) {
