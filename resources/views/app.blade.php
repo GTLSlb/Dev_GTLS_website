@@ -11,9 +11,27 @@
     <meta name="site_name" property="og:site_name" content="GTLS">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="image" property="og:image" content="{{ asset('favicon.ico') }}">
-    <meta name="title" property="og:title" content="Gold Tiger Logistics Solutions">
-    <meta name="description" property="og:description"
-        content="Smarter supply chain management and third-party logistics solutions including interstate line haul, warehousing, distribution, and full 3PL & 4PL services.">
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Gold Tiger Logistics | Smarter Supply Chains">
+    <meta name="description"
+        content="3PL & 4PL services including interstate line haul, warehousing, and smart distribution.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Gold Tiger Logistics | Smarter Supply Chains">
+    <meta property="og:description"
+        content="3PL & 4PL services including interstate line haul, warehousing, and smart distribution.">
+    <meta property="og:image" content="{{ asset('AppLogo/w-logo.png') }}"> <!-- Replace with real image -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="Gold Tiger Logistics | Smarter Supply Chains">
+    <meta property="twitter:description"
+        content="3PL & 4PL services including interstate line haul, warehousing, and smart distribution.">
+    <meta property="twitter:image" content="{{ asset('AppLogo/w-logo.png') }}"> <!-- Replace with real image -->
 
     <script type="application/ld+json">
             {!! json_encode([

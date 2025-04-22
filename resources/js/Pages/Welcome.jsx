@@ -1,19 +1,27 @@
 import { getFromStrapi } from "@/CommonFunctions";
+import { lazy, Suspense, useEffect, useState } from "react"; // already exists
+
 import MainLayout from "@/Layouts/MainLayout";
 import { Head } from "@inertiajs/react";
-import { useEffect, useState } from "react";
 import { BounceLoader } from "react-spinners";
 import "../../css/certficatesSwiper.css";
-import AboutUs from "./Component/landingPage/AboutUs";
-import Certifiactesw from "./Component/landingPage/certificatesw";
-import Features from "./Component/landingPage/Features";
-import GoingGreenSection from "./Component/landingPage/GoingGreenSection";
-import GTRS from "./Component/landingPage/GtrsDemo";
-import PrimaryServices from "./Component/landingPage/Primaryservices";
-import Safety from "./Component/landingPage/Safety";
-import Technologies from "./Component/landingPage/Technologies";
 import VideoHeader from "./Component/landingPage/VideoHeader";
 import SearchWebsite from "./Component/SearchWebsite";
+const AboutUs = lazy(() => import("./Component/landingPage/AboutUs"));
+const Certifiactesw = lazy(() =>
+    import("./Component/landingPage/certificatesw")
+);
+const Features = lazy(() => import("./Component/landingPage/Features"));
+const GoingGreenSection = lazy(() =>
+    import("./Component/landingPage/GoingGreenSection")
+);
+const GTRS = lazy(() => import("./Component/landingPage/GtrsDemo"));
+const PrimaryServices = lazy(() =>
+    import("./Component/landingPage/Primaryservices")
+);
+const Safety = lazy(() => import("./Component/landingPage/Safety"));
+const Technologies = lazy(() => import("./Component/landingPage/Technologies"));
+
 const scrollToElement = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
@@ -84,9 +92,7 @@ export default function Welcome(props) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await getFromStrapi(
-                    `/api/home-page?pLevel=4`
-                );
+                const result = await getFromStrapi(`/api/home-page?pLevel=4`);
 
                 if (result.success) {
                     setGetHeader(result.data);
@@ -170,32 +176,29 @@ export default function Welcome(props) {
 
     return (
         <>
-            {loading ? (
-                <div className="bg-dark flex justify-center items-center h-screen">
-                    {" "}
-                    <BounceLoader color="#e2b540" />
-                </div>
-            ) : (
-                <>
-                    <Head title="Welcome" />
-                    {/* <Navbars /> */}
-                    <div className="relative isolate bg-dark">
-                        <MainLayout loading={loading} isHomeScreen={true}>
-                            <SearchWebsite />
-                            <VideoHeader getHeader={getHeader} />
-                            <AboutUs getAbout={getAbout} />
-                            <PrimaryServices getservices={getservices} />
-                            <GoingGreenSection getGreen={getGreen} />
-                            <Features getwhygtls={getwhygtls} />
-                            <GTRS getGtrs={getGtrs} />
-                            <Safety getSafety={getSafety} />
-                            <Technologies gettechnologies={gettechnologies} />
-                            <Certifiactesw getcertificates={getcertificates} />
-                        </MainLayout>
-                        
-                    </div>
-                </>
-            )}
+            <Head title="Welcome" />
+            <div className="relative isolate bg-dark">
+                <Suspense
+                    fallback={
+                        <div className="bg-dark flex justify-center items-center h-screen">
+                            <BounceLoader color="#e2b540" />
+                        </div>
+                    }
+                >
+                    <MainLayout loading={loading} isHomeScreen={true}>
+                        <SearchWebsite />
+                        <VideoHeader getHeader={getHeader} />
+                        <AboutUs getAbout={getAbout} />
+                        <PrimaryServices getservices={getservices} />
+                        <GoingGreenSection getGreen={getGreen} />
+                        <Features getwhygtls={getwhygtls} />
+                        <GTRS getGtrs={getGtrs} />
+                        <Safety getSafety={getSafety} />
+                        <Technologies gettechnologies={gettechnologies} />
+                        <Certifiactesw getcertificates={getcertificates} />
+                    </MainLayout>
+                </Suspense>
+            </div>
         </>
     );
 }
