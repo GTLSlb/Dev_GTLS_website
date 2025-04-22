@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <link rel="canonical" href="{{ url()->current() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="locale" property="og:locale" content="en_US">
     <meta name="type" property="og:type" content="website">
@@ -12,7 +13,31 @@
     <meta name="image" property="og:image" content="{{ asset('favicon.ico') }}">
     <meta name="title" property="og:title" content="Gold Tiger Logistics Solutions">
     <meta name="description" property="og:description"
-        content="SMARTER SUPPLY CHAIN MANAGEMENT...">
+        content="Smarter supply chain management and third-party logistics solutions including interstate line haul, warehousing, distribution, and full 3PL & 4PL services.">
+
+    <script type="application/ld+json">
+            {!! json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'WebSite',
+                'name' => 'Gold Tiger Logistics',
+                'url' => config('app.url'),
+                'description' => 'Smarter supply chain management and third-party logistics specialists. Offering interstate line haul, warehousing, distribution, and complete 3PL/4PL solutions across Australia.',
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => 'Gold Tiger Logistics',
+                    'logo' => [
+                        '@type' => 'ImageObject',
+                        'url' => config('app.url') . '/AppLogo/w-logo.png'
+                    ]
+                ],
+                'potentialAction' => [
+                    '@type' => 'SearchAction',
+                    'target' => config('app.url') . '/search?q={search_term_string}',
+                    'query-input' => 'required name=search_term_string'
+                ]
+            ], JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT) !!}
+            </script>
+
 
     <!-- Preload Fonts -->
     <link rel="preload" href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" as="style">
@@ -22,9 +47,14 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KMJRECLV1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
         gtag('js', new Date());
-        gtag('config', 'G-0KMJRECLV1', { anonymize_ip: true });
+        gtag('config', 'G-0KMJRECLV1', {
+            anonymize_ip: true
+        });
     </script>
 
     <!-- Laravel Variables -->

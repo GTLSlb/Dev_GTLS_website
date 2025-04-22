@@ -9,7 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 ReactGA.initialize("G-0KMJRECLV1");
 
 const appName =
-    window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
+    window.document.getElementsByTagName("title")[0]?.innerText || "Gold Tiger | Supply Chain, Transport & 3PL Logistics Experts";
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

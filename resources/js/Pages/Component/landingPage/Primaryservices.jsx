@@ -35,7 +35,7 @@ export default function PrimaryServices(props) {
                                     <img
                                         className="w-full"
                                         src={strapiURL + feature.Icon.url}
-                                        alt=""
+                                        alt={feature.Icon.alternativeText ? feature.Icon.alternativeText : feature.Title}
                                     />
                                 </div>
                                 <div className="w-3/4 border-l border-goldt border-opacity-30 pl-5">
