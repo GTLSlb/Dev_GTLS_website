@@ -53,7 +53,8 @@ import bTripleImage from "@/assets/news/b-triple.webp";
 import nationalRoadImage from "@/assets/news/National-Road.webp";
 import nationaCoverImage from "@/assets/news/NationalRoadCover.jpg";
 import QueenslandDepot from "@/assets/news/QueenslandDepot.png";
-
+import ExpandingMelb from "@/assets/news/ExpandingMelb.png";
+import ExpandingMelbCover from "@/assets/news/ExpandingMelbCover.png";
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import {
@@ -1010,9 +1011,61 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             imgUrl: QLDDepotCover,
             imgSliders: [QueenslandDepot],
         },
+        {
+            id: 31,
+            title: "Expanding Our BTriple Solution: Melbourne to Adelaide Corridor",
+            content1: `Following the BTriple Launch in November 2024, Gold Tiger Logistics Solutions is expanding its BTriple transport solution along the Melbourne to Adelaide corridor. This milestone is driven by customer growth and the continued demand for sustainable, cost-effective, and reliable freight solutions.
+
+            Why This Matters
+            `,
+            list: [
+                {
+                    id: 0,
+                    title: `Meeting Growth Demand`,
+                    content: `Our customers’ evolving needs have fuelled the expansion of our high-capacity, cost-efficient BTriple solution, providing greater freight volume and streamlined interstate delivery.`,
+                },
+                {
+                    id: 1,
+                    title: `Increased Capacity `,
+                    content: `Our BTriple fleet enables greater payload efficiency, reducing the number of trips needed and delivering faster, more sustainable transport solutions.`,
+                },
+                {
+                    id: 2,
+                    title: `Sustainability Focus`,
+                    content: `By optimising load capacity and reducing the number of trips required, our BTriple solution helps cut fuel consumption and lower CO₂ emissions, aligning with our commitment to a greener supply chain.`,
+                },
+                {
+                    id: 3,
+                    title: `Cost-Effective Logistics`,
+                    content: `Through our integrated operating model and company-owned BTriple fleet, we optimise efficiency and maintain cost control while delivering reliable, high-quality service to our customers.`,
+                },
+                {
+                    id: 4,
+                    title: `Seamless End-to-End Service`,
+                    content: `The expansion strengthens our network reliability, ensuring our partners experience consistent, on-time deliveries across the Melbourne-Adelaide corridor.`,
+                },
+            ],
+            content2: `Our BTriple expansion is a testament to the trust our customer place in us and our relentless drive to innovate in the Australian logistics sector.
+            Are you ready to experience the Gold Tiger difference?
+            Get in touch with our team today! Call 1800 04 03 06 or visit our website to learn more.
+            `,
+
+            imgUrl: ExpandingMelbCover,
+            imgSliders: [ExpandingMelb],
+        },
     ];
 
     const posts = [
+        {
+            id: 31,
+            title: "Expanding Our BTriple Solution: Melbourne to Adelaide Corridor",
+            href: "#",
+            description: `Following the BTriple Launch in November 2024, Gold Tiger Logistics Solutions is expanding its BTriple transport solution along the Melbourne to Adelaide corridor. This milestone is driven by customer growth and the continued demand for sustainable, cost-effective, and reliable freight solutions.`,
+            imageUrl: ExpandingMelb,
+            date: "April 16, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 30,
             title: "Gold Tiger Logistics Solutions is expanding in Queensland!",
@@ -1384,6 +1437,15 @@ We continue to monitor the severe weather conditions in Queensland and northern 
                             src={contentJson[id].imgUrl}
                             alt="news"
                             className="h-[40rem] w-full object-cover object-top "
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-dark" />
+                    </div>
+                ) : id == 31 ? (
+                    <div aria-hidden="true" className="relative">
+                        <img
+                            src={contentJson[id].imgUrl}
+                            alt="news"
+                            className=" pt-10 rounded-2xl bg-gray-100 object-[35%_65%] object-cover w-full"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>

@@ -30,6 +30,7 @@ import nationalRoadImage from "@/assets/news/National-Road.webp";
 import cycloneImage from "@/assets/news/Cyclone.webp";
 import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
 import QueenslandDepot from "@/assets/news/QLDDepot.jpg";
+import ExpandingMelb from "@/assets/news/ExpandingMelb.png";
 import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -40,6 +41,16 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 const posts = [
+    {
+        id: 31,
+        title: "Expanding Our BTriple Solution: Melbourne to Adelaide Corridor",
+        href: "#",
+        description: `Following the BTriple Launch in November 2024, Gold Tiger Logistics Solutions is expanding its BTriple transport solution along the Melbourne to Adelaide corridor. This milestone is driven by customer growth and the continued demand for sustainable, cost-effective, and reliable freight solutions.`,
+        imageUrl: ExpandingMelb,
+        date: "April 16, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 30,
         title: "Gold Tiger Logistics Solutions is expanding in Queensland!",
@@ -539,19 +550,29 @@ export default function News() {
                                     >
                                         <div className="h-full ">
                                             <div className="relative w-full www">
-                                                {
-                                                    post.id == 26 || post.id == 27 || post.id == 28 || post.id == 30 ? (
-                                                        <img
+                                                {post.id == 26 ||
+                                                post.id == 27 ||
+                                                post.id == 28 ||
+                                                post.id == 30 ? (
+                                                    <img
                                                         src={post.imageUrl}
                                                         alt={post.title}
-                                                        className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-center  w-full "
+                                                        className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-center w-full"
                                                     />
-                                                    ) :  <img
-                                                    src={post.imageUrl}
-                                                    alt={post.title}
-                                                    className=" aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top  w-full "
-                                                />
-                                                }
+                                                ) : post.id == 31 ? (
+                                                    <img
+                                                        src={post.imageUrl}
+                                                        alt={post.title}
+                                                        className="aspect-[16/9] rounded-2xl bg-gray-100 object-[35%_65%] object-cover w-full"
+                                                    />
+                                                ) : (
+                                                    <img
+                                                        src={post.imageUrl}
+                                                        alt={post.title}
+                                                        className="aspect-[16/9] rounded-2xl bg-gray-100 object-cover object-top w-full"
+                                                    />
+                                                )}
+
                                                 <div className="absolute rounded-2xl inset-0 bg-gradient-to-b from-transparent to-goldt opacity-40"></div>
                                             </div>
                                             <article
