@@ -1021,27 +1021,27 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             list: [
                 {
                     id: 0,
-                    title: `Meeting Growth Demand`,
+                    title: `<b>Meeting Growth Demand</b>`,
                     content: `Our customers’ evolving needs have fuelled the expansion of our high-capacity, cost-efficient BTriple solution, providing greater freight volume and streamlined interstate delivery.`,
                 },
                 {
                     id: 1,
-                    title: `Increased Capacity `,
+                    title: `<b>Increased Reliability</b>`,
                     content: `Our BTriple fleet enables greater payload efficiency, reducing the number of trips needed and delivering faster, more sustainable transport solutions.`,
                 },
                 {
                     id: 2,
-                    title: `Sustainability Focus`,
+                    title: `<b>Sustainability Focus</b>`,
                     content: `By optimising load capacity and reducing the number of trips required, our BTriple solution helps cut fuel consumption and lower CO₂ emissions, aligning with our commitment to a greener supply chain.`,
                 },
                 {
                     id: 3,
-                    title: `Cost-Effective Logistics`,
+                    title: `<b>Cost-Effective Logistics</b>`,
                     content: `Through our integrated operating model and company-owned BTriple fleet, we optimise efficiency and maintain cost control while delivering reliable, high-quality service to our customers.`,
                 },
                 {
                     id: 4,
-                    title: `Seamless End-to-End Service`,
+                    title: `<b>Seamless End-to-End Service</b>`,
                     content: `The expansion strengthens our network reliability, ensuring our partners experience consistent, on-time deliveries across the Melbourne-Adelaide corridor.`,
                 },
             ],
@@ -1062,7 +1062,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             href: "#",
             description: `Following the BTriple Launch in November 2024, Gold Tiger Logistics Solutions is expanding its BTriple transport solution along the Melbourne to Adelaide corridor. This milestone is driven by customer growth and the continued demand for sustainable, cost-effective, and reliable freight solutions.`,
             imageUrl: ExpandingMelb,
-            date: "April 16, 2025",
+            date: "April 28, 2025",
             datetime: "2024-9-3",
             category: { title: "", href: "#" },
         },

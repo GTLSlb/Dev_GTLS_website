@@ -47,7 +47,7 @@ const posts = [
         href: "#",
         description: `Following the BTriple Launch in November 2024, Gold Tiger Logistics Solutions is expanding its BTriple transport solution along the Melbourne to Adelaide corridor. This milestone is driven by customer growth and the continued demand for sustainable, cost-effective, and reliable freight solutions.`,
         imageUrl: ExpandingMelb,
-        date: "April 16, 2025",
+        date: "April 28, 2025",
         datetime: "2024-9-3",
         category: { title: "", href: "#" },
     },
