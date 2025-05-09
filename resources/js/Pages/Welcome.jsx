@@ -41,10 +41,6 @@ const navigation = [
     { id: 8, name: "National Road Alerts", href: mapUrl, link: true },
 ];
 
-// function scrollToDiv (myDivRef)  {
-//     myDivRef.current.scrollIntoView({ behavior: 'smooth' });
-//   };
-
 export default function Welcome(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [showNavbar, setShowNavbar] = useState(false);

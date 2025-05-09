@@ -185,20 +185,33 @@ export default function ScrollNav() {
                             {navigation.map((item) =>
                                 item.id == 5 || item.id == 6 ? null : item.id !=
                                   8 ? (
-                                    <Link
-                                        key={item.name}
-                                        href={item.href}
-                                        // data={item.ref}
-                                        // smooth={true}
-                                        className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
-                                    >
-                                        {item.name}
-                                    </Link>
+                                    <div key={item.name}>
+                                        {item.link ? (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                // data={item.ref}
+                                                smooth={true}
+                                                className="hover:cursor-pointer hover:border-b hover:border-goldt p-1   text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        ) : (
+                                            <ScrollLink
+                                                key={item.name}
+                                                to={item.href}
+                                                smooth={true}
+                                                className="hover:cursor-pointer h-8 hover:border-b hover:border-goldt p-1 hover:text-white text-md font-semibold leading-6 text-goldt"
+                                            >
+                                                {item.name}
+                                            </ScrollLink>
+                                        )}
+                                    </div>
                                 ) : (
                                     <a
                                         href={item.href}
                                         target="_blank"
-                                        className="hover:cursor-pointer hover:border-b hover:border-goldt p-1 text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
+                                        className="hover:cursor-pointer hover:border-b hover:border-goldt text-[1rem] font-semibold leading-6 text-goldt hover:text-white"
                                     >
                                         {item.name}
                                     </a>
@@ -338,7 +351,7 @@ export default function ScrollNav() {
                                                 // className="border-2 w-10 bg-goldt text-gray-600 hover:text-gray-900 dark:text-gray-900 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                             >
                                                 <button className="border rounded bg-goldt text-white h-10 w-20 hover:bg-black"> Log in</button>
-                                                
+
                                             </Link>
 
                                             <Link
