@@ -42,6 +42,16 @@ import axios from "axios";
 
 const posts = [
     {
+        id: 32,
+        title: "Our Commitment to Food Safety at Gold Tiger Logistics Solutions",
+        href: "#",
+        description: `At Gold Tiger Logistics Solutions, safety is at the core of everything we do. While many know us for being accredited by NHVR for our strong focus on fatigue management and road safety, another critical area we take just as seriously is food safety.`,
+        imageUrl: goldt,
+        date: "May 30, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
+    {
         id: 31,
         title: "Expanding Our BTriple Solution: Melbourne to Adelaide Corridor",
         href: "#",

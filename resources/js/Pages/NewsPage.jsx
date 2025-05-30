@@ -1053,9 +1053,39 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             imgUrl: ExpandingMelbCover,
             imgSliders: [ExpandingMelb],
         },
+        {
+            id: 32,
+            title: "Our Commitment to Food Safety at Gold Tiger Logistics Solutions",
+            content1: `At Gold Tiger Logistics Solutions, safety is at the core of everything we do. While many know us for being accredited by NHVR for our strong focus on fatigue management and road safety, another critical area we take just as seriously is <b>food safety</b>.
+            
+            The transportation, storage and handling of food and food related products, requires a high level of responsibility, precision, and compliance. That’s why we’re proud to share that Gold Tiger Logistics Solutions is <b>SQF (Safe Quality Food)</b> accredited. SQF accreditation is a globally recognised certification that demonstrates adherence to rigorous food safety and quality standards.       
+            
+            The SQF certification is a comprehensive food safety management system recognised by retailers and food service providers worldwide. This accreditation ensures that every aspect of our operations from warehousing to transportation meets strict criteria for hygiene, handling, and temperature control.             
+            
+            Being SQF accredited is not just a badge of honour, it’s a daily commitment. It reflects our dedication to maintaining clean, controlled environments and implementing procedures that safeguard the quality and safety of food and food related products. Our customers, especially those in the food and beverage industry, can trust that their products are handled with the highest levels of care and accountability. We apply robust protocols to ensure everything arrives in optimal condition.        
+            
+            Gold Tiger Logistics Solutions specialises in ambient food and food related product storage and distribution. By prioritising food safety alongside our other operational pillars, we help protect not only our customers brands but also the health and trust of their end consumers.
+            
+            In today’s complex supply chain environment, having a logistics partner who understands and upholds food safety is more important than ever. At Gold Tiger Logistics Solutions, we take pride in being that partner, one who delivers more than just freight, but also peace of mind.
+            
+            Call our friendly Sales team on <a href="tel:1800 040 306" class="font-extrabold">1800 04 03 06</a>  for an obligation free quote.
+            
+            Prefer us to call you? Simply leave your details at <a href="/contact_us" class="underline " >www.gtls.com.au/contact_us</a>  and we’ll be in touch shortly.`,
+            imgUrl: goldt,
+        },
     ];
 
     const posts = [
+        {
+            id: 32,
+            title: "Our Commitment to Food Safety at Gold Tiger Logistics Solutions",
+            href: "#",
+            description: `At Gold Tiger Logistics Solutions, safety is at the core of everything we do. While many know us for being accredited by NHVR for our strong focus on fatigue management and road safety, another critical area we take just as seriously is food safety.`,
+            imageUrl: goldt,
+            date: "May 30, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 31,
             title: "Expanding Our BTriple Solution: Melbourne to Adelaide Corridor",
