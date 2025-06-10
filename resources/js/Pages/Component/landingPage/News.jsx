@@ -35,7 +35,7 @@ import { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import SQF from "@/assets/news/SQF.jpeg";
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
@@ -46,7 +46,7 @@ const posts = [
         title: "Our Commitment to Food Safety at Gold Tiger Logistics Solutions",
         href: "#",
         description: `At Gold Tiger Logistics Solutions, safety is at the core of everything we do. While many know us for being accredited by NHVR for our strong focus on fatigue management and road safety, another critical area we take just as seriously is food safety.`,
-        imageUrl: goldt,
+        imageUrl: SQF,
         date: "May 30, 2025",
         datetime: "2024-9-3",
         category: { title: "", href: "#" },
@@ -563,7 +563,8 @@ export default function News() {
                                                 {post.id == 26 ||
                                                 post.id == 27 ||
                                                 post.id == 28 ||
-                                                post.id == 30 ? (
+                                                post.id == 30 ||
+                                                post.id == 32 ? (
                                                     <img
                                                         src={post.imageUrl}
                                                         alt={post.title}

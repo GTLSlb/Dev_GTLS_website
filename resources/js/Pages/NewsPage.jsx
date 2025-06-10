@@ -55,6 +55,8 @@ import nationaCoverImage from "@/assets/news/NationalRoadCover.jpg";
 import QueenslandDepot from "@/assets/news/QueenslandDepot.png";
 import ExpandingMelb from "@/assets/news/ExpandingMelb.png";
 import ExpandingMelbCover from "@/assets/news/ExpandingMelbCover.png";
+import SQF from "@/assets/news/SQF.jpeg";
+import SQFHero from "@/assets/news/SQFHero.png";
 import { usePage } from "@inertiajs/react";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import {
@@ -1071,7 +1073,8 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             Call our friendly Sales team on <a href="tel:1800 040 306" class="font-extrabold">1800 04 03 06</a>  for an obligation free quote.
             
             Prefer us to call you? Simply leave your details at <a href="/contact_us" class="underline " >www.gtls.com.au/contact_us</a>  and we’ll be in touch shortly.`,
-            imgUrl: goldt,
+            imgUrl: SQFHero,
+            imgSliders: [],
         },
     ];
 
@@ -1476,6 +1479,15 @@ We continue to monitor the severe weather conditions in Queensland and northern 
                             src={contentJson[id].imgUrl}
                             alt="news"
                             className=" pt-10 rounded-2xl bg-gray-100 object-[35%_65%] object-cover w-full"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-dark" />
+                    </div>
+                ) : id == 32 ? (
+                    <div aria-hidden="true" className="relative">
+                        <img
+                            src={contentJson[id].imgUrl}
+                            alt="news"
+                            className="h-[35rem] w-full object-cover object-center "
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
