@@ -36,11 +36,22 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SQF from "@/assets/news/SQF.jpeg";
+import DFleet from "@/assets/news/DoubledVehicle.png";
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
 const posts = [
+    {
+        id: 33,
+        title: "We've Doubled Our B-Triple Fleet!",
+        href: "#",
+        description: `At Gold Tiger Logistics Solutions, we're proud to announce that we have doubled our B-Triple fleet.  This is a strategic move to meet growing customer demand, enable the additional B-Triple Corridors recently announced to move freight efficiently between states, and to keep sustainability front and centre.`,
+        imageUrl: DFleet,
+        date: "June 10, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
     {
         id: 32,
         title: "Our Commitment to Food Safety at Gold Tiger Logistics Solutions",

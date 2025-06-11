@@ -82,6 +82,7 @@ import ReactPlayer from "react-player";
 import cycloneImage from "@/assets/news/Cyclone.webp";
 import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
 import QLDDepotCover from "@/assets/news/QLDDepotCover.jpg";
+import DFleet from "@/assets/news/DoubledVehicle.png";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -1076,9 +1077,48 @@ We continue to monitor the severe weather conditions in Queensland and northern 
             imgUrl: SQFHero,
             imgSliders: [],
         },
+        {
+            id: 33,
+            title: "BIG NEWS: We've Doubled Our B-Triple Fleet!",
+            content1: `At Gold Tiger Logistics Solutions, we're proud to announce that we have doubled our B-Triple fleet.  This is a strategic move to meet growing customer demand, enable the additional B-Triple Corridors recently announced to move freight efficiently between states, and to keep sustainability front and centre.
+            `,
+            list: [
+                {
+                    id: 0,
+                    title: `<b>Increased Capacity</b>`,
+                    content: `More freight per trip means better efficiency and fewer trucks on the road.`,
+                },
+                {
+                    id: 1,
+                    title: `<b>Sustainability</b>`,
+                    content: `Fewer trips , lower emissions. A win for your business and the environment.`,
+                },
+                {
+                    id: 2,
+                    title: `<b>Meeting Demand</b>`,
+                    content: `As customer needs grow, so does our commitment to delivering faster, smarter, and greener.`,
+                },
+            ],
+            content2: `This investment is part of our ongoing mission to drive innovation, reduce environmental impact, and keep your Freight moving safely and reliably across Australia.
+
+            <b>More loads. Fewer trips. Bigger impact.</b>
+            `,
+
+            imgUrl: DFleet,
+        },
     ];
 
     const posts = [
+        {
+            id: 33,
+            title: "We've Doubled Our B-Triple Fleet!",
+            href: "#",
+            description: `At Gold Tiger Logistics Solutions, we're proud to announce that we have doubled our B-Triple fleet.  This is a strategic move to meet growing customer demand, enable the additional B-Triple Corridors recently announced to move freight efficiently between states, and to keep sustainability front and centre.`,
+            imageUrl: DFleet,
+            date: "June 10, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 32,
             title: "Our Commitment to Food Safety at Gold Tiger Logistics Solutions",
@@ -1464,7 +1504,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
-                ) : id == 20 || id == 21 || id == 24 || id == 25 ? (
+                ) : id == 20 || id == 21 || id == 24 || id == 25 || id == 33 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}
