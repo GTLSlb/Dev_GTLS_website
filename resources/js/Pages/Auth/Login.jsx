@@ -48,6 +48,7 @@ export default function Login({ status, canResetPassword }) {
                 gtlsLogo={Logo}
                 backToHomeURL={backToHomeURL}
                 microsoftLogo={MicrosoftLogo}
+                isTest={window.Laravel.isTest || false}
             />
         </div>
     );

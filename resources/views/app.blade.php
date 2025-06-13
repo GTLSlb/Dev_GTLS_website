@@ -44,6 +44,7 @@
             strapiAppUrl: "{{ env('STRAPI_APP') }}",
             strapiApiKey: "{{ env('STRAPI_API_KEY') }}",
             googleKey: "{{ env('RECAPTHCA_API') }}",
+            isTest: "{{ env('IS_TESTING') }}",
         };
     </script>
 
