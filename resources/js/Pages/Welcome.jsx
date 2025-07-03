@@ -192,7 +192,7 @@ export default function Welcome(props) {
                             <Technologies gettechnologies={gettechnologies} />
                             <Certifiactesw getcertificates={getcertificates} />
                         </MainLayout>
-                        
+
                     </div>
                 </>
             )}

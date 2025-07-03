@@ -281,11 +281,11 @@ export default function LandingPage({}) {
     // *********************************************************
 
     return (
-        <div className=" w-full relative min-h-screen bg-gray-200">
+        <div className="overflow-hidden w-full relative h-full bg-gray-200">
             {appsApi && currentUser ? (
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
-                        <div className="flex flex-col relative w-full min-h-screen bg-gradient-to-br from-gray-800 via-dark to-dark">
+                        <div className="flex flex-col relative w-full min-h-full bg-gradient-to-br from-gray-800 via-dark to-dark">
                             <img
                                 src={goldmap}
                                 className="absolute right-0 top-32"

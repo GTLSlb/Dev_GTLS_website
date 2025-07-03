@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\ConsTrackingController;
 use App\Http\Controllers\FeedBackFormController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ProfileController;
@@ -9,7 +8,6 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\SupportFormController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\SendDailyEmail;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -20,6 +18,7 @@ use App\Http\Controllers\SearchController;
 use GuzzleHttp\Client;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,7 +37,7 @@ Route::get('/sitemap.xml', function () {
     $sitemap = Sitemap::create();
     $headers = [
         'Authorization' => 'Bearer ' . env('STRAPI_API_KEY'),
-        'Accept' => 'application/json', 
+        'Accept' => 'application/json',
     ];
     $staticUrls = [
         '/terms',
@@ -84,13 +83,28 @@ Route::get('/login', function () {
     return Inertia::render('Auth/Login');
 })->name('login');
 
+Route::get('/failed-login', function () {
+    return Inertia::render('Auth/FailedLogin');
+})->name('failed-login');
+
+Route::get('/maintenance', function () {
+    return Inertia::render('MaintenancePage');
+})->name('maintenance');
+
+Route::get('/forgot-password', function () {
+    return Inertia::render('Auth/ForgotPassword');
+})->name('forgot.password');
+
+Route::get('/logout', function () {
+    return Inertia::render('Auth/Logout');
+})->name('logoutRoute');
+
 Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
 
 Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
 
 Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
 
-Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogout');
 
 Route::post('/logoutWithoutReq', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
 

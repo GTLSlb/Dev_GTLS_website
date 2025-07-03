@@ -31,6 +31,10 @@
     <script defer>
         window.Laravel = {
             gtamUrl: "{{ env('GTAM_API_URL') }}",
+            azureClientId: "{{ env('AZURE_CLIENT_ID') }}",
+            azureClientSecret: "{{ env('AZURE_CLIENT_SECRET') }}",
+            azureRedirectUrl: "{{ env('AZURE_REDIRECT_URI') }}",
+            azureTenantId: "{{ env('AZURE_TENANT_ID') }}",
             azureCallback: "{{ env('AZURE_CALLBACK_URL') }}",
             appDomain: "{{ env('SESSION_DOMAIN') }}",
             appUrl: "{{ env('APP_URL') }}",
