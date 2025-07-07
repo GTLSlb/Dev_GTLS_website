@@ -242,7 +242,7 @@ Route::get('/news/{slug}', function ($slug) {
 // ******************************************************************
 
 Route::fallback(function () {
-    return Inertia::render('NotFoundPage', [
+    return Inertia::render('NotFound', [
         // Add any data you want to pass to the React component
     ]);
 });
