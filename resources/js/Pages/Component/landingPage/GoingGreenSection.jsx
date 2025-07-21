@@ -1,5 +1,7 @@
 import "../../../../css/gradient.css";
 import Calc from "../../Component/landingPage/Calc";
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function GoingGreenSection(props) {
     const getGreen = props.getGreen;
@@ -38,3 +40,7 @@ export default function GoingGreenSection(props) {
         </div>
     );
 }
+
+GoingGreenSection.propTypes = {
+    getGreen: PropTypes.object,
+};

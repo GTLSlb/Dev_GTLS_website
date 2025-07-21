@@ -2,10 +2,10 @@ import { getFromStrapi } from "@/CommonFunctions";
 import LoadingComp from "@/Components/LoadingComp";
 import MainLayout from "@/Layouts/MainLayout";
 import { Head } from "@inertiajs/react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 
-export default function PalletTerms(props) {
+export default function PalletTerms() {
     // *********************************************************
     // ********************* All requests  *********************
     // *********************************************************

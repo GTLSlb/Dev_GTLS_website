@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import PropTypes from "prop-types";
 
 function SEOComponent({ seoData }) {
     return (
@@ -64,5 +65,9 @@ function SEOComponent({ seoData }) {
         </div>
     );
 }
+
+SEOComponent.propTypes = {
+    seoData: PropTypes.object.isRequired,
+};
 
 export default SEOComponent;

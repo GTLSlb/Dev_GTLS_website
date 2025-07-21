@@ -1,5 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
@@ -7,6 +7,7 @@ import newscircle from "../../../assets/pictures/newscircle.webp";
 import "../../../../css/blog.css";
 // import LogoWhite from "../../../../../public/app/icons/";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
+import PropTypes from "prop-types";
 
 function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -18,6 +19,12 @@ function SampleNextArrow(props) {
         />
     );
 }
+
+SampleNextArrow.propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+};
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -31,6 +38,12 @@ function SamplePrevArrow(props) {
         </div>
     );
 }
+
+SamplePrevArrow.propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+};
 
 export default function News(props) {
     const getPosts = props.getPosts;
@@ -73,7 +86,7 @@ export default function News(props) {
         prevArrow: <SamplePrevArrow />,
     };
     const maxScrollWidth = useRef(0);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const currentIndex = 0
     const carousel = useRef(null);
 
     useEffect(() => {
@@ -130,6 +143,7 @@ export default function News(props) {
                                         className=""
                                     >
                                         <Link
+                                        // eslint-disable-next-line
                                             href={route("newsPage", {
                                                 slug: post.Slug,
                                             })}
@@ -203,3 +217,7 @@ export default function News(props) {
         </div>
     );
 }
+
+News.propTypes = {
+    getPosts: PropTypes.object,
+};

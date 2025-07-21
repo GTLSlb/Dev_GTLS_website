@@ -1,13 +1,15 @@
 import GuestLayout from '@/Layouts/GuestLayout';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Head, Link, useForm } from '@inertiajs/react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});
 
     const submit = (e) => {
         e.preventDefault();
-
+// eslint-disable-next-line
         post(route('verification.send'));
     };
 
@@ -31,6 +33,7 @@ export default function VerifyEmail({ status }) {
                     <PrimaryButton disabled={processing}>Resend Verification Email</PrimaryButton>
 
                     <Link
+                        // eslint-disable-next-line
                         href={route('logout')}
                         method="post"
                         as="button"
@@ -43,3 +46,7 @@ export default function VerifyEmail({ status }) {
         </GuestLayout>
     );
 }
+
+VerifyEmail.propTypes = {
+    status: PropTypes.string,
+};

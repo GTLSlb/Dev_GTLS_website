@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import Typesense from "typesense";
 import TypesenseInstantsearchAdapter from "typesense-instantsearch-adapter";
 import axios from "axios";
 import SearchPopup from "./SearchPopup";
+import PropTypes from "prop-types";
 
 export default function SearchWebsite() {
     const host = window.Laravel.typesenseHost;
@@ -43,19 +43,6 @@ export default function SearchWebsite() {
         ],
     });
 
-    // Initialize the Typesense client
-    const client = new Typesense.Client({
-        nodes: [
-            {
-                host: host, // Your Typesense server host
-                port: port, // Your Typesense server port
-                protocol: protocol, // Protocol (http or https)
-            },
-        ],
-        connectionTimeoutSeconds: 20,
-        logLevel: "SILENT",
-        apiKey: apiKey, // Your Typesense API key
-    });
 
     const [components, setComponents] = useState([]);
     const [indices, setIndices] = useState([]);
@@ -317,7 +304,7 @@ export default function SearchWebsite() {
                 setIndices(items);
             })
             .catch((err) => {
-                console.log("err", err);
+                console.error("err", err);
             });
     };
 
@@ -331,9 +318,9 @@ export default function SearchWebsite() {
         };
         axios
             .post("/addCollections", formData)
-            .then((res) => {})
-            .catch((err) => {
-                console.log(err);
+            .then(() => {})
+            .catch((error) => {
+                console.error(error);
             });
     };
     useEffect(() => {
@@ -362,7 +349,6 @@ export default function SearchWebsite() {
         }
         else{
             const field = selector?.highlights?.[0]?.field == 'slug' ? selector?.highlights?.[1]?.field : selector?.highlights?.[0]?.field;
-            const elements = document.body.getElementsByTagName("*");
 
             const selectorParts = selector?.document[field].split(" > ");
             const currentElement = findElementByText(selectorParts);
@@ -427,6 +413,9 @@ export default function SearchWebsite() {
             </div>
         );
     };
+    Hit.propTypes = {
+        hit: PropTypes.object,
+    }
 
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -447,7 +436,7 @@ export default function SearchWebsite() {
                 setIsLoading(false);
             })
             .catch((err) => {
-                console.log(err);
+                console.error(err);
                 setIsLoading(false);
                 setResults([]);
                 setError(err.response.data.message || "Something went wrong");

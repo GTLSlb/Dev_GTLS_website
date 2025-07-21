@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Head, useForm } from "@inertiajs/react";
+import PropTypes from "prop-types";
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -26,7 +26,7 @@ export default function ResetPassword({ token, email }) {
 
     const submit = (e) => {
         e.preventDefault();
-
+// eslint-disable-next-line
         post(route("password.store"));
     };
 
@@ -114,3 +114,8 @@ export default function ResetPassword({ token, email }) {
         </GuestLayout>
     );
 }
+
+ResetPassword.propTypes = {
+    token: PropTypes.string,
+    email: PropTypes.string,
+};

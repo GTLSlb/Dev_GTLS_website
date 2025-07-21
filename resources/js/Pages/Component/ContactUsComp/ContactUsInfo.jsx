@@ -4,6 +4,8 @@ import {
     InboxStackIcon,
     MapPinIcon,
 } from "@heroicons/react/24/outline";
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function ContactUsInfo({ getContactUsInfo }) {
     return (
@@ -85,3 +87,7 @@ export default function ContactUsInfo({ getContactUsInfo }) {
         </div>
     );
 }
+
+ContactUsInfo.propTypes = {
+    getContactUsInfo: PropTypes.object,
+};

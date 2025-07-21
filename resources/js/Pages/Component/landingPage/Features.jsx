@@ -1,4 +1,6 @@
 import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function Features(props) {
     const getwhygtls = props.getwhygtls;
@@ -41,3 +43,7 @@ export default function Features(props) {
         </div>
     );
 }
+
+Features.propTypes = {
+    getwhygtls: PropTypes.object,
+};

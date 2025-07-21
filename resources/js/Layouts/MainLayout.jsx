@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import ScrollToTopButton from "@/Components/ScrollUpButton";
 import TrainNotification from "@/Components/TrainNotification";
 import CookiePopup from "@/Pages/Component/CookiePopup";
@@ -8,6 +8,7 @@ import { getFromStrapi } from "@/CommonFunctions";
 import { BounceLoader } from "react-spinners";
 import Navbars from "@/Components/Navbars";
 import HomePageNavBar from "@/Components/HomePageNavBar";
+import PropTypes from "prop-types";
 
 function MainLayout({ children, loading, isHomeScreen }) {
     const [getTrainNotification, setTrainNotification] = useState();
@@ -99,5 +100,11 @@ function MainLayout({ children, loading, isHomeScreen }) {
         </div>
     );
 }
+
+MainLayout.propTypes = {
+    children: PropTypes.node.isRequired,
+    isHomeScreen: PropTypes.bool,
+    loading: PropTypes.bool,
+};
 
 export default MainLayout;

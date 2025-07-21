@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Autosuggest from "react-autosuggest";
 
@@ -238,7 +238,7 @@ function Map() {
                     </div>
                 </div>
                 <div className="col-span-1 border-b border-goldt">
-                    <label for="weight-input" className="text-goldt font-bold text-2xl">Weight (in tons)</label>
+                    <label htmlFor="weight-input" className="text-goldt font-bold text-2xl">Weight (in tons)</label>
                     <input
                         id="weight-input"
                         className="w-full text-white peer appearance-none bg-transparent outline-none border-dark border-transparent focus:border-transparent focus:ring-0"

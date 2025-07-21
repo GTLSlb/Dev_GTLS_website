@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MagnifyingGlassPlusIcon } from "@heroicons/react/20/solid";
-
+import PropTypes from "prop-types";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "swiper/css";
@@ -179,4 +179,8 @@ export default function Certifiactesw(props) {
             <div>{renderModal()}</div>
         </div>
     );
+}
+
+Certifiactesw.propTypes = {
+    getcertificates: PropTypes.object.isRequired,
 }

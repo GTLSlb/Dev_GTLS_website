@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import tiger from "../assets/pictures/LogoWhite.webp";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import goldmap from "../assets/backgrounds/goldmap.webp";
@@ -8,14 +8,11 @@ import Footer from "./Component/landingPage/Footer";
 import { PublicClientApplication } from "@azure/msal-browser";
 import Cookies from "js-cookie";
 import { clearMSALLocalStorage, getFromStrapi } from "@/CommonFunctions";
+import axios from "axios";
 
-export default function LandingPage({}) {
-    const appUrl = window.Laravel.appUrl;
+export default function LandingPage() {
 
-    const [apps, setApps] = useState([]);
     const [currentUser, setcurrentUser] = useState(null);
-    const [isClicked, setIsClicked] = useState(false);
-    const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState([]);
     const [Token, setToken] = useState(Cookies.get("access_token"));
@@ -41,7 +38,7 @@ export default function LandingPage({}) {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
                 if (error.response.status === 401) {
                     window.location.href = `/login`;
                 }
@@ -84,7 +81,7 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                 });
         }
     }, [currentUser]);
@@ -110,15 +107,13 @@ export default function LandingPage({}) {
                     });
                     parsedDataPromise.then((parsedData) => {
                         setFilteredApps(parsedData);
-                        setApps(parsedData);
                         setAppsApi(true);
                     });
                 })
                 .catch((err) => {
                     // Handle other errors
-                    console.log(err);
+                    console.error(err);
                     setFilteredApps([]);
-                    setApps([]);
                     setAppsApi(true);
                 });
         }
@@ -136,32 +131,10 @@ export default function LandingPage({}) {
         }
     }
 
-    const handleEditClick = () => {
-        const isModalCurrentlyOpen = !isModalOpen;
-        document.body.style.overflow = isModalCurrentlyOpen ? "hidden" : "auto";
-        setIsModalOpen(isModalCurrentlyOpen);
-        setMobileMenuOpen(false);
-    };
-
-    const handleSearch = (event) => {
-        const searchInput = event.target.value.toLowerCase();
-        setSearchTerm(searchInput);
-        const filtered = apps.filter(
-            (app) =>
-                app.AppName.toLowerCase().includes(searchInput) ||
-                app.AppAbv.toLowerCase().includes(searchInput)
-        );
-        setFilteredApps(filtered);
-    };
 
     const GoAppPage = (app) => {
         window.open(app.AppURL, "_blank");
     };
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [activePage, setactivePage] = useState(null);
-    const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [PODetails, setPODetails] = useState();
-
     useEffect(() => {
         setGreeting(getGreeting());
     }, []);
@@ -207,11 +180,10 @@ export default function LandingPage({}) {
                 }
             })
             .catch((error) => {
-                console.log(error);
+                console.error(error);
             });
     };
     const [appsImgs, setAppsImgs] = useState([]);
-    const [isFetchingImg, setIsFetchingImg] = useState(true);
     const fetchImageData = async (picName, app) => {
         try {
             const response = await axios({
@@ -228,7 +200,7 @@ export default function LandingPage({}) {
                 [app.AppId]: blobUrl,
             }));
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setAppsImgs((prev) => ({
                 ...prev,
                 [app.AppId]: "/icons/NoPhoto.jpg",
@@ -247,12 +219,6 @@ export default function LandingPage({}) {
         }
     }, [filteredApps]);
 
-    useEffect(() => {
-        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
-        if (appsImgsArray?.length == filteredApps?.length) {
-            setIsFetchingImg(false);
-        }
-    }, [appsImgs, filteredApps]);
 
     const [getfooter, setfooter] = useState([]);
 
@@ -366,6 +332,7 @@ export default function LandingPage({}) {
                                         </div>
                                     </div>
                                     <a
+                                        rel="noopener noreferrer"
                                         href="https://support.gtls.com.au/help/2703577665"
                                         target="_blank"
                                         className="flex justify-center"

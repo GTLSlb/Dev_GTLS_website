@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 export default function Technologies(props) {
     const gettechnologies = props.gettechnologies;
     const strapiApi = window.Laravel.strapiAppUrl;
@@ -45,3 +47,7 @@ export default function Technologies(props) {
         </div>
     );
 }
+
+Technologies.propTypes = {
+    gettechnologies: PropTypes.object,
+};

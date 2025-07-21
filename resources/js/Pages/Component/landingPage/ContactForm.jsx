@@ -16,7 +16,7 @@ class ContactForm extends Component {
         };
     }
 
-    handleRecaptchaChange = (value) => {
+    handleRecaptchaChange = () => {
         this.setState({ recaptchaValue: true });
     };
 
@@ -98,7 +98,7 @@ class ContactForm extends Component {
     };
 
     render() {
-        const { errors, previewUrl } = this.state;
+        const { errors } = this.state;
         const { isLoading, success } = this.state;
         const { recaptchaValue } = this.state;
 

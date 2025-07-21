@@ -1,12 +1,11 @@
 import { Head } from "@inertiajs/react";
 import Team from "../Pages/Component/landingPage/Team";
-import { useState, useEffect } from "react";
-import BounceLoader from "react-spinners/BounceLoader";
+import React, { useState, useEffect } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import { getFromStrapi } from "@/CommonFunctions";
 import LoadingComp from "@/Components/LoadingComp";
 
-export default function AboutUs(props) {
+export default function AboutUs() {
     // *********************************************************
     // ********************* All requests  *********************
     // *********************************************************

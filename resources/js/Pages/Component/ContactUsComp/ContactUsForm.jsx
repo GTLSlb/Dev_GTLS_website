@@ -3,7 +3,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useEffect } from "react";
-import { get } from "react-scroll/modules/mixins/scroller";
+import PropTypes from "prop-types";
 
 function ContactUsForm({ getFormSection }) {
     const [enquiryValue, setEnquiryValue] = useState(new Set([]));
@@ -336,3 +336,7 @@ function ContactUsForm({ getFormSection }) {
 }
 
 export default ContactUsForm;
+
+ContactUsForm.propTypes = {
+    getFormSection: PropTypes.func.isRequired,
+};

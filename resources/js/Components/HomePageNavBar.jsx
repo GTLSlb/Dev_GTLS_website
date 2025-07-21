@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Dialog, Transition, Popover } from "@headlessui/react";
 import {
     ChevronDownIcon,
@@ -10,6 +10,7 @@ import { PhoneIcon } from "@heroicons/react/20/solid";
 import FeedbackButton from "@/Pages/Component/landingPage/FeedbackButton";
 import TrainNotification from "./TrainNotification";
 import SearchWebsite from "@/Pages/Component/SearchWebsite";
+import PropTypes from "prop-types";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 
@@ -41,12 +42,21 @@ const TopBar = ({ topBarLinks, phoneNb }) => (
     </div>
 );
 
+TopBar.propTypes = {
+    topBarLinks: PropTypes.array.isRequired,
+    phoneNb: PropTypes.string.isRequired,
+};
+
 const Logo = ({ Image }) => (
     <a href="/" className="-m-1.5 p-1.5">
         <span className="sr-only">Your Company</span>
         <img className="h-20" src={strapiUrl + Image} alt="Gold Tiger" />
     </a>
 );
+
+Logo.propTypes = {
+    Image: PropTypes.string.isRequired,
+};
 
 const LoginPopover = () => (
     <Popover className="relative object-right flex-item md:ml-auto">
@@ -78,6 +88,7 @@ const LoginPopover = () => (
                         </a>
                         <div className="bg-gray-600 h-[0.05rem]"></div>
                         <a
+                            rel="noopener noreferrer"
                             target="_blank"
                             href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
                             className="hover:bg-dark text-dark hover:text-goldt"
@@ -123,6 +134,10 @@ function NavigationLinks({ navLinks }) {
     );
 }
 
+NavigationLinks.propTypes = {
+    navLinks: PropTypes.array.isRequired,
+};
+
 const MobileMenu = ({ mobileMenuOpen, setMobileMenuOpen, getNavigation }) => (
     <Dialog
         as="div"
@@ -160,10 +175,15 @@ const MobileMenu = ({ mobileMenuOpen, setMobileMenuOpen, getNavigation }) => (
     </Dialog>
 );
 
+MobileMenu.propTypes = {
+    mobileMenuOpen: PropTypes.bool.isRequired,
+    setMobileMenuOpen: PropTypes.func.isRequired,
+    getNavigation: PropTypes.object.isRequired,
+};
+
 const Header = ({
     getNavigation,
     navLinks,
-    mobileMenuOpen,
     setMobileMenuOpen,
 }) => (
     <nav
@@ -194,6 +214,12 @@ const Header = ({
         </div>
     </nav>
 );
+
+Header.propTypes = {
+    getNavigation: PropTypes.object.isRequired,
+    navLinks: PropTypes.array.isRequired,
+    setMobileMenuOpen: PropTypes.func.isRequired,
+};
 
 const ScrollNavBar = ({
     getTrainNotification,
@@ -271,6 +297,13 @@ const ScrollNavBar = ({
         </div>
     );
 };
+
+ScrollNavBar.propTypes = {
+    getTrainNotification: PropTypes.object.isRequired,
+    topBarLinks: PropTypes.array.isRequired,
+    navLinks: PropTypes.array.isRequired,
+    getNavigation: PropTypes.object.isRequired,
+};
 const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [topBarLinks, setTopBarLinks] = useState([]);
@@ -324,5 +357,11 @@ const HomePageNavBar = ({ getTrainNotification, getNavigation }) => {
         </div>
     );
 };
+
+HomePageNavBar.propTypes = {
+    getTrainNotification: PropTypes.object.isRequired,
+    getNavigation: PropTypes.object.isRequired,
+};
+
 
 export default HomePageNavBar;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Logo from "../../assets/pictures/Logo-upscaled.png";
 import { PublicClientApplication } from "@azure/msal-browser";
 import "../../../css/scroll.css";
@@ -21,7 +21,7 @@ const msalConfig = {
 
 const pca = new PublicClientApplication(msalConfig);
 
-export default function Login({ status, canResetPassword }) {
+export default function Login() {
     const gtamURl = window.Laravel.gtamUrl;
     const appDomain = window.Laravel.appDomain;
     const backToHomeURL = window.Laravel.backToHomeURL;

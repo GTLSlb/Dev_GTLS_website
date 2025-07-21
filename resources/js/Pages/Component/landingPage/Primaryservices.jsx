@@ -1,5 +1,7 @@
 import lottie from "lottie-web";
 import { defineElement } from "lord-icon-element";
+import React from "react";
+import PropTypes from "prop-types";
 
 defineElement(lottie.loadAnimation);
 
@@ -59,3 +61,7 @@ export default function PrimaryServices(props) {
         </div>
     );
 }
+
+PrimaryServices.propTypes = {
+    getservices: PropTypes.object,
+};

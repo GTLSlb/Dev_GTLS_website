@@ -1,11 +1,11 @@
 import { Head } from "@inertiajs/react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import { getFromStrapi } from "@/CommonFunctions";
 import BounceLoader from "react-spinners/BounceLoader";
 
 
-export default function Technology(props) {
+export default function Technology() {
     const [getTechnology, setTechnology] = useState([]);
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
 

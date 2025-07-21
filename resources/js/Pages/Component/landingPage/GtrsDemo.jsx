@@ -1,6 +1,7 @@
 import React from "react";
 import ReactPlayer from "react-player";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 export default function ResponsiveStyledPlayer(props) {
     const getGtrs = props.getGtrs;
@@ -14,6 +15,11 @@ export default function ResponsiveStyledPlayer(props) {
             controls={true}
         />
     );
+
+    Player.propTypes = {
+        className: PropTypes.string,
+    };
+    
     const AbsolutelyPositionedPlayer = styled(Player)`
         position: absolute;
         top: 0;
@@ -41,8 +47,6 @@ export default function ResponsiveStyledPlayer(props) {
     );
 }
 
-// const ResponsiveStyledPlayer = () => (
-
-// );
-
-// export default ResponsiveStyledPlayer;
+ResponsiveStyledPlayer.propTypes = {
+    getGtrs: PropTypes.object,
+};

@@ -3,7 +3,7 @@ import SEOComponent from "@/Components/SEO/SEOComponent";
 import MainLayout from "@/Layouts/MainLayout";
 import { ArrowLongLeftIcon } from "@heroicons/react/24/outline";
 import { usePage } from "@inertiajs/react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     FacebookIcon,
     FacebookShareButton,
@@ -23,7 +23,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "../../css/NewsPageSlider.css";
 import "../../css/iframe.css";
-export default function NewsPage(props) {
+export default function NewsPage() {
     const { slug } = usePage().props;
     const [postslug, setPostSlug] = useState();
     const [loading, setLoading] = useState(true); // Add this state to manage loading state
@@ -42,7 +42,7 @@ export default function NewsPage(props) {
                 setPostSlug(result.data[0]);
                 setLoading(false);
             } else {
-                console.log("Fetch failed:", result.error);
+                console.error("Fetch failed:", result.error);
                 setLoading(false);
             }
         };
@@ -51,7 +51,7 @@ export default function NewsPage(props) {
     }, [slug]);
 
     const maxScrollWidth = useRef(0);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const currentIndex = 0;
     const carousel = useRef(null);
 
     useEffect(() => {
@@ -102,7 +102,8 @@ export default function NewsPage(props) {
             iframe.allowFullscreen = true;
             iframe.frameBorder = "0";
 
-            iframe.className = "custom-iframe flex items-center justify-center "; // Add your class names here
+            iframe.className =
+                "custom-iframe flex items-center justify-center "; // Add your class names here
 
             // Replace the oembed tag with the iframe
             oembedTag.parentNode.replaceChild(iframe, oembedTag);

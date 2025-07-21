@@ -1,12 +1,12 @@
 import { Head } from "@inertiajs/react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ContactUs from "./Component/ContactUsComp/ContactUs";
 
 import { BounceLoader } from "react-spinners";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
 
-export default function Capability(props) {
+export default function Capability() {
     const [getContactUsInfo, setContactUsInfo] = useState([]);
     const [getFormSection, setFormSection] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ export default function Capability(props) {
                 // Set loading to false when all requests are completed
                 setLoading(false);
             } catch (error) {
-                // Optionally, handle error state here
+                console.error("Error fetching data:", error);
                 setLoading(false); // Set loading to false if there's an error
             }
         };

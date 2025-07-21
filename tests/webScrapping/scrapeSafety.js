@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { Builder, By, Options } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
