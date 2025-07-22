@@ -1,10 +1,11 @@
 import { Head } from "@inertiajs/react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { BounceLoader } from "react-spinners";
 import ContactForm from "./Component/landingPage/ContactForm";
 import MainLayout from "@/Layouts/MainLayout";
 import { getFromStrapi } from "@/CommonFunctions";
 import pallet from "../assets/pictures/pallet.webp";
+import PropTypes from "prop-types";
 
 // Hero Section Component
 const strapiApiUrl = window.Laravel.strapiAppUrl;
@@ -22,6 +23,10 @@ const HeroSection = ({ heroSection }) => (
     </div>
 );
 
+HeroSection.propTypes = {
+    heroSection: PropTypes.object.isRequired,
+};
+
 // Introduction Section Component
 const IntroductionSection = ({ introduction }) => (
     <div className="relative mx-auto -mt-12 max-w-7xl px-4 pb-16 sm:px-6 sm:pb-4 lg:px-8">
@@ -36,6 +41,10 @@ const IntroductionSection = ({ introduction }) => (
         </div>
     </div>
 );
+
+IntroductionSection.propTypes = {
+    introduction: PropTypes.object.isRequired,
+};
 
 // Work Conditions Section Component
 const WorkConditionsSection = ({ workConditions }) => (
@@ -56,6 +65,10 @@ const WorkConditionsSection = ({ workConditions }) => (
     </div>
 );
 
+WorkConditionsSection.propTypes = {
+    workConditions: PropTypes.object.isRequired,
+};
+
 // Relevant Skills Section Component
 const RelevantSkillsSection = ({ relevantSkills }) => (
     <div className="relative isolate overflow-hidden py-16 sm:py-16">
@@ -73,8 +86,12 @@ const RelevantSkillsSection = ({ relevantSkills }) => (
     </div>
 );
 
+RelevantSkillsSection.propTypes = {
+    relevantSkills: PropTypes.object.isRequired,
+};
+
 // Jobs List Section Component
-const JobsListSection = ({ jobsArray, activeJob, changeActiveJob }) => (
+const JobsListSection = ({ jobsArray, changeActiveJob }) => (
     <div className="relative isolate overflow-hidden pb-16 sm:pb-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <ul className="flex space-x-2 mt-5 border-b">
@@ -108,6 +125,11 @@ const JobsListSection = ({ jobsArray, activeJob, changeActiveJob }) => (
     </div>
 );
 
+JobsListSection.propTypes = {
+    jobsArray: PropTypes.array.isRequired,
+    changeActiveJob: PropTypes.func.isRequired,
+};
+
 // Contact Section Component
 const ContactSection = () => (
     <div className="relative isolate py-24 px-6 sm:py-24 lg:px-8">
@@ -140,7 +162,7 @@ const ContactSection = () => (
 );
 
 // Main Opportunities Component
-export default function Opportunities(props) {
+export default function Opportunities() {
     const [getCareers, setCareers] = useState();
     const [loading, setLoading] = useState(true);
     const [jobsArray, setJobsArray] = useState([]);

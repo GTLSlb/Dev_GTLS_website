@@ -1,20 +1,5 @@
 import Cookies from "js-cookie";
-import { PublicClientApplication } from "@azure/msal-browser";
-
-const msalConfig = {
-    auth: {
-        clientId: window.Laravel.azureClientId,
-        authority:
-            `https://login.microsoftonline.com/${window.Laravel.azureTenantId}`,
-        redirectUri: window.Laravel.azureCallback,
-        failureRedirectUri: '/failed-login',
-    },
-    cache: {
-        cacheLocation: "sessionStorage",
-        storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
-    },
-};
-export const pca = new PublicClientApplication(msalConfig);
+import axios from "axios";
 
 export async function handleSessionExpiration() {
     const appUrl = window.Laravel.appUrl;
@@ -50,14 +35,14 @@ export async function handleSessionExpiration() {
                             window.location.href = `/login`;
                         }
                     } else {
-                        console.log("Logout error:", response);
+                        console.error("Logout error:", response);
                     }
                 })
                 .catch((error) => {
-                    console.log(error);
+                    console.error(error);
                 });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.error(error));
 }
 
 export function clearMSALLocalStorage() {

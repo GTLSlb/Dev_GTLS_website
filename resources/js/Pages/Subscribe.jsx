@@ -1,27 +1,25 @@
 import LogoWhite from "../assets/pictures/LogoWhite.webp";
-import notFound from "../assets/pictures/404.webp";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Subsribe() {
     const { id } = usePage().props;
-    const number = Number(id.replace(/[\[\]]/g, ""));
+    const number = Number(id.replace(/[[\]]/g, ""));
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     function subscribefunc() {
         setLoading(true);
         axios
             .get(`/api/subscribe/${number}`)
-            .then((response) => {
+            .then(() => {
                 setLoading(false);
                 setSuccess(true);
             })
             .catch((error) => {
                 setLoading(false);
-                setError(error);
+                console.error(error);
             });
     }
     return (

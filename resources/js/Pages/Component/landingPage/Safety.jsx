@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 export default function Safety(props) {
     const getSafety = props.getSafety;
     const strapiApi = window.Laravel.strapiAppUrl;
@@ -36,3 +39,7 @@ export default function Safety(props) {
         </div>
     );
 }
+
+Safety.propTypes = {
+    getSafety: PropTypes.object,
+};

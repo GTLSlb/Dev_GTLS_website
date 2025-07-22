@@ -1,8 +1,9 @@
 import ReactModal from "react-modal";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import CircularProgress from "@mui/material/CircularProgress";
 import { XMarkIcon } from '@heroicons/react/20/solid';
+import PropTypes from "prop-types";
 
 export default function SearchPopup({
     results,
@@ -99,3 +100,17 @@ export default function SearchPopup({
         </ReactModal>
     );
 }
+
+SearchPopup.propTypes = {
+    results: PropTypes.array,
+    isLoading: PropTypes.bool,
+    searchQuery: PropTypes.string,
+    isOpen: PropTypes.bool,
+    handlePopUpClose: PropTypes.func,
+    handleSearchChange: PropTypes.func,
+    setIsOpen: PropTypes.func,
+    indices: PropTypes.array,
+    handleClearInput: PropTypes.func,
+    Hit: PropTypes.func,
+    errMsg: PropTypes.string,
+};

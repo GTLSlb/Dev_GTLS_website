@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { exec } = require("child_process");
 require("dotenv").config();
 
@@ -9,18 +10,18 @@ const command = `docker run -d -p 8108:8108 -v/tmp/typesense-data:/data typesens
 
 exec(command, (err, stdout, stderr) =>{
     if(!err && !stderr){
-        console.log("Typesense Server is running...")
+        console.warn("Typesense Server is running...")
     }
 
     if(err){
-        console.log("Error running server: ", err)
+        console.warn("Error running server: ", err)
     }
 
     if(stderr){
-        console.log("Error running server: ", stderr)
+        console.warn("Error running server: ", stderr)
     }
 
     if(stdout){
-        console.log("Server output : ", stdout)
+        console.warn("Server output : ", stdout)
     }
 })

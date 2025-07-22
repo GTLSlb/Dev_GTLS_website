@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 import Calc from "./Component/landingPage/Calc";
 
 import "../../css/gradient.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import MainLayout from "@/Layouts/MainLayout";
 import { getFromStrapi } from "@/CommonFunctions";
 import { BounceLoader } from "react-spinners";

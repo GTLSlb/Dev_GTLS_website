@@ -1,8 +1,9 @@
-import { useState } from "react";
+/* eslint-disable */
+import React, { useState } from "react";
 import { forwardRef, useEffect, useRef } from "react";
 
 export default forwardRef(function TextInput(
-    { type = "text", className = "", isFocused = false, ...props },
+    {className = "", isFocused = false, ...props },
     ref
 ) {
     const input = ref ? ref : useRef();

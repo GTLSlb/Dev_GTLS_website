@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 export default function Footer(props) {
     const getfooter = props.getfooter;
     const strapiApi = window.Laravel.strapiAppUrl;
@@ -87,3 +90,7 @@ export default function Footer(props) {
         </footer>
     );
 }
+
+Footer.propTypes = {
+    getfooter: PropTypes.object,
+};

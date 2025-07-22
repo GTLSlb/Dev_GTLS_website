@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // # res/script.js
 //
 // This is the script file that gets copied into the output. It mainly manages the display

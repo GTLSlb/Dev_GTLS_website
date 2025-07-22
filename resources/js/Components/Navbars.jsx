@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import {
     Bars3Icon,
@@ -9,6 +9,7 @@ import {
 import { Link } from "@inertiajs/inertia-react";
 import TrainNotification from "./TrainNotification";
 import SearchWebsite from "@/Pages/Component/SearchWebsite";
+import PropTypes from "prop-types";
 
 const strapiUrl = window.Laravel.strapiAppUrl;
 // Top Bar component
@@ -41,6 +42,11 @@ function TopBar({ topBarLinks, phoneNb }) {
         </div>
     );
 }
+
+TopBar.propTypes = {
+    topBarLinks: PropTypes.array.isRequired,
+    phoneNb: PropTypes.string.isRequired,
+};
 
 // Login Popover component
 function LoginPopover() {
@@ -75,6 +81,7 @@ function LoginPopover() {
                                 </a>
                                 <div className="bg-gray-600 h-[0.05rem]"></div>
                                 <a
+                                    rel="noopener noreferrer"
                                     target="_blank"
                                     href="https://jaixwebapps.gtls.com.au/Portal/Account/Login.aspx"
                                     className="hover:bg-dark text-dark hover:text-goldt"
@@ -123,6 +130,10 @@ function NavigationLinks({ navLinks }) {
     );
 }
 
+NavigationLinks.propTypes = {
+    navLinks: PropTypes.array.isRequired,
+};
+
 // Mobile Menu component
 function MobileMenu({
     mobileMenuOpen,
@@ -166,6 +177,13 @@ function MobileMenu({
         </Dialog>
     );
 }
+
+MobileMenu.propTypes = {
+    mobileMenuOpen: PropTypes.bool.isRequired,
+    setMobileMenuOpen: PropTypes.func.isRequired,
+    getNavigation: PropTypes.object.isRequired,
+    navLinks: PropTypes.array.isRequired,
+};
 
 export default function Navbars({ getNavigation, getTrainNotification }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -329,3 +347,8 @@ export default function Navbars({ getNavigation, getTrainNotification }) {
         </div>
     );
 }
+
+Navbars.propTypes = {
+    getNavigation: PropTypes.object,
+    getTrainNotification: PropTypes.object,
+};

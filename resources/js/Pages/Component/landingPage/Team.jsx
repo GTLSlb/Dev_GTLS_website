@@ -1,11 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-// import LogoWhite from "../../../../../public/app/icons/";
+import PropTypes from "prop-types";
 import { ArrowSmallRightIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
 import React from "react";
 
 function SampleNextArrow(props) {
@@ -18,6 +16,11 @@ function SampleNextArrow(props) {
         />
     );
 }
+SampleNextArrow.propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+};
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -31,6 +34,11 @@ function SamplePrevArrow(props) {
         </div>
     );
 }
+SamplePrevArrow.propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
+    onClick: PropTypes.func,
+};
 
 export default function News(props) {
     const getTeam = props.getTeam;
@@ -72,7 +80,7 @@ export default function News(props) {
         prevArrow: <SamplePrevArrow />,
     };
     const maxScrollWidth = useRef(0);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const currentIndex = 0
     const carousel = useRef(null);
 
     useEffect(() => {
@@ -86,14 +94,6 @@ export default function News(props) {
         maxScrollWidth.current = carousel.current
             ? carousel.current.scrollWidth - carousel.current.offsetWidth
             : 0;
-    }, []);
-
-    const baseURL = "/posts";
-    const [postss, setPost] = useState([]);
-    useEffect(() => {
-        axios.get(baseURL).then((response) => {
-            setPost(response.data);
-        });
     }, []);
 
     const strapiAppUrl = window.Laravel.strapiAppUrl;
@@ -140,3 +140,7 @@ export default function News(props) {
         </div>
     );
 }
+
+News.propTypes = {
+    getTeam: PropTypes.object,
+};

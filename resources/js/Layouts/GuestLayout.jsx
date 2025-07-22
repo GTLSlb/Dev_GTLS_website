@@ -1,4 +1,6 @@
 import Logo from "../assets/pictures/Logo.png";
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function Guest({ children }) {
     return (
@@ -22,3 +24,7 @@ export default function Guest({ children }) {
         </div>
     );
 }
+
+Guest.propTypes = {
+    children: PropTypes.node,
+};

@@ -1,12 +1,12 @@
 import { Head } from "@inertiajs/react";
 import jobs from "../assets/pictures/jobs.webp";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import News from "./Component/landingPage/News";
 import { getFromStrapi } from "@/CommonFunctions";
 import { BounceLoader } from "react-spinners";
 import MainLayout from "@/Layouts/MainLayout";
 
-export default function Newss(props) {
+export default function Newss() {
     const [loading, setLoading] = useState(true);
     const [getPosts, setPosts] = useState([]);
 

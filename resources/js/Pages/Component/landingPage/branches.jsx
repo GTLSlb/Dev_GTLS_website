@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 export default function Branches(props) {
     const getBranch = props.getBranch;
     return (
@@ -26,6 +29,7 @@ export default function Branches(props) {
                                 width="600"
                                 height="450"
                                 allowFullScreen=""
+                                // eslint-disable-next-line
                                 maptype="satellite"
                                 loading="lazy"
                                 className=" aspect-[3/2] w-full shadow-xl rounded-2xl object-cover"
@@ -43,3 +47,7 @@ export default function Branches(props) {
         </div>
     );
 }
+
+Branches.propTypes = {
+    getBranch: PropTypes.object,
+};

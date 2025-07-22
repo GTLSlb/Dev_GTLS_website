@@ -1,5 +1,6 @@
 import aboutcircle from "../../../assets/pictures/aboutcircle.webp";
-
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function AboutUs(props) {
     const getAbout = props.getAbout;
@@ -44,3 +45,7 @@ export default function AboutUs(props) {
         </div>
     );
 }
+
+AboutUs.propTypes = {
+    getAbout: PropTypes.object,
+};

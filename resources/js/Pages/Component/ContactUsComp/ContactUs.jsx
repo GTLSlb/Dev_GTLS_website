@@ -1,5 +1,7 @@
 import ContactUsForm from "./ContactUsForm";
 import ContactUsInfo from "./ContactUsInfo";
+import PropTypes from "prop-types";
+import React from "react";
 
 export default function ContatcUs({ getContactUsInfo, getFormSection }) {
     return (
@@ -11,3 +13,8 @@ export default function ContatcUs({ getContactUsInfo, getFormSection }) {
         </div>
     );
 }
+
+ContatcUs.propTypes = {
+    getContactUsInfo: PropTypes.object,
+    getFormSection: PropTypes.object,
+};

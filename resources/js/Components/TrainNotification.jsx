@@ -1,3 +1,6 @@
+import React from "react";
+import PropTypes from "prop-types";
+
 function TrainNotification({ getTrainNotification }) {
     const strapiUrl = window.Laravel.strapiAppUrl;
 
@@ -91,5 +94,9 @@ function TrainNotification({ getTrainNotification }) {
         </div>
     );
 }
+
+TrainNotification.propTypes = {
+    getTrainNotification: PropTypes.object,
+};
 
 export default TrainNotification;

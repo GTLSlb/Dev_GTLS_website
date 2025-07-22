@@ -1,3 +1,4 @@
+import React from "react";
 import { getFromStrapi } from "@/CommonFunctions";
 import MainLayout from "@/Layouts/MainLayout";
 import { Head } from "@inertiajs/react";
@@ -21,15 +22,13 @@ const scrollToElement = (elementId) => {
     }
 };
 
-export default function Welcome(props) {
-    const [showNavbar, setShowNavbar] = useState(false);
+export default function Welcome() {
     const [getSafety, setSafety] = useState([]);
 
     useEffect(() => {
         function handleScroll() {
             const scrollTop =
                 window.pageYOffset || document.documentElement.scrollTop;
-            setShowNavbar(scrollTop > 0);
             // setIsSuggOpen(false);
             const hash = window.location.hash;
             if (hash && document.querySelector(hash)) {

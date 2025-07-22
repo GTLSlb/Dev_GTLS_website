@@ -1,3 +1,5 @@
+import React from "react";
+import PropTypes from "prop-types";
 export default function VideoHeader(props) {
     const getHeader = props.getHeader.Dynamic_zone.find(
         (zone) => zone.__component === "home-page.home-hero-section"
@@ -115,3 +117,7 @@ export default function VideoHeader(props) {
         </div>
     );
 }
+
+VideoHeader.propTypes = {
+    getHeader: PropTypes.object,
+};
