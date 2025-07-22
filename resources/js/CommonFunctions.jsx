@@ -1,6 +1,23 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 
+import { PublicClientApplication } from "@azure/msal-browser";
+
+const msalConfig = {
+    auth: {
+        clientId: window.Laravel.azureClientId,
+        authority:
+            `https://login.microsoftonline.com/${window.Laravel.azureTenantId}`,
+        redirectUri: window.Laravel.azureCallback,
+        failureRedirectUri: '/failed-login',
+    },
+    cache: {
+        cacheLocation: "sessionStorage",
+        storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
+    },
+};
+export const pca = new PublicClientApplication(msalConfig);
+
 export async function handleSessionExpiration() {
     const appUrl = window.Laravel.appUrl;
     // Ensure CSRF token is set in Axios for the logout request
