@@ -1,1 +1,2 @@
-var tree={};
+/* eslint-disable */
+var tree = {};

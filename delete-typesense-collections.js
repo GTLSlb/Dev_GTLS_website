@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Typesense = require("typesense");
 require('dotenv').config();
 
