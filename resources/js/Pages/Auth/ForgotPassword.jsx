@@ -12,7 +12,7 @@ import LottieComponent from "@/Components/lottie/LottieComponent";
 import { useEffect } from "react";
 
 export default function ForgotPassword({ status }) {
-    const { data, setData, post, processing, errors } = useForm({
+    const { data, setData, errors, setError } = useForm({
         email: "",
     });
 
@@ -67,6 +67,7 @@ export default function ForgotPassword({ status }) {
                 setUserId(res.data[0].UserID);
             })
             .catch((err) => {
+                setError("Email", err.response.data.Message);
                 setEmailLoading(false);
                 console.log(err);
             });
@@ -76,7 +77,7 @@ export default function ForgotPassword({ status }) {
 
     const submitOTP = () => {
         setOTPLoading(true);
-         let concatenatedNumber = inputs.join("");
+        let concatenatedNumber = inputs.join("");
         axios
             .get(`${gtamUrl}OTP/Verification`, {
                 headers: {
@@ -192,7 +193,7 @@ export default function ForgotPassword({ status }) {
                         onChange={onHandleChange}
                     />
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.Email} className="mt-2" />
 
                     {emailLoading ? (
                         <div className="flex justify-center rounded-md mt-4 overflow-hidden ">
