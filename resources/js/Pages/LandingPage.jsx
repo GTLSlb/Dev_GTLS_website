@@ -5,14 +5,12 @@ import goldmap from "../assets/backgrounds/goldmap.webp";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
-import { PublicClientApplication } from "@azure/msal-browser";
 import Cookies from "js-cookie";
 import { clearMSALLocalStorage, getFromStrapi } from "@/CommonFunctions";
 import axios from "axios";
 
 export default function LandingPage() {
-
-    const [currentUser, setcurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState([]);
     const [Token, setToken] = useState(Cookies.get("access_token"));
@@ -34,7 +32,7 @@ export default function LandingPage() {
             .get("/users")
             .then((res) => {
                 if (typeof res.data == "object") {
-                    setcurrentUser(res.data);
+                    setCurrentUser(res.data);
                 }
             })
             .catch((error) => {
@@ -131,7 +129,6 @@ export default function LandingPage() {
         }
     }
 
-
     const GoAppPage = (app) => {
         window.open(app.AppURL, "_blank");
     };
@@ -139,29 +136,14 @@ export default function LandingPage() {
         setGreeting(getGreeting());
     }, []);
 
-    const msalConfig = {
-        auth: {
-            clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
-            authority:
-                "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
-            redirectUri: window.Laravel.azureCallback,
-        },
-        cache: {
-            cacheLocation: "localStorage",
-            storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
-        },
-    };
-    const pca = new PublicClientApplication(msalConfig);
-
     const handleLogout = async () => {
         const credentials = {
-            URL: window.Laravel.gtamUrl,
             CurrentUser: currentUser,
+            URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
-        await pca.initialize();
         axios
-            .post("/composerLogout", credentials)
+            .post("/logoutWithoutReq", credentials)
             .then((response) => {
                 if (response.status === 200) {
                     const isMicrosoftLogin = Cookies.get(
@@ -169,13 +151,15 @@ export default function LandingPage() {
                     );
                     clearMSALLocalStorage();
                     Cookies.remove("access_token");
+                    // Remove all items
+                    sessionStorage.clear();
 
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
-                        setcurrentUser(null);
+                        setCurrentUser(null);
                     } else {
                         window.location.href = `${window.Laravel.appUrl}/login`;
-                        setcurrentUser(null);
+                        setCurrentUser(null);
                     }
                 }
             })
@@ -218,7 +202,6 @@ export default function LandingPage() {
             });
         }
     }, [filteredApps]);
-
 
     const [getfooter, setfooter] = useState([]);
 
