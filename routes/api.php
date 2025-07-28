@@ -61,18 +61,3 @@ Route::post('/uploadPO', function (Request $request) {
         return response()->json(['error' => 'No file uploaded'], 400);
     }
 });
-
-
-Route::get('subscriber/{id}', [SubscriberController::class, 'getById']);
-
-Route::get('add-subscriber/{email}', [SubscriberController::class, 'addSubscriber']);
-
-Route::get('allSubscribers', [SubscriberController::class, 'getAll']);
-
-Route::get('subscribe/{id}', [SubscriberController::class, 'subscribe']);
-
-Route::post('/unsubscribe', [SubscriberController::class, 'unsubscribe']);
-
-Route::post('add-history/{id}/{action}', [ActionHistoryController::class, 'AddHistory']);
-
-Route::get('receivedEmail/{id}', [SubscriberController::class, 'receivedEmail']);
