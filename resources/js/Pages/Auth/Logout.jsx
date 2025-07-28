@@ -1,5 +1,7 @@
 import { clearMSALLocalStorage, pca } from "@/CommonFunctions";
 import { LogoutPage } from "gtls-npm-libraries";
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function Logout({ currentUser, setToken, setCurrentUser }) {
     return (
@@ -15,3 +17,9 @@ export default function Logout({ currentUser, setToken, setCurrentUser }) {
         />
     )
 }
+
+Logout.propTypes = {
+    currentUser: PropTypes.object,
+    setToken: PropTypes.func,
+    setCurrentUser: PropTypes.func,
+};
