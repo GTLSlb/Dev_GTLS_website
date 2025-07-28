@@ -14,7 +14,7 @@ export default function ContactUsInfo({ getContactUsInfo }) {
                 <div
                     className=""
                     dangerouslySetInnerHTML={{
-                        __html: getContactUsInfo.Title,
+                        __html: getContactUsInfo?.Title,
                     }}
                 />
                 <dl className="mt-10 space-y-4 text-base leading-7 text-gray-300  w-full">
@@ -29,9 +29,9 @@ export default function ContactUsInfo({ getContactUsInfo }) {
                         <dd>
                             <a
                                 className="hover:text-goldt text-lg"
-                                href={`tel:+${getContactUsInfo.PhoneNumber}`}
+                                href={`tel:+${getContactUsInfo?.PhoneNumber}`}
                             >
-                                {getContactUsInfo.PhoneNumber}
+                                {getContactUsInfo?.PhoneNumber}
                             </a>
                         </dd>
                     </div>
@@ -45,11 +45,11 @@ export default function ContactUsInfo({ getContactUsInfo }) {
                         </dt>
                         <dd>
                             <a className=" text-lg" href="#">
-                                {getContactUsInfo.POBox}
+                                {getContactUsInfo?.POBox}
                             </a>
                         </dd>
                     </div>
-                    {getContactUsInfo.branches.map((branch, index) => (
+                    {getContactUsInfo?.branches.map((branch, index) => (
                         <div className="flex gap-x-6 w-full" key={index}>
                             <dt className="flex-none">
                                 <span className="sr-only">

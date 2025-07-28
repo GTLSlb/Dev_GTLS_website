@@ -200,7 +200,7 @@ function ContactUsForm({ getFormSection }) {
                                 label: "text-white  group-data-[filled=true]:text-white group-data-[filled=true]:mb-2",
                             }}
                         >
-                            {getFormSection.Enquries.enquiries_types.map(
+                            {getFormSection?.Enquries?.enquiries_types?.map(
                                 (type) => (
                                     <SelectItem
                                         key={type.id}
@@ -235,7 +235,7 @@ function ContactUsForm({ getFormSection }) {
                                 label: "text-white  group-data-[filled=true]:text-white group-data-[filled=true]:mb-2",
                             }}
                         >
-                            {getFormSection.HeardFrom.heared_froms.map(
+                            {getFormSection?.HeardFrom?.heared_froms?.map(
                                 (type) => (
                                     <SelectItem
                                         key={type.id}
