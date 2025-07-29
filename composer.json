@@ -9,7 +9,7 @@
         "alexazartsev/heroicon": "^2.0",
         "ayvazyan10/nova-imagic": "^1.3",
         "digital-creative/nova-filepond": "^1.0",
-        "gtls/loginstory": "1.0.6",
+        "gtls/loginstory": "1.0.7",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/database": "*",
         "illuminate/support": "*",
