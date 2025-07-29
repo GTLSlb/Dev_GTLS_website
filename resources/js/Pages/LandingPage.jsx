@@ -39,13 +39,13 @@ export default function LandingPage({}) {
         axios
             .get("/users")
             .then((res) => {
-                if(typeof res.data == "object"){
+                if (typeof res.data == "object") {
                     setcurrentUser(res.data);
                 }
             })
             .catch((error) => {
-                console.log(error)
-                if(error.response.status === 401){
+                console.log(error);
+                if (error.response.status === 401) {
                     window.location.href = `/login`;
                 }
             });
@@ -109,11 +109,11 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                        // Handle other errors
-                        console.log(err);
-                        setFilteredApps([]);
-                        setApps([]);
-                        setAppsApi(true);
+                    // Handle other errors
+                    console.log(err);
+                    setFilteredApps([]);
+                    setApps([]);
+                    setAppsApi(true);
                 });
         }
     }, [currentUser]);
@@ -134,7 +134,6 @@ export default function LandingPage({}) {
         const isModalCurrentlyOpen = !isModalOpen;
         document.body.style.overflow = isModalCurrentlyOpen ? "hidden" : "auto";
         setIsModalOpen(isModalCurrentlyOpen);
-        setMobileMenuOpen(false);
     };
 
     const handleSearch = (event) => {
@@ -151,46 +150,28 @@ export default function LandingPage({}) {
     const GoAppPage = (app) => {
         window.open(app.AppURL, "_blank");
     };
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [activePage, setactivePage] = useState(null);
-    const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [PODetails, setPODetails] = useState();
-
     useEffect(() => {
         setGreeting(getGreeting());
     }, []);
 
-    const msalConfig = {
-        auth: {
-            clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
-            authority:
-                "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
-            redirectUri: window.Laravel.azureCallback,
-        },
-        cache: {
-            cacheLocation: "localStorage",
-            storeAuthStateInCookie: true, // Set this to true if dealing with IE11 or issues with sessionStorage
-        },
-    };
-    const pca = new PublicClientApplication(msalConfig);
-
     const handleLogout = async () => {
         const credentials = {
-            URL: window.Laravel.gtamUrl,
             CurrentUser: currentUser,
+            URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
-        await pca.initialize();
         axios
-            .post("/composerLogout", credentials)
+            .post("/logoutWithoutReq", credentials)
             .then((response) => {
                 if (response.status === 200) {
                     const isMicrosoftLogin = Cookies.get(
                         "msal.isMicrosoftLogin"
                     );
                     clearMSALLocalStorage();
-                    Cookies.remove('access_token');
+                    Cookies.remove("access_token");
 
+                    // Remove all items
+                    sessionStorage.clear();
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
                         setcurrentUser(null);
@@ -383,7 +364,6 @@ export default function LandingPage({}) {
 
                                     <ResponsiveNavLink
                                         method="post"
-                                        // href={route("logout")}
                                         as="button"
                                         onClick={handleLogout}
                                         className="flex flex-row items-center hover:bg-gray-700 hover:text-white"
@@ -452,7 +432,11 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={appsImgs[app?.AppId]}
+                                                              src={
+                                                                  appsImgs[
+                                                                      app?.AppId
+                                                                  ]
+                                                              }
                                                               //{`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"
@@ -470,7 +454,9 @@ export default function LandingPage({}) {
                                                                   <span className="">
                                                                       {app.AppAbv.substring(
                                                                           1,
-                                                                          app.AppAbv.length
+                                                                          app
+                                                                              .AppAbv
+                                                                              .length
                                                                       ).toUpperCase()}
                                                                   </span>
                                                               </h1>{" "}
