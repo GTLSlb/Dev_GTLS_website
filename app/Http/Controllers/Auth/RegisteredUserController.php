@@ -58,17 +58,17 @@ class RegisteredUserController extends Controller
     {
         if ($request->session()->get('user') !== null) {
             $sessionId = $request->session()->getId();
-    
+
             // Query the database to get the user based on the session ID
             $user = DB::table('custom_sessions')
                 ->where('id', $sessionId)
                 ->value('user');
-    
+
             // Check if user data was found
             if ($user !== null) {
                 // Assuming the 'user' column contains JSON-encoded user data
                 $user = json_decode($user);
-    
+
                 // Check if json_decode returned a valid object
                 if ($user !== null && is_object($user)) {
                     // Handle based on TypeId
@@ -81,7 +81,6 @@ class RegisteredUserController extends Controller
                             'GroupName' => $user->GroupName,
                             'Username' => $user->Username,
                             'Email' => $user->Email,
-                            'Accounts' => $user->Accounts,
                         ]);
                     } else if ($user->TypeId == 2) { // Employee
                         return response()->json([
@@ -134,7 +133,7 @@ class RegisteredUserController extends Controller
             return response()->json(['error' => 'Session not found'], 401);
         }
     }
-    
+
     public function getUserName($id)
     {
         $user = User::find($id);

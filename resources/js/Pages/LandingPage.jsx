@@ -255,7 +255,7 @@ export default function LandingPage({}) {
             {appsApi && currentUser ? (
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
-                        <div className="flex flex-col relative w-full min-h-screen bg-gradient-to-br from-gray-800 via-dark to-dark">
+                        <div className="flex flex-col relative w-full min-h-screen bg-gradient-to-br from-gray-800 via-dark to-dark overflow-hidden">
                             <img
                                 src={goldmap}
                                 className="absolute right-0 top-32"
@@ -283,7 +283,7 @@ export default function LandingPage({}) {
                                                 currentUser.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser?.FirstName?.substring(
+                                                            {currentUser.FirstName.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -292,31 +292,9 @@ export default function LandingPage({}) {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser?.Username?.substring(
+                                                            {currentUser.Username.substring(
                                                                 0,
                                                                 1
-                                                            ).toUpperCase()}
-                                                        </p>
-                                                    </>
-                                                )}
-                                            </>
-                                            <>
-                                                {currentUser?.FirstName &&
-                                                currentUser?.LastName ? (
-                                                    <>
-                                                        <p>
-                                                            {currentUser?.LastName?.substring(
-                                                                0,
-                                                                1
-                                                            ).toUpperCase()}
-                                                        </p>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <p>
-                                                            {currentUser?.Username?.substring(
-                                                                1,
-                                                                2
                                                             ).toUpperCase()}
                                                         </p>
                                                     </>
@@ -324,14 +302,14 @@ export default function LandingPage({}) {
                                             </>
                                         </div>
                                         <p className="text-sm text-white w-71 hidden sm:block">
-                                            {currentUser?.FirstName &&
-                                            currentUser?.LastName ? (
+                                            {currentUser.FirstName &&
+                                            currentUser.LastName ? (
                                                 <>
-                                                    {currentUser?.FirstName}{" "}
-                                                    {currentUser?.LastName}
+                                                    {currentUser.FirstName}{" "}
+                                                    {currentUser.LastName}
                                                 </>
                                             ) : (
-                                                <>{currentUser?.Username}</>
+                                                <>{currentUser.Username}</>
                                             )}
                                         </p>
                                     </div>
@@ -364,6 +342,7 @@ export default function LandingPage({}) {
 
                                     <ResponsiveNavLink
                                         method="post"
+                                        // href={route("logout")}
                                         as="button"
                                         onClick={handleLogout}
                                         className="flex flex-row items-center hover:bg-gray-700 hover:text-white"
@@ -418,9 +397,8 @@ export default function LandingPage({}) {
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-8">
                                     {filteredApps?.length > 0
-                                        ? filteredApps?.map((app) => (
+                                        ? filteredApps.map((app) => (
                                               <div
-                                                  key={app.AppId}
                                                   id={app.AppName}
                                                   className={`bg-gradient-to-tr sm:w-auto border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}
                                                   onClick={() => {
@@ -432,12 +410,7 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={
-                                                                  appsImgs[
-                                                                      app?.AppId
-                                                                  ]
-                                                              }
-                                                              //{`${app.AppPic}`}
+                                                              src={`${app.AppPic}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />
@@ -454,9 +427,7 @@ export default function LandingPage({}) {
                                                                   <span className="">
                                                                       {app.AppAbv.substring(
                                                                           1,
-                                                                          app
-                                                                              .AppAbv
-                                                                              .length
+                                                                          app.AppAbv.length
                                                                       ).toUpperCase()}
                                                                   </span>
                                                               </h1>{" "}
@@ -507,7 +478,7 @@ export default function LandingPage({}) {
                 </div>
             )}
             <div className="">
-                <Footer getfooter={getfooter} />
+                <Footer />
             </div>
         </div>
     );

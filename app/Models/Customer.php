@@ -24,7 +24,6 @@ class Customer extends User
         'OwnerId',
         'GroupId',
         'GroupName',
-        'Accounts',
         'remember_token',
         'password',
         'UserId',
@@ -32,7 +31,7 @@ class Customer extends User
         'TypeName',
         'Username',
         'Email',
-        
+
     ];
 
     /**
@@ -41,7 +40,6 @@ class Customer extends User
      * @var array<int, string>
      */
     protected $hidden = [
-        'Accounts',
         'password',
         'remember_token',
         'Email',
