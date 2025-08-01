@@ -6,14 +6,14 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
 import Cookies from "js-cookie";
-import { clearMSALLocalStorage, getFromStrapi } from "@/CommonFunctions";
+import { clearMSALLocalStorage, getFromStrapi, handleSessionExpiration } from "@/CommonFunctions";
 import axios from "axios";
 
 export default function LandingPage() {
     const [currentUser, setCurrentUser] = useState(null);
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState([]);
-    const [Token, setToken] = useState(Cookies.get("access_token"));
+    const [Token, setToken] = useState(null);
     const [appsApi, setAppsApi] = useState();
     const gtamUrl = window.Laravel.gtamUrl;
     const appDomain = window.Laravel.appDomain;
@@ -31,9 +31,8 @@ export default function LandingPage() {
         axios
             .get("/users")
             .then((res) => {
-                if (typeof res.data == "object") {
-                    setCurrentUser(res.data);
-                }
+                setToken(res.data.token);
+                setCurrentUser(res.data.user);
             })
             .catch((error) => {
                 console.error(error);
@@ -46,15 +45,13 @@ export default function LandingPage() {
     useEffect(() => {
         if (currentUser && !Token) {
             const headers = {
-                UserId: currentUser.UserId,
-                // currentUser.UserId,
-                OwnerId: currentUser.OwnerId,
                 "Content-Type": "application/x-www-form-urlencoded",
             };
             const data = {
-                grant_type: "password",
+                UserId: currentUser.UserId,
+                OwnerId: currentUser.OwnerId,
             };
-            axios
+           axios
                 .post(`${gtamUrl}/Token`, data, {
                     headers: headers,
                 })
@@ -70,16 +67,11 @@ export default function LandingPage() {
                     });
                     parsedDataPromise.then((parsedData) => {
                         setToken(parsedData.access_token);
-                        Cookies.set("access_token", parsedData.access_token, {
-                            domain: appDomain,
-                            path: "/",
-                            secure: true, // Use this if your site is served over HTTPS
-                            sameSite: "Lax", // Optional, depending on your needs
-                        });
                     });
                 })
-                .catch((err) => {
+                .catch(async (err) => {
                     console.error(err);
+                    await handleSessionExpiration();
                 });
         }
     }, [currentUser]);
@@ -143,7 +135,7 @@ export default function LandingPage() {
             SessionDomain: window.Laravel.appDomain,
         };
         axios
-            .post("/logoutWithoutReq", credentials)
+            .post("/composerLogout", credentials)
             .then((response) => {
                 if (response.status === 200) {
                     const isMicrosoftLogin = Cookies.get(

@@ -74,17 +74,24 @@ class RegisteredUserController extends Controller
                     // Handle based on TypeId
                     if ($user->TypeId == 1) { // Customer
                         return response()->json([
-                            'UserId' => $user->UserId,
-                            'TypeId' => $user->TypeId,
-                            'TypeName' => $user->TypeName,
-                            'OwnerId' => $user->OwnerId,
-                            'Username' => $user->Username,
-                            'Email' => $user->Email,
+                            'token' => $request->session()->get('token'),
+                            'user' => [
+                                'UserId' => $user->UserId,
+                                'TypeId' => $user->TypeId,
+                                'TypeName' => $user->TypeName,
+                                'OwnerId' => $user->OwnerId,
+                                'PhoneNumber' => $user->PhoneNumber,
+                                'CustomerName' => $user->CustomerName,
+                                'Picture' => $user->Picture,
+                                'Username' => $user->Username,
+                                'Email' => $user->Email,
+                            ]
                         ]);
                     } else if ($user->TypeId == 2) { // Employee
                         return response()->json([
+                            'token' => $request->session()->get('token'),
+                            'user' => [
                             'UserId' => $user->UserId,
-                            'UniqueId' => $user->UniqueId,
                             'TypeId' => $user->TypeId,
                             'TypeName' => $user->TypeName,
                             'OwnerId' => $user->OwnerId,
@@ -106,9 +113,11 @@ class RegisteredUserController extends Controller
                             'HiringDate' => $user->HiringDate,
                             'StateId' => $user->StateId,
                             'StateName' => $user->StateName,
-                        ]);
+                        ]]);
                     } else { // Driver
                         return response()->json([
+                            'token' => $request->session()->get('token'),
+                            'user' => [
                             'UserId' => $user->UserId,
                             'TypeId' => $user->TypeId,
                             'TypeName' => $user->TypeName,
@@ -118,7 +127,7 @@ class RegisteredUserController extends Controller
                             'Username' => $user->Username,
                             'Email' => $user->Email,
                             'phoneNbr' => $user->phoneNbr,
-                        ]);
+                        ]]);
                     }
                 } else {
                     // json_decode failed or returned invalid data
