@@ -2,7 +2,7 @@ import LogoWhite from "../assets/pictures/LogoWhite.webp";
 import notFound from "../assets/pictures/404.webp";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useState } from "react";
 
 export default function Subsribe() {

@@ -1,11 +1,11 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-const {nextui} = require("@nextui-org/react");
+const {heroui} = require("@heroui/react");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
-        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+        "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.jsx",
@@ -62,6 +62,6 @@ module.exports = {
         require("@tailwindcss/line-clamp"),
         require("@tailwindcss/aspect-ratio"),
         require("tailwindcss-animated"),
-        nextui(),
+        heroui(),
     ],
 };

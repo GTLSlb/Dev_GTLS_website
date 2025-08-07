@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Tabs, Tab, Card, CardBody } from "@heroui/react";
 
 const ContactUsHubspot = () => {
     const [loading, setLoading] = useState(true);
@@ -41,20 +42,47 @@ const ContactUsHubspot = () => {
     }
 
     return (
-        <div className="hubspot-form-wrapper flex lg:flex-row gap-4 lg:max-w-7xl mx-auto mt-10">
-            <div
-                className="hs-form-frame w-full"
-                data-region="ap1"
-                data-portal-id="441740132"
-                data-form-id="825dd6df-6a62-4da6-be38-f15be454bb17"
-            ></div>
-
-            <div
-                className="hs-form-frame w-full"
-                data-region="ap1"
-                data-portal-id="441740132"
-                data-form-id="2f944b6d-0828-4181-96a6-43a3cd7d4ac9"
-            ></div>
+        <div className="hubspot-form-wrapper w-full">
+            <div className="flex w-full flex-col">
+                <Tabs
+                    aria-label="Options"
+                    classNames={{
+                        tabList:
+                            "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+                        cursor: "w-full bg-white",
+                        tab: "max-w-fit px-0 h-12",
+                        tabContent:
+                            "text-xl group-data-[selected=true]:text-goldt group-data-[selected=true]:border-b-2 group-data-[selected=true]:border-goldt pb-2",
+                    }}
+                    color="primary"
+                    variant="underlined"
+                >
+                    <Tab
+                        key="sales"
+                        title="Sales Inquiry"
+                        className="text-white"
+                    >
+                        <div
+                            className="hs-form-frame w-full"
+                            data-region="ap1"
+                            data-portal-id="441740132"
+                            data-form-id="825dd6df-6a62-4da6-be38-f15be454bb17"
+                        ></div>
+                    </Tab>
+                    <Tab
+                        key="general"
+                        title="General Inquiry"
+                        className="text-white"
+                    >
+                        <div
+                            className="hs-form-frame w-full bg-white"
+                            data-region="ap1"
+                            data-portal-id="441740132"
+                            data-form-id="b1c96eb3-3310-4a1b-8a1b-680a2e82207c"
+                        ></div>
+                    </Tab>
+                </Tabs>
+            </div>
         </div>
     );
 };
