@@ -48,7 +48,7 @@ const contactInfo = {
 
 export default function ContactUsInfo() {
     return (
-        <div className="max-w-7xl mx-auto py-16 px-4">
+        <div className="max-w-7xl mx-auto pb-16">
             <h2 className="text-4xl font-bold tracking-tight text-goldt text-center lg:text-left">
                 Contact Us
             </h2>
