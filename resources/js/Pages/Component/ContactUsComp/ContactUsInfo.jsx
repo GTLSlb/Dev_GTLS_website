@@ -8,12 +8,12 @@ import {
 // Refactored JSON object for all contact information
 const contactInfo = {
     general: [
-        {
-            icon: PhoneIcon,
-            label: "Telephone",
-            value: "1800 04 03 06",
-            href: "tel:+1800040306",
-        },
+        // {
+        //     icon: PhoneIcon,
+        //     label: "Telephone",
+        //     value: "1800 04 03 06",
+        //     href: "tel:+1800040306",
+        // },
         {
             icon: InboxStackIcon,
             label: "Box Address",

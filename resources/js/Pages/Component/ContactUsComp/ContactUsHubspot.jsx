@@ -59,7 +59,7 @@ const ContactUsHubspot = () => {
                 >
                     <Tab
                         key="sales"
-                        title="Sales Inquiry"
+                        title="Sales Enquiry"
                         className="text-white"
                     >
                         <div
@@ -71,7 +71,7 @@ const ContactUsHubspot = () => {
                     </Tab>
                     <Tab
                         key="general"
-                        title="General Inquiry"
+                        title="General Enquiry"
                         className="text-white"
                     >
                         <div
