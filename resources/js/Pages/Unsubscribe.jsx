@@ -2,7 +2,7 @@ import LogoWhite from "../assets/pictures/LogoWhite.webp";
 import "../../../resources/css/app.css";
 import { usePage } from "@inertiajs/react";
 import axios from "axios";
-import { Button, Textarea } from "@nextui-org/react";
+import { Button, Textarea } from "@heroui/react";
 import { useState } from "react";
 
 export default function Unsubsribe() {

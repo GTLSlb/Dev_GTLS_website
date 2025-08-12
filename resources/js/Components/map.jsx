@@ -11,11 +11,11 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import { Checkbox } from "@nextui-org/checkbox";
+// import { Checkbox } from "@heroui/checkbox";
 import Flooding from "../assets/pictures/Flooding.png";
 import { Checkbox } from "@mui/material";
 // import Checkbox from "./Checkbox";
-// import { Checkbox } from "@nextui-org/react";
+// import { Checkbox } from "@heroui/react";
 const Map = () => {
     // coordinates of the cities and states that we need to show their weather
     const coordinates = [
