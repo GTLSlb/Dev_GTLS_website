@@ -13,14 +13,15 @@ import {
 import Footer from "./Component/landingPage/Footer";
 import { PublicClientApplication } from "@azure/msal-browser";
 import Cookies from "js-cookie";
-import { clearMSALLocalStorage } from "@/CommonFunctions";
+import { handleSessionExpiration , clearMSALLocalStorage } from "@/CommonFunctions";
+import swal from "sweetalert";
 
 export default function LandingPage({}) {
     const appUrl = window.Laravel.appUrl;
 
     const [apps, setApps] = useState([]);
     const [currentUser, setcurrentUser] = useState(null);
-    const [isClicked, setIsClicked] = useState(false);
+    const [Token, setToken] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState([]);
@@ -40,56 +41,37 @@ export default function LandingPage({}) {
             .get("/users")
             .then((res) => {
                 if (typeof res.data == "object") {
-                    setcurrentUser(res.data);
+                    setcurrentUser(res.data.user);
+                    setToken(res.data.token);
                 }
             })
             .catch((error) => {
-                console.log(error);
-                if (error.response.status === 401) {
-                    window.location.href = `/login`;
+                if (err.response && err.response.status === 401) {
+                    // Handle 401 error
+                    swal({
+                        title: "Session Expired!",
+                        text: "Please login again",
+                        type: "success",
+                        icon: "info",
+                        confirmButtonText: "OK",
+                    }).then(async function () {
+                        await handleSessionExpiration();
+                    });
+                } else {
+                    // Handle other errors
+                    AlertToast("Error with showing logs.", 2);
+                    console.error(err);
                 }
             });
     }, []);
 
-    // useEffect(() => {
-    //     if (currentUser) {
-    //         axios
-    //             .get(`${gtamUrl}User/Permissions`, {
-    //                 headers: {
-    //                     UserId: currentUser.UserId,
-    //                 },
-    //             })
-    //             .then((res) => {
-    //                 const x = JSON.stringify(res.data);
-    //                 const parsedDataPromise = new Promise((resolve, reject) => {
-    //                     try {
-    //                         const parsedData = JSON.parse(x);
-    //                         resolve(parsedData || []); // Use an empty array if parsedData is null
-    //                     } catch (error) {
-    //                         reject(error);
-    //                     }
-    //                 });
-    //                 parsedDataPromise.then((parsedData) => {
-    //                     console.log('dataaaaaaaaaa',currentUser);
-
-    //                     setFilteredApps(parsedData);
-    //                     setApps(parsedData);
-    //                     setAppsApi(true);
-    //                 });
-    //             })
-    //             .catch((err) => {
-    //                 console.log(err);
-    //             });
-    //     }
-    // }, [currentUser]);
-
     useEffect(() => {
-        if (currentUser) {
+        if (currentUser && Token) {
             axios
                 .get(`${gtamUrl}User/Permissions`, {
                     headers: {
                         UserId: currentUser.UserId,
-                        //Authorization: `Bearer ${Token}`,
+                        Authorization: `Bearer ${Token}`,
                     },
                 })
                 .then((res) => {
@@ -109,14 +91,29 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                    // Handle other errors
-                    console.log(err);
-                    setFilteredApps([]);
-                    setApps([]);
-                    setAppsApi(true);
+                    if (err.response && err.response.status === 401) {
+                        // Handle 401 error
+                        swal({
+                            title: "Session Expired!",
+                            text: "Please login again",
+                            type: "success",
+                            icon: "info",
+                            confirmButtonText: "OK",
+                        }).then(async function () {
+                            await handleSessionExpiration();
+                        });
+                    } else {
+                        // Handle other errors
+                        AlertToast("Error with showing Apps.", 2);
+                        setFilteredApps([]);
+                        setApps([]);
+                        setAppsApi(true);
+                        console.error(err);
+                    }
+
                 });
         }
-    }, [currentUser]);
+    }, [currentUser, Token]);
 
     function getGreeting() {
         const currentHour = new Date().getHours();
@@ -161,7 +158,7 @@ export default function LandingPage({}) {
             SessionDomain: window.Laravel.appDomain,
         };
         axios
-            .post("/logoutWithoutReq", credentials)
+            .post("/composerLogout", credentials)
             .then((response) => {
                 if (response.status === 200) {
                     const isMicrosoftLogin = Cookies.get(
@@ -203,7 +200,6 @@ export default function LandingPage({}) {
                 [app.AppId]: blobUrl,
             }));
         } catch (error) {
-            console.log(error);
             setAppsImgs((prev) => ({
                 ...prev,
                 [app.AppId]: "/icons/NoPhoto.jpg",
@@ -427,7 +423,9 @@ export default function LandingPage({}) {
                                                                   <span className="">
                                                                       {app.AppAbv.substring(
                                                                           1,
-                                                                          app.AppAbv.length
+                                                                          app
+                                                                              .AppAbv
+                                                                              .length
                                                                       ).toUpperCase()}
                                                                   </span>
                                                               </h1>{" "}

@@ -24,7 +24,7 @@ export async function handleSessionExpiration() {
     .get("/users")
     .then((res) => {
         const credentials = {
-            CurrentUser: res.data,
+            CurrentUser: res.data.user,
             URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
@@ -64,6 +64,14 @@ export function clearMSALLocalStorage() {
     const msalKeys = Object.keys(localStorage).filter(key => key.startsWith("msal"));
     msalKeys.forEach(key => {
         localStorage.removeItem(key);
+    });
+
+    // Find all keys in sessionStorage starting with 'msal' and remove them
+    const msalSessionKeys = Object.keys(sessionStorage).filter((key) =>
+        key.startsWith("msal")
+    );
+    msalSessionKeys.forEach((key) => {
+        sessionStorage.removeItem(key);
     });
 
     // Remove the msal.isMicrosoftLogin cookie
