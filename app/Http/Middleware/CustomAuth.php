@@ -10,9 +10,13 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+
+
 
 class CustomAuth extends Middleware
 {
+
     /**
      * Attempt to authenticate a user using the given credentials.
      *
@@ -42,22 +46,25 @@ class CustomAuth extends Middleware
         return false;
     }
 
-    public function handle($request, Closure $next, ...$guards)
+    public function handle($request, $next, ...$guards)
     {
         $hasSession = $request->hasSession();
         if ($hasSession) {
-            $sessionToken = $request->session()->token();
             $path = $request->path();
+
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
             // Allow access to the login route
-            if ($path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'logoutAPI') {
+            if($request->getBasePath() == ""){
                 return $next($request);
             }
-            if($request->session()->has('user')==false) {
-                return redirect('/login');
+            if ($path == 'loginComp' ||  $path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken' || $path == 'logoutWithoutRequest') {
+                return $next($request);
+            }
+            if ($path !== 'login' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+                return redirect()->route('login');
             }
         } else {
-            if ($request->path() == 'login' || $request->path() == 'loginapi') {
+            if ($request->path() == 'login' || $request->path() == 'loginapi' || $request->path() == '/auth/azure' || $request->path() == 'auth/azure/callback' || $request->path() == 'microsoftToken'  || $request->path() == 'logoutWithoutRequest' ) {
                 return $next($request);
             }
 

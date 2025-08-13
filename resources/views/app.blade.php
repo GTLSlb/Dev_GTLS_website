@@ -28,9 +28,18 @@
     </script>
     <script>
         window.Laravel = {
-            gtamUrl: "{{ env('GTAM_API_URL') }}",
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
-            recaptchaKey: "{{ env('RECAPTHCA_API') }}",
+            gtamUrl: "{{ env('GTAM_API_URL') }}",
+            azureCallback: "{{ env('AZURE_CALLBACK_URL') }}",
+            appDomain: "{{ env('SESSION_DOMAIN') }}",
+            appUrl: "{{ env('APP_URL') }}",
+            backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
+            mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
+            googleKey: "{{ env('RECAPTHCA_API') }}",
+            azureClientId: "{{ env('AZURE_CLIENT_ID') }}",
+            azureClientSecret: "{{ env('AZURE_CLIENT_SECRET') }}",
+            azureRedirectUrl: "{{ env('AZURE_REDIRECT_URI') }}",
+            azureTenantId: "{{ env('AZURE_TENANT_ID') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->

@@ -11,13 +11,20 @@ import {
     MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
 import Footer from "./Component/landingPage/Footer";
+import { PublicClientApplication } from "@azure/msal-browser";
+import Cookies from "js-cookie";
+import { handleSessionExpiration , clearMSALLocalStorage } from "@/CommonFunctions";
+import swal from "sweetalert";
+
 export default function LandingPage({}) {
-    const [apps, setApps] = useState();
+    const appUrl = window.Laravel.appUrl;
+
+    const [apps, setApps] = useState([]);
     const [currentUser, setcurrentUser] = useState(null);
-    const [isClicked, setIsClicked] = useState(false);
+    const [Token, setToken] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
-    const [filteredApps, setFilteredApps] = useState();
+    const [filteredApps, setFilteredApps] = useState([]);
     const [appsApi, setAppsApi] = useState();
     const gtamUrl = window.Laravel.gtamUrl;
     function classNames(...classes) {
@@ -25,20 +32,46 @@ export default function LandingPage({}) {
     }
 
     useEffect(() => {
-        axios
-            .get("/users")
-            .then((res) => {
-                setcurrentUser(res.data);
-            })
-            .catch((error) => console.log(error));
+        document.cookie =
+            "previous_page=" + encodeURIComponent(window.location.href);
     }, []);
 
     useEffect(() => {
-        if (currentUser) {
+        axios
+            .get("/users")
+            .then((res) => {
+                if (typeof res.data == "object") {
+                    setcurrentUser(res.data.user);
+                    setToken(res.data.token);
+                }
+            })
+            .catch((error) => {
+                if (err.response && err.response.status === 401) {
+                    // Handle 401 error
+                    swal({
+                        title: "Session Expired!",
+                        text: "Please login again",
+                        type: "success",
+                        icon: "info",
+                        confirmButtonText: "OK",
+                    }).then(async function () {
+                        await handleSessionExpiration();
+                    });
+                } else {
+                    // Handle other errors
+                    AlertToast("Error with showing logs.", 2);
+                    console.error(err);
+                }
+            });
+    }, []);
+
+    useEffect(() => {
+        if (currentUser && Token) {
             axios
                 .get(`${gtamUrl}User/Permissions`, {
                     headers: {
                         UserId: currentUser.UserId,
+                        Authorization: `Bearer ${Token}`,
                     },
                 })
                 .then((res) => {
@@ -58,10 +91,29 @@ export default function LandingPage({}) {
                     });
                 })
                 .catch((err) => {
-                    console.log(err);
+                    if (err.response && err.response.status === 401) {
+                        // Handle 401 error
+                        swal({
+                            title: "Session Expired!",
+                            text: "Please login again",
+                            type: "success",
+                            icon: "info",
+                            confirmButtonText: "OK",
+                        }).then(async function () {
+                            await handleSessionExpiration();
+                        });
+                    } else {
+                        // Handle other errors
+                        AlertToast("Error with showing Apps.", 2);
+                        setFilteredApps([]);
+                        setApps([]);
+                        setAppsApi(true);
+                        console.error(err);
+                    }
+
                 });
         }
-    }, [currentUser]);
+    }, [currentUser, Token]);
 
     function getGreeting() {
         const currentHour = new Date().getHours();
@@ -79,7 +131,6 @@ export default function LandingPage({}) {
         const isModalCurrentlyOpen = !isModalOpen;
         document.body.style.overflow = isModalCurrentlyOpen ? "hidden" : "auto";
         setIsModalOpen(isModalCurrentlyOpen);
-        setMobileMenuOpen(false);
     };
 
     const handleSearch = (event) => {
@@ -96,54 +147,111 @@ export default function LandingPage({}) {
     const GoAppPage = (app) => {
         window.open(app.AppURL, "_blank");
     };
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [activePage, setactivePage] = useState(null);
-    const [activeIndexGtam, setActiveIndexGtam] = useState(1);
-    const [activeCon, setactiveCon] = useState(0);
-    const [loadingGtrs, setLoadingGtrs] = useState(false);
-    const [activeIndexGTRS, setActiveIndexGTRS] = useState(0);
-    const [activeHeader, setactiveHeader] = useState("null");
-    const [currentComponent, setcurrentComponent] = useState([]);
-    const [activeIndexInv, setActiveIndexInv] = useState(1);
-    const [invoiceDetails, setInvoiceDetails] = useState();
-    const [PODetails, setPODetails] = useState();
-
     useEffect(() => {
         setGreeting(getGreeting());
     }, []);
 
-    const handleGTAMIndexChange = (e) => {
-        setActiveIndexGtam(e);
-    };
-    useEffect(() => {
+    const handleLogout = async () => {
+        const credentials = {
+            CurrentUser: currentUser,
+            URL: window.Laravel.gtamUrl,
+            SessionDomain: window.Laravel.appDomain,
+        };
         axios
-            .get("/users")
-            .then((res) => {
-                setcurrentUser(res.data);
-            })
-            .catch((error) => console.log(error));
-    }, []);
-
-    const handleLogout = () => {
-        const isLoggingOut = true;
-        axios
-            .post("/logoutAPI", isLoggingOut)
+            .post("/composerLogout", credentials)
             .then((response) => {
-                if (response.status == 200) {
-                    window.location.href = "/login";
+                if (response.status === 200) {
+                    const isMicrosoftLogin = Cookies.get(
+                        "msal.isMicrosoftLogin"
+                    );
+                    clearMSALLocalStorage();
+                    Cookies.remove("access_token");
+
+                    // Remove all items
+                    sessionStorage.clear();
+                    if (isMicrosoftLogin === "true") {
+                        window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
+                        setcurrentUser(null);
+                    } else {
+                        window.location.href = `${window.Laravel.appUrl}/login`;
+                        setcurrentUser(null);
+                    }
                 }
             })
             .catch((error) => {
                 console.log(error);
             });
     };
+    const [appsImgs, setAppsImgs] = useState([]);
+    const [isFetchingImg, setIsFetchingImg] = useState(true);
+    const fetchImageData = async (picName, app) => {
+        try {
+            const response = await axios({
+                method: "post",
+                url: "/getAppLogo",
+                responseType: "blob", // Set the expected response type as 'blob'
+                data: {
+                    filename: picName,
+                },
+            });
+            const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: blobUrl,
+            }));
+        } catch (error) {
+            setAppsImgs((prev) => ({
+                ...prev,
+                [app.AppId]: "/icons/NoPhoto.jpg",
+            }));
+        }
+    };
+
+    useEffect(() => {
+        if (filteredApps?.length > 0) {
+            filteredApps?.forEach((app) => {
+                if (!appsImgs[app.AppId]) {
+                    // Check if the image URL is not already loaded
+                    fetchImageData(app?.AppIcon, app);
+                }
+            });
+        }
+    }, [filteredApps]);
+
+    useEffect(() => {
+        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
+        if (appsImgsArray?.length == filteredApps?.length) {
+            setIsFetchingImg(false);
+        }
+    }, [appsImgs, filteredApps]);
+
+    const [getfooter, setfooter] = useState([]);
+
+    // *********************************************************
+    // ********************* All requests  *********************
+    // *********************************************************
+
+    useEffect(() => {
+        axios
+            .get("/footer")
+            .then((response) => {
+                // console.log('fetching data:',response.data);
+                setfooter(response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []);
+    // *********************************************************
+    // ********************* End requests  *********************
+    // *********************************************************
 
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
             {appsApi && currentUser ? (
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
-                        <div className="flex flex-col relative w-full min-h-screen bg-gradient-to-br from-gray-800 via-dark to-dark">
+                        <div className="flex flex-col relative w-full min-h-screen bg-gradient-to-br from-gray-800 via-dark to-dark overflow-hidden">
                             <img
                                 src={goldmap}
                                 className="absolute right-0 top-32"
@@ -298,7 +406,7 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`${app.AppPic}`}
+                                                              src={`${window.Laravel.appUrl}/AppLogo/${app?.AppIcon}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />
@@ -315,7 +423,9 @@ export default function LandingPage({}) {
                                                                   <span className="">
                                                                       {app.AppAbv.substring(
                                                                           1,
-                                                                          app.AppAbv.length
+                                                                          app
+                                                                              .AppAbv
+                                                                              .length
                                                                       ).toUpperCase()}
                                                                   </span>
                                                               </h1>{" "}

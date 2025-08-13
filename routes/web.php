@@ -17,7 +17,7 @@ use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
 use SocialiteProviders\Azure\AzureProvider;
 use Illuminate\Http\Request;
-use App\Http\Controllers\LoginController;
+use gtls\loginstory\LoginClass;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,15 +39,25 @@ Route::get('/', function () {
     ]);
 });
 
-Route::post('/loginapi', [LoginController::class, 'login'])->name('loginapi');
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
 
-Route::post('/logoutAPI', [LoginController::class, 'logout'])->middleware(['custom'])->name('logoutAPI');
+Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
+
+Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
+
+Route::post('/microsoftToken', [LoginClass::class, 'sendToken'])->name('azure.token');
+
+Route::post('/composerLogout', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogout');
+
+Route::post('/logoutWithoutRequest', [ LoginClass::class, 'logoutWithoutRequest'])->middleware(['custom.auth'])->name('composerLogoutWithoutReq');
 
 Route::match(['get', 'post'], '/landingPage', function () {
     if (request()->isMethod('post')) {
         return redirect('/');
     }
-    
+
     return Inertia::render('LandingPage');
 })->middleware(['custom'])->name('landing.page');
 
@@ -193,6 +203,9 @@ Route::middleware('custom')->group(function () {
     Route::get('/findUserById/{user_id}', [RegisteredUserController::class, 'searchUserByName']);
     Route::get('/getUsersWhoCanApprove', [RegisteredUserController::class, 'getUsersWhoCanApprove']);
     Route::delete('/delete-file', [RegisteredUserController::class, 'deleteFile']);
+    Route::post('/auth/azure', function () {
+        return Socialite::driver('azure')->redirect();
+    })->name('azure.login');
 });
 
 Route::get('/session-data', function () {
