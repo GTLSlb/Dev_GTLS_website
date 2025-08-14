@@ -48,12 +48,12 @@ const contactInfo = {
 
 export default function ContactUsInfo() {
     return (
-        <div className="max-w-7xl mx-auto pb-16">
+        <div className="max-w-7xl mx-auto pb-8">
             <h2 className="text-4xl font-bold tracking-tight text-goldt text-center lg:text-left">
                 Contact Us
             </h2>
             {/* General contact information section */}
-            <div className="my-5 flex flex-wrap gap-x-6">
+            <div className="my-2 flex flex-wrap gap-x-6">
                 {contactInfo.general.map((item, index) => (
                     <div key={index} className="flex items-center gap-2 my-2">
                         <item.icon className="h-6 w-6 text-goldt" aria-hidden="true" />
@@ -68,7 +68,7 @@ export default function ContactUsInfo() {
             </div>
 
             {/* Branch contact information section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {contactInfo.branches.map((branch, index) => (
                     <div
                         key={index}
