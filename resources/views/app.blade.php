@@ -33,6 +33,7 @@
             azureCallback: "{{ env('AZURE_CALLBACK_URL') }}",
             appDomain: "{{ env('SESSION_DOMAIN') }}",
             appUrl: "{{ env('APP_URL') }}",
+            gtamAppUrl: "{{ env('GTAM_APP_URL') }}",
             backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
             mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
             googleKey: "{{ env('RECAPTHCA_API') }}",

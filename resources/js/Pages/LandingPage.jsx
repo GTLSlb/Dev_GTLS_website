@@ -20,7 +20,7 @@ export default function LandingPage({}) {
     const appUrl = window.Laravel.appUrl;
 
     const [apps, setApps] = useState([]);
-    const [currentUser, setcurrentUser] = useState(null);
+    const [user, setUser] = useState(null);
     const [Token, setToken] = useState(null);
     const [searchTerm, setSearchTerm] = useState("");
     const [greeting, setGreeting] = useState("morning");
@@ -41,7 +41,7 @@ export default function LandingPage({}) {
             .get("/users")
             .then((res) => {
                 if (typeof res.data == "object") {
-                    setcurrentUser(res.data.user);
+                    setUser(res.data.user);
                     setToken(res.data.token);
                 }
             })
@@ -66,11 +66,11 @@ export default function LandingPage({}) {
     }, []);
 
     useEffect(() => {
-        if (currentUser && Token) {
+        if (user && Token) {
             axios
                 .get(`${gtamUrl}User/Permissions`, {
                     headers: {
-                        UserId: currentUser.UserId,
+                        UserId: user.UserId,
                         Authorization: `Bearer ${Token}`,
                     },
                 })
@@ -113,7 +113,7 @@ export default function LandingPage({}) {
 
                 });
         }
-    }, [currentUser, Token]);
+    }, [user, Token]);
 
     function getGreeting() {
         const currentHour = new Date().getHours();
@@ -153,7 +153,7 @@ export default function LandingPage({}) {
 
     const handleLogout = async () => {
         const credentials = {
-            CurrentUser: currentUser,
+            user: user,
             URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
@@ -171,10 +171,10 @@ export default function LandingPage({}) {
                     sessionStorage.clear();
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
-                        setcurrentUser(null);
+                        setUser(null);
                     } else {
                         window.location.href = `${window.Laravel.appUrl}/login`;
-                        setcurrentUser(null);
+                        setUser(null);
                     }
                 }
             })
@@ -248,7 +248,7 @@ export default function LandingPage({}) {
 
     return (
         <div className=" w-full relative min-h-screen bg-gray-200">
-            {appsApi && currentUser ? (
+            {appsApi && user ? (
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
                         <div className="flex flex-col relative w-full min-h-screen bg-gradient-to-br from-gray-800 via-dark to-dark overflow-hidden">
@@ -275,11 +275,11 @@ export default function LandingPage({}) {
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
                                             <>
-                                                {currentUser.FirstName &&
-                                                currentUser.LastName ? (
+                                                {user.FirstName &&
+                                                user.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser.FirstName.substring(
+                                                            {user.FirstName.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -288,7 +288,7 @@ export default function LandingPage({}) {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser.Username.substring(
+                                                            {user.Username.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -298,14 +298,14 @@ export default function LandingPage({}) {
                                             </>
                                         </div>
                                         <p className="text-sm text-white w-71 hidden sm:block">
-                                            {currentUser.FirstName &&
-                                            currentUser.LastName ? (
+                                            {user.FirstName &&
+                                            user.LastName ? (
                                                 <>
-                                                    {currentUser.FirstName}{" "}
-                                                    {currentUser.LastName}
+                                                    {user.FirstName}{" "}
+                                                    {user.LastName}
                                                 </>
                                             ) : (
-                                                <>{currentUser.Username}</>
+                                                <>{user.Username}</>
                                             )}
                                         </p>
                                     </div>
@@ -320,7 +320,6 @@ export default function LandingPage({}) {
                                                 "text-gray-400  hover:text-white",
                                                 "group w-auto p-3 rounded-md flex flex-row items-center text-xs font-medium"
                                             )}
-                                            // aria-current={item.current ? 'page' : undefined}
                                         >
                                             <ChatBubbleLeftEllipsisIcon
                                                 className={classNames(
@@ -358,14 +357,14 @@ export default function LandingPage({}) {
                                     <span>{greeting} </span>
                                     <span className="text-goldd">
                                         <span className="text-white">, </span>
-                                        {currentUser.FirstName &&
-                                        currentUser.LastName ? (
+                                        {user.FirstName &&
+                                        user.LastName ? (
                                             <>
-                                                {currentUser.FirstName}{" "}
-                                                {currentUser.LastName}
+                                                {user.FirstName}{" "}
+                                                {user.LastName}
                                             </>
                                         ) : (
-                                            <>{currentUser.Username}</>
+                                            <>{user.Username}</>
                                         )}
                                     </span>
                                 </div>
@@ -406,7 +405,7 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`${window.Laravel.appUrl}/AppLogo/${app?.AppIcon}`}
+                                                              src={`${window.Laravel.gtamAppUrl}/AppLogo/${app?.AppIcon}`}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />
