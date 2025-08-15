@@ -3,8 +3,8 @@ import ContactUsHubspot from "./ContactUsHubspot";
 
 export default function ContactUs() {
     return (
-        <div className="py-32">
-            <div className=" lg:max-w-7xl mx-auto lg:gap-24 w-full">
+        <div className="py-16">
+            <div className=" lg:max-w-7xl mx-auto w-full min-h-[80vh]">
                 {/* <ContactUsForm /> */}
                 <ContactUsInfo />
                 <ContactUsHubspot />
