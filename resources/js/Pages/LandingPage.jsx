@@ -10,7 +10,7 @@ import { clearMSALLocalStorage, getFromStrapi, handleSessionExpiration } from "@
 import axios from "axios";
 
 export default function LandingPage() {
-    const [currentUser, setCurrentUser] = useState(null);
+    const [user, setUser] = useState(null);
     const [greeting, setGreeting] = useState("morning");
     const [filteredApps, setFilteredApps] = useState([]);
     const [Token, setToken] = useState(null);
@@ -32,7 +32,7 @@ export default function LandingPage() {
             .get("/users")
             .then((res) => {
                 setToken(res.data.token);
-                setCurrentUser(res.data.user);
+                setUser(res.data.user);
             })
             .catch((error) => {
                 console.error(error);
@@ -43,13 +43,13 @@ export default function LandingPage() {
     }, []);
 
     useEffect(() => {
-        if (currentUser && !Token) {
+        if (user && !Token) {
             const headers = {
                 "Content-Type": "application/x-www-form-urlencoded",
             };
             const data = {
-                UserId: currentUser.UserId,
-                OwnerId: currentUser.OwnerId,
+                UserId: user.UserId,
+                OwnerId: user.OwnerId,
             };
            axios
                 .post(`${gtamUrl}/Token`, data, {
@@ -74,15 +74,15 @@ export default function LandingPage() {
                     await handleSessionExpiration();
                 });
         }
-    }, [currentUser]);
+    }, [user]);
 
     useEffect(() => {
-        if (currentUser) {
+        if (user) {
             axios
                 .get(`${gtamUrl}User/Permissions`, {
                     headers: {
-                        UserId: currentUser.UserId,
-                        //Authorization: `Bearer ${Token}`,
+                        UserId: user.UserId,
+                        Authorization: `Bearer ${Token}`,
                     },
                 })
                 .then((res) => {
@@ -107,7 +107,7 @@ export default function LandingPage() {
                     setAppsApi(true);
                 });
         }
-    }, [currentUser]);
+    }, [user]);
 
     function getGreeting() {
         const currentHour = new Date().getHours();
@@ -130,7 +130,7 @@ export default function LandingPage() {
 
     const handleLogout = async () => {
         const credentials = {
-            CurrentUser: currentUser,
+            CurrentUser: user,
             URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
@@ -148,10 +148,10 @@ export default function LandingPage() {
 
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
-                        setCurrentUser(null);
+                        setUser(null);
                     } else {
                         window.location.href = `${window.Laravel.appUrl}/login`;
-                        setCurrentUser(null);
+                        setUser(null);
                     }
                 }
             })
@@ -223,7 +223,7 @@ export default function LandingPage() {
 
     return (
         <div className="overflow-hidden w-full relative h-full bg-gray-200">
-            {appsApi && currentUser ? (
+            {appsApi && user ? (
                 <div className="w-full h-full ">
                     <div className="flex flex-row w-full h-full">
                         <div className="flex flex-col relative w-full min-h-full bg-gradient-to-br from-gray-800 via-dark to-dark">
@@ -250,11 +250,11 @@ export default function LandingPage() {
                                             className={`text-smooth text-sm rounded-full border-2 border-goldt bg-gray-700 flex justify-center items-center w-10  h-10`}
                                         >
                                             <>
-                                                {currentUser.FirstName &&
-                                                currentUser.LastName ? (
+                                                {user.FirstName &&
+                                                user.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser?.FirstName?.substring(
+                                                            {user?.FirstName?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -263,7 +263,7 @@ export default function LandingPage() {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser?.Username?.substring(
+                                                            {user?.Username?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -272,11 +272,11 @@ export default function LandingPage() {
                                                 )}
                                             </>
                                             <>
-                                                {currentUser?.FirstName &&
-                                                currentUser?.LastName ? (
+                                                {user?.FirstName &&
+                                                user?.LastName ? (
                                                     <>
                                                         <p>
-                                                            {currentUser?.LastName?.substring(
+                                                            {user?.LastName?.substring(
                                                                 0,
                                                                 1
                                                             ).toUpperCase()}
@@ -285,7 +285,7 @@ export default function LandingPage() {
                                                 ) : (
                                                     <>
                                                         <p>
-                                                            {currentUser?.Username?.substring(
+                                                            {user?.Username?.substring(
                                                                 1,
                                                                 2
                                                             ).toUpperCase()}
@@ -295,14 +295,14 @@ export default function LandingPage() {
                                             </>
                                         </div>
                                         <div className="text-sm text-white w-71 hidden sm:block">
-                                            {currentUser?.FirstName &&
-                                            currentUser?.LastName ? (
+                                            {user?.FirstName &&
+                                            user?.LastName ? (
                                                 <>
-                                                    {currentUser?.FirstName}{" "}
-                                                    {currentUser?.LastName}
+                                                    {user?.FirstName}{" "}
+                                                    {user?.LastName}
                                                 </>
                                             ) : (
-                                                <>{currentUser?.Username}</>
+                                                <>{user?.Username}</>
                                             )}
                                         </div>
                                     </div>
@@ -356,14 +356,14 @@ export default function LandingPage() {
                                     <span>{greeting} </span>
                                     <span className="text-goldd">
                                         <span className="text-white">, </span>
-                                        {currentUser.FirstName &&
-                                        currentUser.LastName ? (
+                                        {user.FirstName &&
+                                        user.LastName ? (
                                             <>
-                                                {currentUser.FirstName}{" "}
-                                                {currentUser.LastName}
+                                                {user.FirstName}{" "}
+                                                {user.LastName}
                                             </>
                                         ) : (
-                                            <>{currentUser.Username}</>
+                                            <>{user.Username}</>
                                         )}
                                     </span>
                                 </div>
