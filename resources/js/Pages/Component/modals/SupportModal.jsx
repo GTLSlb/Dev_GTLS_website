@@ -14,7 +14,6 @@ export default function SupportModal({
     handleClose,
     url,
     reason,
-    currentUser,
     setReason,
     updateLocalData,
     failedReasons,
@@ -29,13 +28,13 @@ export default function SupportModal({
     const [success, setSuccess] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
-    
+
     // if (reasonAuditId !== null && typeof reasonAuditId === "object") {
     //     id = 0;
     // } else if (typeof reasonAuditId === "number") {
     //     id = reasonAuditId;
     // }
-    
+
 
     const handlePopUpClose = () => {
         setError(null); // Clear the error message
@@ -44,10 +43,10 @@ export default function SupportModal({
         setdescription("");
         handleClose(); // Clear the input value
     };
-   
 
 
-    
+
+
 
     return (
         <ReactModal
@@ -77,7 +76,7 @@ export default function SupportModal({
                             />
                         </svg>
                     </button>
-                    
+
                 </div>
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
                                 Support application form

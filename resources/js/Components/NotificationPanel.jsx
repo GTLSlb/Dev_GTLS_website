@@ -21,7 +21,7 @@ const NotificationPanel = ({
     invoiceDetails,
     PODetails,
     setPODetails,
-    currentUser,
+    user,
     url
 }) => {
     const [notifications, setNotifications] = useState([]);
@@ -90,7 +90,7 @@ const NotificationPanel = ({
         axios
             .get(`${url}/api/GTIS/Invoices`, {
                 headers: {
-                    UserId: currentUser.user_id,
+                    UserId: user.user_id,
                     InvoiceId: InvoiceId,
                 },
             })
@@ -114,7 +114,7 @@ const NotificationPanel = ({
         axios
             .get(`${url}api/GTIS/POs`, {
                 headers: {
-                    UserId: currentUser.user_id,
+                    UserId: user.user_id,
                     PO_Id: POId,
                 },
             })
@@ -145,11 +145,11 @@ const NotificationPanel = ({
     };
     function filterNotifcations(notifications) {
         const filtered = notifications?.filter((item) => {
-            const notSameUser = item[0].AddedBy !== currentUser.name;
+            const notSameUser = item[0].AddedBy !== user.name;
             let byState = true;
-            if (currentUser.role_id == 7 || currentUser.role_id == 6) {
+            if (user.role_id == 7 || user.role_id == 6) {
                 //State manager or Assistant
-                byState = item[0].StateId == currentUser.state;
+                byState = item[0].StateId == user.state;
             }
             return notSameUser && byState;
         });
@@ -162,14 +162,14 @@ const NotificationPanel = ({
             });
         }
         return filtered;
-    }  
+    }
     function convertUtcToUserTimezone(utcDateString) {
         // Create a Date object from the UTC date string
         const utcDate = new Date(utcDateString);
-        
+
         // Get the current user's timezone
         const targetTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    
+
         const formatter = new Intl.DateTimeFormat("en-US", {
             year: "numeric",
             month: "2-digit",
@@ -179,11 +179,11 @@ const NotificationPanel = ({
             second: "2-digit",
             timeZone: targetTimezone,
         });
-    
+
         const convertedDate = formatter.format(utcDate);
         return convertedDate;
     }
-    
+
     function handleClickNotifications(modelId, id, index) {
         if (modelId == 1) {
             getInvoicesbyId(id, index);
