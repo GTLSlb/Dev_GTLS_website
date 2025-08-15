@@ -93,8 +93,7 @@ export default function AboutUs(props) {
                                 doing interstate linehaul.
                             </p>
                             <p className="mt-3 text-smooth">
-                                Today, turnover is more than $55 million a year
-                                and growing. Gold Tiger’s wholly owned Volvo
+                                Gold Tiger’s wholly owned Volvo
                                 transport fleet has grown to more than 120 prime
                                 movers, 280 trailers and 40 delivery trucks and
                                 the workforce (drivers and administration) has
