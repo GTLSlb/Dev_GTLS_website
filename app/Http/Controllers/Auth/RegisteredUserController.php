@@ -54,28 +54,13 @@ class RegisteredUserController extends Controller
 
         return redirect(RouteServiceProvider::HOME);
     }
-    public function getCurrentUserName(Request $request)
-    {
-        if ($request->session()->get('user') !== null) {
-            $sessionId = $request->session()->getId();
 
-            // Query the database to get the user based on the session ID
-            $user = DB::table('custom_sessions')
-                ->where('id', $sessionId)
-                ->value('user');
-
-            // Check if user data was found
-            if ($user !== null) {
-                // Assuming the 'user' column contains JSON-encoded user data
-                $user = json_decode($user);
-
-                // Check if json_decode returned a valid object
-                if ($user !== null && is_object($user)) {
-                    // Handle based on TypeId
-                    if ($user->TypeId == 1) { // Customer
-                        return response()->json([
-                            'token' => $request->session()->get('token'),
-                            'user' => [
+    private function mapUserByTypeId($user){
+        $user_type_id = $user->TypeId;
+        switch($user_type_id){
+            case 1:
+                // User is a customer
+                return [
                                 'UserId' => $user->UserId,
                                 'TypeId' => $user->TypeId,
                                 'TypeName' => $user->TypeName,
@@ -85,12 +70,10 @@ class RegisteredUserController extends Controller
                                 'Picture' => $user->Picture,
                                 'Username' => $user->Username,
                                 'Email' => $user->Email,
-                            ]
-                        ]);
-                    } else if ($user->TypeId == 2) { // Employee
-                        return response()->json([
-                            'token' => $request->session()->get('token'),
-                            'user' => [
+                            ];
+            case 2:
+                // User is an employee
+                return [
                             'UserId' => $user->UserId,
                             'TypeId' => $user->TypeId,
                             'TypeName' => $user->TypeName,
@@ -113,11 +96,10 @@ class RegisteredUserController extends Controller
                             'HiringDate' => $user->HiringDate,
                             'StateId' => $user->StateId,
                             'StateName' => $user->StateName,
-                        ]]);
-                    } else { // Driver
-                        return response()->json([
-                            'token' => $request->session()->get('token'),
-                            'user' => [
+                        ];
+            case 3:
+                // User is a driver
+                return [
                             'UserId' => $user->UserId,
                             'TypeId' => $user->TypeId,
                             'TypeName' => $user->TypeName,
@@ -127,17 +109,31 @@ class RegisteredUserController extends Controller
                             'Username' => $user->Username,
                             'Email' => $user->Email,
                             'phoneNbr' => $user->phoneNbr,
-                        ]]);
-                    }
-                } else {
-                    // json_decode failed or returned invalid data
-                    return response()->json(['error' => 'Invalid user data'], 400);
-                }
-            } else {
-                // No user found for the session
-                return response()->json(['error' => 'User not found'], 404);
-            }
-        } else {
+                        ];
+            default:
+                return null;
+        }
+    }
+
+    public function getCurrentUserName(Request $request)
+    {
+        $sessionId = $request->session()->getId();
+        $user_from_db = DB::table('custom_sessions')
+                ->where('id', $sessionId)
+                ->value('user');
+        $user_from_session = $request->session()->get('user');
+
+        $valid_user = $user_from_db != null ? $user_from_db : $user_from_session;
+        $decoded_user = is_string($valid_user) ? json_decode($valid_user) : $valid_user;
+
+        if($decoded_user !== null) {
+            $user = $this->mapUserByTypeId($decoded_user);
+            return response()->json([
+                'token' => $request->session()->get('token'),
+                'user' => $user
+            ]);
+        }else{
+            // User object is null
             return response()->json(['error' => 'Session not found'], 401);
         }
     }
