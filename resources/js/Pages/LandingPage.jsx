@@ -165,7 +165,6 @@ export default function LandingPage({}) {
                         "msal.isMicrosoftLogin"
                     );
                     clearMSALLocalStorage();
-                    Cookies.remove("access_token");
 
                     // Remove all items
                     sessionStorage.clear();
@@ -182,48 +181,6 @@ export default function LandingPage({}) {
                 console.log(error);
             });
     };
-    const [appsImgs, setAppsImgs] = useState([]);
-    const [isFetchingImg, setIsFetchingImg] = useState(true);
-    const fetchImageData = async (picName, app) => {
-        try {
-            const response = await axios({
-                method: "post",
-                url: "/getAppLogo",
-                responseType: "blob", // Set the expected response type as 'blob'
-                data: {
-                    filename: picName,
-                },
-            });
-            const blobUrl = URL.createObjectURL(response.data); // Create a URL for the Blob
-            setAppsImgs((prev) => ({
-                ...prev,
-                [app.AppId]: blobUrl,
-            }));
-        } catch (error) {
-            setAppsImgs((prev) => ({
-                ...prev,
-                [app.AppId]: "/icons/NoPhoto.jpg",
-            }));
-        }
-    };
-
-    useEffect(() => {
-        if (filteredApps?.length > 0) {
-            filteredApps?.forEach((app) => {
-                if (!appsImgs[app.AppId]) {
-                    // Check if the image URL is not already loaded
-                    fetchImageData(app?.AppIcon, app);
-                }
-            });
-        }
-    }, [filteredApps]);
-
-    useEffect(() => {
-        const appsImgsArray = Object.keys(appsImgs).map((key) => appsImgs[key]);
-        if (appsImgsArray?.length == filteredApps?.length) {
-            setIsFetchingImg(false);
-        }
-    }, [appsImgs, filteredApps]);
 
     const [getfooter, setfooter] = useState([]);
 

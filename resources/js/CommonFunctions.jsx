@@ -19,7 +19,7 @@ export const pca = new PublicClientApplication(msalConfig);
 export async function handleSessionExpiration() {
     const appUrl = window.Laravel.appUrl;
     // Ensure CSRF token is set in Axios for the logout request
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     axios
     .get("/users")
     .then((res) => {
