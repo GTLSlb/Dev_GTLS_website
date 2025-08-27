@@ -46,29 +46,56 @@ class CustomAuth extends Middleware
         return false;
     }
 
+        public function validateAccessToken($accessToken, $userId){
+        $url = $_ENV['GTAM_API_URL'] . 'Validate/Session';
+
+        $headers = [
+            'UserId' => $userId,
+            'Token' => $accessToken,
+        ];
+        $response = Http::withHeaders($headers)->get($url);
+        switch ($response->status()) {
+            case 200:
+                return true;
+            case 400:
+                // Handle unauthorized access
+                return false;
+            default:
+                // Handle other status codes
+                return false;
+        }
+    }
+
     public function handle($request, $next, ...$guards)
     {
+        $auth_routes = ['loginComp', 'login', 'loginapi', 'forgot-password', 'auth/azure', 'auth/azure/callback', 'microsoftToken', 'logoutWithoutRequest'];
         $hasSession = $request->hasSession();
+
         if ($hasSession) {
             $path = $request->path();
 
             $request->headers->set('X-CSRF-TOKEN', csrf_token());
+
+            $accessToken = $request->session()->get('token') ?? false;
+            $userId = $request->session()->get('user') ?? false;
+            $userId = gettype($userId) == "string" ? json_decode($userId, true) : $userId;
+
             // Allow access to the login route
             if($request->getBasePath() == ""){
                 return $next($request);
             }
-            if ($path == 'loginComp' ||  $path == 'login' || $path == 'loginapi' || $path == 'forgot-password' || $path == 'auth/azure' || $path == 'auth/azure/callback' || $path == 'microsoftToken' || $path == 'logoutWithoutRequest') {
-                return $next($request);
+            if (in_array($path, $auth_routes) && $userId && $accessToken) {
+                if (!$this->validateAccessToken($accessToken, $userId['UserId'])) {
+                    return $next($request);
+                } else {
+                    return redirect($_ENV['REDIRECT_ROUTE']);
             }
-            if ($path !== 'login' && $path !== 'loginapi' && $path !== 'forgot-password' && !$request->session()->has('user')) {
+            } elseif (!in_array($path, $auth_routes) && !$request->session()->has('user')) {
                 return redirect()->route('login');
             }
-        } else {
-            if ($request->path() == 'login' || $request->path() == 'loginapi' || $request->path() == '/auth/azure' || $request->path() == 'auth/azure/callback' || $request->path() == 'microsoftToken'  || $request->path() == 'logoutWithoutRequest' ) {
-                return $next($request);
-            }
 
-
+        } elseif (in_array($request->path(), $auth_routes)) {
+            return $next($request);
         }
         return $next($request);
     }

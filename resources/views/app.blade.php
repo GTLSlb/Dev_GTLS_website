@@ -35,12 +35,12 @@
             appUrl: "{{ env('APP_URL') }}",
             gtamAppUrl: "{{ env('GTAM_APP_URL') }}",
             backToHomeURL: "{{ env('BACK_TO_HOME_URL') }}",
-            mapUrl: "{{ env('REDIRECT_MAP_URL') }}",
             googleKey: "{{ env('RECAPTHCA_API') }}",
             azureClientId: "{{ env('AZURE_CLIENT_ID') }}",
             azureClientSecret: "{{ env('AZURE_CLIENT_SECRET') }}",
             azureRedirectUrl: "{{ env('AZURE_REDIRECT_URI') }}",
             azureTenantId: "{{ env('AZURE_TENANT_ID') }}",
+            recaptchaKey: "{{ env('RECAPTHCA_API') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->
