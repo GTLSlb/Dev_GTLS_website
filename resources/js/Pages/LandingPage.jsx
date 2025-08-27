@@ -45,7 +45,7 @@ export default function LandingPage({}) {
                     setToken(res.data.token);
                 }
             })
-            .catch((error) => {
+            .catch((err) => {
                 if (err.response && err.response.status === 401) {
                     // Handle 401 error
                     swal({

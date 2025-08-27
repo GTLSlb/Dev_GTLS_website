@@ -20,11 +20,8 @@ export async function handleSessionExpiration() {
     const appUrl = window.Laravel.appUrl;
     // Ensure CSRF token is set in Axios for the logout request
     axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-    axios
-    .get("/users")
-    .then((res) => {
         const credentials = {
-            CurrentUser: res.data.user,
+            CurrentUser: {},
             URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
@@ -52,8 +49,6 @@ export async function handleSessionExpiration() {
         .catch((error) => {
             console.log(error);
         });
-    })
-    .catch((error) => console.log(error));
 }
 
 export function clearMSALLocalStorage() {
