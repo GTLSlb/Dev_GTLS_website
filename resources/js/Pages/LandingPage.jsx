@@ -153,7 +153,7 @@ export default function LandingPage({}) {
 
     const handleLogout = async () => {
         const credentials = {
-            user: user,
+            CurrentUser: user,
             URL: window.Laravel.gtamUrl,
             SessionDomain: window.Laravel.appDomain,
         };
@@ -311,7 +311,7 @@ export default function LandingPage({}) {
                             <div className=" flex flex-col w-full mx-auto max-w-7xl px-6 py-4 lg:px-8">
                                 <div className="text-white md:text-3xl  py-4 my-4 ">
                                     {" "}
-                                    <span>{greeting} </span>
+                                    <span>{greeting}</span>
                                     <span className="text-goldd">
                                         <span className="text-white">, </span>
                                         {user.FirstName &&

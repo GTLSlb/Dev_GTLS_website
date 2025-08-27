@@ -73,6 +73,7 @@ export function clearMSALLocalStorage() {
         sessionStorage.removeItem(key);
     });
 
+    localStorage.clear();
     // Remove the msal.isMicrosoftLogin cookie
     Cookies.set('msal.isMicrosoftLogin', '', { expires: -1, domain: appDomain });
 }
