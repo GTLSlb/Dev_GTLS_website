@@ -1,72 +1,9 @@
 import { Head } from "@inertiajs/react";
 import jobs from "../assets/pictures/jobs.webp";
-import pallet from "../assets/pictures/pallet.webp";
-import { useState, useEffect } from "react";
-import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
-
 import Footer from "./Component/landingPage/Footer";
-import ContactForm from "./Component/landingPage/ContactForm";
-import Chatbot from "./Component/chatBot";
 import Navbars from "./Component/Navbars";
-const navigation = [
-    { name: "Services", href: "/#services", ref: "services" },
-    { name: "About", href: "/#about", ref: "about" },
-    { name: "News", href: "/#news", ref: "news" },
-    { name: "Contact Us", href: "/contact_us", ref: "contact" },
-];
-const features = [
-    { name: "Origin", description: "Designed by Good Goods, Inc." },
-    {
-        name: "Material",
-        description:
-            "Solid walnut base with rare earth magnets and polycarbonate add-ons.",
-    },
-    { name: "Dimensions", description: '15" x 3.75" x .75"' },
-    {
-        name: "Finish",
-        description: "Hand sanded and finished with natural oil",
-    },
-    {
-        name: "Includes",
-        description:
-            "Pen Tray, Phone Tray, Small Tray, Large Tray, Sticky Note Holder",
-    },
-    {
-        name: "Considerations",
-        description:
-            "Made from natural materials. Grain and color vary with each item.",
-    },
-];
-const handleClick = () => {
-    history.push("/", { scrollToElement: "news" });
-};
 
-export default function Terms(props) {
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [showNavbar, setShowNavbar] = useState(false);
-    const [resumeFile, setResumeFile] = useState(null);
-    const [resumePreview, setResumePreview] = useState(null);
-
-    const handleFileUpload = (file) => {
-        setResumeFile(file);
-        setResumePreview(URL.createObjectURL(file));
-    };
-
-    useEffect(() => {
-        let prevScrollPosition = window.pageYOffset;
-
-        function handleScroll() {
-            const scrollTop =
-                window.pageYOffset || document.documentElement.scrollTop;
-            setShowNavbar(scrollTop > 0);
-        }
-
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
-
+export default function Terms() {
     return (
         <>
             <Head title="Trading Terms and Conditions" />
@@ -129,7 +66,8 @@ export default function Terms(props) {
                                                     1.1
                                                 </span>
                                                 <span>
-                                                    Gold Tiger Group of Companies provides logistics
+                                                    Gold Tiger Group of
+                                                    Companies provides logistics
                                                     solutions including
                                                     transport, handling and
                                                     storage of Goods ("the
@@ -145,14 +83,16 @@ export default function Terms(props) {
                                                 </span>
                                                 <span>
                                                     Any instructions received by
-                                                    Gold Tiger Group of Companies from the Customer for
-                                                    the supply of the Services
-                                                    shall constitute acceptance
-                                                    of the terms of this
-                                                    Agreement. Instructions may
-                                                    be received in writing
+                                                    Gold Tiger Group of
+                                                    Companies from the Customer
+                                                    for the supply of the
+                                                    Services shall constitute
+                                                    acceptance of the terms of
+                                                    this Agreement. Instructions
+                                                    may be received in writing
                                                     (including electronically)
-                                                    or orally by Gold Tiger Group of Companies from the
+                                                    or orally by Gold Tiger
+                                                    Group of Companies from the
                                                     Customer.
                                                 </span>
                                             </div>
@@ -169,7 +109,8 @@ export default function Terms(props) {
                                                 rescinded in accordance with
                                                 these terms and conditions or
                                                 with the written consent of the
-                                                Managing Director of Gold Tiger Group of Companies.
+                                                Managing Director of Gold Tiger
+                                                Group of Companies.
                                             </span>
                                         </li>
                                     </ul>
@@ -247,13 +188,17 @@ export default function Terms(props) {
                                                         <li>
                                                             When the Customer
                                                             starts using the
-                                                            services of Gold Tiger Group of Companies or
+                                                            services of Gold
+                                                            Tiger Group of
+                                                            Companies or
                                                         </li>
                                                         <li>
                                                             When the customer
                                                             pays for services
                                                             requested from and
-                                                            provided by Gold Tiger Group of Companies
+                                                            provided by Gold
+                                                            Tiger Group of
+                                                            Companies
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -303,7 +248,8 @@ export default function Terms(props) {
                                                     "Consignee" shall mean the
                                                     person to whom the Goods are
                                                     to be delivered by way of
-                                                    Gold Tiger Group of Companies’s Services.
+                                                    Gold Tiger Group of
+                                                    Companies’s Services.
                                                 </strong>
                                             </span>
                                         </li>
@@ -314,7 +260,8 @@ export default function Terms(props) {
                                             <span>
                                                 <strong>
                                                     "Customer" shall mean any
-                                                    customer who engages Gold Tiger Group of Companies to
+                                                    customer who engages Gold
+                                                    Tiger Group of Companies to
                                                     provide the Services and
                                                     includes any person or
                                                     persons acting on behalf of
@@ -340,14 +287,17 @@ export default function Terms(props) {
                                                     "Goods" means any goods
                                                     collected, carried,
                                                     transported, delivered or
-                                                    stored by Gold Tiger Group of Companies for or on
+                                                    stored by Gold Tiger Group
+                                                    of Companies for or on
                                                     behalf of the Customer, and
                                                     includes cargo together with
                                                     any container, packaging, or
                                                     pallet(s) to be moved from
                                                     one place to another by way
-                                                    of Gold Tiger Group of Companies’s Services, or for
-                                                    storage by Gold Tiger Group of Companies.
+                                                    of Gold Tiger Group of
+                                                    Companies’s Services, or for
+                                                    storage by Gold Tiger Group
+                                                    of Companies.
                                                 </strong>
                                             </span>
                                         </li>
@@ -378,20 +328,28 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 <strong>
-                                                “Gold Tiger Group of Companies” shall mean any or all of the below entities:
-                                                <br></br>
-                                                <br></br>
-• Gold Tiger Logistics QLD Pty Ltd A.B.N. 81 651 394 099
-<br></br>
-• Gold Tiger Logistics Sydney Pty Ltd A.B.N. 49 651 376 519
-<br></br>
-• Gold Tiger Logistics Victoria Pty Ltd A.B.N. 44 639 257 293
-<br></br>
-• Gold Tiger Maintenance Pty Ltd A.B.N. 64 635 551 110
-<br></br>
-• Linehaul Express Services Pty Ltd A.B.N. 34 607 088 460
-<br></br>
-• Gold Tiger Logistic Solution NSW Pty Ltd A.B.N. 13 653 722 064.
+                                                    “Gold Tiger Group of
+                                                    Companies” shall mean any or
+                                                    all of the below entities:
+                                                    <br></br>
+                                                    <br></br>• Gold Tiger
+                                                    Logistics QLD Pty Ltd A.B.N.
+                                                    81 651 394 099
+                                                    <br></br>• Gold Tiger
+                                                    Logistics Sydney Pty Ltd
+                                                    A.B.N. 49 651 376 519
+                                                    <br></br>• Gold Tiger
+                                                    Logistics Victoria Pty Ltd
+                                                    A.B.N. 44 639 257 293
+                                                    <br></br>• Gold Tiger
+                                                    Maintenance Pty Ltd A.B.N.
+                                                    64 635 551 110
+                                                    <br></br>• Linehaul Express
+                                                    Services Pty Ltd A.B.N. 34
+                                                    607 088 460
+                                                    <br></br>• Gold Tiger
+                                                    Logistic Solution NSW Pty
+                                                    Ltd A.B.N. 13 653 722 064.
                                                 </strong>
                                             </span>
                                         </li>
@@ -462,9 +420,10 @@ export default function Terms(props) {
                                                     provided to the Customer;
                                                     otherwise, the price shall
                                                     be as indicated on invoices
-                                                    provided by Gold Tiger Group of Companies to the
-                                                    Customer in respect of
-                                                    Services supplied.
+                                                    provided by Gold Tiger Group
+                                                    of Companies to the Customer
+                                                    in respect of Services
+                                                    supplied.
                                                 </strong>
                                             </span>
                                         </li>
@@ -475,13 +434,15 @@ export default function Terms(props) {
                                             <span>
                                                 <strong>
                                                     "Services" shall mean all
-                                                    services supplied by Gold Tiger Group of Companies to
+                                                    services supplied by Gold
+                                                    Tiger Group of Companies to
                                                     the Customer and are as
                                                     described on the quotations,
                                                     invoices, consignment note,
                                                     airway bills, manifests,
                                                     sales order or any other
-                                                    forms as provided by Gold Tiger Group of Companies to
+                                                    forms as provided by Gold
+                                                    Tiger Group of Companies to
                                                     the Customer and includes
                                                     any advice or
                                                     recommendations.
@@ -520,7 +481,9 @@ export default function Terms(props) {
                                                     </span>
                                                     <span>
                                                         Any other person, firm
-                                                        or Gold Tiger Group of Companies with whom Gold Tiger Group of Companies
+                                                        or Gold Tiger Group of
+                                                        Companies with whom Gold
+                                                        Tiger Group of Companies
                                                         may arrange for the
                                                         carriage or storage of
                                                         any Goods the subject of
@@ -556,14 +519,16 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         These terms and conditions are to be
-                                        read in conjunction with Gold Tiger Group of Companies’s
-                                        quotation, consignment note, agreement,
-                                        airway bills, manifests, or any other
-                                        forms as provided by Gold Tiger Group of Companies to the
-                                        Customer. If there are any
-                                        inconsistencies between these documents
-                                        then the terms and conditions contained
-                                        in this document shall prevail.
+                                        read in conjunction with Gold Tiger
+                                        Group of Companies’s quotation,
+                                        consignment note, agreement, airway
+                                        bills, manifests, or any other forms as
+                                        provided by Gold Tiger Group of
+                                        Companies to the Customer. If there are
+                                        any inconsistencies between these
+                                        documents then the terms and conditions
+                                        contained in this document shall
+                                        prevail.
                                     </p>
                                 </div>
                             </figure>
@@ -580,28 +545,32 @@ export default function Terms(props) {
                                         The acceptance of these terms and
                                         conditions by the Customer means that an
                                         Agreement is created between the
-                                        Customer and Gold Tiger Group of Companies and, unless the
-                                        Customer wishes to enter into a formal
-                                        and more permanent Contract with Gold Tiger Group of Companies,
-                                        this agreement is per consignment basis
-                                        and is automatically renewed every time
-                                        the customer retains the services of
-                                        Gold Tiger Group of Companies. The length of the term of the
+                                        Customer and Gold Tiger Group of
+                                        Companies and, unless the Customer
+                                        wishes to enter into a formal and more
+                                        permanent Contract with Gold Tiger Group
+                                        of Companies, this agreement is per
+                                        consignment basis and is automatically
+                                        renewed every time the customer retains
+                                        the services of Gold Tiger Group of
+                                        Companies. The length of the term of the
                                         agreement shall be dependent on the
-                                        Customer and Gold Tiger Group of Companies unless otherwise
-                                        agreed in writing between Gold Tiger Group of Companies and the
-                                        Customer. The Customer may renew the
-                                        Term by providing Gold Tiger Group of Companies with further work
-                                        however, either party can terminate the
-                                        Agreement in accordance with the
+                                        Customer and Gold Tiger Group of
+                                        Companies unless otherwise agreed in
+                                        writing between Gold Tiger Group of
+                                        Companies and the Customer. The Customer
+                                        may renew the Term by providing Gold
+                                        Tiger Group of Companies with further
+                                        work however, either party can terminate
+                                        the Agreement in accordance with the
                                         sub-clauses below
                                     </p>
 
                                     <p className="text-gray-200 mt-2">
                                         <span className="text-goldt">4.2</span>{" "}
-                                        Gold Tiger Group of Companies may terminate this Agreement and
-                                        cease to provide the Services
-                                        immediately if:{" "}
+                                        Gold Tiger Group of Companies may
+                                        terminate this Agreement and cease to
+                                        provide the Services immediately if:{" "}
                                     </p>
 
                                     <ul
@@ -625,8 +594,9 @@ export default function Terms(props) {
                                                 The Customer fails to rectify a
                                                 breach of this Agreement within
                                                 fourteen (14) days after being
-                                                given notice by Gold Tiger Group of Companies requiring
-                                                it to do so;
+                                                given notice by Gold Tiger Group
+                                                of Companies requiring it to do
+                                                so;
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -658,7 +628,8 @@ export default function Terms(props) {
                                             <span>
                                                 If in accordance with clause
                                                 18.1 the Customer receives a
-                                                credit score, which in Gold Tiger Group of Companies's
+                                                credit score, which in Gold
+                                                Tiger Group of Companies's
                                                 absolute discretion is deemed
                                                 too low or is indicative that
                                                 the Customer is likely to be a
@@ -682,11 +653,12 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies fails to rectify a breach
-                                                of this Agreement within
-                                                fourteen (14) days after being
-                                                given notice by the Customer
-                                                requiring it to do so;
+                                                Gold Tiger Group of Companies
+                                                fails to rectify a breach of
+                                                this Agreement within fourteen
+                                                (14) days after being given
+                                                notice by the Customer requiring
+                                                it to do so;
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -694,9 +666,10 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies enters any arrangement with
-                                                its creditors or becomes subject
-                                                to external administration or
+                                                Gold Tiger Group of Companies
+                                                enters any arrangement with its
+                                                creditors or becomes subject to
+                                                external administration or
                                                 ceases to be able to pay its
                                                 debts as and when they become
                                                 due;
@@ -707,8 +680,8 @@ export default function Terms(props) {
                                                 c.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies ceases to carry on
-                                                business.
+                                                Gold Tiger Group of Companies
+                                                ceases to carry on business.
                                             </span>
                                         </li>
                                     </ul>
@@ -734,7 +707,8 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies shall immediately cease
+                                                Gold Tiger Group of Companies
+                                                shall immediately cease
                                                 providing the Services; and
                                             </span>
                                         </li>
@@ -763,46 +737,50 @@ export default function Terms(props) {
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.1</span>{" "}
                                         In consideration for performance of the
-                                        Services, the Customer shall pay to Gold Tiger Group of Companies
-                                        the Price for all Services in accordance
-                                        with this Agreement.
+                                        Services, the Customer shall pay to Gold
+                                        Tiger Group of Companies the Price for
+                                        all Services in accordance with this
+                                        Agreement.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.2</span>{" "}
-                                        Gold Tiger Group of Companies may by giving notice to the
-                                        Customer increase the Price of the
-                                        Services to reflect any increase in the
-                                        cost to Gold Tiger Group of Companies beyond the reasonable
-                                        control of Gold Tiger Group of Companies (including, without
-                                        limitation, foreign exchange
-                                        fluctuations, or increases in taxes or
-                                        customs duties or insurance premiums or
-                                        warehousing costs).
+                                        Gold Tiger Group of Companies may by
+                                        giving notice to the Customer increase
+                                        the Price of the Services to reflect any
+                                        increase in the cost to Gold Tiger Group
+                                        of Companies beyond the reasonable
+                                        control of Gold Tiger Group of Companies
+                                        (including, without limitation, foreign
+                                        exchange fluctuations, or increases in
+                                        taxes or customs duties or insurance
+                                        premiums or warehousing costs).
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.3</span>{" "}
-                                        Gold Tiger Group of Companies may charge freight by weight,
-                                        measurement or value, and may at any
-                                        time re-weigh, or revalue or remeasure
-                                        or require the Goods to be re-weighed,
-                                        or re-valued or re-measured and charge
-                                        proportional additional freight
-                                        accordingly.
+                                        Gold Tiger Group of Companies may charge
+                                        freight by weight, measurement or value,
+                                        and may at any time re-weigh, or revalue
+                                        or remeasure or require the Goods to be
+                                        re-weighed, or re-valued or re-measured
+                                        and charge proportional additional
+                                        freight accordingly.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.4</span>{" "}
-                                        Gold Tiger Group of Companies’s charges shall be considered
-                                        earned in the case of Goods for carriage
-                                        as soon as the Goods are loaded and
-                                        despatched from the Customer’s premises.
+                                        Gold Tiger Group of Companies’s charges
+                                        shall be considered earned in the case
+                                        of Goods for carriage as soon as the
+                                        Goods are loaded and despatched from the
+                                        Customer’s premises.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.5</span>{" "}
-                                        Gold Tiger Group of Companies shall render a tax invoice to the
-                                        Customer for the Services specifying the
-                                        Price at the end of each consignment or
-                                        alternatively at the end of each week or
-                                        otherwise as agreed with the Customer.
+                                        Gold Tiger Group of Companies shall
+                                        render a tax invoice to the Customer for
+                                        the Services specifying the Price at the
+                                        end of each consignment or alternatively
+                                        at the end of each week or otherwise as
+                                        agreed with the Customer.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.6</span>{" "}
@@ -814,12 +792,14 @@ export default function Terms(props) {
                                         due thirty (30) days following the date
                                         of the invoice. If an invoice is not
                                         paid by the due date, interest will be
-                                        payable by the Customer to Gold Tiger Group of Companies in
-                                        accordance with clause 16.1.
+                                        payable by the Customer to Gold Tiger
+                                        Group of Companies in accordance with
+                                        clause 16.1.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">5.7</span>{" "}
-                                        At Gold Tiger Group of Companies’s sole discretion;
+                                        At Gold Tiger Group of Companies’s sole
+                                        discretion;
                                     </p>
 
                                     <ul
@@ -842,8 +822,8 @@ export default function Terms(props) {
                                             <span>
                                                 Payment for approved Customers
                                                 shall be made by instalments in
-                                                accordance with Gold Tiger Group of Companies’s payment
-                                                schedule
+                                                accordance with Gold Tiger Group
+                                                of Companies’s payment schedule
                                             </span>
                                         </li>
                                     </ul>
@@ -853,7 +833,8 @@ export default function Terms(props) {
                                         cheque, or by bank cheque, or by credit
                                         card (plus a CC surcharge fee), or by
                                         direct credit, or by any other method as
-                                        agreed to between the Customer and Gold Tiger Group of Companies.
+                                        agreed to between the Customer and Gold
+                                        Tiger Group of Companies.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">5.9</span>{" "}
@@ -879,11 +860,11 @@ export default function Terms(props) {
                                             <span>
                                                 Pay reasonable surcharges as
                                                 arising and in accordance with
-                                                Gold Tiger Group of Companies’s written or verbal
-                                                communication of a requirement
-                                                to do so to ensure safe,
-                                                compliant, profitable, carriage
-                                                of Goods.
+                                                Gold Tiger Group of Companies’s
+                                                written or verbal communication
+                                                of a requirement to do so to
+                                                ensure safe, compliant,
+                                                profitable, carriage of Goods.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -892,11 +873,13 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Pay reasonable charges arising
-                                                and in accordance with Gold Tiger Group of Companies’s
+                                                and in accordance with Gold
+                                                Tiger Group of Companies’s
                                                 written or verbal communication
                                                 of a requirement to do so for
                                                 freight services arising that
-                                                have not been quoted by Gold Tiger Group of Companies.
+                                                have not been quoted by Gold
+                                                Tiger Group of Companies.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -923,8 +906,9 @@ export default function Terms(props) {
                                             <span>
                                                 Pay demurrage charges in
                                                 accordance with clause 9 where a
-                                                Gold Tiger Group of Companies vehicle is unduly delayed
-                                                at collection or delivery.
+                                                Gold Tiger Group of Companies
+                                                vehicle is unduly delayed at
+                                                collection or delivery.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -974,9 +958,11 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 Pay fees without notice or prior
-                                                agreement between Gold Tiger Group of Companies and the
+                                                agreement between Gold Tiger
+                                                Group of Companies and the
                                                 Customer, where charges are
-                                                reasonably levied by Gold Tiger Group of Companies for
+                                                reasonably levied by Gold Tiger
+                                                Group of Companies for
                                                 unforeseen circumstances or are
                                                 incurred to directly mitigate a
                                                 higher consequential cost to the
@@ -997,11 +983,12 @@ export default function Terms(props) {
                                                 hire, recovery and or
                                                 replacement of all pallets
                                                 listed on consignment notes by
-                                                Gold Tiger Group of Companies for transportation of the
-                                                Goods, where the Customer’s
-                                                equipment exchange or transfer
-                                                procedures fail, and
-                                                consequential costs arise.
+                                                Gold Tiger Group of Companies
+                                                for transportation of the Goods,
+                                                where the Customer’s equipment
+                                                exchange or transfer procedures
+                                                fail, and consequential costs
+                                                arise.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1041,15 +1028,18 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">6.1</span>{" "}
-                                        If the Customer instructs Gold Tiger Group of Companies to use a
-                                        particular method of carriage whether by
-                                        road, rail, sea or air Gold Tiger Group of Companies will give
-                                        priority to the method designated but if
-                                        that method cannot conveniently be
-                                        adopted by Gold Tiger Group of Companies the Customer shall be
-                                        deemed to authorise Gold Tiger Group of Companies to carry or
-                                        have the Goods carried by another method
-                                        or methods.
+                                        If the Customer instructs Gold Tiger
+                                        Group of Companies to use a particular
+                                        method of carriage whether by road,
+                                        rail, sea or air Gold Tiger Group of
+                                        Companies will give priority to the
+                                        method designated but if that method
+                                        cannot conveniently be adopted by Gold
+                                        Tiger Group of Companies the Customer
+                                        shall be deemed to authorise Gold Tiger
+                                        Group of Companies to carry or have the
+                                        Goods carried by another method or
+                                        methods.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">6.2</span>{" "}
@@ -1057,16 +1047,18 @@ export default function Terms(props) {
                                         authorise any deviation from the usual
                                         route or manner of carriage of Goods
                                         that may in the absolute discretion of
-                                        Gold Tiger Group of Companies be deemed reasonable or necessary
-                                        in the circumstances.
+                                        Gold Tiger Group of Companies be deemed
+                                        reasonable or necessary in the
+                                        circumstances.
                                     </p>
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">6.3</span>{" "}
                                         If a container has not been stowed by or
-                                        on behalf of Gold Tiger Group of Companies, Gold Tiger Group of Companies shall not be
-                                        liable for loss of or damage to the
-                                        Goods caused by:
+                                        on behalf of Gold Tiger Group of
+                                        Companies, Gold Tiger Group of Companies
+                                        shall not be liable for loss of or
+                                        damage to the Goods caused by:
                                     </p>
                                     <ul
                                         role="list"
@@ -1116,17 +1108,20 @@ export default function Terms(props) {
                                                 a.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies is authorised to deliver
-                                                the Goods at the address given
-                                                to Gold Tiger Group of Companies by the Customer for that
-                                                purpose and it is expressly
-                                                agreed that Gold Tiger Group of Companies shall be taken
-                                                to have delivered the Goods in
-                                                accordance with this Agreement
-                                                if at that address Gold Tiger Group of Companies obtains
-                                                from any person a receipt or a
-                                                signed docket for delivery of
-                                                the Goods.
+                                                Gold Tiger Group of Companies is
+                                                authorised to deliver the Goods
+                                                at the address given to Gold
+                                                Tiger Group of Companies by the
+                                                Customer for that purpose and it
+                                                is expressly agreed that Gold
+                                                Tiger Group of Companies shall
+                                                be taken to have delivered the
+                                                Goods in accordance with this
+                                                Agreement if at that address
+                                                Gold Tiger Group of Companies
+                                                obtains from any person a
+                                                receipt or a signed docket for
+                                                delivery of the Goods.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1134,24 +1129,28 @@ export default function Terms(props) {
                                                 b.
                                             </span>
                                             <span>
-                                                If the address given to Gold Tiger Group of Companies for
-                                                the purposes of delivery is
+                                                If the address given to Gold
+                                                Tiger Group of Companies for the
+                                                purposes of delivery is
                                                 unattended at the time of
                                                 delivery, or if delivery cannot
-                                                be effected by Gold Tiger Group of Companies (other than
-                                                by reason of the negligence)
-                                                then Gold Tiger Group of Companies may deposit the Goods
-                                                at that address (which shall be
-                                                deemed to be delivery under this
+                                                be effected by Gold Tiger Group
+                                                of Companies (other than by
+                                                reason of the negligence) then
+                                                Gold Tiger Group of Companies
+                                                may deposit the Goods at that
+                                                address (which shall be deemed
+                                                to be delivery under this
                                                 Agreement) or store the Goods at
-                                                a place where Gold Tiger Group of Companies deems
-                                                necessary or appropriate to
-                                                store those Goods, and if the
-                                                Goods are stored the Customer
-                                                shall pay Gold Tiger Group of Companies for all costs and
-                                                expenses incurred of and
-                                                incidental to that Storage and
-                                                redelivery.
+                                                a place where Gold Tiger Group
+                                                of Companies deems necessary or
+                                                appropriate to store those
+                                                Goods, and if the Goods are
+                                                stored the Customer shall pay
+                                                Gold Tiger Group of Companies
+                                                for all costs and expenses
+                                                incurred of and incidental to
+                                                that Storage and redelivery.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1160,12 +1159,13 @@ export default function Terms(props) {
                                             </span>
                                             <span>
                                                 The Customer agrees that the
-                                                person delivering any Goods Gold Tiger Group of Companies
-                                                for carriage or transportation
-                                                and or Storage is authorised to
-                                                sign the documentation
-                                                evidencing this agreement for or
-                                                on behalf of the Customer.
+                                                person delivering any Goods Gold
+                                                Tiger Group of Companies for
+                                                carriage or transportation and
+                                                or Storage is authorised to sign
+                                                the documentation evidencing
+                                                this agreement for or on behalf
+                                                of the Customer.
                                             </span>
                                         </li>
                                     </ul>
@@ -1180,20 +1180,22 @@ export default function Terms(props) {
                                 </h1>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
-                                        The Customer hereby authorises Gold Tiger Group of Companies (if
-                                        Gold Tiger Group of Companies should think fit to do so) to
-                                        arrange with a Sub-Contractor for the
-                                        carriage of any Goods that are the
-                                        subject of this Agreement. Any such
+                                        The Customer hereby authorises Gold
+                                        Tiger Group of Companies (if Gold Tiger
+                                        Group of Companies should think fit to
+                                        do so) to arrange with a Sub-Contractor
+                                        for the carriage of any Goods that are
+                                        the subject of this Agreement. Any such
                                         arrangement shall be deemed to be
                                         ratified by the Customer upon delivery
                                         of the said Goods to such
                                         Sub-Contractor, who shall there upon be
                                         entitled to the full benefit of these
                                         terms and conditions to the same extent
-                                        as Gold Tiger Group of Companies. In so far as it may be
-                                        necessary to ensure that such
-                                        Sub-Contractor shall be so entitled Gold Tiger Group of Companies
+                                        as Gold Tiger Group of Companies. In so
+                                        far as it may be necessary to ensure
+                                        that such Sub-Contractor shall be so
+                                        entitled Gold Tiger Group of Companies
                                         shall be deemed to enter into this
                                         Agreement for its own benefit and also
                                         as agent for the Sub-Contractor.
@@ -1210,23 +1212,24 @@ export default function Terms(props) {
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">8.1</span>{" "}
-                                        The Customer shall give Gold Tiger Group of Companies not less
-                                        than fourteen (14) days prior written
-                                        notice of any proposed change of
-                                        ownership of the Customer, including any
-                                        change in control of the Customer, or
-                                        any change in the Customer’s name and/or
-                                        any other change in the Customer’s
-                                        details (including but not limited to,
-                                        changes in the Customer’s address, email
+                                        The Customer shall give Gold Tiger Group
+                                        of Companies not less than fourteen (14)
+                                        days prior written notice of any
+                                        proposed change of ownership of the
+                                        Customer, including any change in
+                                        control of the Customer, or any change
+                                        in the Customer’s name and/or any other
+                                        change in the Customer’s details
+                                        (including but not limited to, changes
+                                        in the Customer’s address, email
                                         address, or business practice).
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">8.2</span>{" "}
                                         The Customer shall be liable for any
-                                        loss incurred by Gold Tiger Group of Companies as a result of the
-                                        Customer’s failure to comply with this
-                                        clause.
+                                        loss incurred by Gold Tiger Group of
+                                        Companies as a result of the Customer’s
+                                        failure to comply with this clause.
                                     </p>
                                 </div>
                             </figure>
@@ -1239,48 +1242,82 @@ export default function Terms(props) {
                                 </h1>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
-                                        The Customer will be and shall remain responsible to Gold Tiger Group of Companies for all its proper 
-                                        charges incurred for any reason. A charge may be made by Gold Tiger Group of Companies in respect of 
-                                        any delay in excess of thirty (30) minutes in loading or unloading occurring other than from the default of Gold 
-                                        Tiger Group of Companies. Such permissible delay period shall commence upon Gold Tiger Group of 
-                                        Companies reporting for loading or unloading at the gate (as opposed to the dock), ready to load or unload. 
-                                        Labour to load or unload the vehicle shall be the responsibility and expense of the Customer or Consignee. 
-                                        Unless otherwise agreed in writing between the parties, demurrage shall be payable by the Customer to Gold 
-                                        Tiger Group of Companies at the rate stated below:
-
-                                        <table className="min-w-full divide-y divide-gray-700">
-                   
+                                        The Customer will be and shall remain
+                                        responsible to Gold Tiger Group of
+                                        Companies for all its proper charges
+                                        incurred for any reason. A charge may be
+                                        made by Gold Tiger Group of Companies in
+                                        respect of any delay in excess of an
+                                        agreed period in loading or unloading
+                                        occurring other than from the default of
+                                        Gold Tiger Group of Companies. Such
+                                        permissible delay period shall commence
+                                        upon Gold Tiger Group of Companies
+                                        reporting for loading or unloading at
+                                        the gate (as opposed to the dock), ready
+                                        to load or unload. Labour to load or
+                                        unload the vehicle shall be the
+                                        responsibility and expense of the
+                                        Customer or Consignee. Unless otherwise
+                                        agreed in writing between the parties,
+                                        demurrage shall be payable by the
+                                        Customer to Gold Tiger Group of
+                                        Companies at our agreed rates.
+                                        {/* <table className="min-w-full divide-y divide-gray-700">
                                             <tbody className="divide-y divide-gray-800">
-                                            
                                                 <tr>
-                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
-                                                Rigid - Demurrage - After 30 Minutes or Part Thereof pick and delivery
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$1.41</td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Vehicle Waiting allowance 30 minutes > Time thereafter charged per minute</td>
-                                                
+                                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                        Rigid - Demurrage -
+                                                        After 30 Minutes or Part
+                                                        Thereof pick and
+                                                        delivery
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                        $1.41
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                        Vehicle Waiting
+                                                        allowance 30 minutes{" "}
+                                                        {">"} Time thereafter
+                                                        charged per minute
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
-                                                Semi - Demurrage - After 60 Minutes or Part Thereof
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2.08</td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 60 minutes > Time 
-thereafter charged per minute</td>
-                                                
+                                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                        Semi - Demurrage - After
+                                                        60 Minutes or Part
+                                                        Thereof
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                        $2.08
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                        {" "}
+                                                        Vehicle Waiting
+                                                        allowance 60 minutes{" "}
+                                                        {">"} Time thereafter
+                                                        charged per minute
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
-                                                B-Double - Demurrage - After 90 Minutes or Part Thereof
-                                                </td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">$2.91</td>
-                                                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300"> Vehicle Waiting allowance 90 minutes > Time 
-thereafter charged per minute</td>
-                                                
+                                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                        B-Double - Demurrage -
+                                                        After 90 Minutes or Part
+                                                        Thereof
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                        $2.91
+                                                    </td>
+                                                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                        {" "}
+                                                        Vehicle Waiting
+                                                        allowance 90 minutes{" "}
+                                                        {">"} Time thereafter
+                                                        charged per minute
+                                                    </td>
                                                 </tr>
-                                            
                                             </tbody>
-                                        </table>
+                                        </table> */}
                                     </p>
                                 </div>
                             </figure>
@@ -1294,24 +1331,26 @@ thereafter charged per minute</td>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">10.1</span>{" "}
-                                        Gold Tiger Group of Companies has a general lien on Goods the
-                                        subject of this Agreement for all
-                                        amounts due or which become due on any
-                                        account to Gold Tiger Group of Companies by the Customer or its
-                                        Related Entities (as defined in the
-                                        Corporations Act 2001 (Cth), whether for
-                                        the Services or otherwise
+                                        Gold Tiger Group of Companies has a
+                                        general lien on Goods the subject of
+                                        this Agreement for all amounts due or
+                                        which become due on any account to Gold
+                                        Tiger Group of Companies by the Customer
+                                        or its Related Entities (as defined in
+                                        the Corporations Act 2001 (Cth), whether
+                                        for the Services or otherwise
                                     </p>
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">10.2</span>{" "}
                                         If any amounts due or which become due
-                                        by the Customer to Gold Tiger Group of Companies are not paid, or
-                                        the Customer fails to take delivery or
-                                        return of any products and/or goods,
-                                        Gold Tiger Group of Companies may without notice (and in the case
-                                        of perishable or dangerous products
-                                        and/or goods immediately):
+                                        by the Customer to Gold Tiger Group of
+                                        Companies are not paid, or the Customer
+                                        fails to take delivery or return of any
+                                        products and/or goods, Gold Tiger Group
+                                        of Companies may without notice (and in
+                                        the case of perishable or dangerous
+                                        products and/or goods immediately):
                                     </p>
 
                                     <ul
@@ -1323,9 +1362,9 @@ thereafter charged per minute</td>
                                                 a.
                                             </span>
                                             <span>
-                                                Store the Goods as Gold Tiger Group of Companies thinks
-                                                fit at the Customer’s risk and
-                                                expense;
+                                                Store the Goods as Gold Tiger
+                                                Group of Companies thinks fit at
+                                                the Customer’s risk and expense;
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1334,8 +1373,9 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 Open any package and sell all or
-                                                any of the Goods as Gold Tiger Group of Companies thinks
-                                                fit and apply the proceeds to
+                                                any of the Goods as Gold Tiger
+                                                Group of Companies thinks fit
+                                                and apply the proceeds to
                                                 discharge the lien and costs of
                                                 sale;
                                             </span>
@@ -1347,7 +1387,8 @@ thereafter charged per minute</td>
                                             <span>
                                                 Deduct or set-off any monies
                                                 (including the costs of storage
-                                                of any Goods) due to Gold Tiger Group of Companies by the
+                                                of any Goods) due to Gold Tiger
+                                                Group of Companies by the
                                                 Customer under any this
                                                 Agreement or otherwise; and/or
                                             </span>
@@ -1390,15 +1431,17 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 For so long as any monies owing
-                                                by the Customer to Gold Tiger Group of Companies under
-                                                this Agreement remain unpaid,
-                                                the Customer acknowledges that
-                                                Gold Tiger Group of Companies maintains a Security
-                                                Interest in the Goods under the
-                                                PPSA and this Agreement shall
-                                                constitute a Security Agreement
-                                                that covers the Goods for the
-                                                purposes of the PPSA.
+                                                by the Customer to Gold Tiger
+                                                Group of Companies under this
+                                                Agreement remain unpaid, the
+                                                Customer acknowledges that Gold
+                                                Tiger Group of Companies
+                                                maintains a Security Interest in
+                                                the Goods under the PPSA and
+                                                this Agreement shall constitute
+                                                a Security Agreement that covers
+                                                the Goods for the purposes of
+                                                the PPSA.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1407,7 +1450,8 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 The Customer will, at the
-                                                request of Gold Tiger Group of Companies, do anything
+                                                request of Gold Tiger Group of
+                                                Companies, do anything
                                                 (including obtaining consents,
                                                 giving notices or directions to
                                                 any person, making amendments to
@@ -1416,20 +1460,23 @@ thereafter charged per minute</td>
                                                 document) for the purpose of (i)
                                                 ensuring that any Security
                                                 Interest granted by the Customer
-                                                to Gold Tiger Group of Companies attaches to the Goods or
+                                                to Gold Tiger Group of Companies
+                                                attaches to the Goods or
                                                 collateral intended to be
                                                 covered by that Security
                                                 Interest, is enforceable,
                                                 perfected and otherwise
                                                 effective, and has the priority
-                                                required by Gold Tiger Group of Companies; (ii) enabling
-                                                Gold Tiger Group of Companies to prepare and register a
-                                                financing statement or financing
-                                                change statement or (iii)
-                                                enabling Gold Tiger Group of Companies to exercise any of
-                                                its rights or powers in
-                                                connection with any such
-                                                Security Interest.
+                                                required by Gold Tiger Group of
+                                                Companies; (ii) enabling Gold
+                                                Tiger Group of Companies to
+                                                prepare and register a financing
+                                                statement or financing change
+                                                statement or (iii) enabling Gold
+                                                Tiger Group of Companies to
+                                                exercise any of its rights or
+                                                powers in connection with any
+                                                such Security Interest.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1439,11 +1486,13 @@ thereafter charged per minute</td>
                                             <span>
                                                 The Customer will promptly
                                                 provide any information
-                                                requested by Gold Tiger Group of Companies in connection
-                                                with any Security Interest
-                                                granted by the Customer to Gold Tiger Group of Companies
-                                                to enable Gold Tiger Group of Companies to exercise any
-                                                of its rights or powers or
+                                                requested by Gold Tiger Group of
+                                                Companies in connection with any
+                                                Security Interest granted by the
+                                                Customer to Gold Tiger Group of
+                                                Companies to enable Gold Tiger
+                                                Group of Companies to exercise
+                                                any of its rights or powers or
                                                 perform any of its obligations
                                                 under the PPSA.
                                             </span>
@@ -1467,12 +1516,13 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 Except if section 275(7) of the
-                                                PPSA applies, each of Gold Tiger Group of Companies and
-                                                the Customer agree not to
-                                                disclose any information of the
-                                                kind referred to in section
-                                                275(1) of the PPSA that is not
-                                                publicly available.
+                                                PPSA applies, each of Gold Tiger
+                                                Group of Companies and the
+                                                Customer agree not to disclose
+                                                any information of the kind
+                                                referred to in section 275(1) of
+                                                the PPSA that is not publicly
+                                                available.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1481,11 +1531,11 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 Despite anything contained in
-                                                this Agreement, Gold Tiger Group of Companies is not
-                                                required to disclose any
-                                                information of the kind referred
-                                                to in section 275(1) of the
-                                                PPSA.
+                                                this Agreement, Gold Tiger Group
+                                                of Companies is not required to
+                                                disclose any information of the
+                                                kind referred to in section
+                                                275(1) of the PPSA.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -1494,19 +1544,21 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 Anything that the Customer is
-                                                required by Gold Tiger Group of Companies to do under
-                                                this clause 10.4 must be done by
-                                                the Customer at its own expense.
-                                                The Customer agrees to reimburse
-                                                on demand Gold Tiger Group of Companies’s costs
-                                                (including all legal and other
-                                                professional costs (including
-                                                all legal and other professional
-                                                costs on a full indemnity basis)
-                                                in connection with any action
-                                                taken by Gold Tiger Group of Companies under or in
-                                                connection with this clause
-                                                10.4.
+                                                required by Gold Tiger Group of
+                                                Companies to do under this
+                                                clause 10.4 must be done by the
+                                                Customer at its own expense. The
+                                                Customer agrees to reimburse on
+                                                demand Gold Tiger Group of
+                                                Companies’s costs (including all
+                                                legal and other professional
+                                                costs (including all legal and
+                                                other professional costs on a
+                                                full indemnity basis) in
+                                                connection with any action taken
+                                                by Gold Tiger Group of Companies
+                                                under or in connection with this
+                                                clause 10.4.
                                             </span>
                                         </li>
                                     </ul>
@@ -1523,28 +1575,32 @@ thereafter charged per minute</td>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.1</span>{" "}
                                         Unless otherwise agreed in advance in
-                                        writing with Gold Tiger Group of Companies the Customer or his
-                                        authorised agent shall not tender for
-                                        carriage or for storage any explosive,
-                                        inflammable or otherwise Dangerous
-                                        Goods. The Customer shall be liable for
-                                        and hereby indemnifies Gold Tiger Group of Companies for all loss
-                                        or damage whatsoever caused by any
-                                        Dangerous Goods.
+                                        writing with Gold Tiger Group of
+                                        Companies the Customer or his authorised
+                                        agent shall not tender for carriage or
+                                        for storage any explosive, inflammable
+                                        or otherwise Dangerous Goods. The
+                                        Customer shall be liable for and hereby
+                                        indemnifies Gold Tiger Group of
+                                        Companies for all loss or damage
+                                        whatsoever caused by any Dangerous
+                                        Goods.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.2</span>{" "}
                                         If the parties agree that Dangerous
                                         Goods are to be carried or stored by
-                                        Gold Tiger Group of Companies, then prior to each delivery of
-                                        Goods or collection for storage, the
-                                        Customer shall provide to Gold Tiger Group of Companies in
-                                        writing the precise details of the
-                                        class, volume and packaging type of
-                                        dangerous or hazardous Goods by way of
-                                        an appropriate Material Safety Sheet and
-                                        Emergency Procedure Guide so that Gold Tiger Group of Companies
-                                        in its absolute discretion may accept or
+                                        Gold Tiger Group of Companies, then
+                                        prior to each delivery of Goods or
+                                        collection for storage, the Customer
+                                        shall provide to Gold Tiger Group of
+                                        Companies in writing the precise details
+                                        of the class, volume and packaging type
+                                        of dangerous or hazardous Goods by way
+                                        of an appropriate Material Safety Sheet
+                                        and Emergency Procedure Guide so that
+                                        Gold Tiger Group of Companies in its
+                                        absolute discretion may accept or
                                         decline to proceed with the transaction,
                                         and should it proceed, accordingly
                                         notify all parties as required to ensure
@@ -1553,25 +1609,27 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.3</span>{" "}
-                                        In the event of discovery by Gold Tiger Group of Companies of
-                                        hazardous or dangerous Goods not being
-                                        disclosed Gold Tiger Group of Companies may hold the discovered
-                                        dangerous Goods at a nominated depot, at
-                                        the expense of the Customer, for the
-                                        Customer to then arrange appropriate
-                                        measures to rectify the non-compliance
-                                        and allow resumption of transport
-                                        services.
+                                        In the event of discovery by Gold Tiger
+                                        Group of Companies of hazardous or
+                                        dangerous Goods not being disclosed Gold
+                                        Tiger Group of Companies may hold the
+                                        discovered dangerous Goods at a
+                                        nominated depot, at the expense of the
+                                        Customer, for the Customer to then
+                                        arrange appropriate measures to rectify
+                                        the non-compliance and allow resumption
+                                        of transport services.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">11.4</span>{" "}
                                         In the event that the Customer fails or
-                                        neglects to notify Gold Tiger Group of Companies of dangerous
-                                        goods presented for carriage, handling
-                                        or Storage, then the Customer will be
-                                        liable for all and any loss or losses
-                                        attributable to that nondisclosure to
-                                        Gold Tiger Group of Companies.
+                                        neglects to notify Gold Tiger Group of
+                                        Companies of dangerous goods presented
+                                        for carriage, handling or Storage, then
+                                        the Customer will be liable for all and
+                                        any loss or losses attributable to that
+                                        nondisclosure to Gold Tiger Group of
+                                        Companies.
                                     </p>
                                 </div>
                             </figure>
@@ -1585,29 +1643,33 @@ thereafter charged per minute</td>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.1</span>{" "}
-                                        Gold Tiger Group of Companies reserves the right to refuse at its
-                                        discretion the storage of any Goods.
+                                        Gold Tiger Group of Companies reserves
+                                        the right to refuse at its discretion
+                                        the storage of any Goods.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.2</span>{" "}
                                         All goods are stored entirely at the
-                                        risk of the Customer and Gold Tiger Group of Companies accepts no
-                                        liability for the Goods whatsoever.
+                                        risk of the Customer and Gold Tiger
+                                        Group of Companies accepts no liability
+                                        for the Goods whatsoever.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.3</span>{" "}
-                                        Gold Tiger Group of Companies relies on the Customer to supply
-                                        details of the description,
-                                        pallet/space, weight, items, quantity,
-                                        value and measurement and condition of
-                                        the Goods as supplied by the Customer.
+                                        Gold Tiger Group of Companies relies on
+                                        the Customer to supply details of the
+                                        description, pallet/space, weight,
+                                        items, quantity, value and measurement
+                                        and condition of the Goods as supplied
+                                        by the Customer.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">12.4</span>{" "}
-                                        Gold Tiger Group of Companies will not be liable for loss or
-                                        damage to the Goods for ullage up to and
-                                        including an amount equal to two percent
-                                        (2%) of the value of the Goods.
+                                        Gold Tiger Group of Companies will not
+                                        be liable for loss or damage to the
+                                        Goods for ullage up to and including an
+                                        amount equal to two percent (2%) of the
+                                        value of the Goods.
                                     </p>
                                 </div>
                             </figure>
@@ -1622,25 +1684,27 @@ thereafter charged per minute</td>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">13.1</span>{" "}
                                         The Customer agrees without exception,
-                                        that Gold Tiger Group of Companies has no obligation or right,
-                                        nor liability, to manage pallet
-                                        equipment hire on behalf of the
-                                        Customer, the consignee, the consignor,
-                                        or its Sub-contractors. Gold Tiger Group of Companies will record
-                                        pallet equipment details on its
+                                        that Gold Tiger Group of Companies has
+                                        no obligation or right, nor liability,
+                                        to manage pallet equipment hire on
+                                        behalf of the Customer, the consignee,
+                                        the consignor, or its Sub-contractors.
+                                        Gold Tiger Group of Companies will
+                                        record pallet equipment details on its
                                         consignment notes if they are provided
-                                        by the Customer, however Gold Tiger Group of Companies cannot
-                                        verify and does not admit to the
-                                        accuracy of this information.
+                                        by the Customer, however Gold Tiger
+                                        Group of Companies cannot verify and
+                                        does not admit to the accuracy of this
+                                        information.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">13.2</span>{" "}
-                                        The Customer shall indemnify Gold Tiger Group of Companies
-                                        without limitation against claims for
-                                        any loss or costs arising from pallet
-                                        equipment control errors and failed
-                                        practise in pallet management by any
-                                        party.
+                                        The Customer shall indemnify Gold Tiger
+                                        Group of Companies without limitation
+                                        against claims for any loss or costs
+                                        arising from pallet equipment control
+                                        errors and failed practise in pallet
+                                        management by any party.
                                     </p>
                                 </div>
                             </figure>
@@ -1655,9 +1719,10 @@ thereafter charged per minute</td>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.1</span>{" "}
                                         It is agreed that the person delivering
-                                        any Goods to Gold Tiger Group of Companies for carriage or
-                                        forwarding is authorised to sign the
-                                        consignment note for the Customer.
+                                        any Goods to Gold Tiger Group of
+                                        Companies for carriage or forwarding is
+                                        authorised to sign the consignment note
+                                        for the Customer.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.2</span>{" "}
@@ -1669,21 +1734,24 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.3</span>{" "}
-                                        Gold Tiger Group of Companies is authorised to deliver the Goods
-                                        at the address given to Gold Tiger Group of Companies by the
-                                        Customer for that purpose and it is
-                                        expressly agreed that Gold Tiger Group of Companies shall be
+                                        Gold Tiger Group of Companies is
+                                        authorised to deliver the Goods at the
+                                        address given to Gold Tiger Group of
+                                        Companies by the Customer for that
+                                        purpose and it is expressly agreed that
+                                        Gold Tiger Group of Companies shall be
                                         taken to have delivered the Goods in
                                         accordance with this contract if at that
-                                        address Gold Tiger Group of Companies obtains from any person a
-                                        receipt or a signed delivery docket for
-                                        the Goods
+                                        address Gold Tiger Group of Companies
+                                        obtains from any person a receipt or a
+                                        signed delivery docket for the Goods
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.4</span>{" "}
-                                        The Customer expressly warrants to Gold Tiger Group of Companies
-                                        that the Customer is either the owner or
-                                        the authorised agent of the owner of any
+                                        The Customer expressly warrants to Gold
+                                        Tiger Group of Companies that the
+                                        Customer is either the owner or the
+                                        authorised agent of the owner of any
                                         Goods or property that is the subject
                                         matter of this contract of cartage
                                         and/or storage and by entering into this
@@ -1694,7 +1762,8 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.5</span>{" "}
-                                        Gold Tiger Group of Companies may deliver the Goods in separate
+                                        Gold Tiger Group of Companies may
+                                        deliver the Goods in separate
                                         instalments (in accordance with the
                                         agreed delivery schedule). Each separate
                                         instalment shall be invoiced and paid
@@ -1710,9 +1779,10 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">14.7</span>{" "}
-                                        The failure of Gold Tiger Group of Companies to deliver shall not
-                                        entitle the Customer to treat this
-                                        Agreement as repudiated.
+                                        The failure of Gold Tiger Group of
+                                        Companies to deliver shall not entitle
+                                        the Customer to treat this Agreement as
+                                        repudiated.
                                     </p>
                                 </div>
                             </figure>
@@ -1726,47 +1796,51 @@ thereafter charged per minute</td>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.1</span>{" "}
-                                        Gold Tiger Group of Companies is not a Common Carrier and will
-                                        accept no liability as such. All
-                                        articles are carried or transported and
-                                        all storage and other services are
-                                        performed by Gold Tiger Group of Companies subject only to these
-                                        conditions and Gold Tiger Group of Companies reserves the right
-                                        to refuse the carriage or transport of
-                                        articles for any person, corporation or
-                                        body, and the carriage or transport of
-                                        any class of articles at its discretion.
+                                        Gold Tiger Group of Companies is not a
+                                        Common Carrier and will accept no
+                                        liability as such. All articles are
+                                        carried or transported and all storage
+                                        and other services are performed by Gold
+                                        Tiger Group of Companies subject only to
+                                        these conditions and Gold Tiger Group of
+                                        Companies reserves the right to refuse
+                                        the carriage or transport of articles
+                                        for any person, corporation or body, and
+                                        the carriage or transport of any class
+                                        of articles at its discretion.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.2</span>{" "}
-                                        Gold Tiger Group of Companies accepts no liability for, and the
-                                        Customer releases and indemnifies Gold Tiger Group of Companies
-                                        against all loss, damage, costs and
-                                        expense from any claim by the Customer
-                                        in tort (including negligence),
+                                        Gold Tiger Group of Companies accepts no
+                                        liability for, and the Customer releases
+                                        and indemnifies Gold Tiger Group of
+                                        Companies against all loss, damage,
+                                        costs and expense from any claim by the
+                                        Customer in tort (including negligence),
                                         contract, bailment or otherwise for loss
                                         or damage to any property, injury to, or
                                         death of any person arising out of the
-                                        acts or omissions of Gold Tiger Group of Companies, or any or all
-                                        of the Goods, any delay, non-delivery or
-                                        other failure to supply the Goods,
-                                        deterioration, damage, contamination or
-                                        loss of Goods or any failure arising or
-                                        delay out of the storage of the Goods.
+                                        acts or omissions of Gold Tiger Group of
+                                        Companies, or any or all of the Goods,
+                                        any delay, non-delivery or other failure
+                                        to supply the Goods, deterioration,
+                                        damage, contamination or loss of Goods
+                                        or any failure arising or delay out of
+                                        the storage of the Goods.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.3</span>{" "}
                                         Except as expressly provided in this
-                                        agreement, Gold Tiger Group of Companies is not under any
-                                        liability to the Customer in respect of
-                                        any loss, damage, injury, claims,
-                                        demands, costs or expenses, howsoever
-                                        caused, which may be suffered or
-                                        incurred or which may arise in respect
-                                        of the provision of the Services,
-                                        including any loss of, damage to or
-                                        deterioration or contamination of the
-                                        Goods, or any delay, non-delivery,
+                                        agreement, Gold Tiger Group of Companies
+                                        is not under any liability to the
+                                        Customer in respect of any loss, damage,
+                                        injury, claims, demands, costs or
+                                        expenses, howsoever caused, which may be
+                                        suffered or incurred or which may arise
+                                        in respect of the provision of the
+                                        Services, including any loss of, damage
+                                        to or deterioration or contamination of
+                                        the Goods, or any delay, non-delivery,
                                         misdirection of Goods, or other failure
                                         to supply the Goods, or supply the Goods
                                         in time, or arising out of the Goods, or
@@ -1789,10 +1863,11 @@ thereafter charged per minute</td>
                                                 The Goods and Services are
                                                 provided, carried, handled, and
                                                 stored solely at the Customer's
-                                                risk, and Gold Tiger Group of Companies is under no
-                                                obligation to arrange insurance
-                                                to cover Goods and Services for
-                                                the Customer against any form of
+                                                risk, and Gold Tiger Group of
+                                                Companies is under no obligation
+                                                to arrange insurance to cover
+                                                Goods and Services for the
+                                                Customer against any form of
                                                 direct or consequential loss
                                                 arising, nor shall it arrange
                                                 such insurance of any kind
@@ -1818,12 +1893,13 @@ thereafter charged per minute</td>
                                             </span>
                                             <span>
                                                 No claim may be made against
-                                                Gold Tiger Group of Companies for failure to arrange
-                                                insurance on behalf of the
-                                                Customer or for not insuring
-                                                Goods in transit, handling, and
-                                                storage or for outcomes of
-                                                Services provided by Gold Tiger Group of Companies.
+                                                Gold Tiger Group of Companies
+                                                for failure to arrange insurance
+                                                on behalf of the Customer or for
+                                                not insuring Goods in transit,
+                                                handling, and storage or for
+                                                outcomes of Services provided by
+                                                Gold Tiger Group of Companies.
                                             </span>
                                         </li>
                                     </ul>
@@ -1835,38 +1911,43 @@ thereafter charged per minute</td>
                                         loss of or damage to the Goods
                                         (including but not limited to chilled,
                                         frozen, refrigerated or perishable
-                                        Goods), Gold Tiger Group of Companies shall not be under any
-                                        liability for any damage to, loss,
-                                        deterioration, mis-delivery, delay in
-                                        delivery or non-delivery of the Goods
-                                        (whether the Goods are or have been in
-                                        the possession of Gold Tiger Group of Companies or not) nor for
-                                        any instructions, advice, information or
-                                        service given or provided to any person,
+                                        Goods), Gold Tiger Group of Companies
+                                        shall not be under any liability for any
+                                        damage to, loss, deterioration,
+                                        mis-delivery, delay in delivery or
+                                        non-delivery of the Goods (whether the
+                                        Goods are or have been in the possession
+                                        of Gold Tiger Group of Companies or not)
+                                        nor for any instructions, advice,
+                                        information or service given or provided
+                                        to any person,
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.6</span>{" "}
-                                        In no event shall Gold Tiger Group of Companies be liable for any
-                                        special, incidental, indirect or
-                                        consequential damages (including,
-                                        without limiting generality, damages for
-                                        loss of business profits, business
-                                        interruption and loss of business
-                                        information or computer programs) or
-                                        exemplary or punitive damages or damage
-                                        to personal property.
+                                        In no event shall Gold Tiger Group of
+                                        Companies be liable for any special,
+                                        incidental, indirect or consequential
+                                        damages (including, without limiting
+                                        generality, damages for loss of business
+                                        profits, business interruption and loss
+                                        of business information or computer
+                                        programs) or exemplary or punitive
+                                        damages or damage to personal property.
                                     </p>
 
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.7</span>{" "}
-                                        The Customer shall indemnify Gold Tiger Group of Companies from,
-                                        and defend and hold Gold Tiger Group of Companies harmless from
-                                        and against any and all damages, losses,
-                                        liability and expenses (including
-                                        reasonable legal fees) suffered or
-                                        incurred by any Gold Tiger Group of Companies or to which Gold Tiger Group of Companies
-                                        becomes subject, arising out of or
-                                        relating to any claim:
+                                        The Customer shall indemnify Gold Tiger
+                                        Group of Companies from, and defend and
+                                        hold Gold Tiger Group of Companies
+                                        harmless from and against any and all
+                                        damages, losses, liability and expenses
+                                        (including reasonable legal fees)
+                                        suffered or incurred by any Gold Tiger
+                                        Group of Companies or to which Gold
+                                        Tiger Group of Companies becomes
+                                        subject, arising out of or relating to
+                                        any claim:
                                     </p>
 
                                     <ul
@@ -1878,7 +1959,8 @@ thereafter charged per minute</td>
                                                 a.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies shall not be liable for any
+                                                Gold Tiger Group of Companies
+                                                shall not be liable for any
                                                 claims or damages arising from
                                                 the Customer's breach of its
                                                 representations or warranties
@@ -1890,7 +1972,8 @@ thereafter charged per minute</td>
                                                 b.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies shall not be liable for any
+                                                Gold Tiger Group of Companies
+                                                shall not be liable for any
                                                 claims or damages relating to
                                                 personal injury or property
                                                 damage to any Customer employee,
@@ -1903,7 +1986,8 @@ thereafter charged per minute</td>
                                                 c.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies shall not be liable for any
+                                                Gold Tiger Group of Companies
+                                                shall not be liable for any
                                                 claims or damages relating to
                                                 claims by the Customer's
                                                 suppliers and/or third-party
@@ -1915,7 +1999,8 @@ thereafter charged per minute</td>
                                                 d.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies shall not be liable for any
+                                                Gold Tiger Group of Companies
+                                                shall not be liable for any
                                                 other claims or damages arising
                                                 from the Customer's business,
                                                 resources, or services.
@@ -1928,14 +2013,16 @@ thereafter charged per minute</td>
                                         this sub-clause 15.7 shall be reduced
                                         proportionally to the extent that any
                                         unlawful, wrongful, wilful or negligent
-                                        act or omission of Gold Tiger Group of Companies caused or
-                                        contributed to the liability or loss.
+                                        act or omission of Gold Tiger Group of
+                                        Companies caused or contributed to the
+                                        liability or loss.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">15.9</span>{" "}
-                                        The Customer acknowledges that, Gold Tiger Group of Companies’s
-                                        liability to the Customer arising out of
-                                        or in connection with this Agreement
+                                        The Customer acknowledges that, Gold
+                                        Tiger Group of Companies’s liability to
+                                        the Customer arising out of or in
+                                        connection with this Agreement
                                         (including the performance or
                                         non-performance of the Services),
                                         whether under the law of contract, in
@@ -1949,14 +2036,15 @@ thereafter charged per minute</td>
                                         <span className="text-goldt">
                                             15.10
                                         </span>{" "}
-                                        Gold Tiger Group of Companies shall be deemed to have been
-                                        discharged from all liability in respect
-                                        of the Services whether under contract,
-                                        in tort, in equity, under statute or
-                                        otherwise, at the expiration of the
-                                        Term, or if no date is specified, on the
-                                        expiration of 3 years from the
-                                        completion of the Services.
+                                        Gold Tiger Group of Companies shall be
+                                        deemed to have been discharged from all
+                                        liability in respect of the Services
+                                        whether under contract, in tort, in
+                                        equity, under statute or otherwise, at
+                                        the expiration of the Term, or if no
+                                        date is specified, on the expiration of
+                                        3 years from the completion of the
+                                        Services.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">
@@ -1964,13 +2052,15 @@ thereafter charged per minute</td>
                                         </span>{" "}
                                         The Customer undertakes that no claim or
                                         allegation shall be made against any
-                                        servant or agent of Gold Tiger Group of Companies which attempts
-                                        to impose upon any of them any liability
-                                        whatsoever in connection with the Goods
-                                        and, if any such claim or allegation
-                                        should nevertheless be made, to
-                                        indemnify Gold Tiger Group of Companies and any such servant or
-                                        agent against all consequences thereof.
+                                        servant or agent of Gold Tiger Group of
+                                        Companies which attempts to impose upon
+                                        any of them any liability whatsoever in
+                                        connection with the Goods and, if any
+                                        such claim or allegation should
+                                        nevertheless be made, to indemnify Gold
+                                        Tiger Group of Companies and any such
+                                        servant or agent against all
+                                        consequences thereof.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">
@@ -1990,14 +2080,16 @@ thereafter charged per minute</td>
                                         <span className="text-goldt">
                                             15.13
                                         </span>{" "}
-                                        Liability of Gold Tiger Group of Companies arising out of any one
+                                        Liability of Gold Tiger Group of
+                                        Companies arising out of any one
                                         incident whether or not there has been
                                         any declaration of value of the Goods,
                                         for breach of warranty implied into
                                         these terms and conditions by the
                                         Australian Consumer Law or howsoever
                                         arising, is limited to any of the
-                                        following as determined by Gold Tiger Group of Companies;
+                                        following as determined by Gold Tiger
+                                        Group of Companies;
                                     </p>
 
                                     <ul
@@ -2009,8 +2101,9 @@ thereafter charged per minute</td>
                                                 a.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies may, at its discretion,
-                                                supply the Services again.
+                                                Gold Tiger Group of Companies
+                                                may, at its discretion, supply
+                                                the Services again.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -2018,8 +2111,9 @@ thereafter charged per minute</td>
                                                 b.
                                             </span>
                                             <span>
-                                                Gold Tiger Group of Companies may, at its discretion, pay
-                                                the cost of having the Services
+                                                Gold Tiger Group of Companies
+                                                may, at its discretion, pay the
+                                                cost of having the Services
                                                 supplied again.
                                             </span>
                                         </li>
@@ -2059,30 +2153,33 @@ thereafter charged per minute</td>
                                         <span className="text-goldt">16.2</span>{" "}
                                         If the Customer defaults in payment of
                                         any invoice when due, the Customer shall
-                                        indemnify Gold Tiger Group of Companies from and against all
-                                        costs and disbursements incurred by Gold Tiger Group of Companies
-                                        in pursuing the debt including legal
-                                        costs on a solicitor and own client
-                                        basis and Gold Tiger Group of Companies’s collection agency
-                                        costs.
+                                        indemnify Gold Tiger Group of Companies
+                                        from and against all costs and
+                                        disbursements incurred by Gold Tiger
+                                        Group of Companies in pursuing the debt
+                                        including legal costs on a solicitor and
+                                        own client basis and Gold Tiger Group of
+                                        Companies’s collection agency costs.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.3</span>{" "}
                                         Without prejudice to any other remedies
-                                        Gold Tiger Group of Companies may have, if at any time the
-                                        Customer is in breach of any obligation
-                                        (including those relating to payment),
-                                        Gold Tiger Group of Companies may suspend or terminate the supply
-                                        of Services to the Customer and any of
-                                        its other obligations under the terms
-                                        and conditions.
+                                        Gold Tiger Group of Companies may have,
+                                        if at any time the Customer is in breach
+                                        of any obligation (including those
+                                        relating to payment), Gold Tiger Group
+                                        of Companies may suspend or terminate
+                                        the supply of Services to the Customer
+                                        and any of its other obligations under
+                                        the terms and conditions.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.4</span>{" "}
-                                        Gold Tiger Group of Companies will not be liable to the Customer
-                                        for any loss or damage the Customer
-                                        suffers because Gold Tiger Group of Companies exercised its
-                                        rights under this clause.
+                                        Gold Tiger Group of Companies will not
+                                        be liable to the Customer for any loss
+                                        or damage the Customer suffers because
+                                        Gold Tiger Group of Companies exercised
+                                        its rights under this clause.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.5</span>{" "}
@@ -2096,15 +2193,17 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">16.6</span>{" "}
-                                        Without prejudice to Gold Tiger Group of Companies’s other
-                                        remedies at law Gold Tiger Group of Companies shall be entitled
-                                        to cancel all or any part of any order
-                                        of the Customer which remains
+                                        Without prejudice to Gold Tiger Group of
+                                        Companies’s other remedies at law Gold
+                                        Tiger Group of Companies shall be
+                                        entitled to cancel all or any part of
+                                        any order of the Customer which remains
                                         unperformed in addition to and without
                                         prejudice to any other remedies and all
-                                        amounts owing to Gold Tiger Group of Companies shall, whether or
-                                        not due for payment, become immediately
-                                        payable in the event that:
+                                        amounts owing to Gold Tiger Group of
+                                        Companies shall, whether or not due for
+                                        payment, become immediately payable in
+                                        the event that:
                                     </p>
                                     <ul
                                         role="list"
@@ -2115,11 +2214,12 @@ thereafter charged per minute</td>
                                                 a.
                                             </span>
                                             <span>
-                                                If any money payable to Gold Tiger Group of Companies
-                                                becomes overdue, or in Gold Tiger Group of Companies’s
-                                                opinion the Customer will be
-                                                unable to meet its payments as
-                                                they fall due.
+                                                If any money payable to Gold
+                                                Tiger Group of Companies becomes
+                                                overdue, or in Gold Tiger Group
+                                                of Companies’s opinion the
+                                                Customer will be unable to meet
+                                                its payments as they fall due.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -2164,7 +2264,8 @@ thereafter charged per minute</td>
                                         <span className="text-goldt">17.1</span>{" "}
                                         Despite anything to the contrary
                                         contained herein or any other rights
-                                        which Gold Tiger Group of Companies may have howsoever:
+                                        which Gold Tiger Group of Companies may
+                                        have howsoever:
                                     </p>
 
                                     <ul
@@ -2185,7 +2286,8 @@ thereafter charged per minute</td>
                                                 and/or charge all of their joint
                                                 and/or several interest in the
                                                 said land, realty or any other
-                                                asset to Gold Tiger Group of Companies or its nominee to
+                                                asset to Gold Tiger Group of
+                                                Companies or its nominee to
                                                 secure.
                                             </span>
                                         </li>
@@ -2198,14 +2300,15 @@ thereafter charged per minute</td>
                                                 obligations payable under the
                                                 terms and conditions. The
                                                 Customer and/or the Guarantor
-                                                acknowledge and agree that Gold Tiger Group of Companies
-                                                (or Gold Tiger Group of Companies’s nominee) shall be
-                                                entitled to lodge where
-                                                appropriate a caveat, which
-                                                caveat shall be released once
-                                                all payments and other monetary
-                                                obligations payable hereunder
-                                                have been met.
+                                                acknowledge and agree that Gold
+                                                Tiger Group of Companies (or
+                                                Gold Tiger Group of Companies’s
+                                                nominee) shall be entitled to
+                                                lodge where appropriate a
+                                                caveat, which caveat shall be
+                                                released once all payments and
+                                                other monetary obligations
+                                                payable hereunder have been met.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -2213,15 +2316,18 @@ thereafter charged per minute</td>
                                                 c.
                                             </span>
                                             <span>
-                                                Should Gold Tiger Group of Companies elect to proceed in
+                                                Should Gold Tiger Group of
+                                                Companies elect to proceed in
                                                 any manner in accordance with
                                                 this clause and/or its
                                                 subclauses, the Customer and/or
-                                                Guarantor shall indemnify Gold Tiger Group of Companies
-                                                from and against all Gold Tiger Group of Companies’s
-                                                costs and disbursements
-                                                including legal costs on a
-                                                solicitor and own client basis.
+                                                Guarantor shall indemnify Gold
+                                                Tiger Group of Companies from
+                                                and against all Gold Tiger Group
+                                                of Companies’s costs and
+                                                disbursements including legal
+                                                costs on a solicitor and own
+                                                client basis.
                                             </span>
                                         </li>
                                         <li className="flex gap-x-3">
@@ -2232,13 +2338,14 @@ thereafter charged per minute</td>
                                                 The Customer and/or the
                                                 Guarantor (if any) agree to
                                                 irrevocably nominate constitute
-                                                and appoint Gold Tiger Group of Companies or Gold Tiger Group of Companies’s
-                                                nominee as the Customer’s and/or
-                                                Guarantor’s true and lawful
-                                                attorney to perform all
-                                                necessary acts to give effect to
-                                                the provisions of this clause
-                                                17.1.
+                                                and appoint Gold Tiger Group of
+                                                Companies or Gold Tiger Group of
+                                                Companies’s nominee as the
+                                                Customer’s and/or Guarantor’s
+                                                true and lawful attorney to
+                                                perform all necessary acts to
+                                                give effect to the provisions of
+                                                this clause 17.1.
                                             </span>
                                         </li>
                                     </ul>
@@ -2255,21 +2362,24 @@ thereafter charged per minute</td>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">18.1</span>{" "}
                                         The Customer and/or the Guarantor/s
-                                        agree for Gold Tiger Group of Companies to obtain from a credit
-                                        reporting agency a credit report
-                                        containing personal credit information
-                                        about the Customer and Guarantor/s in
-                                        relation to credit provided by Gold Tiger Group of Companies.
+                                        agree for Gold Tiger Group of Companies
+                                        to obtain from a credit reporting agency
+                                        a credit report containing personal
+                                        credit information about the Customer
+                                        and Guarantor/s in relation to credit
+                                        provided by Gold Tiger Group of
+                                        Companies.
                                     </p>
                                     <p className="text-gray-200 mb-2">
                                         <span className="text-goldt">18.2</span>{" "}
                                         The Customer and/or the Guarantor/s
-                                        agree that Gold Tiger Group of Companies may exchange information
-                                        about the Customer and the Guarantor/s
-                                        with those credit providers either named
-                                        as trade referees by the Customer or
-                                        named in a consumer credit report issued
-                                        by a credit reporting agency for the
+                                        agree that Gold Tiger Group of Companies
+                                        may exchange information about the
+                                        Customer and the Guarantor/s with those
+                                        credit providers either named as trade
+                                        referees by the Customer or named in a
+                                        consumer credit report issued by a
+                                        credit reporting agency for the
                                         following purposes:
                                     </p>
                                     <ul
@@ -2320,21 +2430,23 @@ thereafter charged per minute</td>
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">18.3</span>{" "}
-                                        The Customer consents to Gold Tiger Group of Companies being
-                                        given a consumer credit report to
-                                        collect overdue payment on commercial
-                                        credit (Section 18K(1)(h) Privacy Act
-                                        1988).
+                                        The Customer consents to Gold Tiger
+                                        Group of Companies being given a
+                                        consumer credit report to collect
+                                        overdue payment on commercial credit
+                                        (Section 18K(1)(h) Privacy Act 1988).
                                     </p>
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">18.4</span>{" "}
                                         The Customer agrees that personal credit
                                         information provided may be used and
-                                        retained by Gold Tiger Group of Companies for the following
-                                        purposes and for other purposes as shall
-                                        be agreed between the Customer and Gold Tiger Group of Companies
-                                        or required by law from time to time:
+                                        retained by Gold Tiger Group of
+                                        Companies for the following purposes and
+                                        for other purposes as shall be agreed
+                                        between the Customer and Gold Tiger
+                                        Group of Companies or required by law
+                                        from time to time:
                                     </p>
 
                                     <ul
@@ -2352,8 +2464,9 @@ thereafter charged per minute</td>
                                                 b.
                                             </span>
                                             <span>
-                                                Marketing of Services by Gold Tiger Group of Companies,
-                                                its agents or distributors in
+                                                Marketing of Services by Gold
+                                                Tiger Group of Companies, its
+                                                agents or distributors in
                                                 relation to the Services.
                                             </span>
                                         </li>
@@ -2398,9 +2511,10 @@ thereafter charged per minute</td>
 
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">18.5</span>{" "}
-                                        Gold Tiger Group of Companies may give information about the
-                                        Customer to a credit reporting agency
-                                        for the following purposes:
+                                        Gold Tiger Group of Companies may give
+                                        information about the Customer to a
+                                        credit reporting agency for the
+                                        following purposes:
                                     </p>
 
                                     <ul
@@ -2441,31 +2555,34 @@ thereafter charged per minute</td>
                                 <div className="ml-4">
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">19.1</span>{" "}
-                                        Gold Tiger Group of Companies may cancel any Services to which
-                                        these terms and conditions apply or
-                                        cancel delivery of Goods at any time
-                                        before the Goods are delivered by giving
-                                        written notice to the Customer.
+                                        Gold Tiger Group of Companies may cancel
+                                        any Services to which these terms and
+                                        conditions apply or cancel delivery of
+                                        Goods at any time before the Goods are
+                                        delivered by giving written notice to
+                                        the Customer.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">19.2</span>{" "}
-                                        Gold Tiger Group of Companies shall not be liable for any loss or
-                                        damage whatever arising from such
-                                        cancellation.
+                                        Gold Tiger Group of Companies shall not
+                                        be liable for any loss or damage
+                                        whatever arising from such cancellation.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">19.3</span>{" "}
                                         In the event that the Customer cancels
                                         delivery of Goods the Customer shall be
-                                        liable for any loss incurred by Gold Tiger Group of Companies
-                                        (including, but not limited to, any loss
-                                        of profits) up to the time of
-                                        cancellation. Subject to clause 10, all
-                                        and any monies owing by the Customer to
-                                        Gold Tiger Group of Companies must be paid in full before any
-                                        Goods held by Gold Tiger Group of Companies at the time of
-                                        cancellation are released by Gold Tiger Group of Companies to the
-                                        Customer.
+                                        liable for any loss incurred by Gold
+                                        Tiger Group of Companies (including, but
+                                        not limited to, any loss of profits) up
+                                        to the time of cancellation. Subject to
+                                        clause 10, all and any monies owing by
+                                        the Customer to Gold Tiger Group of
+                                        Companies must be paid in full before
+                                        any Goods held by Gold Tiger Group of
+                                        Companies at the time of cancellation
+                                        are released by Gold Tiger Group of
+                                        Companies to the Customer.
                                     </p>
                                 </div>
                             </figure>
@@ -2481,29 +2598,33 @@ thereafter charged per minute</td>
                                         <span className="text-goldt">20.1</span>{" "}
                                         The Customer acknowledges that all
                                         rights, title and interests in and to
-                                        Gold Tiger Group of Companies Intellectual Property Rights,
-                                        including all modifications, changes and
+                                        Gold Tiger Group of Companies
+                                        Intellectual Property Rights, including
+                                        all modifications, changes and
                                         enhancements to the Intellectual
                                         Property Rights, are and shall be the
-                                        sole and exclusive property of Gold Tiger Group of Companies or
-                                        its licensor. The Customer hereby
-                                        assigns, and shall cause its employees,
-                                        agents and contractors to assign to
-                                        Gold Tiger Group of Companies, all rights, title and interest in
-                                        and to the Intellectual Property Rights
-                                        including all modifications, changes and
-                                        enhancements thereto.
+                                        sole and exclusive property of Gold
+                                        Tiger Group of Companies or its
+                                        licensor. The Customer hereby assigns,
+                                        and shall cause its employees, agents
+                                        and contractors to assign to Gold Tiger
+                                        Group of Companies, all rights, title
+                                        and interest in and to the Intellectual
+                                        Property Rights including all
+                                        modifications, changes and enhancements
+                                        thereto.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">20.2</span>{" "}
                                         Notwithstanding anything to the contrary
-                                        in this Agreement or otherwise, Gold Tiger Group of Companies
-                                        shall retain all right, title and
-                                        interest in and to any and all ideas,
-                                        concepts, know-how, development tools,
-                                        methodologies, processes, procedures,
-                                        technologies or algorithms ("Gold Tiger Group of Companies
-                                        Know-How").
+                                        in this Agreement or otherwise, Gold
+                                        Tiger Group of Companies shall retain
+                                        all right, title and interest in and to
+                                        any and all ideas, concepts, know-how,
+                                        development tools, methodologies,
+                                        processes, procedures, technologies or
+                                        algorithms ("Gold Tiger Group of
+                                        Companies Know-How").
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">20.3</span>{" "}
@@ -2523,30 +2644,34 @@ thereafter charged per minute</td>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.1</span>{" "}
                                         In consideration of the Customer
-                                        contracting with Gold Tiger Group of Companies, the Guarantor/s,
-                                        evidenced by the Guarantor's signature
-                                        to this Agreement, jointly and severally
+                                        contracting with Gold Tiger Group of
+                                        Companies, the Guarantor/s, evidenced by
+                                        the Guarantor's signature to this
+                                        Agreement, jointly and severally
                                         guarantee the performance by the
                                         Customer of all of the Customer's
                                         obligations under this Agreement.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.2</span>{" "}
-                                        The Guarantor indemnifies Gold Tiger Group of Companies against
-                                        any cost or loss whatsoever arising as a
-                                        result of the default by the Customer in
+                                        The Guarantor indemnifies Gold Tiger
+                                        Group of Companies against any cost or
+                                        loss whatsoever arising as a result of
+                                        the default by the Customer in
                                         performing its obligations under this
                                         Agreement for whatever reason.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.3</span>{" "}
-                                        Gold Tiger Group of Companies may seek to recover any loss from
-                                        the Guarantor before seeking recovery
-                                        from the Customer and any settlement or
+                                        Gold Tiger Group of Companies may seek
+                                        to recover any loss from the Guarantor
+                                        before seeking recovery from the
+                                        Customer and any settlement or
                                         compromise with the Customer will not
                                         release the Guarantor from the
                                         obligation to pay any balance that may
-                                        be owing to Gold Tiger Group of Companies
+                                        be owing to Gold Tiger Group of
+                                        Companies
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">21.4</span>{" "}
@@ -2555,7 +2680,8 @@ thereafter charged per minute</td>
                                         administrators and assigns and the
                                         benefit of the guarantee is available to
                                         any assignee of the benefit of this
-                                        Agreement by Gold Tiger Group of Companies.
+                                        Agreement by Gold Tiger Group of
+                                        Companies.
                                     </p>
                                 </div>
                             </figure>
@@ -2833,17 +2959,20 @@ thereafter charged per minute</td>
                                         The Customer shall not be entitled to
                                         set off against or deduct from the Price
                                         any sums owed or claimed to be owed to
-                                        the Customer by Gold Tiger Group of Companies.
+                                        the Customer by Gold Tiger Group of
+                                        Companies.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">23.5</span>{" "}
-                                        Gold Tiger Group of Companies reserves the right to review these
-                                        terms and conditions at any time. If,
-                                        following any such review, there is to
-                                        be any change to these terms and
-                                        conditions, then that change will take
-                                        effect from the date on which Gold Tiger Group of Companies
-                                        notifies the Customer of such change.
+                                        Gold Tiger Group of Companies reserves
+                                        the right to review these terms and
+                                        conditions at any time. If, following
+                                        any such review, there is to be any
+                                        change to these terms and conditions,
+                                        then that change will take effect from
+                                        the date on which Gold Tiger Group of
+                                        Companies notifies the Customer of such
+                                        change.
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">23.6</span>{" "}
@@ -2866,12 +2995,13 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">23.8</span>{" "}
-                                        The failure by Gold Tiger Group of Companies to enforce any
-                                        provision of these terms and conditions
-                                        shall not be treated as a waiver of that
-                                        provision, nor shall it affect Gold Tiger Group of Companies’s
-                                        right to subsequently enforce that
-                                        provision.
+                                        The failure by Gold Tiger Group of
+                                        Companies to enforce any provision of
+                                        these terms and conditions shall not be
+                                        treated as a waiver of that provision,
+                                        nor shall it affect Gold Tiger Group of
+                                        Companies’s right to subsequently
+                                        enforce that provision.
                                     </p>
                                 </div>
                             </figure>
@@ -2889,12 +3019,13 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">1.</span>{" "}
-                                        Gold Tiger Group of Companies is committed to providing you with
-                                        the best possible customer service
-                                        experience. Gold Tiger Group of Companies is bound by the Privacy
-                                        Act 1988 (Cth), which sets out a number
-                                        of principles concerning the privacy of
-                                        individuals
+                                        Gold Tiger Group of Companies is
+                                        committed to providing you with the best
+                                        possible customer service experience.
+                                        Gold Tiger Group of Companies is bound
+                                        by the Privacy Act 1988 (Cth), which
+                                        sets out a number of principles
+                                        concerning the privacy of individuals
                                     </p>
                                     <p className="text-gray-200 font-bold">
                                         Collection of your personal information
@@ -2904,8 +3035,9 @@ thereafter charged per minute</td>
                                         There are many aspects of the site which
                                         can be viewed without providing personal
                                         information, however, for access to
-                                        future Gold Tiger Group of Companies customer support features
-                                        you are required to submit personally
+                                        future Gold Tiger Group of Companies
+                                        customer support features you are
+                                        required to submit personally
                                         identifiable information. This may
                                         include but not be limited to a unique
                                         username and password or provide
@@ -2925,11 +3057,12 @@ thereafter charged per minute</td>
                                         shipping. Those companies will be
                                         permitted to obtain only the personal
                                         information they need to deliver the
-                                        service. Gold Tiger Group of Companies takes reasonable steps to
-                                        ensure that these Organisations are
-                                        bound by confidentiality and privacy
-                                        obligations in relation to the
-                                        protection of your personal information.
+                                        service. Gold Tiger Group of Companies
+                                        takes reasonable steps to ensure that
+                                        these Organisations are bound by
+                                        confidentiality and privacy obligations
+                                        in relation to the protection of your
+                                        personal information.
                                     </p>
                                     <p className="text-gray-200 font-bold">
                                         Use of your personal information
@@ -2985,11 +3118,11 @@ thereafter charged per minute</td>
                                     </p>
                                     <p className="text-gray-200 mb-3">
                                         <span className="text-goldt">7.</span>{" "}
-                                        Gold Tiger Group of Companies reserves the right to make
-                                        amendments to this Privacy Policy at any
-                                        time. If you have objections to the
-                                        Privacy Policy, you should not access or
-                                        use the Site.
+                                        Gold Tiger Group of Companies reserves
+                                        the right to make amendments to this
+                                        Privacy Policy at any time. If you have
+                                        objections to the Privacy Policy, you
+                                        should not access or use the Site.
                                     </p>
                                     <p className="text-gray-200 font-bold">
                                         Accessing Your Personal Information
@@ -3001,10 +3134,11 @@ thereafter charged per minute</td>
                                         allowed by law. If you would like to do
                                         so, please let us know. You may be
                                         required to put your request in writing
-                                        for security reasons. Gold Tiger Group of Companies reserves the
-                                        right to charge a fee for searching for,
-                                        and providing access to, your
-                                        information on a per request basis.
+                                        for security reasons. Gold Tiger Group
+                                        of Companies reserves the right to
+                                        charge a fee for searching for, and
+                                        providing access to, your information on
+                                        a per request basis.
                                     </p>
                                     <p className="text-gray-200 font-bold">
                                         Contacting us
@@ -3016,8 +3150,8 @@ thereafter charged per minute</td>
                                         Policy. If you have any questions about
                                         this Privacy Policy and would like
                                         further information, please contact our
-                                        Managing Director by email
-                                        imad@Gold Tiger Group of Companies.com.au
+                                        Managing Director by email imad@Gold
+                                        Tiger Group of Companies.com.au
                                     </p>
                                 </div>
                             </figure>
