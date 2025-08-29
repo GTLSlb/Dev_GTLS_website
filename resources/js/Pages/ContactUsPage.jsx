@@ -1,24 +1,18 @@
 import { Head } from "@inertiajs/react";
-import jobs from "../assets/pictures/jobs.webp";
-
-import Branches from "./Component/landingPage/branches";
-import ContatcUs from "./Component/ContactUsComp/ContactUs";
-
 import Footer from "./Component/landingPage/Footer";
 import Navbars from "./Component/Navbars";
-
+import ContactUs from "./Component/ContactUsComp/ContactUs";
 
 export default function Capability(props) {
-
     return (
         <>
             <Head title="Contact Us" />
             <div className="relative isolate bg-dark">
-                {/* <Chatbot /> */}
                 <Navbars />
-                <ContatcUs />
-                {/* <Branches /> */}
-                <Footer />
+                <div className="pt-24">
+                    <ContactUs />
+                    <Footer />
+                </div>
             </div>
         </>
     );
