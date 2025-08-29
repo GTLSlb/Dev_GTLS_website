@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem } from "@heroui/react";
 import { useEffect } from "react";
 
 function ContactUsForm() {
@@ -162,7 +162,8 @@ function ContactUsForm() {
                                         } group-focus-within:text-xs group-focus-within:h-1/2 group-focus-within:-translate-y-full group-focus-within:pl-0`}
                                     >
                                         {field.charAt(0).toUpperCase() +
-                                            field.slice(1)}<span className="text-red-500">*</span>
+                                            field.slice(1)}
+                                        <span className="text-red-500">*</span>
                                     </label>
                                 </div>
                                 {errors[field] && (

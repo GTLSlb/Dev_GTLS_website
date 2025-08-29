@@ -1,12 +1,13 @@
-import ContactUsForm from "./ContactUsForm";
 import ContactUsInfo from "./ContactUsInfo";
+import ContactUsHubspot from "./ContactUsHubspot";
 
-export default function ContatcUs() {
+export default function ContactUs() {
     return (
-        <div className=" pt-8">
-            <div className=" lg:max-w-7xl mx-auto lg:gap-24 flex flex-col-reverse lg:flex-row w-full">
-                <ContactUsForm />
+        <div className="py-16">
+            <div className=" lg:max-w-7xl mx-auto w-full min-h-[80vh]">
+                {/* <ContactUsForm /> */}
                 <ContactUsInfo />
+                <ContactUsHubspot />
             </div>
         </div>
     );
