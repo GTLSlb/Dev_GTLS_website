@@ -166,14 +166,13 @@ export default function LandingPage({}) {
                     );
 
                     // Remove all items
-                    sessionStorage.clear();
+                    clearMSALLocalStorage();
+
                     if (isMicrosoftLogin === "true") {
                         window.location.href = `https://login.microsoftonline.com/common/oauth2/v2.0/logout?post_logout_redirect_uri=${window.Laravel.appUrl}/login`;
-                        clearMSALLocalStorage();
                         setUser(null);
                     } else {
                         window.location.href = `${window.Laravel.appUrl}/login`;
-                        clearMSALLocalStorage();
                         setUser(null);
                     }
                 }

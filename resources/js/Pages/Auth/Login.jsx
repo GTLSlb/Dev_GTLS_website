@@ -12,6 +12,7 @@ export default function Login() {
 
     useEffect(() => {
         clearMSALLocalStorage();
+        sessionStorage.clear();
     }, []);
 
     return (
