@@ -11,7 +11,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Http;
 
 
 class CustomAuth extends Middleware
@@ -81,22 +81,24 @@ class CustomAuth extends Middleware
             $userId = gettype($userId) == "string" ? json_decode($userId, true) : $userId;
 
             // Allow access to the login route
-            if($request->getBasePath() == ""){
+            if($path == "" || $path == "/"){
                 return $next($request);
             }
             if (in_array($path, $auth_routes) && $userId && $accessToken) {
                 if (!$this->validateAccessToken($accessToken, $userId['UserId'])) {
                     return $next($request);
                 } else {
-                    return redirect($_ENV['REDIRECT_ROUTE']);
+                    return redirect()->route('landing.page');
+                }
             }
-            } elseif (!in_array($path, $auth_routes) && !$request->session()->has('user')) {
+            elseif (!in_array($path, $auth_routes) && !$request->session()->has('user')) {
                 return redirect()->route('login');
             }
 
         } elseif (in_array($request->path(), $auth_routes)) {
             return $next($request);
         }
+
         return $next($request);
     }
 

@@ -59,7 +59,6 @@ export default function LandingPage({}) {
                     });
                 } else {
                     // Handle other errors
-                    AlertToast("Error with showing logs.", 2);
                     console.error(err);
                 }
             });
@@ -104,7 +103,6 @@ export default function LandingPage({}) {
                         });
                     } else {
                         // Handle other errors
-                        AlertToast("Error with showing Apps.", 2);
                         setFilteredApps([]);
                         setApps([]);
                         setAppsApi(true);
@@ -175,6 +173,7 @@ export default function LandingPage({}) {
                         window.location.href = `${window.Laravel.appUrl}/login`;
                         setUser(null);
                     }
+                    localStorage.clear();
                 }
             })
             .catch((error) => {
@@ -349,7 +348,7 @@ export default function LandingPage({}) {
                                 </p>
                                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-10 gap-y-8">
                                     {filteredApps?.length > 0
-                                        ? filteredApps.map((app) => (
+                                        ? filteredApps?.map((app) => (
                                               <div
                                                   id={app.AppName}
                                                   className={`bg-gradient-to-tr sm:w-auto border border-goldl from-dark via-dark to-[#373B3D] transition hover:scale-105 relative rounded-3xl shadow-md shadow-goldd p-5 h-[18rem] hover:cursor-pointer  hover:shadow-lg hover:shadow-goldd overflow-hidden`}

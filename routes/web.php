@@ -41,7 +41,7 @@ Route::get('/', function () {
 
 Route::get('/login', function () {
     return Inertia::render('Auth/Login');
-})->name('login');
+})->name('login')->middleware(['web', 'custom.auth']);
 
 Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
 
@@ -59,31 +59,8 @@ Route::match(['get', 'post'], '/landingPage', function () {
     }
 
     return Inertia::render('LandingPage');
-})->middleware(['custom'])->name('landing.page');
+})->middleware(['custom.auth'])->name('landing.page');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['custom'])->name('dashboard');
-
-Route::get('/gtms', function () {
-    return Inertia::render('GTMS');
-})->middleware(['custom'])->name('gtms');
-
-Route::get('/gtam', function () {
-    return Inertia::render('GTAM');
-})->middleware(['custom'])->name('gtam');
-
-Route::get('/gtrs', function () {
-    return Inertia::render('GTRS');
-})->middleware(['custom'])->name('gtrs');
-
-Route::get('/gtw', function () {
-    return Inertia::render('GTW');
-})->middleware(['custom'])->name('gtw');
-
-// Route::get('/main', function () {
-//     return Inertia::render('Layout');
-// })->middleware(['custom'])->name('layout');
 
 Route::get('/opportunities', function () {
     return Inertia::render('Opportunities');
@@ -191,12 +168,12 @@ Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback'
 Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
 
 
-Route::middleware('custom')->group(function () {
+Route::middleware('custom.auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('/gtms');
-    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('/gtms');
-    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('/gtms');
+    Route::get('/users', [RegisteredUserController::class, 'getCurrentUserName'])->name('users');
+    Route::get('/childrens/{id}', [RegisteredUserController::class, 'getChildrens'])->name('children');
+    Route::get('/childrenlist/{id}', [RegisteredUserController::class, 'getChildrensList'])->name('children.list');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/user/{id}', [RegisteredUserController::class, 'getUserName']);
     Route::get('/safety/{user_id}', [RegisteredUserController::class, 'getSafetyData']);
