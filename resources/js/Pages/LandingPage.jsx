@@ -295,7 +295,7 @@ export default function LandingPage({}) {
                                         method="post"
                                         // href={route("logout")}
                                         as="button"
-                                        onClick={handleLogout}
+                                        onClick={()=> window.location.href = `${window.Laravel.appUrl}/logout`}
                                         className="flex flex-row items-center hover:bg-gray-700 hover:text-white"
                                     >
                                         <ArrowRightOnRectangleIcon className="w-7 ml-2 text-goldt" />

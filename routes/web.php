@@ -43,6 +43,10 @@ Route::get('/login', function () {
     return Inertia::render('Auth/Login');
 })->name('login')->middleware(['web', 'custom.auth']);
 
+Route::get('/logout', function () {
+    return Inertia::render('Auth/Logout');
+})->name('logout')->middleware(['web', 'custom.auth']);
+
 Route::post('/loginComp', [ LoginClass::class, 'login'])->name('loginComp');
 
 Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');

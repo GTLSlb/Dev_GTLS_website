@@ -4,10 +4,10 @@ import { PublicClientApplication } from "@azure/msal-browser";
 
 const msalConfig = {
     auth: {
-        clientId: "05f70999-6ca7-4ee8-ac70-f2d136c50288",
-        authority:
-            "https://login.microsoftonline.com/647bf8f1-fc82-468e-b769-65fd9dacd442",
+        clientId: window.Laravel.azureClientId,
+        authority: `https://login.microsoftonline.com/${window.Laravel.azureTenantId}`,
         redirectUri: window.Laravel.azureCallback,
+        failureRedirectUri: "/failed-login",
     },
     cache: {
         cacheLocation: "sessionStorage",
