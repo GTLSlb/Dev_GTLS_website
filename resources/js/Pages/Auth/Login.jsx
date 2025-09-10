@@ -10,10 +10,6 @@ export default function Login() {
     const backToHomeURL = window.Laravel.backToHomeURL;
     const googleKey = window.Laravel.googleKey;
 
-    useEffect(() => {
-        clearMSALLocalStorage();
-    }, []);
-
     return (
         <div className="h-screen w-full">
         <LoginPage

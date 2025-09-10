@@ -338,9 +338,8 @@ export default function LandingPage({}) {
 
                                     <ResponsiveNavLink
                                         method="post"
-                                        // href={route("logout")}
                                         as="button"
-                                        onClick={handleLogout}
+                                        onClick={()=> window.location.href = `${window.Laravel.appUrl}/logout`}
                                         className="flex flex-row items-center hover:bg-gray-700 hover:text-white"
                                     >
                                         <ArrowRightOnRectangleIcon className="w-7 ml-2 text-goldt" />
@@ -406,7 +405,9 @@ export default function LandingPage({}) {
                                                           className={` rounded-3xl w-auto`}
                                                       >
                                                           <img
-                                                              src={`${app.AppPic}`}
+                                                              src={appsImgs[
+                                                                      app?.AppId
+                                                                  ]}
                                                               alt=""
                                                               className="h-14 w-14"
                                                           />

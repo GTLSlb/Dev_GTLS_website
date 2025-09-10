@@ -44,6 +44,7 @@
             azureClientSecret: "{{ env('AZURE_CLIENT_SECRET') }}",
             azureRedirectUrl: "{{ env('AZURE_REDIRECT_URI') }}",
             azureTenantId: "{{ env('AZURE_TENANT_ID') }}",
+            recaptchaKey: "{{ env('RECAPTHCA_API') }}",
         };
     </script>
     <!-- resources/views/layouts/app.blade.php -->
