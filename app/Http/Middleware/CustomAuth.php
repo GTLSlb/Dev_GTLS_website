@@ -68,7 +68,7 @@ class CustomAuth extends Middleware
 
     public function handle($request, $next, ...$guards)
     {
-        $auth_routes = ['loginComp', 'login', 'loginapi', 'forgot-password', 'auth/azure', 'auth/azure/callback', 'microsoftToken', 'logoutWithoutRequest'];
+        $auth_routes = ['loginComp', 'login', 'loginapi', 'forgot-password', 'auth/azure', 'auth/azure/callback', 'microsoftToken', 'logoutWithoutRequest', ];
         $hasSession = $request->hasSession();
 
         if ($hasSession) {

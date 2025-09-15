@@ -39,7 +39,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-            \App\Http\Middleware\CustomAuth::class, // ADDED CustomAuth here
+            // \App\Http\Middleware\CustomAuth::class, // ADDED CustomAuth here
         ],
         'custom.auth' => [
             \App\Http\Middleware\CustomAuth::class,
