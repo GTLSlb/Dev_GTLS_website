@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tabs, Tab, Card, CardBody } from "@heroui/react";
+import { Tabs, Tab } from "@heroui/react";
 
 const ContactUsHubspot = () => {
     const [loading, setLoading] = useState(true);

@@ -5,7 +5,7 @@ import { createRoot } from "react-dom/client";
 import ReactGA from "react-ga";
 import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 ReactGA.initialize("G-0KMJRECLV1");
 
 const appName =
@@ -22,9 +22,9 @@ createInertiaApp({
         const root = createRoot(el);
         ReactGA.pageview(window.location.pathname + window.location.search);
         root.render(
-            <NextUIProvider>
+            <HeroUIProvider>
                 <App {...props} />
-            </NextUIProvider>
+            </HeroUIProvider>
         );
     },
     progress: {
