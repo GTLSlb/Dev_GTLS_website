@@ -15,6 +15,10 @@
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KMJRECLV1"></script>
+    <script
+       src="https://js-ap1.hsforms.net/forms/embed/developer/441740132.js"
+       defer
+    ></script>
      <script type="text/javascript" id="hs-script-loader" async defer src="//js-ap1.hs-scripts.com/441740132.js"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
