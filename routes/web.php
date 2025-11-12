@@ -2,20 +2,16 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\ContactUsFormController;
 use App\Http\Controllers\SupportFormController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\Auth\FileController;
-use App\Http\Controllers\AzureAuthController;
 use App\Http\Controllers\SendDailyEmail;
 use App\Http\Controllers\BlogController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
-use SocialiteProviders\Azure\AzureProvider;
 use Illuminate\Http\Request;
 use gtls\loginstory\LoginClass;
 
@@ -168,9 +164,7 @@ Route::get('/auth/azure', function () {
     return Socialite::driver('azure')->redirect();
 });
 
-Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleCallback']);
-Route::get('/checkEmail', [AzureAuthController::class, 'handleClickCallBack']);
-
+Route::get('/auth/azure/callback', [LoginClass::class, 'handleCallback'])->name('azure.callback');
 
 Route::middleware('custom.auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
