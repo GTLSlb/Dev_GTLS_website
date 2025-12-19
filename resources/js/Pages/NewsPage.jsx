@@ -1110,10 +1110,10 @@ We continue to monitor the severe weather conditions in Queensland and northern 
         {
             id: 34,
             title: "We are moving in Brisbane! ",
-            content1: `We’re pleased to share an important update with our customers and partners.
+            content1: `We're pleased to share an important update with our customers and partners.
  
             From Monday 22 December, Gold Tiger Logistics Solutions will be operating from our new Brisbane depot at
-            24–36 Prosperity Place, Park Ridge QLD 4125.
+            18-36 Prosperity Place, Park Ridge QLD 4125.
             
             This relocation strengthens our Queensland operations, providing an all weather facility with secure capacity for up to 8,000 pallets. The new site has been designed to support reliable warehousing, efficient transport movement, and seamless service during peak and everyday operations.
             
