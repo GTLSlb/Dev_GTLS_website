@@ -44,7 +44,7 @@ import axios from "axios";
 const posts = [
     {
         id: 34,
-        title: "we are moving in Brisbane!",
+        title: "We are moving in Brisbane!",
         href: "#",
         description: `We’re pleased to share an important update with our customers and partners.`,
         imageUrl: QueenslandDepot,

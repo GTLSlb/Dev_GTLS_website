@@ -1109,7 +1109,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
         },
         {
             id: 34,
-            title: "we are moving in Brisbane! ",
+            title: "We are moving in Brisbane! ",
             content1: `We’re pleased to share an important update with our customers and partners.
  
             From Monday 22 December, Gold Tiger Logistics Solutions will be operating from our new Brisbane depot at
@@ -1128,7 +1128,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
     const posts = [
         {
             id: 34,
-            title: "we are moving in Brisbane!",
+            title: "We are moving in Brisbane!",
             href: "#",
             description: `We’re pleased to share an important update with our customers and partners.`,
             imageUrl: QueenslandDepot,
