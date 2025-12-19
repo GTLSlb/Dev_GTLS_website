@@ -82,6 +82,7 @@ import ReactPlayer from "react-player";
 import cycloneImage from "@/assets/news/Cyclone.webp";
 import cycloneUpdateImage from "@/assets/news/CycloneUpdate.webp";
 import QLDDepotCover from "@/assets/news/QLDDepotCover.jpg";
+import QLDNewDepotCover from "@/assets/news/QLDNewDepot.jpg";
 import DFleet from "@/assets/news/DoubledVehicle.png";
 
 function SampleNextArrow(props) {
@@ -1106,9 +1107,35 @@ We continue to monitor the severe weather conditions in Queensland and northern 
 
             imgUrl: DFleet,
         },
+        {
+            id: 34,
+            title: "we are moving in Brisbane! ",
+            content1: `We’re pleased to share an important update with our customers and partners.
+ 
+            From Monday 22 December, Gold Tiger Logistics Solutions will be operating from our new Brisbane depot at
+            24–36 Prosperity Place, Park Ridge QLD 4125.
+            
+            This relocation strengthens our Queensland operations, providing an all weather facility with secure capacity for up to 8,000 pallets. The new site has been designed to support reliable warehousing, efficient transport movement, and seamless service during peak and everyday operations.
+            
+            This investment in the new Brisbane Depot reflects our ongoing commitment to support our customers’ growth and delivers consistent, dependable logistics solutions.
+            
+            If you have any questions about the transition or would like to discuss how this expanded capability can support your business, our team is ready to help.
+            `,
+            imgUrl: QLDNewDepotCover,
+        },
     ];
 
     const posts = [
+        {
+            id: 34,
+            title: "we are moving in Brisbane!",
+            href: "#",
+            description: `We’re pleased to share an important update with our customers and partners.`,
+            imageUrl: QueenslandDepot,
+            date: "December 18, 2025",
+            datetime: "2024-9-3",
+            category: { title: "", href: "#" },
+        },
         {
             id: 33,
             title: "We've Doubled Our B-Triple Fleet!",
@@ -1513,7 +1540,7 @@ We continue to monitor the severe weather conditions in Queensland and northern 
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-dark" />
                     </div>
-                ) : id == 31 ? (
+                ) : id == 31 || id == 34 ? (
                     <div aria-hidden="true" className="relative">
                         <img
                             src={contentJson[id].imgUrl}

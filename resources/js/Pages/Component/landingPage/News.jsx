@@ -43,6 +43,16 @@ import axios from "axios";
 
 const posts = [
     {
+        id: 34,
+        title: "we are moving in Brisbane!",
+        href: "#",
+        description: `We’re pleased to share an important update with our customers and partners.`,
+        imageUrl: QueenslandDepot,
+        date: "December 18, 2025",
+        datetime: "2024-9-3",
+        category: { title: "", href: "#" },
+    },
+    {
         id: 33,
         title: "We've Doubled Our B-Triple Fleet!",
         href: "#",
@@ -575,7 +585,8 @@ export default function News() {
                                                 post.id == 27 ||
                                                 post.id == 28 ||
                                                 post.id == 30 ||
-                                                post.id == 32 ? (
+                                                post.id == 32 || 
+                                                post.id == 34 ? (
                                                     <img
                                                         src={post.imageUrl}
                                                         alt={post.title}
