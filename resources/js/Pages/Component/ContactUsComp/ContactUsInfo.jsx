@@ -38,7 +38,8 @@ const contactInfo = {
         },
         {
             name: "BRISBANE BRANCH",
-            address: "839 Beaudesert Road ARCHERFIELD QLD 4108",
+            // address: "839 Beaudesert Road ARCHERFIELD QLD 4108",
+            address: "18–36 Prosperity Place\nPark Ridge QLD 4125",
             addressLink: "https://maps.app.goo.gl/26eN7YExv8PJrRxp9",
             phone: "07 3416 9744",
             phoneLink: "tel:+0734169744",
